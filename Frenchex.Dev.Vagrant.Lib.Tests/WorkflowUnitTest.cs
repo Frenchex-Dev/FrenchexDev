@@ -103,7 +103,7 @@ public class CompleteWorkflowTests : AbstractUnitTest
                     new List<int> {0, 1},
                     true);
 
-                vsCode.Invoke(initRequest.Base.WorkingDirectory!);
+                // vsCode.Invoke(initRequest.Base.WorkingDirectory!);
 
                 await TestInner(
                     "status",

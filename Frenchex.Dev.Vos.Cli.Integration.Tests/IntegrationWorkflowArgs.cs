@@ -1,6 +1,8 @@
 ﻿using System.CommandLine;
 using static System.Threading.Tasks.Task;
 
+[assembly: Parallelize(Workers = 4, Scope = ExecutionScope.MethodLevel)]
+
 namespace Frenchex.Dev.Vos.Cli.Integration.Tests;
 
 [TestClass]
@@ -8,7 +10,16 @@ public class IntegrationWorkflowArgs : IntegrationWorkflowUnitTestForVirtualBox
 {
     public static IEnumerable<object[]> Test_Data_MultipleRuns()
     {
-        return ProduceDataSets(TimeSpan.FromMinutes(10), "vagrant", 1, 4);
+        return ProduceDataSets(TimeSpan.FromMinutes(10), "vagrant", 10, 4);
+    }
+
+    [TestMethod]
+    [DynamicData(nameof(Test_Data_MultipleRuns), DynamicDataSourceType.Method)]
+    public async Task TestExecutions(string testCaseName, Payload payload)
+    {
+        var tasks = CreateRunInternal(testCaseName, payload, InternalRunExecution);
+
+        await WhenAll(tasks);
     }
 
     [TestMethod]
@@ -16,15 +27,6 @@ public class IntegrationWorkflowArgs : IntegrationWorkflowUnitTestForVirtualBox
     public async Task TestArgumentsParsing(string testCaseName, Payload payload)
     {
         var tasks = CreateRunInternal(testCaseName, payload, InternalRunParsing);
-
-        await WhenAll(tasks);
-    }
-    
-    [TestMethod]
-    [DynamicData(nameof(Test_Data_MultipleRuns), DynamicDataSourceType.Method)]
-    public async Task TestExecutions(string testCaseName, Payload payload)
-    {
-        var tasks = CreateRunInternal(testCaseName, payload, InternalRunExecution);
 
         await WhenAll(tasks);
     }

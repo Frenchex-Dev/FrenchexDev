@@ -29,21 +29,25 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
         UnitTest = VosUnitTestBase.CreateUnitTest<ExecutionContext>();
         UnitTest.BuildIfNecessary();
 
-        var tempDir = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
+        int max = 10;
+        for (var i = 0; i < max; i++)
+        {
+            var tempDir = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
 
-        yield return new[] {
-            BuildInitCommandRequest(tempDir),
-            BuildDefineMachineTypeAddCommandRequestsList(tempDir),
-            BuildDefineMachineAddCommandRequestsList(tempDir),
-            BuildNameCommandRequestsList(tempDir),
-            BuildStatusBeforeUpCommandRequestsList(tempDir),
-            BuildUpCommandRequestsList(tempDir),
-            BuildStatusAfterUpCommandRequestsList(tempDir),
-            BuildSshConfigCommandRequestsList(tempDir),
-            BuildSshCommandRequestsList(tempDir),
-            BuildHaltCommandRequestsList(tempDir),
-            BuildDestroyCommandRequestsList(tempDir)
-        };
+            yield return new[] {
+                BuildInitCommandRequest(tempDir),
+                BuildDefineMachineTypeAddCommandRequestsList(tempDir),
+                BuildDefineMachineAddCommandRequestsList(tempDir),
+                BuildNameCommandRequestsList(tempDir),
+                BuildStatusBeforeUpCommandRequestsList(tempDir),
+                BuildUpCommandRequestsList(tempDir),
+                BuildStatusAfterUpCommandRequestsList(tempDir),
+                BuildSshConfigCommandRequestsList(tempDir),
+                BuildSshCommandRequestsList(tempDir),
+                BuildHaltCommandRequestsList(tempDir),
+                BuildDestroyCommandRequestsList(tempDir)
+            };
+        }
     }
 
     [TestCleanup]
@@ -56,6 +60,8 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
     }
 
     [TestMethod]
+    [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     [TestCategory("need-vagrant")]
     public async Task Test_Complete_Workflow(

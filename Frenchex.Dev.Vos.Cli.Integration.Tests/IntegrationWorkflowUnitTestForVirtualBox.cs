@@ -3,13 +3,42 @@ using Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib.Domain;
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Microsoft.Extensions.DependencyInjection;
 
-[assembly: Parallelize(Workers = 2, Scope = ExecutionScope.MethodLevel)]
-
 namespace Frenchex.Dev.Vos.Cli.Integration.Tests;
 
 public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
 {
     private const string WorkingDirectoryMarker = "##{{WORKING_DIRECTORY}}##";
+    public static IEnumerable<object[]> ProduceDataSets(
+        TimeSpan timeout,
+        string vagrantBinPath,
+        int nbTestCases = 1,
+        int nbVosInstances = 3
+    )
+    {
+        var listOfList = new List<object[]>();
+        
+        for (var i = 0; i < nbTestCases; i++)
+        {
+            var payload = new Payload() {
+                TestCaseName = $"Test case {i}",
+                ListOfListOfCommands = new List<List<InputCommand>>(nbVosInstances)
+            };
+
+            var obj = new List<object> {
+                payload.TestCaseName,
+                payload
+            };
+
+            for (var x = 0; x < nbVosInstances; x++)
+            {
+                payload.ListOfListOfCommands.Add(ProduceTestData(timeout, vagrantBinPath).ToList());
+            }
+
+            listOfList.Add(obj.ToArray());
+        }
+
+        return listOfList;
+    }
 
     [TestInitialize]
     public async Task Setup()
@@ -36,33 +65,7 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
         public List<List<InputCommand>>? ListOfListOfCommands { get; init; }
     }
 
-    protected static IEnumerable<object[]> ProduceDataSets(
-        TimeSpan timeout,
-        string vagrantBinPath,
-        int nbTestCases = 1,
-        int nbVosInstances = 3
-    )
-    {
-        for (var i = 0; i < nbTestCases; i++)
-        {
-            var payload = new Payload() {
-                TestCaseName = $"Test case {i}",
-                ListOfListOfCommands = new List<List<InputCommand>>(nbVosInstances)
-            };
-
-            var obj = new List<object> {
-                payload.TestCaseName,
-                payload
-            };
-
-            for (var x = 0; x < nbVosInstances; x++)
-            {
-                payload.ListOfListOfCommands.Add(ProduceTestData(timeout, vagrantBinPath).ToList());
-            }
-
-            yield return obj.ToArray();
-        }
-    }
+    
 
     private async Task InternalRunParsing(InputCommand[] commands, string workingDirectory)
     {
