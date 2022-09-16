@@ -8,6 +8,11 @@ public class ServicesConfiguration : IServicesConfiguration
 {
     public void ConfigureServices(IServiceCollection services)
     {
+        StaticConfigureServices(services);
+    }
+
+    public static void StaticConfigureServices(IServiceCollection services)
+    {
         services
             .AddTransient<IProgramBuilder, ProgramBuilder>()
             .AddTransient<IHostConfigurationConfiguration, HostConfigurationConfiguration>()

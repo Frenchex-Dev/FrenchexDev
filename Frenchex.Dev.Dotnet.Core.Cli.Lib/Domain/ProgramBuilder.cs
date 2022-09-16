@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Frenchex.Dev.Dotnet.Cli.Lib.Domain;

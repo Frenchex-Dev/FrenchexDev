@@ -16,7 +16,7 @@ public static class VosUnitTestBase
             },
             (services, configurationRoot) =>
             {
-                ServicesConfiguration.ConfigureServices(services);
+                new ServicesConfiguration().ConfigureServices(services);
             },
             (services, _) =>
             {

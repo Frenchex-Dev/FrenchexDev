@@ -1,4 +1,5 @@
-﻿using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
+﻿using Frenchex.Dev.OnSteroid.Lib.DependencyInjection;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
 using Frenchex.Dev.Vos.Lib.Domain.Actions.Configuration.Load;
 using Frenchex.Dev.Vos.Lib.Domain.Actions.Configuration.Save;
 using Frenchex.Dev.Vos.Lib.Domain.Actions.Naming;
@@ -19,107 +20,112 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.Vos.Lib.DependencyInjection;
 
-public class ServicesConfiguration
+public class ServicesConfiguration : IServicesConfiguration
 {
-    public static IServiceCollection ConfigureServices(IServiceCollection services)
+    public IServiceCollection ConfigureServices(IServiceCollection outterServices)
     {
-        // dependencies
-        Dotnet.Core.Filesystem.Lib.DependencyInjection.ServicesConfiguration
-            .ConfigureServices(services)
-            ;
+        return BasicServicesConfiguration.ConfigureServices(outterServices,
+            () =>
+            {
+                // dependencies
+                Dotnet.Core.Filesystem.Lib.DependencyInjection.ServicesConfiguration
+                    .ConfigureServices(outterServices)
+                    ;
 
-        Vagrant.Lib.DependencyInjection.ServicesConfiguration
-            .ConfigureServices(services)
-            ;
+                Vagrant.Lib.DependencyInjection.ServicesConfiguration
+                    .ConfigureServices(outterServices)
+                    ;
 
-        // resources
+                // resources
 
-        services
-            .AddScoped<IVagrantfileResource, VagrantfileResource>()
-            ;
+                outterServices
+                    .AddScoped<IVagrantfileResource, VagrantfileResource>()
+                    ;
 
-        // actions
+                // actions
 
-        services
-            .AddScoped<IConfigurationLoadAction, ConfigurationLoadAction>()
-            .AddScoped<IConfigurationSaveAction, ConfigurationSaveAction>()
-            .AddScoped<IDefaultGatewayGetterAction, DefaultGatewayGetterAction>()
-            ;
+                outterServices
+                    .AddScoped<IConfigurationLoadAction, ConfigurationLoadAction>()
+                    .AddScoped<IConfigurationSaveAction, ConfigurationSaveAction>()
+                    .AddScoped<IDefaultGatewayGetterAction, DefaultGatewayGetterAction>()
+                    ;
 
-        // proprosed services
-        services
+                // proprosed services
+                outterServices
 
-            // Root
-            .AddTransient<IBaseRequestBuilderFactory, BaseRequestBuilderFactory>()
-            .AddTransient<IBaseRequestBuilder, BaseRequestBuilder>()
+                    // Root
+                    .AddTransient<IBaseRequestBuilderFactory, BaseRequestBuilderFactory>()
+                    .AddTransient<IBaseRequestBuilder, BaseRequestBuilder>()
 
-            // Bases
-            .AddTransient<MachineBaseDefinitionBuilder, MachineBaseDefinitionBuilder>()
-            .AddTransient<MachineBaseDefinitionBuilderFactory, MachineBaseDefinitionBuilderFactory>()
-            .AddTransient<MachineDefinitionBuilder, MachineDefinitionBuilder>()
-            .AddTransient<MachineDefinitionBuilderFactory, MachineDefinitionBuilderFactory>()
-            .AddTransient<IMachineTypeDefinitionBuilder, MachineTypeDefinitionBuilder>()
-            .AddTransient<IMachineTypeDefinitionBuilderFactory, MachineTypeDefinitionBuilderFactory>()
+                    // Bases
+                    .AddTransient<MachineBaseDefinitionBuilder, MachineBaseDefinitionBuilder>()
+                    .AddTransient<MachineBaseDefinitionBuilderFactory, MachineBaseDefinitionBuilderFactory>()
+                    .AddTransient<MachineDefinitionBuilder, MachineDefinitionBuilder>()
+                    .AddTransient<MachineDefinitionBuilderFactory, MachineDefinitionBuilderFactory>()
+                    .AddTransient<IMachineTypeDefinitionBuilder, MachineTypeDefinitionBuilder>()
+                    .AddTransient<IMachineTypeDefinitionBuilderFactory, MachineTypeDefinitionBuilderFactory>()
 
-            // Actions
-            .AddScoped<IVexNameToVagrantNameConverter, VexNameToVagrantNameConverter>()
+                    // Actions
+                    .AddScoped<IVexNameToVagrantNameConverter, VexNameToVagrantNameConverter>()
 
-            // Commands
-            .AddScoped<INameCommand, NameCommand>()
-            .AddScoped<INameCommandRequestBuilder, NameCommandRequestBuilder>()
-            .AddScoped<INameCommandRequestBuilderFactory, NameCommandRequestBuilderFactory>()
-            .AddScoped<INameCommandResponseBuilder, NameCommandResponseBuilder>()
-            .AddScoped<INameCommandResponseBuilderFactory, NameCommandResponseBuilderFactory>()
-            .AddScoped<IDefineMachineAddCommand, DefineMachineAddCommand>()
-            .AddScoped<IDefineMachineAddCommandRequestBuilder, DefineMachineAddCommandRequestBuilder>()
-            .AddScoped<IDefineMachineAddCommandRequestBuilderFactory, DefineMachineAddCommandRequestBuilderFactory>()
-            .AddScoped<IDefineMachineAddCommandResponseBuilder, DefineMachineAddCommandResponseBuilder>()
-            .AddScoped<IDefineMachineAddCommandResponseBuilderFactory,
-                DefineMachineAddCommandResponseBuilderFactory>()
-            .AddScoped<IDefineMachineTypeAddCommand, DefineMachineTypeAddCommand>()
-            .AddScoped<IDefineMachineTypeAddCommandRequestBuilder, DefineMachineTypeAddCommandRequestBuilder>()
-            .AddScoped<IDefineMachineTypeAddCommandRequestBuilderFactory,
-                DefineMachineTypeAddCommandRequestBuilderFactory>()
-            .AddScoped<IDefineMachineTypeAddCommandResponseBuilder, DefineMachineTypeAddCommandResponseBuilder>()
-            .AddScoped<IDefineMachineTypeAddCommandResponseBuilderFactory,
-                DefineMachineTypeAddCommandResponseBuilderFactory>()
-            .AddScoped<IDestroyCommand, DestroyCommand>()
-            .AddScoped<IDestroyCommandRequestBuilder, DestroyCommandRequestBuilder>()
-            .AddScoped<IDestroyCommandRequestBuilderFactory, DestroyCommandRequestBuilderFactory>()
-            .AddScoped<IDestroyCommandResponseBuilder, DestroyCommandResponseBuilder>()
-            .AddScoped<IDestroyCommandResponseBuilderFactory, DestroyCommandResponseBuilderFactory>()
-            .AddScoped<IHaltCommand, HaltCommand>()
-            .AddScoped<IHaltCommandRequestBuilder, HaltCommandRequestBuilder>()
-            .AddScoped<IHaltCommandRequestBuilderFactory, HaltCommandRequestBuilderFactory>()
-            .AddScoped<IHaltCommandResponseBuilder, HaltCommandResponseBuilder>()
-            .AddScoped<IHaltCommandResponseBuilderFactory, HaltCommandResponseBuilderFactory>()
-            .AddScoped<IInitCommand, InitCommand>()
-            .AddScoped<IInitCommandRequestBuilder, InitCommandRequestBuilder>()
-            .AddScoped<IInitCommandRequestBuilderFactory, InitCommandRequestBuilderFactory>()
-            .AddScoped<IInitCommandResponseBuilder, InitCommandResponseBuilder>()
-            .AddScoped<IInitCommandResponseBuilderFactory, InitCommandResponseBuilderFactory>()
-            .AddScoped<ISshCommand, SshCommand>()
-            .AddScoped<ISshCommandRequestBuilder, SshCommandRequestBuilder>()
-            .AddScoped<ISshCommandRequestBuilderFactory, SshCommandRequestBuilderFactory>()
-            .AddScoped<ISshCommandResponseBuilder, SshCommandResponseBuilder>()
-            .AddScoped<ISshCommandResponseBuilderFactory, SshCommandResponseBuilderFactory>()
-            .AddScoped<ISshConfigCommand, SshConfigCommand>()
-            .AddScoped<ISshConfigCommandRequestBuilder, SshConfigCommandRequestBuilder>()
-            .AddScoped<ISshConfigCommandRequestBuilderFactory, SshConfigCommandRequestBuilderFactory>()
-            .AddScoped<ISshConfigCommandResponseBuilder, SshConfigCommandResponseBuilder>()
-            .AddScoped<ISshConfigCommandResponseBuilderFactory, SshConfigCommandResponseBuilderFactory>()
-            .AddScoped<IStatusCommand, StatusCommand>()
-            .AddScoped<IStatusCommandRequestBuilder, StatusCommandRequestBuilder>()
-            .AddScoped<IStatusCommandRequestBuilderFactory, StatusCommandRequestBuilderFactory>()
-            .AddScoped<IStatusCommandResponseBuilder, StatusCommandResponseBuilder>()
-            .AddScoped<IStatusCommandResponseBuilderFactory, StatusCommandResponseBuilderFactory>()
-            .AddScoped<IUpCommand, UpCommand>()
-            .AddScoped<IUpCommandRequestBuilder, UpCommandRequestBuilder>()
-            .AddScoped<IUpCommandRequestBuilderFactory, UpCommandRequestBuilderFactory>()
-            .AddScoped<IUpCommandResponseBuilder, UpCommandResponseBuilder>()
-            .AddScoped<IUpCommandResponseBuilderFactory, UpCommandResponseBuilderFactory>()
-            ;
+                    // Commands
+                    .AddScoped<INameCommand, NameCommand>()
+                    .AddScoped<INameCommandRequestBuilder, NameCommandRequestBuilder>()
+                    .AddScoped<INameCommandRequestBuilderFactory, NameCommandRequestBuilderFactory>()
+                    .AddScoped<INameCommandResponseBuilder, NameCommandResponseBuilder>()
+                    .AddScoped<INameCommandResponseBuilderFactory, NameCommandResponseBuilderFactory>()
+                    .AddScoped<IDefineMachineAddCommand, DefineMachineAddCommand>()
+                    .AddScoped<IDefineMachineAddCommandRequestBuilder, DefineMachineAddCommandRequestBuilder>()
+                    .AddScoped<IDefineMachineAddCommandRequestBuilderFactory,
+                        DefineMachineAddCommandRequestBuilderFactory>()
+                    .AddScoped<IDefineMachineAddCommandResponseBuilder, DefineMachineAddCommandResponseBuilder>()
+                    .AddScoped<IDefineMachineAddCommandResponseBuilderFactory,
+                        DefineMachineAddCommandResponseBuilderFactory>()
+                    .AddScoped<IDefineMachineTypeAddCommand, DefineMachineTypeAddCommand>()
+                    .AddScoped<IDefineMachineTypeAddCommandRequestBuilder, DefineMachineTypeAddCommandRequestBuilder>()
+                    .AddScoped<IDefineMachineTypeAddCommandRequestBuilderFactory,
+                        DefineMachineTypeAddCommandRequestBuilderFactory>()
+                    .AddScoped<IDefineMachineTypeAddCommandResponseBuilder,
+                        DefineMachineTypeAddCommandResponseBuilder>()
+                    .AddScoped<IDefineMachineTypeAddCommandResponseBuilderFactory,
+                        DefineMachineTypeAddCommandResponseBuilderFactory>()
+                    .AddScoped<IDestroyCommand, DestroyCommand>()
+                    .AddScoped<IDestroyCommandRequestBuilder, DestroyCommandRequestBuilder>()
+                    .AddScoped<IDestroyCommandRequestBuilderFactory, DestroyCommandRequestBuilderFactory>()
+                    .AddScoped<IDestroyCommandResponseBuilder, DestroyCommandResponseBuilder>()
+                    .AddScoped<IDestroyCommandResponseBuilderFactory, DestroyCommandResponseBuilderFactory>()
+                    .AddScoped<IHaltCommand, HaltCommand>()
+                    .AddScoped<IHaltCommandRequestBuilder, HaltCommandRequestBuilder>()
+                    .AddScoped<IHaltCommandRequestBuilderFactory, HaltCommandRequestBuilderFactory>()
+                    .AddScoped<IHaltCommandResponseBuilder, HaltCommandResponseBuilder>()
+                    .AddScoped<IHaltCommandResponseBuilderFactory, HaltCommandResponseBuilderFactory>()
+                    .AddScoped<IInitCommand, InitCommand>()
+                    .AddScoped<IInitCommandRequestBuilder, InitCommandRequestBuilder>()
+                    .AddScoped<IInitCommandRequestBuilderFactory, InitCommandRequestBuilderFactory>()
+                    .AddScoped<IInitCommandResponseBuilder, InitCommandResponseBuilder>()
+                    .AddScoped<IInitCommandResponseBuilderFactory, InitCommandResponseBuilderFactory>()
+                    .AddScoped<ISshCommand, SshCommand>()
+                    .AddScoped<ISshCommandRequestBuilder, SshCommandRequestBuilder>()
+                    .AddScoped<ISshCommandRequestBuilderFactory, SshCommandRequestBuilderFactory>()
+                    .AddScoped<ISshCommandResponseBuilder, SshCommandResponseBuilder>()
+                    .AddScoped<ISshCommandResponseBuilderFactory, SshCommandResponseBuilderFactory>()
+                    .AddScoped<ISshConfigCommand, SshConfigCommand>()
+                    .AddScoped<ISshConfigCommandRequestBuilder, SshConfigCommandRequestBuilder>()
+                    .AddScoped<ISshConfigCommandRequestBuilderFactory, SshConfigCommandRequestBuilderFactory>()
+                    .AddScoped<ISshConfigCommandResponseBuilder, SshConfigCommandResponseBuilder>()
+                    .AddScoped<ISshConfigCommandResponseBuilderFactory, SshConfigCommandResponseBuilderFactory>()
+                    .AddScoped<IStatusCommand, StatusCommand>()
+                    .AddScoped<IStatusCommandRequestBuilder, StatusCommandRequestBuilder>()
+                    .AddScoped<IStatusCommandRequestBuilderFactory, StatusCommandRequestBuilderFactory>()
+                    .AddScoped<IStatusCommandResponseBuilder, StatusCommandResponseBuilder>()
+                    .AddScoped<IStatusCommandResponseBuilderFactory, StatusCommandResponseBuilderFactory>()
+                    .AddScoped<IUpCommand, UpCommand>()
+                    .AddScoped<IUpCommandRequestBuilder, UpCommandRequestBuilder>()
+                    .AddScoped<IUpCommandRequestBuilderFactory, UpCommandRequestBuilderFactory>()
+                    .AddScoped<IUpCommandResponseBuilder, UpCommandResponseBuilder>()
+                    .AddScoped<IUpCommandResponseBuilderFactory, UpCommandResponseBuilderFactory>()
+                    ;
 
-        return services;
+            });
     }
 }

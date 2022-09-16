@@ -10,7 +10,7 @@ public class IntegrationWorkflowArgs : IntegrationWorkflowUnitTestForVirtualBox
 {
     public static IEnumerable<object[]> Test_Data_MultipleRuns()
     {
-        return ProduceDataSets(TimeSpan.FromMinutes(10), "vagrant", 10, 4);
+        return ProduceDataSets(TimeSpan.FromMinutes(10), "vagrant", 4, 4);
     }
 
     [TestMethod]
