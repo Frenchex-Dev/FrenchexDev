@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.NewtonSoft.Json\Frenchex.Dev.Dotnet.Core.Dependencies.NewtonSoft.Json.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Vagrant.Lib\Frenchex.Dev.Vagrant.Lib.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Vos.Lib.Abstractions\Frenchex.Dev.Vos.Lib.Abstractions.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="Resources\Provisioning\alpine38\v1\docker-ce\install.sh">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="Resources\Vagrant\Vagrantfile">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+</Project>

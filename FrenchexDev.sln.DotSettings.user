@@ -1,0 +1,44 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e24f32ee_002Ddb65_002D47e6_002Dbb4b_002D696d8bd1f3e6/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Session" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;And&gt;&#xD;
+    &lt;TestAncestor&gt;&#xD;
+      &lt;TestId&gt;MSTest::125E6CB5-CFA3-493B-9E2E-DFC57B527245::net6.0::Frenchex.Dev.Vos.Cli.Integration.Tests.IntegrationWorkflowArgs.TestExecutions&lt;/TestId&gt;&#xD;
+    &lt;/TestAncestor&gt;&#xD;
+    &lt;Project Location="C:\code\frenchex-dev_i7\FrenchexDev\Frenchex.Dev.Vos.Cli.Integration.Tests" Presentation="&amp;lt;Vos&amp;gt;\&amp;lt;Cli&amp;gt;\&amp;lt;Frenchex.Dev.Vos.Cli.Integration.Tests&amp;gt;" /&gt;&#xD;
+    &lt;Namespace&gt;Frenchex.Dev.Vos.Cli.Integration.Tests&lt;/Namespace&gt;&#xD;
+  &lt;/And&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<s:String x:Key="/Default/Housekeeping/UnitTestingMru/UnitTestRunner/SpawnedProcessesKnownList/=vagrant_002Eexe/@EntryIndexedValue">KillOrphaned</s:String></wpf:ResourceDictionary>

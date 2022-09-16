@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib\Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Cli.Lib\Frenchex.Dev.Dotnet.Core.Cli.Lib.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Vos.Cli.Integration\Frenchex.Dev.Vos.Cli.Integration.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Vos.Lib\Frenchex.Dev.Vos.Lib.csproj"/>
+    </ItemGroup>
+
+</Project>

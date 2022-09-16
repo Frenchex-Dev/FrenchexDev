@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib\Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Abstractions.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Abstractions.Lib.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Abstractions.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Abstractions.Lib.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Lib.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.System.CommandLine\Frenchex.Dev.Dotnet.Core.Dependencies.System.CommandLine.csproj"/>
+    </ItemGroup>
+
+</Project>
