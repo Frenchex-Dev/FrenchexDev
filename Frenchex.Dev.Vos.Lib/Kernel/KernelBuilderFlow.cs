@@ -1,5 +1,6 @@
 ﻿using Frenchex.Dev.OnSteroid.Lib.Domain.Kernel;
-using Frenchex.Dev.OnSteroid.Lib.Domain.Workflows;
+using Frenchex.Dev.OnSteroid.Lib.Domain.Workflows.Kernel;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.Vos.Lib.Kernel;
 
@@ -14,10 +15,11 @@ public class KernelBuilderFlow : IKernelBuilderFlow
         _kernelInitializeAndBuildWorkflow = kernelInitializeAndBuildWorkflow;
     }
 
-    public async Task<IKernel> FlowAsync(
-        IKernerlConfiguration kernelConfiguration
-    )
+    public async Task<IKernel> FlowAsync(IServiceCollection services)
     {
-        return await _kernelInitializeAndBuildWorkflow.FlowAsync(kernelConfiguration);
+        var servicesConfiguration = new DependencyInjection.ServicesConfiguration();
+        var kernelConfiguration = new KernelConfiguration(servicesConfiguration);
+
+        return await _kernelInitializeAndBuildWorkflow.FlowAsync(services, kernelConfiguration);
     }
 }

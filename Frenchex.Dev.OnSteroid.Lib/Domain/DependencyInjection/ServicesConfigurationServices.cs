@@ -12,6 +12,7 @@ public class ServicesConfigurationServices : IServicesConfigurationServices, IDi
     )
     {
         servicesConfiguration.Invoke();
+        dependenciesServicesConfiguration.Invoke();
 
         return services;
     }

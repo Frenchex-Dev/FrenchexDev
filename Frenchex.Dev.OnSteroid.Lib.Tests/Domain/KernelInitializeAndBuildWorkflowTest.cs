@@ -1,7 +1,7 @@
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Frenchex.Dev.OnSteroid.Lib.DependencyInjection;
 using Frenchex.Dev.OnSteroid.Lib.Domain.Kernel;
-using Frenchex.Dev.OnSteroid.Lib.Domain.Workflows;
+using Frenchex.Dev.OnSteroid.Lib.Domain.Workflows.Kernel;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.OnSteroid.Lib.Tests.Domain;
@@ -31,10 +31,11 @@ public class KernelInitializeAndBuildWorkflowTest : AbstractUnitTest
                 var kernelBuilderFlow =
                     provider.GetRequiredService<IKernelInitializeAndBuildWorkflow>();
 
+                var serviceCollection = new ServiceCollection();
                 var servicesConfiguration = new ServicesConfiguration();
                 var kernelConfiguration = new KernelConfiguration(servicesConfiguration);
 
-                context.Kernel = await kernelBuilderFlow.FlowAsync(kernelConfiguration);
+                context.Kernel = await kernelBuilderFlow.FlowAsync(serviceCollection, kernelConfiguration);
                 context.DefaultScope = await context.Kernel.CreateScopeAsync(defaultScopeName);
             },
             async (provider, root, context) =>

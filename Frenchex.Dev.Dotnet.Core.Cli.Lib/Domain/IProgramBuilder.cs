@@ -10,4 +10,10 @@ public interface IProgramBuilder
         Action<IServiceCollection> registerServices,
         Action<ILoggingBuilder> loggingConfiguration
     );
+    
+    IProgram Build(
+        Context context,
+        AsyncServiceScope asyncServiceScope,
+        Action<ILoggingBuilder> loggingConfiguration
+    );
 }

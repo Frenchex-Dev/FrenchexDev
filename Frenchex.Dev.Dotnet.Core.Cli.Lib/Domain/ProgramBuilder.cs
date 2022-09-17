@@ -22,4 +22,13 @@ public class ProgramBuilder : IProgramBuilder
     {
         return new Program(_hostBuilder.Build(context, registerServices, loggingConfigurationLambda));
     }
+
+    public IProgram Build(
+        Context context,
+        AsyncServiceScope asyncServiceScope,
+        Action<ILoggingBuilder> loggingConfigurationLambda
+    )
+    {
+        return new Program(_hostBuilder.Build(context, asyncServiceScope, loggingConfigurationLambda));
+    }
 }

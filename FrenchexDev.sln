@@ -126,6 +126,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.OnSteroid.Lib.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.OnSteroid.Lib.Tests", "Frenchex.Dev.OnSteroid.Lib.Tests\Frenchex.Dev.OnSteroid.Lib.Tests.csproj", "{14A2B6FC-EE22-48E6-8AD2-04D9DE678789}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.OnSteroid.Cli.Lib.Integration", "Frenchex.Dev.OnSteroid.Cli.Lib.Integration\Frenchex.Dev.OnSteroid.Cli.Lib.Integration.csproj", "{B316C6A5-D4B7-447C-8EA2-491A55C0778C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.OnSteroid.Cli.Lib.Integration.Tests", "Frenchex.Dev.OnSteroid.Cli.Lib.Integration.Tests\Frenchex.Dev.OnSteroid.Cli.Lib.Integration.Tests.csproj", "{72C81A52-6F12-4E18-A6E4-829E7318EF7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.OnSteroid.Cli.Lib.Tests", "Frenchex.Dev.OnSteroid.Cli.Lib.Tests\Frenchex.Dev.OnSteroid.Cli.Lib.Tests.csproj", "{A47EBABD-E644-4D21-B241-B00F10A299C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -188,6 +194,9 @@ Global
 		{E885A580-EF72-4060-9E31-5B22197C1B9A} = {00DF52F4-C875-4774-A599-D4A184487E9C}
 		{4B6BCA82-2084-4751-9609-3AB370EEB338} = {836410A3-FCF5-4A46-BF28-DE7337790CB7}
 		{14A2B6FC-EE22-48E6-8AD2-04D9DE678789} = {836410A3-FCF5-4A46-BF28-DE7337790CB7}
+		{B316C6A5-D4B7-447C-8EA2-491A55C0778C} = {00DF52F4-C875-4774-A599-D4A184487E9C}
+		{72C81A52-6F12-4E18-A6E4-829E7318EF7D} = {00DF52F4-C875-4774-A599-D4A184487E9C}
+		{A47EBABD-E644-4D21-B241-B00F10A299C2} = {00DF52F4-C875-4774-A599-D4A184487E9C}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{5BA9259E-5B3E-4253-B44A-E30E341322F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -358,5 +367,17 @@ Global
 		{14A2B6FC-EE22-48E6-8AD2-04D9DE678789}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14A2B6FC-EE22-48E6-8AD2-04D9DE678789}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14A2B6FC-EE22-48E6-8AD2-04D9DE678789}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B316C6A5-D4B7-447C-8EA2-491A55C0778C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B316C6A5-D4B7-447C-8EA2-491A55C0778C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B316C6A5-D4B7-447C-8EA2-491A55C0778C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B316C6A5-D4B7-447C-8EA2-491A55C0778C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72C81A52-6F12-4E18-A6E4-829E7318EF7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72C81A52-6F12-4E18-A6E4-829E7318EF7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72C81A52-6F12-4E18-A6E4-829E7318EF7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72C81A52-6F12-4E18-A6E4-829E7318EF7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A47EBABD-E644-4D21-B241-B00F10A299C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A47EBABD-E644-4D21-B241-B00F10A299C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A47EBABD-E644-4D21-B241-B00F10A299C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A47EBABD-E644-4D21-B241-B00F10A299C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

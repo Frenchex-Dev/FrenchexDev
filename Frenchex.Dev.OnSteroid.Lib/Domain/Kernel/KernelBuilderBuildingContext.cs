@@ -24,7 +24,6 @@ public class KernelBuilderBuildingContext : IKernelBuilderBuildingContext
         {
             return await Task.Run(() => ServicesCollection.BuildServiceProvider());
         }
-        
 
         return new Kernel(BuildServiceProvider, KernelConfiguration);
     }

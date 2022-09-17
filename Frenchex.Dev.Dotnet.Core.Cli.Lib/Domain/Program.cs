@@ -18,4 +18,17 @@ public class Program : IProgram
         await _host.StartAsync();
         await _host.WaitForShutdownAsync();
     }
+
+    public async ValueTask DisposeAsync()
+    {
+        await Task.Run(() =>
+        {
+            _host.Dispose();
+        });
+    }
+
+    public void Dispose()
+    {
+        _host.Dispose();
+    }
 }

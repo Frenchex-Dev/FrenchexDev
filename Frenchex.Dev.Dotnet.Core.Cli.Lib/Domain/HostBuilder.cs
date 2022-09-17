@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.EventLog;
 using IHostBuilder = Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain.IHostBuilder;
 
 namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
@@ -32,6 +33,25 @@ public class HostBuilder : IHostBuilder
         Action<ILoggingBuilder> loggingConfigurationLambda
     )
     {
+        return BuildInternal(context, loggingConfigurationLambda, servicesConfigurationLambda, null);
+    }
+
+    public IHost Build(
+        Context context,
+        AsyncServiceScope asyncServiceScope,
+        Action<ILoggingBuilder> loggingConfigurationLambda
+    )
+    {
+        return BuildInternal(context, loggingConfigurationLambda, null, asyncServiceScope);
+    }
+
+    private IHost BuildInternal(
+        Context context,
+        Action<ILoggingBuilder> loggingConfigurationLambda,
+        Action<IServiceCollection>? servicesConfigurationLambda,
+        AsyncServiceScope? asyncServiceScope
+    )
+    {
         return Host
                 .CreateDefaultBuilder(_entryPointInfo.CommandLineArgs)
                 .UseContentRoot(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location))
@@ -45,7 +65,7 @@ public class HostBuilder : IHostBuilder
                 })
                 .ConfigureServices(services =>
                 {
-                    servicesConfigurationLambda(services);
+                    servicesConfigurationLambda?.Invoke(services);
                     _servicesConfiguration.ConfigureServices(services);
                 })
                 .ConfigureLogging(loggingConfigurationLambda)

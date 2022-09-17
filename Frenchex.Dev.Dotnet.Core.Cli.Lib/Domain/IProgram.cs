@@ -1,6 +1,6 @@
 ﻿namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
 
-public interface IProgram
+public interface IProgram : IAsyncDisposable, IDisposable
 {
     Task RunAsync();
 }

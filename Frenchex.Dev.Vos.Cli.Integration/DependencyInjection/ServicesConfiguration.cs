@@ -1,5 +1,4 @@
 ﻿using Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib.Domain;
-using Frenchex.Dev.OnSteroid.Lib.DependencyInjection;
 using Frenchex.Dev.OnSteroid.Lib.Domain.DependencyInjection;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands;
@@ -23,6 +22,11 @@ namespace Frenchex.Dev.Vos.Cli.Integration.DependencyInjection;
 
 public class ServicesConfiguration : IServicesConfiguration
 {
+    public IServiceCollection ConfigureServices(IServiceCollection services)
+    {
+        return StaticConfigureServices(services);
+    }
+
     /// <summary>
     ///     Configure services object against integration classes.
     ///     Integration classes are meant to be used only once during execution of CLI.
@@ -32,7 +36,7 @@ public class ServicesConfiguration : IServicesConfiguration
     ///     by DI.
     /// </summary>
     /// <param name="services"></param>
-    public IServiceCollection ConfigureServices(IServiceCollection services)
+    public static IServiceCollection StaticConfigureServices(IServiceCollection services)
     {
         return new ServicesConfigurationServices().ConfigureServices(services,
             () =>
@@ -113,6 +117,7 @@ public class ServicesConfiguration : IServicesConfiguration
             () =>
             {
                 Lib.DependencyInjection.ServicesConfiguration.StaticConfigureServices(services);
+
             });
     }
 }

@@ -7,6 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib\Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib.csproj" />
+      <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Cli.Lib\Frenchex.Dev.Dotnet.Core.Cli.Lib.csproj" />
+      <ProjectReference Include="..\Frenchex.Dev.OnSteroid.Cli.Lib.Integration\Frenchex.Dev.OnSteroid.Cli.Lib.Integration.csproj" />
       <ProjectReference Include="..\Frenchex.Dev.OnSteroid.Lib\Frenchex.Dev.OnSteroid.Lib.csproj" />
     </ItemGroup>
 

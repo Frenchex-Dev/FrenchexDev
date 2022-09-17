@@ -143,6 +143,8 @@ public class ServicesConfiguration : IServicesConfiguration
                         .ConfigureServices(services)
                         ;
 
+                    OnSteroid.Lib.DependencyInjection.ServicesConfiguration.StaticConfigureServices(services);
+
                 });
     }
 }
