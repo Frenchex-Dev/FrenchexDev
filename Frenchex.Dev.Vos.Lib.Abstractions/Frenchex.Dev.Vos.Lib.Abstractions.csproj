@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.NewtonSoft.Json\Frenchex.Dev.Dotnet.Core.Dependencies.NewtonSoft.Json.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.NewtonSoft.Json\Frenchex.Dev.Dotnet.Core.Dependencies.NewtonSoft.Json.csproj"/>
     </ItemGroup>
 
 </Project>

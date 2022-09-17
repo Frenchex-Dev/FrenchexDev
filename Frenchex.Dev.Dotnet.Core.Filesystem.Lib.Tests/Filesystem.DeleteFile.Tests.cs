@@ -43,7 +43,7 @@ public class FilesystemDeleteFileTests : AbstractUnitTest
         );
     }
 
-    public class ExecutionContext: WithWorkingDirectoryExecutionContext
+    public class ExecutionContext : WithWorkingDirectoryExecutionContext
     {
         public string? FileToDelete { get; set; }
     }

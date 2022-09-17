@@ -19,5 +19,6 @@ public interface IFilesystem
     Task FileWriteAllTextAsync(string path, string content);
     bool FileExists(string path);
     Task<string> FileReadAllText(string path);
+
     #endregion
 }

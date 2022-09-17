@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Frenchex.Dev.Dotnet.Core.Cli.Lib.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
 
@@ -7,10 +8,10 @@ public class ExecutionContextBuilder
     public ExecutionContext Build()
     {
         IServiceCollection coreServices = new ServiceCollection();
-        DependencyInjection.ServicesConfiguration.StaticConfigureServices(coreServices);
-        ServiceProvider coreServicesProvider = coreServices.BuildServiceProvider();
+        ServicesConfiguration.StaticConfigureServices(coreServices);
+        var coreServicesProvider = coreServices.BuildServiceProvider();
 
-        return new ExecutionContext() {AsyncScope = coreServicesProvider.CreateAsyncScope()};
+        return new ExecutionContext {AsyncScope = coreServicesProvider.CreateAsyncScope()};
     }
 }
 

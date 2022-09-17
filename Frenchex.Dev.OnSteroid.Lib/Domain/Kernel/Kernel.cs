@@ -13,11 +13,21 @@ public class Kernel : IKernel, IAsyncDisposable, IDisposable
         Configuration = configuration;
     }
 
-    private  Func<Task<ServiceProvider>> ServiceProviderBuilder { get; }
-    public IKernerlConfiguration Configuration { get; init; }
-    
+    private Func<Task<ServiceProvider>> ServiceProviderBuilder { get; }
 
-    public Dictionary<string, AsyncServiceScope> Scopes { get; } = new Dictionary<string, AsyncServiceScope>();
+    public void Dispose()
+    {
+        foreach (KeyValuePair<string, AsyncServiceScope> scope in Scopes)
+        {
+            scope.Value.DisposeAsync();
+        }
+    }
+
+    public IKernerlConfiguration Configuration { get; init; }
+
+
+    public Dictionary<string, AsyncServiceScope> Scopes { get; } = new();
+
     public async Task<AsyncServiceScope> CreateScopeAsync(string name)
     {
         var scope = await ServiceProviderBuilder.Invoke();
@@ -31,18 +41,10 @@ public class Kernel : IKernel, IAsyncDisposable, IDisposable
     {
         await Task.Run(() =>
         {
-            foreach (var scope in Scopes)
+            foreach (KeyValuePair<string, AsyncServiceScope> scope in Scopes)
             {
                 scope.Value.DisposeAsync();
             }
         });
     }
-    public void Dispose()
-    {
-        foreach (var scope in Scopes)
-        {
-            scope.Value.DisposeAsync();
-        }
-    }
 }
-

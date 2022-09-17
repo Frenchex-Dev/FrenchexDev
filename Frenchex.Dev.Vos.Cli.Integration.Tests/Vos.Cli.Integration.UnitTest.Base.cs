@@ -11,7 +11,7 @@ public static class VosCliIntegrationUnitTestBase
 {
     public static UnitTest CreateUnitTest<T>() where T : class
     {
-        var _unitTest= new UnitTest(
+        var _unitTest = new UnitTest(
             builder =>
             {
                 // no need for configuration
@@ -26,7 +26,7 @@ public static class VosCliIntegrationUnitTestBase
                 var configuration = configurationBuilder.Build();
 
                 // overload your services to mock them
-                Mock<IConsole> mockedConsole = new Mock<IConsole>();
+                Mock<IConsole> mockedConsole = new();
                 services.AddSingleton(_ => mockedConsole.Object);
 
                 services.AddSingleton<IConfiguration>(_ => configuration);
@@ -34,7 +34,7 @@ public static class VosCliIntegrationUnitTestBase
                 services.AddSingleton<SubjectUnderTest>();
             }
         );
-        
+
         return _unitTest;
     }
 }

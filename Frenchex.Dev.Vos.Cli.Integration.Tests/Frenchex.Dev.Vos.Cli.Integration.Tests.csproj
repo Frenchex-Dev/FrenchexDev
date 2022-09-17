@@ -18,6 +18,7 @@
     <ItemGroup>
         <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.UnitTesting.Lib\Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.csproj" />
         <ProjectReference Include="..\Frenchex.Dev.Vos.Cli.Integration\Frenchex.Dev.Vos.Cli.Integration.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Vos.Lib.Tests.Abstractions\Frenchex.Dev.Vos.Lib.Tests.Abstractions.csproj" />
     </ItemGroup>
 
 </Project>

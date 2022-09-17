@@ -14,6 +14,7 @@ using Frenchex.Dev.Vos.Lib.Domain.Commands.Ssh;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.SshConfig;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Status;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Up;
+using Frenchex.Dev.Vos.Lib.Tests.Abstractions.Domain;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.Vos.Lib.Tests.Domain.Commands;
@@ -29,7 +30,7 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
         UnitTest = VosUnitTestBase.CreateUnitTest<ExecutionContext>();
         UnitTest.BuildIfNecessary();
 
-        int max = 10;
+        var max = 10;
         for (var i = 0; i < max; i++)
         {
             var tempDir = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
@@ -63,7 +64,7 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
-    [TestCategory("need-vagrant")]
+    [TestCategory(TestCategories.NeedVagrant)]
     public async Task Test_Complete_Workflow(
         IInitCommandRequest initRequest,
         IList<IDefineMachineTypeAddCommandRequest> defineMachineTypeAddCommandRequestsList,

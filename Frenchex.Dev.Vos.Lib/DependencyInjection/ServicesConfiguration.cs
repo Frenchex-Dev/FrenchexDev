@@ -1,5 +1,4 @@
-﻿using Frenchex.Dev.OnSteroid.Lib.DependencyInjection;
-using Frenchex.Dev.OnSteroid.Lib.Domain.DependencyInjection;
+﻿using Frenchex.Dev.OnSteroid.Lib.Domain.DependencyInjection;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
 using Frenchex.Dev.Vos.Lib.Domain.Actions.Configuration.Load;
 using Frenchex.Dev.Vos.Lib.Domain.Actions.Configuration.Save;
@@ -40,7 +39,7 @@ public class ServicesConfiguration : IServicesConfiguration
                     services
                         .AddScoped<IKernelBuilderFlow, KernelBuilderFlow>()
                         ;
-                    
+
                     // resources
 
                     services
@@ -144,7 +143,6 @@ public class ServicesConfiguration : IServicesConfiguration
                         ;
 
                     OnSteroid.Lib.DependencyInjection.ServicesConfiguration.StaticConfigureServices(services);
-
                 });
     }
 }

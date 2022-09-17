@@ -8,6 +8,7 @@ namespace Frenchex.Dev.Vos.Cli.Integration.Tests;
 public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
 {
     private const string WorkingDirectoryMarker = "##{{WORKING_DIRECTORY}}##";
+
     public static IEnumerable<object[]> ProduceDataSets(
         TimeSpan timeout,
         string vagrantBinPath,
@@ -15,16 +16,16 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
         int nbVosInstances = 3
     )
     {
-        var listOfList = new List<object[]>();
-        
+        List<object[]> listOfList = new List<object[]>();
+
         for (var i = 0; i < nbTestCases; i++)
         {
-            var payload = new Payload() {
+            var payload = new Payload {
                 TestCaseName = $"Test case {i}",
                 ListOfListOfCommands = new List<List<InputCommand>>(nbVosInstances)
             };
 
-            var obj = new List<object> {
+            List<object> obj = new List<object> {
                 payload.TestCaseName,
                 payload
             };
@@ -59,13 +60,6 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
             new UnitTest.VsCodeDebugging {TellMe = true});
     }
 
-    public class Payload
-    {
-        public string? TestCaseName { get; init; }
-        public List<List<InputCommand>>? ListOfListOfCommands { get; init; }
-    }
-
-    
 
     private async Task InternalRunParsing(InputCommand[] commands, string workingDirectory)
     {
@@ -150,5 +144,11 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
             (provider, root, context) => Task.CompletedTask,
             (provider, root, context) => Task.CompletedTask,
             new UnitTest.VsCodeDebugging {TellMe = true});
+    }
+
+    public class Payload
+    {
+        public string? TestCaseName { get; init; }
+        public List<List<InputCommand>>? ListOfListOfCommands { get; init; }
     }
 }

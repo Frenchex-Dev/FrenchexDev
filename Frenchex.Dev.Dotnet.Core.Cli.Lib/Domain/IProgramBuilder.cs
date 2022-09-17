@@ -11,7 +11,7 @@ public interface IProgramBuilder
         Action<IServiceCollection> registerHostedServices,
         Action<ILoggingBuilder> loggingConfiguration
     );
-    
+
     IProgram Build(
         Context context,
         AsyncServiceScope asyncServiceScope,

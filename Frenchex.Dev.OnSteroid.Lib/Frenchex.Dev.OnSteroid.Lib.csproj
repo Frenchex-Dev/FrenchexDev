@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Lib.csproj" />
-      <ProjectReference Include="..\Frenchex.Dev.OnSteroid.Lib.Abstractions\Frenchex.Dev.OnSteroid.Lib.Abstractions.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Lib.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.OnSteroid.Lib.Abstractions\Frenchex.Dev.OnSteroid.Lib.Abstractions.csproj"/>
     </ItemGroup>
 
 </Project>

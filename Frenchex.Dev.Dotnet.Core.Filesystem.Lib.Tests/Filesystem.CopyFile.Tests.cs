@@ -56,7 +56,7 @@ public class FilesystemCopyFileTests : AbstractUnitTest
         );
     }
 
-    public class ExecutionContext: WithWorkingDirectoryExecutionContext
+    public class ExecutionContext : WithWorkingDirectoryExecutionContext
     {
         public string? FullDestinationFile { get; set; }
     }

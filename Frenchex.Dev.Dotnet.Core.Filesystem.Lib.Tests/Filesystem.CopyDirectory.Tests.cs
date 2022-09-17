@@ -60,7 +60,7 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
         );
     }
 
-    public class ExecutionContext: WithWorkingDirectoryExecutionContext
+    public class ExecutionContext : WithWorkingDirectoryExecutionContext
     {
         public string? DirectoryToCopy { get; set; }
         public string? Destination { get; set; }

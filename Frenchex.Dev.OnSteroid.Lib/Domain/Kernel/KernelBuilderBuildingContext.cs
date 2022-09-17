@@ -4,9 +4,6 @@ namespace Frenchex.Dev.OnSteroid.Lib.Domain.Kernel;
 
 public class KernelBuilderBuildingContext : IKernelBuilderBuildingContext
 {
-    private IServiceCollection ServicesCollection { get; init; }
-    private IKernerlConfiguration KernelConfiguration { get; init; }
-    
     public KernelBuilderBuildingContext(
         IServiceCollection servicesCollection,
         IKernerlConfiguration kernelConfiguration
@@ -15,6 +12,9 @@ public class KernelBuilderBuildingContext : IKernelBuilderBuildingContext
         ServicesCollection = servicesCollection;
         KernelConfiguration = kernelConfiguration;
     }
+
+    private IServiceCollection ServicesCollection { get; }
+    private IKernerlConfiguration KernelConfiguration { get; }
 
     public IKernel Build()
     {

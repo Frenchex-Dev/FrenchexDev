@@ -11,7 +11,7 @@ public interface IHostBuilder
         Action<IServiceCollection> servicesConfigurationLambda,
         Action<ILoggingBuilder> loggingConfigurationLambda
     );
-    
+
     IHost Build(
         Context context,
         AsyncServiceScope asyncServiceScope,

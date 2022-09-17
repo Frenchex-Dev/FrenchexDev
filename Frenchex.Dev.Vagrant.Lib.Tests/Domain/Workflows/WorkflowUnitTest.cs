@@ -8,9 +8,10 @@ using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Ssh;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.SshConfig;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Status;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Up;
+using Frenchex.Dev.Vos.Lib.Tests.Abstractions.Domain;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Frenchex.Dev.Vagrant.Lib.Tests;
+namespace Frenchex.Dev.Vagrant.Lib.Tests.Domain.Workflows;
 
 [TestClass]
 public class CompleteWorkflowTests : AbstractUnitTest
@@ -84,7 +85,7 @@ public class CompleteWorkflowTests : AbstractUnitTest
 
     [TestMethod]
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
-    [TestCategory("need-vagrant")]
+    [TestCategory(TestCategories.NeedVagrant)]
     public async Task Test_Complete_Workflow(
         IInitCommandRequest initRequest,
         IUpCommandRequest upRequest,
@@ -198,7 +199,7 @@ public class CompleteWorkflowTests : AbstractUnitTest
             Assert.IsTrue(!string.IsNullOrEmpty(output), $"{debug} output is neither empty nor null");
     }
 
-    public class ExecutionContext: WithWorkingDirectoryExecutionContext
+    public class ExecutionContext : WithWorkingDirectoryExecutionContext
     {
     }
 }

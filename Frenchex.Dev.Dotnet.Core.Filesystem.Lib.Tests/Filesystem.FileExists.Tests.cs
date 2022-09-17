@@ -53,7 +53,7 @@ public class FilesystemFileExistsTests : AbstractUnitTest
         );
     }
 
-    public class ExecutionContext: WithWorkingDirectoryExecutionContext
+    public class ExecutionContext : WithWorkingDirectoryExecutionContext
     {
         public string? FullDestinationFile { get; set; }
         public bool? FileShouldExists { get; set; }

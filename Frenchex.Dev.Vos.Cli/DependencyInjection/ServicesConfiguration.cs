@@ -20,7 +20,7 @@ public class ServicesConfiguration : IServicesConfiguration, IDiscoverableServic
         return StaticConfigureServices(services, _servicesConfigurationServicesFactory.Factory());
     }
 
-    static public IServiceCollection StaticConfigureServices(
+    public static IServiceCollection StaticConfigureServices(
         IServiceCollection services,
         IServicesConfigurationServices servicesConfigurationServices
     )

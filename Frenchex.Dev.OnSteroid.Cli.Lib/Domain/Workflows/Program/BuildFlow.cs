@@ -73,7 +73,7 @@ public class BuildFlow : IBuildFlow
                 Dotnet.Core.Cli.Lib.DependencyInjection.ServicesConfiguration
                     .StaticConfigureServices(services);
             },
-            (logging) => logging.ClearProviders()
+            logging => logging.ClearProviders()
         );
 
         return program;
@@ -95,7 +95,7 @@ public class BuildFlow : IBuildFlow
     {
         return await Task.Run(() =>
         {
-            IProgram program = programBuilder.Build(
+            var program = programBuilder.Build(
                 new Context(
                     Path.GetFullPath(hostSettingsJsonFilename, appDomainDirectory),
                     Path.GetFullPath(appSettingsJsonFilename, appDomainDirectory),

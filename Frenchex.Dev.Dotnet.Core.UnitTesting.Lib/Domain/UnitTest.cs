@@ -66,7 +66,7 @@ public class UnitTest : IAsyncDisposable
 
         Process? vsCodeProcess = null;
 
-        var openVsCodeDebugging = (string workingDirectory) =>
+        Action<string> openVsCodeDebugging = (string workingDirectory) =>
         {
             var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
@@ -76,7 +76,7 @@ public class UnitTest : IAsyncDisposable
         };
 
         var executionContextObject = ServiceProvider!.GetRequiredService<T>();
-        
+
         if (vsCodeDebugging?.Open == true)
         {
             openVsCodeDebugging.Invoke(executionContextObject.WorkingDirectory!);

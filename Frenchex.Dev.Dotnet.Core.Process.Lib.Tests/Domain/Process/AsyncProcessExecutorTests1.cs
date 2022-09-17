@@ -86,7 +86,7 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
             });
     }
 
-    public class ExecutionContext: WithWorkingDirectoryExecutionContext
+    public class ExecutionContext : WithWorkingDirectoryExecutionContext
     {
         public ProcessExecutionResult? ProcessExecution { get; set; }
         public MemoryStream? OutputStream { get; set; }

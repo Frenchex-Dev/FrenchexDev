@@ -1,5 +1,4 @@
-﻿using System.IO.Pipes;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
@@ -23,7 +22,7 @@ public class ProgramBuilder : IProgramBuilder
     )
     {
         return new Program(_hostBuilder.Build(context,
-            (services) =>
+            services =>
             {
                 registerServices.Invoke(services);
                 registerHostedServices.Invoke(services);

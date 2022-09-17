@@ -1,7 +1,6 @@
-﻿using Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib.Domain;
-using Frenchex.Dev.OnSteroid.Cli.Lib.Domain.Workflows.Program;
+﻿using Frenchex.Dev.OnSteroid.Cli.Lib.Domain.Workflows.Program;
 using Frenchex.Dev.Vos.Cli;
-using Frenchex.Dev.Vos.Cli.Integration.Domain;
+using Frenchex.Dev.Vos.Cli.Integration.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 
 // make sure to us e very same ServiceCollection all around
@@ -14,7 +13,7 @@ await using var program = await buildFlow
         serviceCollection,
         services =>
         {
-            Frenchex.Dev.Vos.Cli.Integration.DependencyInjection.ServicesConfiguration
+            ServicesConfiguration
                 .StaticConfigureServices(services);
         },
         "Configurations\\hostsettings.json",

@@ -1,4 +1,5 @@
 ﻿using System.CommandLine;
+using Frenchex.Dev.Vos.Lib.Tests.Abstractions.Domain;
 using static System.Threading.Tasks.Task;
 
 [assembly: Parallelize(Workers = 4, Scope = ExecutionScope.MethodLevel)]
@@ -6,18 +7,19 @@ using static System.Threading.Tasks.Task;
 namespace Frenchex.Dev.Vos.Cli.Integration.Tests;
 
 [TestClass]
-public class IntegrationWorkflowArgs : IntegrationWorkflowUnitTestForVirtualBox
+[TestCategory(TestCategories.NeedVagrant)]
+public class IntegrationWorkflows : IntegrationWorkflowUnitTestForVirtualBox
 {
     public static IEnumerable<object[]> Test_Data_MultipleRuns()
     {
-        return ProduceDataSets(TimeSpan.FromMinutes(10), "vagrant", 4, 4);
+        return ProduceDataSets(TimeSpan.FromMinutes(10), "vagrant", 2, 2);
     }
 
     [TestMethod]
     [DynamicData(nameof(Test_Data_MultipleRuns), DynamicDataSourceType.Method)]
     public async Task TestExecutions(string testCaseName, Payload payload)
     {
-        var tasks = CreateRunInternal(testCaseName, payload, InternalRunExecution);
+        List<Task> tasks = CreateRunInternal(testCaseName, payload, InternalRunExecution);
 
         await WhenAll(tasks);
     }
@@ -26,7 +28,7 @@ public class IntegrationWorkflowArgs : IntegrationWorkflowUnitTestForVirtualBox
     [DynamicData(nameof(Test_Data_MultipleRuns), DynamicDataSourceType.Method)]
     public async Task TestArgumentsParsing(string testCaseName, Payload payload)
     {
-        var tasks = CreateRunInternal(testCaseName, payload, InternalRunParsing);
+        List<Task> tasks = CreateRunInternal(testCaseName, payload, InternalRunParsing);
 
         await WhenAll(tasks);
     }
@@ -35,17 +37,17 @@ public class IntegrationWorkflowArgs : IntegrationWorkflowUnitTestForVirtualBox
     {
         var numberOfWorkingDirectories = payload.ListOfListOfCommands!.Count;
 
-        var workingDirectories = new List<string>(numberOfWorkingDirectories);
+        List<string> workingDirectories = new List<string>(numberOfWorkingDirectories);
 
-        foreach (var num in payload.ListOfListOfCommands)
+        foreach (List<InputCommand> num in payload.ListOfListOfCommands)
         {
             workingDirectories.Add(Path.Join(Path.GetTempPath(), Path.GetRandomFileName()));
         }
 
-        var tasks = new List<Task>();
+        List<Task> tasks = new List<Task>();
 
         var i = 0;
-        foreach (var run in payload.ListOfListOfCommands)
+        foreach (List<InputCommand> run in payload.ListOfListOfCommands)
         {
             var commandsRun = func.Invoke(run.ToArray(), workingDirectories[i++]);
             tasks.Add(commandsRun);

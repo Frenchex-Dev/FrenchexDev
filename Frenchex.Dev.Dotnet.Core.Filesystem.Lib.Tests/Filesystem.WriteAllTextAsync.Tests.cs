@@ -46,7 +46,7 @@ public class FilesystemWriteAllTextAsyncTests : AbstractUnitTest
         );
     }
 
-    public class ExecutionContext: WithWorkingDirectoryExecutionContext
+    public class ExecutionContext : WithWorkingDirectoryExecutionContext
     {
         public string? FileToRead { get; set; }
         public string? TextToWrite { get; set; }

@@ -17,7 +17,9 @@ public class DefineMachineTypeAddCommandRequestBuilder : IDefineMachineTypeAddCo
     public IBaseRequestBuilder BaseBuilder { get; }
 
 
-    public IDefineMachineTypeAddCommandRequestBuilder UsingDefinition(MachineTypeDefinitionDeclaration definitionDeclaration)
+    public IDefineMachineTypeAddCommandRequestBuilder UsingDefinition(
+        MachineTypeDefinitionDeclaration definitionDeclaration
+    )
     {
         _definition = definitionDeclaration;
         return this;

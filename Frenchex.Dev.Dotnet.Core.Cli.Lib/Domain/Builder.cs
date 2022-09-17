@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Frenchex.Dev.Dotnet.Core.Cli.Lib.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
@@ -17,7 +18,7 @@ public class Builder : IBuilder
     {
         var services = new ServiceCollection();
 
-        new Core.Cli.Lib.DependencyInjection.ServicesConfiguration()
+        new ServicesConfiguration()
             .ConfigureServices(services);
 
         var di = services.BuildServiceProvider();
@@ -39,7 +40,7 @@ public class Builder : IBuilder
 
         return program;
     }
-    
+
     public IProgram Build(
         IServiceCollection services,
         Action<ILoggingBuilder> configureProgramLoggingAction,

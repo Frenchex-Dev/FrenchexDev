@@ -117,7 +117,6 @@ public class ServicesConfiguration : IServicesConfiguration
             () =>
             {
                 Lib.DependencyInjection.ServicesConfiguration.StaticConfigureServices(services);
-
             });
     }
 }

@@ -6,4 +6,3 @@ public interface IServicesConfiguration
 {
     public IServiceCollection ConfigureServices(IServiceCollection services);
 }
-

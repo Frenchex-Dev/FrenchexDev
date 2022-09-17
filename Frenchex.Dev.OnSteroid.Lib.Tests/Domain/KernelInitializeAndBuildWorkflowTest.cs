@@ -36,7 +36,7 @@ public class KernelInitializeAndBuildWorkflowTest : AbstractUnitTest
                 var kernelConfiguration = new KernelConfiguration(servicesConfiguration);
 
                 context.Kernel = await kernelBuilderFlow.FlowAsync(serviceCollection, kernelConfiguration);
-                context.DefaultScope = await context.Kernel.CreateScopeAsync(defaultScopeName);
+                context.DefaultScope = await context.Kernel.CreateScopeAsync();
             },
             async (provider, root, context) =>
             {

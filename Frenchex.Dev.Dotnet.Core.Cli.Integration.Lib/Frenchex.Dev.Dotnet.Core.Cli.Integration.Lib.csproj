@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.System.CommandLine\Frenchex.Dev.Dotnet.Core.Dependencies.System.CommandLine.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.System.CommandLine\Frenchex.Dev.Dotnet.Core.Dependencies.System.CommandLine.csproj"/>
     </ItemGroup>
 
 </Project>

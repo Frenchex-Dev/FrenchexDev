@@ -2,8 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.EventLog;
-using IHostBuilder = Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain.IHostBuilder;
 
 namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
 

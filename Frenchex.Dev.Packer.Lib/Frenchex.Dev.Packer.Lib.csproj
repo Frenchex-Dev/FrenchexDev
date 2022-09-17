@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Domain\Commands\Build" />
+      <Folder Include="Domain\Commands\Console" />
+      <Folder Include="Domain\Commands\Fix" />
+      <Folder Include="Domain\Commands\Fmt" />
+      <Folder Include="Domain\Commands\Hcl2Upgrade" />
+      <Folder Include="Domain\Commands\Init" />
+      <Folder Include="Domain\Commands\Inspect" />
+      <Folder Include="Domain\Commands\Plugins" />
+      <Folder Include="Domain\Commands\Validate" />
+      <Folder Include="Domain\Commands\Version" />
+    </ItemGroup>
+
+</Project>
