@@ -16,13 +16,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Abstractions.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Abstractions.Lib.csproj" />
-        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.UnitTesting.Lib\Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.csproj" />
-        <ProjectReference Include="..\Frenchex.Dev.Vos.Lib\Frenchex.Dev.Vos.Lib.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Domain" />
+      <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.UnitTesting.Lib\Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.csproj" />
+      <ProjectReference Include="..\Frenchex.Dev.OnSteroid.Lib\Frenchex.Dev.OnSteroid.Lib.csproj" />
     </ItemGroup>
 
 </Project>

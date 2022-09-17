@@ -1,5 +1,6 @@
 ﻿using Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib.Domain;
 using Frenchex.Dev.OnSteroid.Lib.DependencyInjection;
+using Frenchex.Dev.OnSteroid.Lib.Domain.DependencyInjection;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Define;
@@ -30,19 +31,16 @@ public class ServicesConfiguration : IServicesConfiguration
     ///     So we mark them as Transient so that created instances will not be managed
     ///     by DI.
     /// </summary>
-    /// <param name="outterServices"></param>
-    public IServiceCollection ConfigureServices(IServiceCollection outterServices)
+    /// <param name="services"></param>
+    public IServiceCollection ConfigureServices(IServiceCollection services)
     {
-        return BasicServicesConfiguration.ConfigureServices(outterServices,
+        return new ServicesConfigurationServices().ConfigureServices(services,
             () =>
             {
-                new Lib.DependencyInjection.ServicesConfiguration()
-                    .ConfigureServices(outterServices);
-
-                outterServices
+                services
                     .AddScoped<IIntegration, Domain.Integration>();
 
-                outterServices
+                services
                     .AddScoped<IVosCommandIntegration, DefineCommandIntegration>()
                     .AddScoped<IDefineCommandIntegration, DefineCommandIntegration>()
                     .AddScoped<IDefineMachineCommandIntegration, DefineMachineCommandIntegration>()
@@ -68,7 +66,7 @@ public class ServicesConfiguration : IServicesConfiguration
                     .AddScoped<INameCommandIntegration, NameCommandIntegration>()
                     ;
 
-                outterServices
+                services
                     .AddScoped<IBoxNameArgumentBuilder, BoxNameArgumentBuilder>()
                     .AddScoped<IInstancesArgumentBuilder, InstancesArgumentBuilder>()
                     .AddScoped<IMachineTypeNameArgumentBuilder, MachineTypeNameArgumentBuilder>()
@@ -81,7 +79,7 @@ public class ServicesConfiguration : IServicesConfiguration
                     .AddScoped<IVirtualCpusArgumentBuilder, VirtualCpusArgumentBuilder>()
                     ;
 
-                outterServices
+                services
                     .AddScoped<IColorOptionBuilder, ColorOptionBuilder>()
                     .AddScoped<IEnabled3dOptionBuilder, Enabled3dOptionBuilder>()
                     .AddScoped<IEnabledOptionBuilder, EnabledOptionBuilder>()
@@ -111,6 +109,10 @@ public class ServicesConfiguration : IServicesConfiguration
                     .AddScoped<IParallelWorkersOptionBuilder, ParallelWorkersOptionBuilder>()
                     .AddScoped<IVagrantBinPathOptionBuilder, VagrantBinPathOptionBuilder>()
                     ;
+            },
+            () =>
+            {
+                Lib.DependencyInjection.ServicesConfiguration.StaticConfigureServices(services);
             });
     }
 }

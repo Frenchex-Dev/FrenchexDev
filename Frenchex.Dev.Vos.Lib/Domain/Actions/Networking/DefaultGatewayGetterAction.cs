@@ -3,11 +3,6 @@ using System.Net.NetworkInformation;
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Actions.Networking;
 
-public interface IDefaultGatewayGetterAction
-{
-    List<(NetworkInterface n, List<IPAddress?>?)> GetDefaultGateway();
-}
-
 public class DefaultGatewayGetterAction : IDefaultGatewayGetterAction
 {
     public List<(NetworkInterface n, List<IPAddress?>?)> GetDefaultGateway()

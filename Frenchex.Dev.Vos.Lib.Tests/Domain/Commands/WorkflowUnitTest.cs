@@ -16,7 +16,7 @@ using Frenchex.Dev.Vos.Lib.Domain.Commands.Status;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Up;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Frenchex.Dev.Vos.Lib.Tests.Commands;
+namespace Frenchex.Dev.Vos.Lib.Tests.Domain.Commands;
 
 [TestClass]
 public class CompleteWorkflowTests1 : AbstractUnitTest
@@ -605,7 +605,7 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
         };
     }
 
-    public class ExecutionContext: WithWorkingDirectoryExecutionContext
+    public class ExecutionContext : WithWorkingDirectoryExecutionContext
     {
         public Task<IInitCommandResponse>? InitCommandResponse { get; set; }
     }

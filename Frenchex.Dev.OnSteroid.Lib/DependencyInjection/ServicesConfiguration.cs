@@ -1,21 +1,33 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.DependencyInjection;
+using Frenchex.Dev.OnSteroid.Lib.Domain.DependencyInjection;
+using Frenchex.Dev.OnSteroid.Lib.Domain.Kernel;
+using Frenchex.Dev.OnSteroid.Lib.Domain.Workflows;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.OnSteroid.Lib.DependencyInjection;
 
-public interface  IServicesConfiguration
+public class ServicesConfiguration : IServicesConfiguration
 {
-    public IServiceCollection ConfigureServices(IServiceCollection outterServices);
-}
-
-public static class BasicServicesConfiguration
-{
-    public static IServiceCollection ConfigureServices(
-        IServiceCollection services,
-        Action configurationBloc
-    )
+    public IServiceCollection ConfigureServices(IServiceCollection services)
     {
-        configurationBloc.Invoke();
+        return StaticConfigureServices(services);
+    }
 
-        return services;
+    public static IServiceCollection StaticConfigureServices(IServiceCollection services)
+    {
+        return new ServicesConfigurationServices()
+            .ConfigureServices(services,
+                () =>
+                {
+                    services
+                        .AddScoped<IServicesConfigurationServices, ServicesConfigurationServices>()
+                        .AddScoped<IKernelBuilder, KernelBuilder>()
+                        .AddScoped<IKernelBuilderBuildingContextFactory, KernelBuilderBuildingContextFactory>()
+                        .AddScoped<IKernelInitializeAndBuildWorkflow, KernelInitializeAndBuildWorkflow>()
+                        ;
+                },
+                () =>
+                {
+                });
     }
 }
