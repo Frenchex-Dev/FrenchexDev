@@ -1,6 +1,6 @@
 ﻿// ReSharper disable UnusedMember.Global
 
-namespace Frenchex.Dev.Dotnet.Cli.Lib.Domain;
+namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
 
 public class SimpleEntrypointInfo : IEntrypointInfo
 {

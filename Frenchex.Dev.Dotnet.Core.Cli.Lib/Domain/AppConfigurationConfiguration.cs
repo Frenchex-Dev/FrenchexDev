@@ -1,5 +1,4 @@
-﻿using Frenchex.Dev.Dotnet.Cli.Lib.Domain;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;

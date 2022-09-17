@@ -1,10 +1,10 @@
 ﻿using System.Reflection;
-using Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using IHostBuilder = Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain.IHostBuilder;
 
-namespace Frenchex.Dev.Dotnet.Cli.Lib.Domain;
+namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
 
 public class HostBuilder : IHostBuilder
 {

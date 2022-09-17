@@ -1,5 +1,4 @@
 ﻿using System.CommandLine;
-using Frenchex.Dev.Dotnet.Cli.Lib.Domain;
 using Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib.Domain;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;

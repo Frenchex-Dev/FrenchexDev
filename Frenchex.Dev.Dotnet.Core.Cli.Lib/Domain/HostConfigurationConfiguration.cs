@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Frenchex.Dev.Dotnet.Cli.Lib.Domain;
+namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
 
 public interface IHostConfigurationConfiguration
 {

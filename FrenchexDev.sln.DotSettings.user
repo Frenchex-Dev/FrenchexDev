@@ -15,6 +15,7 @@
       &lt;Project Location="C:\code\frenchex-dev_i7\FrenchexDev\Frenchex.Dev.Vos.Cli.Integration.Tests" Presentation="&amp;lt;Vos&amp;gt;\&amp;lt;Cli&amp;gt;\&amp;lt;Frenchex.Dev.Vos.Cli.Integration.Tests&amp;gt;" /&gt;&#xD;
       &lt;Namespace&gt;Frenchex.Dev.Vos.Cli.Integration.Tests&lt;/Namespace&gt;&#xD;
     &lt;/And&gt;&#xD;
+    &lt;Project Location="C:\code\frenchex-dev_i7\FrenchexDev" Presentation="&amp;lt;Dotnet&amp;gt;" /&gt;&#xD;
   &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Hosting;
 
-namespace Frenchex.Dev.Dotnet.Cli.Lib.Domain;
+namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
 
 public class Program : IProgram
 {
