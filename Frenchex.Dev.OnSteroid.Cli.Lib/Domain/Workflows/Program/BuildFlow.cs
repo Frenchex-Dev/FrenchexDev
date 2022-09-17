@@ -73,7 +73,7 @@ public class BuildFlow : IBuildFlow
                 Dotnet.Core.Cli.Lib.DependencyInjection.ServicesConfiguration
                     .StaticConfigureServices(services);
             },
-            logging => logging.ClearProviders().AddConsole()
+            (logging) => logging.ClearProviders()
         );
 
         return program;

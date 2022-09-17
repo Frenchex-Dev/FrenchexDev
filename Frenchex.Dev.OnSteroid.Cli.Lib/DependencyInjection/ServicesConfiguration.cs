@@ -1,5 +1,6 @@
 ﻿using Frenchex.Dev.OnSteroid.Cli.Lib.Domain.Workflows.Program;
 using Frenchex.Dev.OnSteroid.Lib.Domain.DependencyInjection;
+using Frenchex.Dev.Vos.Lib.Domain.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.OnSteroid.Cli.Lib.DependencyInjection;
@@ -24,7 +25,6 @@ public class ServicesConfiguration : IServicesConfiguration
             {
                 Dev.OnSteroid.Lib.DependencyInjection.ServicesConfiguration.StaticConfigureServices(services);
                 Dotnet.Core.Cli.Lib.DependencyInjection.ServicesConfiguration.StaticConfigureServices(services);
-                
             });
     }
 }

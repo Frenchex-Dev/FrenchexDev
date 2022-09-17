@@ -15,10 +15,4 @@
         <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.System.CommandLine\Frenchex.Dev.Dotnet.Core.Dependencies.System.CommandLine.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <None Update="appsettings.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
-
 </Project>
