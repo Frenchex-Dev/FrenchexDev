@@ -17,6 +17,7 @@ using Frenchex.Dev.Vos.Lib.Domain.Commands.SshConfig;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Status;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Up;
 using Frenchex.Dev.Vos.Lib.Domain.Resources;
+using Frenchex.Dev.Vos.Lib.Kernel;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.Vos.Lib.DependencyInjection;
@@ -28,28 +29,34 @@ public class ServicesConfiguration : IServicesConfiguration
         return StaticConfigureServices(services);
     }
 
-    public static IServiceCollection StaticConfigureServices(IServiceCollection outterServices)
+    public static IServiceCollection StaticConfigureServices(IServiceCollection services)
     {
         return new ServicesConfigurationServices()
-            .ConfigureServices(outterServices,
+            .ConfigureServices(services,
                 () =>
                 {
+                    // kernel builder flow
+
+                    services
+                        .AddScoped<IKernelBuilderFlow, KernelBuilderFlow>()
+                        ;
+                    
                     // resources
 
-                    outterServices
+                    services
                         .AddScoped<IVagrantfileResource, VagrantfileResource>()
                         ;
 
                     // actions
 
-                    outterServices
+                    services
                         .AddScoped<IConfigurationLoadAction, ConfigurationLoadAction>()
                         .AddScoped<IConfigurationSaveAction, ConfigurationSaveAction>()
                         .AddScoped<IDefaultGatewayGetterAction, DefaultGatewayGetterAction>()
                         ;
 
                     // proprosed services
-                    outterServices
+                    services
 
                         // Root
                         .AddTransient<IBaseRequestBuilderFactory, BaseRequestBuilderFactory>()
@@ -129,11 +136,11 @@ public class ServicesConfiguration : IServicesConfiguration
                 {
                     // dependencies
                     Dotnet.Core.Filesystem.Lib.DependencyInjection.ServicesConfiguration
-                        .ConfigureServices(outterServices)
+                        .ConfigureServices(services)
                         ;
 
                     Vagrant.Lib.DependencyInjection.ServicesConfiguration
-                        .ConfigureServices(outterServices)
+                        .ConfigureServices(services)
                         ;
 
                 });
