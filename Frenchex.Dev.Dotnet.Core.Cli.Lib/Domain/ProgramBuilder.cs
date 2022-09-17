@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.IO.Pipes;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
@@ -17,10 +18,17 @@ public class ProgramBuilder : IProgramBuilder
     public IProgram Build(
         Context context,
         Action<IServiceCollection> registerServices,
+        Action<IServiceCollection> registerHostedServices,
         Action<ILoggingBuilder> loggingConfigurationLambda
     )
     {
-        return new Program(_hostBuilder.Build(context, registerServices, loggingConfigurationLambda));
+        return new Program(_hostBuilder.Build(context,
+            (services) =>
+            {
+                registerServices.Invoke(services);
+                registerHostedServices.Invoke(services);
+            },
+            loggingConfigurationLambda));
     }
 
     public IProgram Build(

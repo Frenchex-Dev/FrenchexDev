@@ -7,6 +7,7 @@ public class Builder : IBuilder
 {
     public IProgram Build(
         Action<IServiceCollection> configureProgramServicesAction,
+        Action<IServiceCollection> configureHostedServicesAction,
         Action<ILoggingBuilder> configureProgramLoggingAction,
         string hostSettingsJsonFilename,
         string appSettingsJsonFilename,
@@ -32,6 +33,7 @@ public class Builder : IBuilder
                 Directory.GetCurrentDirectory()
             ),
             configureProgramServicesAction,
+            configureHostedServicesAction,
             configureProgramLoggingAction
         );
 

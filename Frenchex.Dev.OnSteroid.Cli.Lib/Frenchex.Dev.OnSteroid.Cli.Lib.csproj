@@ -11,10 +11,11 @@
       <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Cli.Lib\Frenchex.Dev.Dotnet.Core.Cli.Lib.csproj" />
       <ProjectReference Include="..\Frenchex.Dev.OnSteroid.Cli.Lib.Integration\Frenchex.Dev.OnSteroid.Cli.Lib.Integration.csproj" />
       <ProjectReference Include="..\Frenchex.Dev.OnSteroid.Lib\Frenchex.Dev.OnSteroid.Lib.csproj" />
+      <ProjectReference Include="..\Frenchex.Dev.Vos.Lib\Frenchex.Dev.Vos.Lib.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Domain" />
+      <Folder Include="Domain\Cli" />
     </ItemGroup>
 
 </Project>

@@ -7,6 +7,7 @@ public interface IBuilder
 {
     public IProgram Build(
         Action<IServiceCollection> configureProgramServicesAction,
+        Action<IServiceCollection> configureHostedServicesAction,
         Action<ILoggingBuilder> configureProgramLoggingAction,
         string hostSettingsJsonFilename,
         string appSettingsJsonFilename,

@@ -8,6 +8,7 @@ public interface IProgramBuilder
     IProgram Build(
         Context context,
         Action<IServiceCollection> registerServices,
+        Action<IServiceCollection> registerHostedServices,
         Action<ILoggingBuilder> loggingConfiguration
     );
     

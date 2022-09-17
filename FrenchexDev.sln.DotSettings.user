@@ -1,6 +1,36 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=36194839_002D94ae_002D46df_002D88a7_002D07fbc7aa3e9b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests from &amp;lt;OnSteroid&amp;gt;" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Project Location="C:\code\frenchex-dev_i7\FrenchexDev" Presentation="&amp;lt;OnSteroid&amp;gt;" /&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;Project Location="C:\code\frenchex-dev_i7\FrenchexDev" Presentation="&amp;lt;OnSteroid&amp;gt;" /&gt;&#xD;
+    &lt;And&gt;&#xD;
+      &lt;TestAncestor&gt;&#xD;
+        &lt;TestId&gt;MSTest::125E6CB5-CFA3-493B-9E2E-DFC57B527245::net6.0::Frenchex.Dev.Vos.Cli.Integration.Tests.IntegrationWorkflowArgs.TestArgumentsParsing&lt;/TestId&gt;&#xD;
+      &lt;/TestAncestor&gt;&#xD;
+      &lt;Project Location="C:\code\frenchex-dev_i7\FrenchexDev\Frenchex.Dev.Vos.Cli.Integration.Tests" Presentation="&amp;lt;Vos&amp;gt;\&amp;lt;Cli&amp;gt;\&amp;lt;Frenchex.Dev.Vos.Cli.Integration.Tests&amp;gt;" /&gt;&#xD;
+      &lt;Namespace&gt;Frenchex.Dev.Vos.Cli.Integration.Tests&lt;/Namespace&gt;&#xD;
+    &lt;/And&gt;&#xD;
+    &lt;And&gt;&#xD;
+      &lt;TestAncestor&gt;&#xD;
+        &lt;TestId&gt;MSTest::125E6CB5-CFA3-493B-9E2E-DFC57B527245::net6.0::Frenchex.Dev.Vos.Cli.Integration.Tests.IntegrationWorkflowArgs.TestExecutions.TestExecutions (Test case 0,Frenchex.Dev.Vos.Cli.Integration.Tests.IntegrationWorkflowUnitTestForVirtualBox+Payload)&lt;/TestId&gt;&#xD;
+      &lt;/TestAncestor&gt;&#xD;
+      &lt;Project Location="C:\code\frenchex-dev_i7\FrenchexDev\Frenchex.Dev.Vos.Cli.Integration.Tests" Presentation="&amp;lt;Vos&amp;gt;\&amp;lt;Cli&amp;gt;\&amp;lt;Frenchex.Dev.Vos.Cli.Integration.Tests&amp;gt;" /&gt;&#xD;
+      &lt;Namespace&gt;Frenchex.Dev.Vos.Cli.Integration.Tests&lt;/Namespace&gt;&#xD;
+    &lt;/And&gt;&#xD;
+    &lt;And&gt;&#xD;
+      &lt;TestAncestor&gt;&#xD;
+        &lt;TestId&gt;MSTest::125E6CB5-CFA3-493B-9E2E-DFC57B527245::net6.0::Frenchex.Dev.Vos.Cli.Integration.Tests.IntegrationWorkflowArgs.TestExecutions.TestExecutions (Test case 1,Frenchex.Dev.Vos.Cli.Integration.Tests.IntegrationWorkflowUnitTestForVirtualBox+Payload)&lt;/TestId&gt;&#xD;
+      &lt;/TestAncestor&gt;&#xD;
+      &lt;Project Location="C:\code\frenchex-dev_i7\FrenchexDev\Frenchex.Dev.Vos.Cli.Integration.Tests" Presentation="&amp;lt;Vos&amp;gt;\&amp;lt;Cli&amp;gt;\&amp;lt;Frenchex.Dev.Vos.Cli.Integration.Tests&amp;gt;" /&gt;&#xD;
+      &lt;Namespace&gt;Frenchex.Dev.Vos.Cli.Integration.Tests&lt;/Namespace&gt;&#xD;
+    &lt;/And&gt;&#xD;
+    &lt;And&gt;&#xD;
+      &lt;TestAncestor&gt;&#xD;
+        &lt;TestId&gt;MSTest::125E6CB5-CFA3-493B-9E2E-DFC57B527245::net6.0::Frenchex.Dev.Vos.Cli.Integration.Tests.IntegrationWorkflowArgs.TestExecutions.TestExecutions (Test case 2,Frenchex.Dev.Vos.Cli.Integration.Tests.IntegrationWorkflowUnitTestForVirtualBox+Payload)&lt;/TestId&gt;&#xD;
+      &lt;/TestAncestor&gt;&#xD;
+      &lt;Project Location="C:\code\frenchex-dev_i7\FrenchexDev\Frenchex.Dev.Vos.Cli.Integration.Tests" Presentation="&amp;lt;Vos&amp;gt;\&amp;lt;Cli&amp;gt;\&amp;lt;Frenchex.Dev.Vos.Cli.Integration.Tests&amp;gt;" /&gt;&#xD;
+      &lt;Namespace&gt;Frenchex.Dev.Vos.Cli.Integration.Tests&lt;/Namespace&gt;&#xD;
+    &lt;/And&gt;&#xD;
+  &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
 	
