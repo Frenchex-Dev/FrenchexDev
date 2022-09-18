@@ -1,4 +1,4 @@
-﻿namespace Frenchex.Dev.Vos.Lib.Tests.Abstractions.Domain;
+﻿namespace Frenchex.Dev.Vagrant.Lib.Tests.Abstractions.Domain;
 
 public static class TestCategories
 {

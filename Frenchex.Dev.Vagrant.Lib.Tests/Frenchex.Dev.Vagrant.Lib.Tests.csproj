@@ -17,8 +17,8 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.UnitTesting.Lib\Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Vagrant.Lib.Tests.Abstractions\Frenchex.Dev.Vagrant.Lib.Tests.Abstractions.csproj" />
         <ProjectReference Include="..\Frenchex.Dev.Vagrant.Lib\Frenchex.Dev.Vagrant.Lib.csproj" />
-        <ProjectReference Include="..\Frenchex.Dev.Vos.Lib.Tests.Abstractions\Frenchex.Dev.Vos.Lib.Tests.Abstractions.csproj" />
     </ItemGroup>
 
 </Project>

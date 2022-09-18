@@ -1,5 +1,5 @@
 ﻿using System.CommandLine;
-using Frenchex.Dev.Vos.Lib.Tests.Abstractions.Domain;
+using Frenchex.Dev.Vagrant.Lib.Tests.Abstractions.Domain;
 using static System.Threading.Tasks.Task;
 
 [assembly: Parallelize(Workers = 4, Scope = ExecutionScope.MethodLevel)]

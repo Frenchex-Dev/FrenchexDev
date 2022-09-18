@@ -33,6 +33,11 @@ public class FilesystemCopyFileTests : AbstractUnitTest
                     fs.FileDelete(context.FullDestinationFile);
                 }
 
+                if (!fs.FileExists(originalFile))
+                {
+                    fs.FileCopy(Path.GetTempFileName(), originalFile);
+                }
+
                 await Task.Run(() =>
                 {
                     fs.FileCopy(originalFile, context.FullDestinationFile);

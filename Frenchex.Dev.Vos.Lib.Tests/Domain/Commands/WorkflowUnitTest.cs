@@ -2,6 +2,7 @@
 using System.Net.NetworkInformation;
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Domain;
+using Frenchex.Dev.Vagrant.Lib.Tests.Abstractions.Domain;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
 using Frenchex.Dev.Vos.Lib.Domain.Actions.Networking;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Machine.Add;
@@ -14,7 +15,6 @@ using Frenchex.Dev.Vos.Lib.Domain.Commands.Ssh;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.SshConfig;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Status;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Up;
-using Frenchex.Dev.Vos.Lib.Tests.Abstractions.Domain;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.Vos.Lib.Tests.Domain.Commands;

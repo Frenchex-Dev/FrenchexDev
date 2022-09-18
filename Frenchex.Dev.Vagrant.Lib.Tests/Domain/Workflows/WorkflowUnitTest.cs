@@ -8,7 +8,7 @@ using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Ssh;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.SshConfig;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Status;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Up;
-using Frenchex.Dev.Vos.Lib.Tests.Abstractions.Domain;
+using Frenchex.Dev.Vagrant.Lib.Tests.Abstractions.Domain;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.Vagrant.Lib.Tests.Domain.Workflows;

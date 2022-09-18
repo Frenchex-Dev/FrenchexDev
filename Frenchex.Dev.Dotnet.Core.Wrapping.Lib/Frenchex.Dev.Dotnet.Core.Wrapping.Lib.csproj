@@ -4,10 +4,10 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>Frenchex.Dev.Dotnet.Wrapping.Lib</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="DependencyInjection" />
       <Folder Include="Domain" />
     </ItemGroup>
 
