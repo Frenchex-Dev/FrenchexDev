@@ -4,5 +4,5 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Up;
 
 public interface IUpCommandResponse : IRootCommandResponse
 {
-    Vagrant.Lib.Domain.Commands.Up.IUpCommandResponse Response { get; }
+    Vagrant.Lib.Abstractions.Domain.Commands.Up.Response.IUpCommandResponse Response { get; }
 }

@@ -7,17 +7,18 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Halt;
 public class HaltCommand : RootCommand, IHaltCommand
 {
     private readonly IHaltCommandResponseBuilderFactory _responseBuilderFactory;
-    private readonly Vagrant.Lib.Domain.Commands.Halt.IHaltCommand _vagrantHaltCommand;
+    private readonly Vagrant.Lib.Abstractions.Domain.Commands.Halt.Command.IHaltCommand _vagrantHaltCommand;
 
-    private readonly Vagrant.Lib.Domain.Commands.Halt.IHaltCommandRequestBuilderFactory
+    private readonly Vagrant.Lib.Abstractions.Domain.Commands.Halt.Request.IHaltCommandRequestBuilderFactory
         _vagrantHaltCommandRequestBuilderFactory;
 
     public HaltCommand(
         IHaltCommandResponseBuilderFactory responseBuilderFactory,
         IConfigurationLoadAction configurationLoadAction,
         IVexNameToVagrantNameConverter vexNameToVagrantNameConverter,
-        Vagrant.Lib.Domain.Commands.Halt.IHaltCommand vagrantHaltCommand,
-        Vagrant.Lib.Domain.Commands.Halt.IHaltCommandRequestBuilderFactory vagrantHaltCommandRequestBuilderFactory
+        Vagrant.Lib.Abstractions.Domain.Commands.Halt.Command.IHaltCommand vagrantHaltCommand,
+        Vagrant.Lib.Abstractions.Domain.Commands.Halt.Request.IHaltCommandRequestBuilderFactory
+            vagrantHaltCommandRequestBuilderFactory
     ) : base(configurationLoadAction, vexNameToVagrantNameConverter)
     {
         _responseBuilderFactory = responseBuilderFactory;
@@ -31,7 +32,7 @@ public class HaltCommand : RootCommand, IHaltCommand
             .BaseBuilder
             .UsingWorkingDirectory(request.Base.WorkingDirectory)
             .UsingTimeoutMiliseconds(request.HaltTimeoutInMiliSeconds)
-            .Parent<Vagrant.Lib.Domain.Commands.Halt.IHaltCommandRequestBuilder>()
+            .Parent<Vagrant.Lib.Abstractions.Domain.Commands.Halt.Request.IHaltCommandRequestBuilder>()
             .UsingNamesOrIds(
                 MapNamesToVagrantNames(
                     request.Names,

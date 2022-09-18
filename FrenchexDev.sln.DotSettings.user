@@ -1,6 +1,21 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=926b607c_002D4bdb_002D4c93_002Da61d_002D2f98f4618b38/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="All tests in category '&amp;lt;Uncategorized&amp;gt;'" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Category&gt;&amp;lt;Uncategorized&amp;gt;&lt;/Category&gt;&#xD;
+  &lt;Or&gt;&#xD;
+    &lt;Category&gt;&amp;lt;Uncategorized&amp;gt;&lt;/Category&gt;&#xD;
+    &lt;And&gt;&#xD;
+      &lt;TestAncestor&gt;&#xD;
+        &lt;TestId&gt;MSTest::125E6CB5-CFA3-493B-9E2E-DFC57B527245::net6.0::Frenchex.Dev.Vos.Cli.Integration.Tests.IntegrationWorkflows.TestArgumentsParsing&lt;/TestId&gt;&#xD;
+      &lt;/TestAncestor&gt;&#xD;
+      &lt;Category&gt;need:vagrant&lt;/Category&gt;&#xD;
+    &lt;/And&gt;&#xD;
+    &lt;And&gt;&#xD;
+      &lt;TestAncestor&gt;&#xD;
+        &lt;TestId&gt;MSTest::0967AF42-F1BD-4B88-ABEA-28DCFB6A2576::net6.0::Frenchex.Dev.Vagrant.Lib.Tests.Domain.Workflows.CompleteWorkflowTests.Test_Complete_Workflow&lt;/TestId&gt;&#xD;
+      &lt;/TestAncestor&gt;&#xD;
+      &lt;Category&gt;need:vagrant&lt;/Category&gt;&#xD;
+    &lt;/And&gt;&#xD;
+    &lt;Category&gt;need:vagrant&lt;/Category&gt;&#xD;
+  &lt;/Or&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
 	

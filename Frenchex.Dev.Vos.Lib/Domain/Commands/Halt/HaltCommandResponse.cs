@@ -5,11 +5,11 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Halt;
 public class HaltCommandResponse : RootResponse, IHaltCommandResponse
 {
     public HaltCommandResponse(
-        Vagrant.Lib.Domain.Commands.Halt.IHaltCommandResponse haltCommandResponse
+        Vagrant.Lib.Abstractions.Domain.Commands.Halt.Response.IHaltCommandResponse haltCommandResponse
     )
     {
         Response = haltCommandResponse;
     }
 
-    public Vagrant.Lib.Domain.Commands.Halt.IHaltCommandResponse Response { get; }
+    public Vagrant.Lib.Abstractions.Domain.Commands.Halt.Response.IHaltCommandResponse Response { get; }
 }

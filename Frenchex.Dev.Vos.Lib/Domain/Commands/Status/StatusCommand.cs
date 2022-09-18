@@ -9,17 +9,17 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Status;
 public class StatusCommand : RootCommand, IStatusCommand
 {
     private readonly IStatusCommandResponseBuilderFactory _statusCommandResponseBuilderFactory;
-    private readonly Vagrant.Lib.Domain.Commands.Status.IStatusCommand _vagrantStatusCommand;
+    private readonly Vagrant.Lib.Abstractions.Domain.Commands.Status.Command.IStatusCommand _vagrantStatusCommand;
 
-    private readonly Vagrant.Lib.Domain.Commands.Status.IStatusCommandRequestBuilderFactory
+    private readonly Vagrant.Lib.Abstractions.Domain.Commands.Status.Request.IStatusCommandRequestBuilderFactory
         _vagrantStatusCommandRequestBuilderFactory;
 
     public StatusCommand(
         IConfigurationLoadAction configurationLoadAction,
         IStatusCommandResponseBuilderFactory statusCommandResponseBuilderFactory,
         IVexNameToVagrantNameConverter nameConverter,
-        Vagrant.Lib.Domain.Commands.Status.IStatusCommand statusCommand,
-        Vagrant.Lib.Domain.Commands.Status.IStatusCommandRequestBuilderFactory statusCommandRequestBuilderFactory
+        Vagrant.Lib.Abstractions.Domain.Commands.Status.Command.IStatusCommand statusCommand,
+        Vagrant.Lib.Abstractions.Domain.Commands.Status.Request.IStatusCommandRequestBuilderFactory statusCommandRequestBuilderFactory
     ) : base(configurationLoadAction, nameConverter)
     {
         _statusCommandResponseBuilderFactory = statusCommandResponseBuilderFactory;
@@ -33,7 +33,7 @@ public class StatusCommand : RootCommand, IStatusCommand
             _vagrantStatusCommandRequestBuilderFactory.Factory()
                 .BaseBuilder
                 .UsingWorkingDirectory(request.Base.WorkingDirectory)
-                .Parent<Vagrant.Lib.Domain.Commands.Status.IStatusCommandRequestBuilder>()
+                .Parent<Vagrant.Lib.Abstractions.Domain.Commands.Status.Request.IStatusCommandRequestBuilder>()
                 .WithNamesOrIds(MapNamesToVagrantNames(
                         request.Names,
                         request.Base.WorkingDirectory,

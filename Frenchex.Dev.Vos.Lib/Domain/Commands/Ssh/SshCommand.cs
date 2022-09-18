@@ -8,17 +8,17 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Ssh;
 public class SshCommand : RootCommand, ISshCommand
 {
     private readonly ISshCommandResponseBuilderFactory _responseBuilderFactory;
-    private readonly Vagrant.Lib.Domain.Commands.Ssh.ISshCommand _vagrantSshCommand;
+    private readonly Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Command.ISshCommand _vagrantSshCommand;
 
-    private readonly Vagrant.Lib.Domain.Commands.Ssh.ISshCommandRequestBuilderFactory
+    private readonly Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Request.ISshCommandRequestBuilderFactory
         _vagrantSshCommandRequestBuilderFactory;
 
     public SshCommand(
         ISshCommandResponseBuilderFactory responseBuilderFactory,
         IConfigurationLoadAction configurationLoadAction,
         IVexNameToVagrantNameConverter nameConverter,
-        Vagrant.Lib.Domain.Commands.Ssh.ISshCommand vagrantSshCommand,
-        Vagrant.Lib.Domain.Commands.Ssh.ISshCommandRequestBuilderFactory sshCommandRequestBuilderFactory
+        Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Command.ISshCommand vagrantSshCommand,
+        Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Request.ISshCommandRequestBuilderFactory sshCommandRequestBuilderFactory
     ) : base(configurationLoadAction, nameConverter)
     {
         _responseBuilderFactory = responseBuilderFactory;
@@ -42,7 +42,7 @@ public class SshCommand : RootCommand, ISshCommand
                     .BaseBuilder
                     .UsingTimeoutMiliseconds(request.Base.TimeoutInMiliSeconds)
                     .UsingWorkingDirectory(request.Base.WorkingDirectory)
-                    .Parent<Vagrant.Lib.Domain.Commands.Ssh.ISshCommandRequestBuilder>()
+                    .Parent<Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Request.ISshCommandRequestBuilder>()
                     .UsingCommand(command)
                     .UsingNameOrId(vagrantMachine)
                     .Build()

@@ -12,6 +12,7 @@ public class UnitTest : IAsyncDisposable
     private readonly Action<IServiceCollection, IConfigurationRoot>? _configureMocksFunc;
     private readonly Action<IServiceCollection, IConfigurationRoot>? _configureServicesFunc;
     private bool _alreadyBuild;
+    private Process? _process;
 
     public UnitTest(
         Action<IConfigurationBuilder> configureConfigurationFunc,
@@ -64,15 +65,20 @@ public class UnitTest : IAsyncDisposable
             throw new ArgumentNullException(nameof(executeFunc));
         }
 
-        Process? vsCodeProcess = null;
+        _process = null;
 
         Action<string> openVsCodeDebugging = (string workingDirectory) =>
         {
             var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
-            vsCodeProcess = Process.Start(
+            _process = Process.Start(
                 vsCodeDebugging?.Bin ?? (isWindows ? "C:\\Program Files\\Microsoft VS Code\\Code.exe" : "code"),
                 "-n " + workingDirectory);
+        };
+
+        Action killVsCodeDebugging = () =>
+        {
+            _process?.Kill();
         };
 
         var executionContextObject = ServiceProvider!.GetRequiredService<T>();
@@ -105,7 +111,8 @@ public class UnitTest : IAsyncDisposable
             cleanupFunc?.Invoke(ServiceProvider!, Configuration!, ServiceProvider!.GetRequiredService<T>());
         }
 
-        vsCodeProcess?.Kill();
+        if (vsCodeDebugging?.Keep == false)
+            _process?.Kill();
 
         if (thrownException is not null)
         {
@@ -148,11 +155,34 @@ public class UnitTest : IAsyncDisposable
         _alreadyBuild = true;
     }
 
-    public class VsCodeDebugging
+    public class VsCodeDebugging : IDisposable, IAsyncDisposable
     {
         public bool Open { get; set; }
         public string? Path { get; set; }
         public string? Bin { get; set; }
         public bool? TellMe { get; set; }
+        public bool? Keep { get; set; }
+
+        public Process? VsProcess { get; set; }
+
+        public bool? Start()
+        {
+            return VsProcess?.Start();
+        }
+
+        public void Stop()
+        {
+            VsProcess?.Kill(true);
+        }
+
+        public void Dispose()
+        {
+            VsProcess?.Dispose();
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            await Task.Run(() => { VsProcess?.Dispose(); });
+        }
     }
 }

@@ -30,13 +30,13 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
         UnitTest = VosUnitTestBase.CreateUnitTest<ExecutionContext>();
         UnitTest.BuildIfNecessary();
 
-        var max = 10;
+        var max = 1;
         for (var i = 0; i < max; i++)
         {
             var tempDir = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
 
             yield return new[] {
-                BuildInitCommandRequest(tempDir),
+                BuildInitCommandRequest(tempDir, UnitTest.ServiceProvider!),
                 BuildDefineMachineTypeAddCommandRequestsList(tempDir),
                 BuildDefineMachineAddCommandRequestsList(tempDir),
                 BuildNameCommandRequestsList(tempDir),
@@ -62,14 +62,12 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
 
     [TestMethod]
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
-    [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
-    [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     [TestCategory(TestCategories.NeedVagrant)]
-    public async Task Test_Complete_Workflow(
+    public async Task VosWortkflowUnitTes(
         IInitCommandRequest initRequest,
         IList<IDefineMachineTypeAddCommandRequest> defineMachineTypeAddCommandRequestsList,
         IList<IDefineMachineAddCommandRequest> defineMachineAddCommandRequestsList,
-        IList<INameCommandRequest> nameCommandRequestsList,
+        IList<NameCommandRequestPayload> nameCommandRequestsList,
         IList<IStatusCommandRequest> statusBeforeUpCommandRequestsList,
         IList<IUpCommandRequest> upRequestsList,
         IList<IStatusCommandRequest> statusAfterUpCommandRequestsList,
@@ -79,6 +77,8 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
         IList<IDestroyCommandRequest> destroyRequestsLists
     )
     {
+        var vsDebuggingContext = new UnitTest.VsCodeDebugging() {TellMe = true, Keep = true};
+
         await UnitTest!.RunAsync<ExecutionContext>(
             async (provider, configuration, context, vsCode) =>
             {
@@ -93,60 +93,75 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
                 });
             },
             (provider, root, context) => Task.CompletedTask,
-            (provider, root, context) => Task.CompletedTask);
+            (provider, root, context) => Task.CompletedTask,
+            vsDebuggingContext);
 
         await UnitTest!.RunAsync<ExecutionContext>(
             async (provider, configuration, context, vsCode) =>
             {
+                var defineMachineTypeAddCommand = provider.GetRequiredService<IDefineMachineTypeAddCommand>();
                 foreach (var item in defineMachineTypeAddCommandRequestsList)
                 {
-                    await provider.GetRequiredService<IDefineMachineTypeAddCommand>().Execute(item);
+                    await defineMachineTypeAddCommand.Execute(item);
                 }
             },
             (provider, root, context) => Task.CompletedTask,
-            (provider, root, context) => Task.CompletedTask);
+            (provider, root, context) => Task.CompletedTask,
+            vsDebuggingContext);
 
         await UnitTest!.RunAsync<ExecutionContext>(
             async (provider, configuration, context, vsCode) =>
             {
+                var defineMachineAddCommand = provider.GetRequiredService<IDefineMachineAddCommand>();
                 foreach (var item in defineMachineAddCommandRequestsList)
                 {
-                    await provider.GetRequiredService<IDefineMachineAddCommand>().Execute(item);
+                    await defineMachineAddCommand.Execute(item);
                 }
             },
             (provider, root, context) => Task.CompletedTask,
-            (provider, root, context) => Task.CompletedTask);
+            (provider, root, context) => Task.CompletedTask,
+            vsDebuggingContext
+        );
 
         await UnitTest!.RunAsync<ExecutionContext>(
             async (provider, configuration, context, vsCode) =>
             {
+                var nameCommand = provider.GetRequiredService<INameCommand>();
+
                 foreach (var item in nameCommandRequestsList)
                 {
-                    var response = await provider.GetRequiredService<INameCommand>().Execute(item);
-                }
-            },
-            (provider, root, context) => Task.CompletedTask,
-            (provider, root, context) => Task.CompletedTask);
-
-        await UnitTest!.RunAsync<ExecutionContext>(
-            async (provider, configuration, context, vsCode) =>
-            {
-                foreach (var item in statusBeforeUpCommandRequestsList)
-                {
-                    var statusResponse = await provider.GetRequiredService<IStatusCommand>().Execute(item);
-                    Assert.IsNotNull(statusResponse, "got status response");
-                    Assert.IsTrue(statusResponse.Statuses.Any(), "got machines in status response");
-
-                    foreach (KeyValuePair<string, (string, VagrantMachineStatusEnum)> statusItem in statusResponse
-                                 .Statuses)
+                    var response = await nameCommand.Execute(item.Request);
+                    Assert.IsNotNull(response);
+                    if (item.ExpectedNames.Any())
                     {
-                        Assert.IsTrue(statusItem.Value.ToString()
-                            .Contains(VagrantMachineStatusEnum.NotCreated.ToString()));
+                        Assert.IsTrue(item.ExpectedNames.All(x => response.Names.Contains(x)));
                     }
                 }
             },
             (provider, root, context) => Task.CompletedTask,
-            (provider, root, context) => Task.CompletedTask);
+            (provider, root, context) => Task.CompletedTask,
+            vsDebuggingContext);
+
+        await UnitTest!.RunAsync<ExecutionContext>(
+            async (provider, configuration, context, vsCode) =>
+            {
+                var statusCommand = provider.GetRequiredService<IStatusCommand>();
+                foreach (var item in statusBeforeUpCommandRequestsList)
+                {
+                    var statusResponse = await statusCommand.Execute(item);
+
+                    Assert.IsNotNull(statusResponse, "got status response");
+                    Assert.IsTrue(statusResponse.Statuses.Any(), "got machines in status response");
+                    Assert.IsTrue(statusResponse
+                        .Statuses
+                        .All(x => x.Value
+                            .ToString()
+                            .Contains(VagrantMachineStatusEnum.NotCreated.ToString()) == true));
+                }
+            },
+            (provider, root, context) => Task.CompletedTask,
+            (provider, root, context) => Task.CompletedTask,
+            vsDebuggingContext);
 
         await UnitTest!.RunAsync<ExecutionContext>(
             async (provider, configuration, context, vsCode) =>
@@ -195,7 +210,8 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
                 }
             },
             (provider, root, context) => Task.CompletedTask,
-            (provider, root, context) => Task.CompletedTask);
+            (provider, root, context) => Task.CompletedTask,
+            vsDebuggingContext);
 
 
         await UnitTest!.RunAsync<ExecutionContext>(
@@ -207,7 +223,8 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
                 }
             },
             (provider, root, context) => Task.CompletedTask,
-            (provider, root, context) => Task.CompletedTask);
+            (provider, root, context) => Task.CompletedTask,
+            vsDebuggingContext);
 
 
         await UnitTest!.RunAsync<ExecutionContext>(
@@ -219,7 +236,8 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
                 }
             },
             (provider, root, context) => Task.CompletedTask,
-            (provider, root, context) => Task.CompletedTask);
+            (provider, root, context) => Task.CompletedTask,
+            vsDebuggingContext);
 
 
         await UnitTest!.RunAsync<ExecutionContext>(
@@ -231,7 +249,8 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
                 }
             },
             (provider, root, context) => Task.CompletedTask,
-            (provider, root, context) => Task.CompletedTask);
+            (provider, root, context) => Task.CompletedTask,
+            vsDebuggingContext);
 
 
         await UnitTest!.RunAsync<ExecutionContext>(
@@ -243,7 +262,8 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
                 }
             },
             (provider, root, context) => Task.CompletedTask,
-            (provider, root, context) => Task.CompletedTask);
+            (provider, root, context) => Task.CompletedTask,
+            vsDebuggingContext);
 
 
         await UnitTest!.RunAsync<ExecutionContext>(
@@ -269,7 +289,10 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
                     Directory.Delete(context.WorkingDirectory!, true);
                     Assert.IsFalse(Directory.Exists(initRequest.Base.WorkingDirectory));
                 });
-            });
+            },
+            vsDebuggingContext);
+
+        vsDebuggingContext.Stop();
 
         /** Template **/
 
@@ -450,140 +473,189 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
         };
     }
 
+
+    internal class Payload
+    {
+        public string Name { get; init; }
+        public string Ipv4Pattern { get; init; }
+        public bool IsPrimary { get; init; }
+    }
+
     private static List<IDefineMachineAddCommandRequest> BuildDefineMachineAddCommandRequestsList(string? tempDir)
     {
         List<(NetworkInterface n, List<IPAddress?>?)> defaultSystemNetworkBridge = UnitTest!.ServiceProvider!
             .GetRequiredService<IDefaultGatewayGetterAction>()
             .GetDefaultGateway();
 
-        return new List<IDefineMachineAddCommandRequest> {
-            UnitTest.ServiceProvider!.GetRequiredService<IDefineMachineAddCommandRequestBuilderFactory>().Factory()
-                .BaseBuilder
-                .UsingWorkingDirectory(tempDir)
-                .UsingTimeoutMs(1000 * 100)
-                .Parent<IDefineMachineAddCommandRequestBuilder>()
-                .UsingDefinition(UnitTest.ServiceProvider!.GetRequiredService<MachineDefinitionBuilderFactory>()
-                    .Factory()
-                    .BaseBuilder
-                    .With3DEnabled(true)
-                    .WithBiosLogoImage("")
-                    .WithFiles(new Dictionary<string, FileCopyDefinition>())
-                    .WithGui(false)
-                    .WithOsType(OsTypeEnum.Debian_64)
-                    .WithOsVersion("10.9.1")
-                    .WithPageFusion(false)
-                    .WithProvider(ProviderEnum.Virtualbox)
-                    .WithProvisioning(new Dictionary<string, ProvisioningDefinition>())
-                    .WithSharedFolders(new Dictionary<string, SharedFolderDefinition>())
-                    .WithVideoRamInMb(16)
-                    .WithRamInMb(256)
-                    .WithVirtualCpus(2)
-                    .Parent<MachineDefinitionBuilder>()
-                    .WithMachineType("foo")
-                    .WithName("foo")
-                    .WithInstances(4)
-                    .WithIPv4Start(2)
-                    .WithIPv4Pattern("10.100.1.#INSTANCE#")
-                    .IsPrimary(true)
-                    .Enabled(true)
-                    .WithVirtualCpUs(2)
-                    .WithRamInMb(512)
-                    .WithNetworkBridge(defaultSystemNetworkBridge.First().Item1.Description)
-                    .Build()
-                )
-                .Build(),
-            UnitTest!.ServiceProvider!.GetRequiredService<IDefineMachineAddCommandRequestBuilderFactory>().Factory()
-                .BaseBuilder
-                .UsingWorkingDirectory(tempDir)
-                .UsingTimeoutMs(1000 * 100)
-                .Parent<IDefineMachineAddCommandRequestBuilder>()
-                .UsingDefinition(UnitTest.ServiceProvider!.GetRequiredService<MachineDefinitionBuilderFactory>()
-                    .Factory()
-                    .BaseBuilder
-                    .With3DEnabled(true)
-                    .WithBiosLogoImage("")
-                    .WithBox(BoxTest)
-                    .WithBoxVersion(BoxVersionTest)
-                    .WithFiles(new Dictionary<string, FileCopyDefinition>())
-                    .WithGui(false)
-                    .WithOsType(OsTypeEnum.Debian_64)
-                    .WithOsVersion("10.9.1")
-                    .WithPageFusion(false)
-                    .WithProvider(ProviderEnum.Virtualbox)
-                    .WithProvisioning(new Dictionary<string, ProvisioningDefinition>())
-                    .WithRamInMb(512)
-                    .WithSharedFolders(new Dictionary<string, SharedFolderDefinition>())
-                    .WithVideoRamInMb(16)
-                    .WithVirtualCpus(2)
-                    .Parent<MachineDefinitionBuilder>()
-                    .WithMachineType("bar")
-                    .WithName("bar")
-                    .WithInstances(4)
-                    .WithIPv4Start(2)
-                    .WithIPv4Pattern("10.100.2.#INSTANCE#")
-                    .IsPrimary(false)
-                    .Enabled(true)
-                    .WithNetworkBridge(defaultSystemNetworkBridge.First().Item1.Description)
-                    .Build()
-                )
-                .Build()
+        var list = new List<IDefineMachineAddCommandRequest>();
+
+        var payloads = new List<Payload>() {
+            new() {Name = "foo", Ipv4Pattern = "10.100.2.#INSTANCE#", IsPrimary = true},
+            new() {Name = "bar", Ipv4Pattern = "10.100.3.#INSTANCE#", IsPrimary = false}
         };
-    }
 
-    private static List<IDefineMachineTypeAddCommandRequest> BuildDefineMachineTypeAddCommandRequestsList(
-        string? tempDir
-    )
-    {
-        List<IDefineMachineTypeAddCommandRequest> list = new();
-
-        IDefineMachineTypeAddCommandRequest BuildDefineMachineTypeAddCommandRequestWithSpecifiedBoxNameAndVersion(
-            string typeName,
-            string boxName,
-            string boxVersion
-        )
+        foreach (var payload in payloads)
         {
-            return UnitTest!.ServiceProvider!.GetRequiredService<IDefineMachineTypeAddCommandRequestBuilderFactory>()
-                .Factory()
-                .BaseBuilder.UsingWorkingDirectory(tempDir)
-                .UsingTimeoutMs((int) TimeSpan.FromMinutes(2).TotalMilliseconds)
-                .Parent<IDefineMachineTypeAddCommandRequestBuilder>()
-                .UsingDefinition(UnitTest.ServiceProvider!.GetRequiredService<IMachineTypeDefinitionBuilderFactory>()
-                    .Factory()
-                    .BaseBuilder.With3DEnabled(true)
-                    .WithBiosLogoImage("")
-                    .WithBox(boxName)
-                    .WithBoxVersion(boxVersion)
-                    .WithFiles(new Dictionary<string, FileCopyDefinition>())
-                    .WithGui(false)
-                    .WithOsType(OsTypeEnum.Debian_64)
-                    .WithOsVersion("10.5.0")
-                    .WithPageFusion(false)
-                    .WithRamInMb(256)
-                    .WithVideoRamInMb(16)
-                    .WithVirtualCpus(4)
-                    .WithFiles(new Dictionary<string, FileCopyDefinition>())
-                    .WithProvisioning(new Dictionary<string, ProvisioningDefinition>())
-                    .WithSharedFolders(new Dictionary<string, SharedFolderDefinition>())
-                    .Parent<IMachineTypeDefinitionBuilder>()
-                    .WithName(typeName)
-                    .Build())
-                .Build();
+            var def = BuildDefineMachineAddCommandRequest(
+                tempDir,
+                TimeSpan.FromSeconds(20),
+                true,
+                "",
+                new Dictionary<string, FileCopyDefinition>(),
+                false,
+                OsTypeEnum.Debian_64,
+                "10.9.0",
+                false,
+                ProviderEnum.Virtualbox,
+                new Dictionary<string, ProvisioningDefinition>(),
+                new Dictionary<string, SharedFolderDefinition>(),
+                16,
+                128,
+                2,
+                "foo",
+                payload.Name,
+                4,
+                2,
+                payload.Ipv4Pattern,
+                true,
+                true,
+                defaultSystemNetworkBridge,
+                UnitTest.ServiceProvider!.GetRequiredService<IDefineMachineAddCommandRequestBuilderFactory>());
+
+            list.Add(def);
         }
-
-        list.Add(BuildDefineMachineTypeAddCommandRequestWithSpecifiedBoxNameAndVersion("foo",
-            BoxTest,
-            BoxVersionTest));
-
-        list.Add(BuildDefineMachineTypeAddCommandRequestWithSpecifiedBoxNameAndVersion("bar",
-            BoxTest,
-            BoxVersionTest));
 
         return list;
     }
 
-    private static IInitCommandRequest BuildInitCommandRequest(string tempDir)
+    private static IDefineMachineAddCommandRequest BuildDefineMachineAddCommandRequest(
+        string? workingDirectory,
+        TimeSpan fromSecondsTs,
+        bool enable3d,
+        string biosLogoImage,
+        Dictionary<string, FileCopyDefinition> withFiles,
+        bool withGui,
+        OsTypeEnum withOsTypeEnum,
+        string withOsVersion,
+        bool withPageFusion,
+        ProviderEnum withProvider,
+        Dictionary<string, ProvisioningDefinition> provisioningDefinitions,
+        Dictionary<string, SharedFolderDefinition> sharedFolderDefinitions,
+        int videoRamInMb,
+        int ramInMb,
+        int vCpus,
+        string machineTypeDefinitionName,
+        string name,
+        int instances,
+        int ipv4Start,
+        string ipv4Pattern,
+        bool isPrimary,
+        bool enabled,
+        List<(NetworkInterface n, List<IPAddress?>?)> defaultSystemNetworkBridge,
+        IDefineMachineAddCommandRequestBuilderFactory defineMachineAddCommandRequestBuilderFactory
+    )
     {
-        return UnitTest!.ServiceProvider!.GetRequiredService<IInitCommandRequestBuilderFactory>().Factory()
+        return defineMachineAddCommandRequestBuilderFactory
+            .Factory()
+            .BaseBuilder
+            .UsingWorkingDirectory(workingDirectory)
+            .UsingTimeoutMs((int) fromSecondsTs.TotalMilliseconds)
+            .Parent<IDefineMachineAddCommandRequestBuilder>()
+            .UsingDefinition(UnitTest.ServiceProvider!.GetRequiredService<MachineDefinitionBuilderFactory>()
+                .Factory()
+                .BaseBuilder
+                .With3DEnabled(enable3d)
+                .WithBiosLogoImage(biosLogoImage)
+                .WithFiles(withFiles)
+                .WithGui(withGui)
+                .WithOsType(withOsTypeEnum)
+                .WithOsVersion(withOsVersion)
+                .WithPageFusion(withPageFusion)
+                .WithProvider(withProvider)
+                .WithProvisioning(provisioningDefinitions)
+                .WithSharedFolders(sharedFolderDefinitions)
+                .WithVideoRamInMb(videoRamInMb)
+                .WithRamInMb(ramInMb)
+                .WithVirtualCpus(vCpus)
+                .Parent<MachineDefinitionBuilder>()
+                .WithMachineType(machineTypeDefinitionName)
+                .WithName(name)
+                .WithInstances(instances)
+                .WithIPv4Start(ipv4Start)
+                .WithIPv4Pattern(ipv4Pattern)
+                .IsPrimary(isPrimary)
+                .Enabled(enabled)
+                .WithNetworkBridge(defaultSystemNetworkBridge.First().Item1.Description)
+                .Build()
+            )
+            .Build();
+    }
+
+    private static IDefineMachineTypeAddCommandRequest
+        BuildDefineMachineTypeAddCommandRequestWithSpecifiedBoxNameAndVersion(
+            string workingDirectory,
+            string typeName,
+            string boxName,
+            string boxVersion,
+            IServiceProvider serviceProvider
+        )
+    {
+        return serviceProvider.GetRequiredService<IDefineMachineTypeAddCommandRequestBuilderFactory>()
+            .Factory()
+            .BaseBuilder.UsingWorkingDirectory(workingDirectory)
+            .UsingTimeoutMs((int) TimeSpan.FromMinutes(2).TotalMilliseconds)
+            .Parent<IDefineMachineTypeAddCommandRequestBuilder>()
+            .UsingDefinition(serviceProvider.GetRequiredService<IMachineTypeDefinitionBuilderFactory>()
+                .Factory()
+                .BaseBuilder
+                .With3DEnabled(true)
+                .WithBiosLogoImage("")
+                .WithBox(boxName)
+                .WithBoxVersion(boxVersion)
+                .WithFiles(new Dictionary<string, FileCopyDefinition>())
+                .WithGui(false)
+                .WithOsType(OsTypeEnum.Debian_64)
+                .WithOsVersion("10.5.0")
+                .WithPageFusion(false)
+                .WithRamInMb(256)
+                .WithVideoRamInMb(16)
+                .WithVirtualCpus(4)
+                .WithFiles(new Dictionary<string, FileCopyDefinition>())
+                .WithProvisioning(new Dictionary<string, ProvisioningDefinition>())
+                .WithSharedFolders(new Dictionary<string, SharedFolderDefinition>())
+                .Enabled(true)
+                .Parent<IMachineTypeDefinitionBuilder>()
+                .WithName(typeName)
+                .Build())
+            .Build();
+    }
+
+    private static List<IDefineMachineTypeAddCommandRequest> BuildDefineMachineTypeAddCommandRequestsList(
+        string tempDir
+    )
+    {
+        List<IDefineMachineTypeAddCommandRequest> list = new();
+
+        list.Add(BuildDefineMachineTypeAddCommandRequestWithSpecifiedBoxNameAndVersion(
+            tempDir,
+            "foo",
+            BoxTest,
+            BoxVersionTest,
+            UnitTest.ServiceProvider!));
+
+        list.Add(BuildDefineMachineTypeAddCommandRequestWithSpecifiedBoxNameAndVersion(
+            tempDir,
+            "bar",
+            BoxTest,
+            BoxVersionTest,
+            UnitTest.ServiceProvider!));
+
+        return list;
+    }
+
+    private static IInitCommandRequest BuildInitCommandRequest(string tempDir, IServiceProvider serviceProvider)
+    {
+        return serviceProvider.GetRequiredService<IInitCommandRequestBuilderFactory>().Factory()
             .BaseBuilder
             .UsingWorkingDirectory(tempDir)
             .UsingTimeoutMs((int) TimeSpan.FromSeconds(20).TotalMilliseconds)
@@ -593,17 +665,31 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
     }
 
 
+    public class NameCommandRequestPayload
+    {
+        public INameCommandRequest Request { get; init; }
+        public List<string> ExpectedNames { get; set; } = new List<string>();
+    }
+
     private static object BuildNameCommandRequestsList(string? tempDir)
     {
-        return new List<INameCommandRequest> {
-            UnitTest!.ServiceProvider!.GetRequiredService<INameCommandRequestBuilderFactory>().Factory()
+        var factory = UnitTest!.ServiceProvider!.GetRequiredService<INameCommandRequestBuilderFactory>();
+        var list = new List<NameCommandRequestPayload>();
+      
+        var payload = new NameCommandRequestPayload() {
+            Request = factory.Factory()
                 .BaseBuilder
                 .UsingWorkingDirectory(tempDir)
-                .UsingTimeoutMs(1000 * 100)
+                .UsingTimeoutMs((int) TimeSpan.FromSeconds(20).TotalMilliseconds)
                 .Parent<INameCommandRequestBuilder>()
                 .WithNames(new[] {"foo-0", "bar-[2-*]"})
-                .Build()
+                .Build(),
+            ExpectedNames = new List<string>() {"foo-00", "bar-02"}
         };
+
+        list.Add(payload);
+
+        return list;
     }
 
     public class ExecutionContext : WithWorkingDirectoryExecutionContext

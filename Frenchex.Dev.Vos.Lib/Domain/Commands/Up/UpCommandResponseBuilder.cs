@@ -4,7 +4,7 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Up;
 
 public class UpCommandResponseBuilder : RootResponseBuilder, IUpCommandResponseBuilder
 {
-    private Vagrant.Lib.Domain.Commands.Up.IUpCommandResponse? _upCommandResponse;
+    private Vagrant.Lib.Abstractions.Domain.Commands.Up.Response.IUpCommandResponse? _upCommandResponse;
 
     public IUpCommandResponse Build()
     {
@@ -13,7 +13,7 @@ public class UpCommandResponseBuilder : RootResponseBuilder, IUpCommandResponseB
         return new UpCommandResponse(_upCommandResponse);
     }
 
-    public IUpCommandResponseBuilder WithUpResponse(Vagrant.Lib.Domain.Commands.Up.IUpCommandResponse response)
+    public IUpCommandResponseBuilder WithUpResponse(Vagrant.Lib.Abstractions.Domain.Commands.Up.Response.IUpCommandResponse response)
     {
         _upCommandResponse = response;
         return this;

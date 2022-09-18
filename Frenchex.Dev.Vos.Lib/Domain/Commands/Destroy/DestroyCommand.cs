@@ -7,17 +7,17 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Destroy;
 public class DestroyCommand : RootCommand, IDestroyCommand
 {
     private readonly IDestroyCommandResponseBuilderFactory _responseBuilderFactory;
-    private readonly Vagrant.Lib.Domain.Commands.Destroy.IDestroyCommand _vagrantDestroyCommand;
+    private readonly Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Command.IDestroyCommand _vagrantDestroyCommand;
 
-    private readonly Vagrant.Lib.Domain.Commands.Destroy.IDestroyCommandRequestBuilderFactory
+    private readonly Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Request.IDestroyCommandRequestBuilderFactory
         _vagrantDestroyCommandRequestBuilderFactory;
 
     public DestroyCommand(
         IDestroyCommandResponseBuilderFactory responseBuilderFactory,
         IConfigurationLoadAction configurationLoadAction,
         IVexNameToVagrantNameConverter nameConverter,
-        Vagrant.Lib.Domain.Commands.Destroy.IDestroyCommand destroyCommand,
-        Vagrant.Lib.Domain.Commands.Destroy.IDestroyCommandRequestBuilderFactory destroyCommandRequestBuilderFactory
+        Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Command.IDestroyCommand destroyCommand,
+        Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Request.IDestroyCommandRequestBuilderFactory destroyCommandRequestBuilderFactory
     ) : base(configurationLoadAction, nameConverter)
     {
         _responseBuilderFactory = responseBuilderFactory;
@@ -31,7 +31,7 @@ public class DestroyCommand : RootCommand, IDestroyCommand
             .BaseBuilder
             .UsingWorkingDirectory(request.Base.WorkingDirectory)
             .UsingTimeoutMiliseconds(request.DestroyTimeoutInMiliSeconds)
-            .Parent<Vagrant.Lib.Domain.Commands.Destroy.IDestroyCommandRequestBuilder>()
+            .Parent<Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Request.IDestroyCommandRequestBuilder>()
             .UsingName(
                 !string.IsNullOrEmpty(request.Name)
                     ? MapNamesToVagrantNames(

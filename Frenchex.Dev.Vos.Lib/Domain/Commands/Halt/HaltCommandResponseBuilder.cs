@@ -4,7 +4,7 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Halt;
 
 public class HaltCommandResponseBuilder : RootResponseBuilder, IHaltCommandResponseBuilder
 {
-    private Vagrant.Lib.Domain.Commands.Halt.IHaltCommandResponse? _haltCommandResponse;
+    private Vagrant.Lib.Abstractions.Domain.Commands.Halt.Response.IHaltCommandResponse? _haltCommandResponse;
 
     public IHaltCommandResponse Build()
     {
@@ -14,7 +14,7 @@ public class HaltCommandResponseBuilder : RootResponseBuilder, IHaltCommandRespo
         return new HaltCommandResponse(_haltCommandResponse);
     }
 
-    public IHaltCommandResponseBuilder WithHaltResponse(Vagrant.Lib.Domain.Commands.Halt.IHaltCommandResponse response)
+    public IHaltCommandResponseBuilder WithHaltResponse(Vagrant.Lib.Abstractions.Domain.Commands.Halt.Response.IHaltCommandResponse response)
     {
         _haltCommandResponse = response;
         return this;

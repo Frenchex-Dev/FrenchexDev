@@ -6,5 +6,5 @@ public interface IHaltCommandResponseBuilder : IRootResponseBuilder
 {
     IHaltCommandResponse Build();
 
-    IHaltCommandResponseBuilder WithHaltResponse(Vagrant.Lib.Domain.Commands.Halt.IHaltCommandResponse response);
+    IHaltCommandResponseBuilder WithHaltResponse(Vagrant.Lib.Abstractions.Domain.Commands.Halt.Response.IHaltCommandResponse response);
 }

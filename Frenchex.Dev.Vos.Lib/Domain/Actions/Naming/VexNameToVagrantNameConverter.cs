@@ -75,7 +75,7 @@ public class VexNameToVagrantNameConverter : IVexNameToVagrantNameConverter
                             var instanceSplitTo = instancesSplit[1];
 
                             if (instanceSplitTo == "*")
-                                to = (configuration?.Machines[machineName].Instances ?? 0) - 1;
+                                to = configuration?.Machines[machineName].Instances - 1 ?? 0;
                         }
                     }
 

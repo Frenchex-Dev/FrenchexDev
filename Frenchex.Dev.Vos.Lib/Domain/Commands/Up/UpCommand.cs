@@ -9,7 +9,7 @@ public class UpCommand : RootCommand, IUpCommand
     private readonly IUpCommandResponseBuilderFactory _responseBuilderFactory;
     private readonly Vagrant.Lib.Domain.Commands.Up.IUpCommand _vagrantUpCommand;
 
-    private readonly Vagrant.Lib.Domain.Commands.Up.IUpCommandRequestBuilderFactory
+    private readonly Vagrant.Lib.Abstractions.Domain.Commands.Up.Request.IUpCommandRequestBuilderFactory
         _vagrantUpCommandRequestBuilderFactory;
 
     public UpCommand(
@@ -17,7 +17,7 @@ public class UpCommand : RootCommand, IUpCommand
         IConfigurationLoadAction configurationLoadAction,
         IVexNameToVagrantNameConverter vexNameToVagrantNameConverter,
         Vagrant.Lib.Domain.Commands.Up.IUpCommand vagrantUpCommand,
-        Vagrant.Lib.Domain.Commands.Up.IUpCommandRequestBuilderFactory vagrantUpCommandRequestBuilderFactory
+        Vagrant.Lib.Abstractions.Domain.Commands.Up.Request.IUpCommandRequestBuilderFactory vagrantUpCommandRequestBuilderFactory
     ) : base(configurationLoadAction, vexNameToVagrantNameConverter)
     {
         _responseBuilderFactory = responseBuilderFactory;
@@ -31,7 +31,7 @@ public class UpCommand : RootCommand, IUpCommand
             .BaseBuilder
             .UsingWorkingDirectory(request.Base.WorkingDirectory)
             .UsingTimeoutMiliseconds(request.Base.TimeoutInMiliSeconds)
-            .Parent<Vagrant.Lib.Domain.Commands.Up.IUpCommandRequestBuilder>()
+            .Parent<Vagrant.Lib.Abstractions.Domain.Commands.Up.Request.IUpCommandRequestBuilder>()
             .UsingNamesOrIds(
                 MapNamesToVagrantNames(
                     request.Names,

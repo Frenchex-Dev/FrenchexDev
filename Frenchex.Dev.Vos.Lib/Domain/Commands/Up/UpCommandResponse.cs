@@ -5,11 +5,11 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Up;
 public class UpCommandResponse : RootResponse, IUpCommandResponse
 {
     public UpCommandResponse(
-        Vagrant.Lib.Domain.Commands.Up.IUpCommandResponse upCommandResponse
+        Vagrant.Lib.Abstractions.Domain.Commands.Up.Response.IUpCommandResponse upCommandResponse
     )
     {
         Response = upCommandResponse;
     }
 
-    public Vagrant.Lib.Domain.Commands.Up.IUpCommandResponse Response { get; }
+    public Vagrant.Lib.Abstractions.Domain.Commands.Up.Response.IUpCommandResponse Response { get; }
 }

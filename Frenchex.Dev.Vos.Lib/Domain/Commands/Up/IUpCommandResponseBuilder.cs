@@ -6,5 +6,5 @@ public interface IUpCommandResponseBuilder : IRootResponseBuilder
 {
     IUpCommandResponse Build();
 
-    IUpCommandResponseBuilder WithUpResponse(Vagrant.Lib.Domain.Commands.Up.IUpCommandResponse response);
+    IUpCommandResponseBuilder WithUpResponse(Vagrant.Lib.Abstractions.Domain.Commands.Up.Response.IUpCommandResponse response);
 }
