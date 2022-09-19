@@ -6,6 +6,8 @@ using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Halt.Command;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Halt.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Init.Command;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Init.Request;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Provision.Command;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Provision.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Root.Response;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Command;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Request;
@@ -28,62 +30,88 @@ public class CompleteWorkflowTests : AbstractUnitTest
         UnitTest = VagrantUnitTestBase.CreateUnitTest<ExecutionContext>();
         UnitTest.BuildIfNecessary();
 
-        // directory is created by Init command
-        var tempDir = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
+        var sp = UnitTest.ServiceProvider!;
+
+        var alpineInstallDockerCommand = @"#!/usr/bin/env bash
+
+apk update
+apk add docker docker-compose
+rc-update add docker default
+        ";
+
+        sp.GetRequiredService<IFilesystem>()
+            .FileWriteAllTextAsync(Path.Join("Provisioning", "docker.install.sh"), alpineInstallDockerCommand);
 
         yield return new object[] {
-            UnitTest!.ServiceProvider!
+            (string workingDirectory) => sp
                 .GetRequiredService<IInitCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
                 .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(1).TotalMilliseconds)
-                .UsingWorkingDirectory(tempDir)
+                .UsingWorkingDirectory(workingDirectory)
                 .Parent<IInitCommandRequestBuilder>()
                 .UsingBoxName("generic/alpine38")
                 .UsingBoxVersion("4.1.10")
                 .Build(),
-            UnitTest!.ServiceProvider!
+            (string workingDirectory) => sp
                 .GetRequiredService<IUpCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
                 .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(10).TotalMilliseconds)
-                .UsingWorkingDirectory(tempDir)
+                .UsingWorkingDirectory(workingDirectory)
                 .Parent<IUpCommandRequestBuilder>()
+                .WithProvision(false)
                 .Build(),
-            UnitTest!.ServiceProvider!
+            (string workingDirectory) =>
+            {
+                var factory = 
+                sp
+                    .GetRequiredService<IProvisionCommandRequestBuilderFactory>();
+
+                var builder = factory.Factory();
+
+                builder.BaseBuilder
+                    .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(1).TotalMilliseconds)
+                    .UsingWorkingDirectory(workingDirectory);
+
+                builder.ProvisionWith(new[] {"docker.install"});
+                
+                return builder.Build(); 
+            },
+            (string workingDirectory) => sp
                 .GetRequiredService<IStatusCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
                 .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(1).TotalMilliseconds)
-                .UsingWorkingDirectory(tempDir)
+                .UsingWorkingDirectory(workingDirectory)
                 .Parent<IStatusCommandRequestBuilder>()
                 .Build(),
-            UnitTest!.ServiceProvider!
+            (string workingDirectory) => sp
                 .GetRequiredService<ISshConfigCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
                 .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(1).TotalMilliseconds)
-                .UsingWorkingDirectory(tempDir)
+                .UsingWorkingDirectory(workingDirectory)
                 .Parent<ISshConfigCommandRequestBuilder>()
                 .UsingName("default")
                 .Build(),
-            UnitTest!.ServiceProvider!
+            (string workingDirectory) => sp
                 .GetRequiredService<ISshCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
                 .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(1).TotalMilliseconds)
-                .UsingWorkingDirectory(tempDir)
+                .UsingWorkingDirectory(workingDirectory)
                 .Parent<ISshCommandRequestBuilder>()
                 .UsingCommand("echo foo")
                 .UsingNameOrId("default")
                 .Build(),
-            UnitTest!.ServiceProvider!
+            (string workingDirectory) => sp
                 .GetRequiredService<IHaltCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
                 .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(3).TotalMilliseconds)
-                .UsingWorkingDirectory(tempDir)
+                .UsingWorkingDirectory(workingDirectory)
                 .Parent<IHaltCommandRequestBuilder>()
                 .Build(),
-            UnitTest!.ServiceProvider!
+            (string workingDirectory) => sp
                 .GetRequiredService<IDestroyCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
                 .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(3).TotalMilliseconds)
-                .UsingWorkingDirectory(tempDir)
+                .UsingWorkingDirectory(workingDirectory)
                 .Parent<IDestroyCommandRequestBuilder>()
                 .WithForce(true)
                 .Build()
@@ -94,15 +122,28 @@ public class CompleteWorkflowTests : AbstractUnitTest
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     [TestCategory(TestCategories.NeedVagrant)]
     public async Task Test_Complete_Workflow(
-        IInitCommandRequest initRequest,
-        IUpCommandRequest upRequest,
-        IStatusCommandRequest statusRequest,
-        ISshConfigCommandRequest sshConfigCommandRequest,
-        ISshCommandRequest sshCommandRequest,
-        IHaltCommandRequest haltRequest,
-        IDestroyCommandRequest destroyRequest
+        Func<string, IInitCommandRequest> initRequestBuilder,
+        Func<string, IUpCommandRequest> upRequestBuilder,
+        Func<string, IProvisionCommandRequest> provisionRequestBuilder,
+        Func<string, IStatusCommandRequest> statusRequestBuilder,
+        Func<string, ISshConfigCommandRequest> sshConfigCommandRequestBuilder,
+        Func<string, ISshCommandRequest> sshCommandRequestBuilder,
+        Func<string, IHaltCommandRequest> haltRequestBuilder,
+        Func<string, IDestroyCommandRequest> destroyRequestBuilder
     )
     {
+        // directory is created by Init command
+        var workingDirectory = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
+
+        var initRequest = initRequestBuilder.Invoke(workingDirectory);
+        var upRequest = upRequestBuilder.Invoke(workingDirectory);
+        var provisionRequest = provisionRequestBuilder.Invoke(workingDirectory);
+        var statusRequest = statusRequestBuilder.Invoke(workingDirectory);
+        var sshConfigCommandRequest = sshConfigCommandRequestBuilder.Invoke(workingDirectory);
+        var sshCommandRequest = sshCommandRequestBuilder.Invoke(workingDirectory);
+        var haltRequest = haltRequestBuilder.Invoke(workingDirectory);
+        var destroyRequest = destroyRequestBuilder.Invoke(workingDirectory);
+        
         await UnitTest!.RunAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
             {
                 await TestInner(
@@ -123,6 +164,13 @@ public class CompleteWorkflowTests : AbstractUnitTest
                 await TestInner(
                     "up",
                     provider.GetRequiredService<IUpCommand>().StartProcess(upRequest),
+                    new List<int> {0, 1},
+                    true
+                );
+                
+                await TestInner(
+                    "provision",
+                    provider.GetRequiredService<IProvisionCommand>().StartProcess(provisionRequest),
                     new List<int> {0, 1},
                     true
                 );
@@ -205,8 +253,6 @@ public class CompleteWorkflowTests : AbstractUnitTest
         else
             Assert.IsTrue(!string.IsNullOrEmpty(output), $"{debug} output is neither empty nor null");
     }
-
-   
 }
 
 public class ExecutionContext : WithWorkingDirectoryExecutionContext

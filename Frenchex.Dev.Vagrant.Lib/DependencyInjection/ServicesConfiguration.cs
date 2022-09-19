@@ -24,6 +24,7 @@ public static class ServicesConfiguration
         Domain.Commands.Destroy.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
         Domain.Commands.Halt.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
         Domain.Commands.Init.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
+        Domain.Commands.Provision.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
         Domain.Commands.Up.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
         Domain.Commands.SshConfig.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
         Domain.Commands.Ssh.DependencyInjection.ServicesConfiguration.ConfigureServices(services);

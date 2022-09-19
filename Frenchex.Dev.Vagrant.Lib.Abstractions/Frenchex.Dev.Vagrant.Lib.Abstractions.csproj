@@ -10,7 +10,6 @@
       <Folder Include="Domain\Commands\Root\Base\Command" />
       <Folder Include="Domain\Commands\Root\Base\Facade" />
       <Folder Include="Domain\Commands\Root\Base\Response" />
-      <Folder Include="Domain\Commands\Root\Facade" />
     </ItemGroup>
 
     <ItemGroup>
