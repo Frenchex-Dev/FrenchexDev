@@ -476,6 +476,13 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
 
     public class Payload
     {
+        public Payload(string name, string ipv4Pattern, bool isPrimary)
+        {
+            Name = name;
+            Ipv4Pattern = ipv4Pattern;
+            IsPrimary = isPrimary;
+        }
+
         public string Name { get; init; }
         public string Ipv4Pattern { get; init; }
         public bool IsPrimary { get; init; }
@@ -490,8 +497,8 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
         var list = new List<IDefineMachineAddCommandRequest>();
 
         var payloads = new List<Payload>() {
-            new() {Name = "foo", Ipv4Pattern = "10.100.2.#INSTANCE#", IsPrimary = true},
-            new() {Name = "bar", Ipv4Pattern = "10.100.3.#INSTANCE#", IsPrimary = false}
+            new("foo", "10.100.2.#INSTANCE#", true),
+            new("bar", "10.100.3.#INSTANCE#", false)
         };
 
         foreach (var payload in payloads)
@@ -507,7 +514,15 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
                 "10.9.0",
                 false,
                 ProviderEnum.Virtualbox,
-                new Dictionary<string, ProvisioningDefinition>(),
+                new Dictionary<string, ProvisioningDefinition>() {
+                    {
+                        "docker.install", new ProvisioningDefinition() {
+                            Env = new Dictionary<string, string>() {
+                                {"DOCKER_VERSION", "20.9"}
+                            }
+                        }
+                    }
+                },
                 new Dictionary<string, SharedFolderDefinition>(),
                 16,
                 128,
@@ -520,7 +535,8 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
                 true,
                 true,
                 defaultSystemNetworkBridge,
-                UnitTest.ServiceProvider!.GetRequiredService<IDefineMachineAddCommandRequestBuilderFactory>());
+                UnitTest.ServiceProvider!.GetRequiredService<IDefineMachineAddCommandRequestBuilderFactory>(),
+                UnitTest.ServiceProvider!.GetRequiredService<MachineDefinitionBuilderFactory>());
 
             list.Add(def);
         }
@@ -552,7 +568,8 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
         bool isPrimary,
         bool enabled,
         List<(NetworkInterface n, List<IPAddress?>?)> defaultSystemNetworkBridge,
-        IDefineMachineAddCommandRequestBuilderFactory defineMachineAddCommandRequestBuilderFactory
+        IDefineMachineAddCommandRequestBuilderFactory defineMachineAddCommandRequestBuilderFactory,
+        MachineDefinitionBuilderFactory machineDefinitionBuilderFactory
     )
     {
         return defineMachineAddCommandRequestBuilderFactory
@@ -561,7 +578,7 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
             .UsingWorkingDirectory(workingDirectory)
             .UsingTimeoutMs((int) fromSecondsTs.TotalMilliseconds)
             .Parent<IDefineMachineAddCommandRequestBuilder>()
-            .UsingDefinition(UnitTest.ServiceProvider!.GetRequiredService<MachineDefinitionBuilderFactory>()
+            .UsingDefinition(machineDefinitionBuilderFactory
                 .Factory()
                 .BaseBuilder
                 .With3DEnabled(enable3d)
@@ -641,14 +658,14 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
             "foo",
             BoxTest,
             BoxVersionTest,
-            UnitTest.ServiceProvider!));
+            UnitTest!.ServiceProvider!));
 
         list.Add(BuildDefineMachineTypeAddCommandRequestWithSpecifiedBoxNameAndVersion(
             tempDir,
             "bar",
             BoxTest,
             BoxVersionTest,
-            UnitTest.ServiceProvider!));
+            UnitTest!.ServiceProvider!));
 
         return list;
     }
@@ -667,6 +684,11 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
 
     public class NameCommandRequestPayload
     {
+        public NameCommandRequestPayload(INameCommandRequest request)
+        {
+            Request = request;
+        }
+
         public INameCommandRequest Request { get; init; }
         public List<string> ExpectedNames { get; set; } = new List<string>();
     }
@@ -675,15 +697,15 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
     {
         var factory = UnitTest!.ServiceProvider!.GetRequiredService<INameCommandRequestBuilderFactory>();
         var list = new List<NameCommandRequestPayload>();
-      
-        var payload = new NameCommandRequestPayload() {
-            Request = factory.Factory()
-                .BaseBuilder
-                .UsingWorkingDirectory(tempDir)
-                .UsingTimeoutMs((int) TimeSpan.FromSeconds(20).TotalMilliseconds)
-                .Parent<INameCommandRequestBuilder>()
-                .WithNames(new[] {"foo-0", "bar-[2-*]"})
-                .Build(),
+        var nameCommandRequest = factory.Factory()
+            .BaseBuilder
+            .UsingWorkingDirectory(tempDir)
+            .UsingTimeoutMs((int) TimeSpan.FromSeconds(20).TotalMilliseconds)
+            .Parent<INameCommandRequestBuilder>()
+            .WithNames(new[] {"foo-0", "bar-[2-*]"})
+            .Build();
+
+        var payload = new NameCommandRequestPayload(nameCommandRequest) {
             ExpectedNames = new List<string>() {"foo-00", "bar-02"}
         };
 

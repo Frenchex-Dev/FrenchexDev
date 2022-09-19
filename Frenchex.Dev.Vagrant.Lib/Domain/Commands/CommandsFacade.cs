@@ -1,21 +1,40 @@
 ﻿using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain;
-using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Facade;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Halt.Facade;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Init.Facade;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Facade;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.SshConfig.Facade;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Status.Facade;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Facade;
 
 namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands;
 
 public class CommandsFacade : ICommandsFacade
 {
-    private readonly IEnumerable<IFaceableCommand> _faceableCommands;
-
     public CommandsFacade(
-        IEnumerable<IFaceableCommand> faceableCommands
+        IDestroyFacade destroy,
+        IHaltFacade halt,
+        IInitFacade init,
+        ISshFacade ssh,
+        ISshConfigFacade sshConfig,
+        IStatusFacade status,
+        IUpFacade up
     )
     {
-        _faceableCommands = faceableCommands;
+        Destroy = destroy;
+        Halt = halt;
+        Init = init;
+        Ssh = ssh;
+        SshConfig = sshConfig;
+        Status = status;
+        Up = up;
     }
-    
-    public IFaceableCommand GetCommandFace(string name)
-    {
-        return _faceableCommands.FirstOrDefault(x => x.GetCliCommandName() == name);
-    }
+
+    public IDestroyFacade Destroy { get; init; }
+    public IHaltFacade Halt { get; init; }
+    public IInitFacade Init { get; init; }
+    public ISshFacade Ssh { get; init; }
+    public ISshConfigFacade SshConfig { get; init; }
+    public IStatusFacade Status { get; init; }
+    public IUpFacade Up { get; init; }
 }
