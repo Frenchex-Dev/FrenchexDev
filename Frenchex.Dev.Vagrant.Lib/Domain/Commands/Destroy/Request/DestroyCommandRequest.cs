@@ -13,7 +13,7 @@ public class DestroyCommandRequest : RootCommandRequest, IDestroyCommandRequest
         bool force,
         bool parallel,
         bool graceful,
-        int destroyTimeoutInMiliSeconds,
+        int destroyTimeoutInMs,
         IBaseCommandRequest baseRequest
     ) : base(baseRequest)
     {
@@ -21,13 +21,12 @@ public class DestroyCommandRequest : RootCommandRequest, IDestroyCommandRequest
         Force = force;
         Parallel = parallel;
         Graceful = graceful;
-        DestroyTimeoutInMiliSeconds = destroyTimeoutInMiliSeconds;
+        DestroyTimeoutInMs = destroyTimeoutInMs;
     }
 
     public string NameOrId { get; }
     public bool Force { get; }
     public bool Parallel { get; }
     public bool Graceful { get; }
-    public int DestroyTimeoutInMiliSeconds { get; }
-    public Dotnet.Wrapping.Lib.Domain.Commands.Root.IBaseCommandRequest Base { get; }
+    public int DestroyTimeoutInMs { get; }
 }

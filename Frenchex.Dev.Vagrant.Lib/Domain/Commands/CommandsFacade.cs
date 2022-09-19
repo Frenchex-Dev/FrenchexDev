@@ -14,7 +14,7 @@ public class CommandsFacade : ICommandsFacade
         _faceableCommands = faceableCommands;
     }
     
-    public IFaceableCommand? GetCommandFace(string name)
+    public IFaceableCommand GetCommandFace(string name)
     {
         return _faceableCommands.FirstOrDefault(x => x.GetCliCommandName() == name);
     }

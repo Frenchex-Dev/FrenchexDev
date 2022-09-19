@@ -9,5 +9,5 @@ public interface IDestroyCommandRequest : IRootCommandRequest
     bool Force { get; }
     bool Parallel { get; }
     bool Graceful { get; }
-    int DestroyTimeoutInMiliSeconds { get; }
+    int DestroyTimeoutInMs { get; }
 }

@@ -206,7 +206,9 @@ public class CompleteWorkflowTests : AbstractUnitTest
             Assert.IsTrue(!string.IsNullOrEmpty(output), $"{debug} output is neither empty nor null");
     }
 
-    public class ExecutionContext : WithWorkingDirectoryExecutionContext
-    {
-    }
+   
+}
+
+public class ExecutionContext : WithWorkingDirectoryExecutionContext
+{
 }

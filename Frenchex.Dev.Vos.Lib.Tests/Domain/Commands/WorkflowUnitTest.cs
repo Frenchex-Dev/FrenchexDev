@@ -474,7 +474,7 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
     }
 
 
-    internal class Payload
+    public class Payload
     {
         public string Name { get; init; }
         public string Ipv4Pattern { get; init; }
