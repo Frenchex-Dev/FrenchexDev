@@ -20,7 +20,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Frenchex.Dev.Vos.Lib.Tests.Domain.Commands;
 
 [TestClass]
-public class CompleteWorkflowTests1 : AbstractUnitTest
+public class VosLibCompleteWorkflowTests : AbstractUnitTest
 {
     private const string BoxTest = "generic/alpine316";
     private const string BoxVersionTest = "4.1.10";

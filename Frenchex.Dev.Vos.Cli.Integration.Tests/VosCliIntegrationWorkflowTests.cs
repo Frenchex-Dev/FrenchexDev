@@ -9,7 +9,7 @@ namespace Frenchex.Dev.Vos.Cli.Integration.Tests;
 
 [TestClass]
 [TestCategory(TestCategories.NeedVagrant)]
-public class IntegrationWorkflows : IntegrationWorkflowUnitTestForVirtualBox
+public class VosCliIntegrationWorkflowTests : IntegrationWorkflowUnitTestForVirtualBox
 {
     public static IEnumerable<object[]> Test_Data_MultipleRuns()
     {

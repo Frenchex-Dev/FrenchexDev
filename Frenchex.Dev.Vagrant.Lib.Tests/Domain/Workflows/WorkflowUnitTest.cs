@@ -23,7 +23,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Frenchex.Dev.Vagrant.Lib.Tests.Domain.Workflows;
 
 [TestClass]
-public class CompleteWorkflowTests : AbstractUnitTest
+public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
 {
     public static IEnumerable<object[]> DataSource()
     {
