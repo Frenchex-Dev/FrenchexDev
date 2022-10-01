@@ -26,7 +26,7 @@ public class UnitTestingTests
                 services.AddScoped<ExecutionContext>();
             });
 
-        await unitTest.RunAsync<ExecutionContext>((provider, root, context, vsCode) =>
+        await unitTest.ExecuteAndAssertAsync<ExecutionContext>((provider, root, context, vsCode) =>
             {
                 executionContext.HasRanExecutionFunction.Mark();
 
@@ -37,7 +37,8 @@ public class UnitTestingTests
                 executionContext.HasRanAssertFunction.Mark();
 
                 return Task.CompletedTask;
-            }
+            },
+            unitTest.ServiceProvider!
         );
 
         var buildingOk =

@@ -1,4 +1,5 @@
 ﻿using System.CommandLine;
+using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Tests.Abstractions.Domain;
 using static System.Threading.Tasks.Task;
 
@@ -19,7 +20,8 @@ public class IntegrationWorkflows : IntegrationWorkflowUnitTestForVirtualBox
     [DynamicData(nameof(Test_Data_MultipleRuns), DynamicDataSourceType.Method)]
     public async Task TestExecutions(string testCaseName, Payload payload)
     {
-        List<Task> tasks = CreateRunInternal(testCaseName, payload, InternalRunExecution);
+        List<Task> tasks =
+            CreateRunInternal(testCaseName, payload, InternalRunExecution, new UnitTest.VsCodeDebugging());
 
         await WhenAll(tasks);
     }
@@ -28,12 +30,17 @@ public class IntegrationWorkflows : IntegrationWorkflowUnitTestForVirtualBox
     [DynamicData(nameof(Test_Data_MultipleRuns), DynamicDataSourceType.Method)]
     public async Task TestArgumentsParsing(string testCaseName, Payload payload)
     {
-        List<Task> tasks = CreateRunInternal(testCaseName, payload, InternalRunParsing);
+        List<Task> tasks = CreateRunInternal(testCaseName, payload, InternalRunParsing, new UnitTest.VsCodeDebugging());
 
         await WhenAll(tasks);
     }
 
-    private List<Task> CreateRunInternal(string testCaseName, Payload payload, Func<InputCommand[], string, Task> func)
+    private List<Task> CreateRunInternal(
+        string testCaseName,
+        Payload payload,
+        Func<InputCommand[], string, UnitTest.VsCodeDebugging, Task> func,
+        UnitTest.VsCodeDebugging vsCodeDebugging
+    )
     {
         var numberOfWorkingDirectories = payload.ListOfListOfCommands!.Count;
 
@@ -47,17 +54,29 @@ public class IntegrationWorkflows : IntegrationWorkflowUnitTestForVirtualBox
         List<Task> tasks = new List<Task>();
 
         var i = 0;
+
         foreach (List<InputCommand> run in payload.ListOfListOfCommands)
         {
-            var commandsRun = func.Invoke(run.ToArray(), workingDirectories[i++]);
+            var commandsRun = func.Invoke(run.ToArray(), workingDirectories[i++], vsCodeDebugging);
             tasks.Add(commandsRun);
         }
 
         return tasks;
     }
 
-    private async Task InternalRunExecution(InputCommand[] commands, string workingDirectory)
+    private async Task InternalRunExecution(
+        InputCommand[] commands,
+        string workingDirectory,
+        UnitTest.VsCodeDebugging vsCodeDebugging
+    )
     {
+        if (UnitTest is null)
+        {
+            throw new ArgumentNullException(nameof(UnitTest));
+        }
+        
+        await SetupUnitTest(UnitTest, vsCodeDebugging);
+        
         await RunInternal(new[] {
                 workingDirectory
             },
@@ -68,25 +87,7 @@ public class IntegrationWorkflows : IntegrationWorkflowUnitTestForVirtualBox
 
                 Assert.AreEqual(0, parsed);
             },
-            false);
-    }
-
-    private async Task InternalRunParsing(InputCommand[] commands, string workingDirectory)
-    {
-        await RunInternal(new[] {
-                workingDirectory
-            },
-            commands,
-            (command, rootCommand) =>
-            {
-                var parsed = rootCommand.Parse(command);
-
-                var msgError = string.Join(Environment.NewLine, parsed.Errors.Select(x => x.Message));
-
-                Assert.AreEqual(0, parsed.Errors.Count, msgError);
-
-                return CompletedTask;
-            },
-            false);
+            vsCodeDebugging
+        );
     }
 }

@@ -27,23 +27,8 @@ public class CompleteWorkflowTests : AbstractUnitTest
 {
     public static IEnumerable<object[]> DataSource()
     {
-        UnitTest = VagrantUnitTestBase.CreateUnitTest<ExecutionContext>();
-        UnitTest.BuildIfNecessary();
-
-        var sp = UnitTest.ServiceProvider!;
-
-        var alpineInstallDockerCommand = @"#!/usr/bin/env bash
-
-apk update
-apk add docker docker-compose
-rc-update add docker default
-        ";
-
-        sp.GetRequiredService<IFilesystem>()
-            .FileWriteAllTextAsync(Path.Join("Provisioning", "docker.install.sh"), alpineInstallDockerCommand);
-
         yield return new object[] {
-            (string workingDirectory) => sp
+            (string workingDirectory, IServiceProvider sp) => sp
                 .GetRequiredService<IInitCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
                 .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(1).TotalMilliseconds)
@@ -52,7 +37,7 @@ rc-update add docker default
                 .UsingBoxName("generic/alpine38")
                 .UsingBoxVersion("4.1.10")
                 .Build(),
-            (string workingDirectory) => sp
+            (string workingDirectory, IServiceProvider sp) => sp
                 .GetRequiredService<IUpCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
                 .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(10).TotalMilliseconds)
@@ -60,30 +45,31 @@ rc-update add docker default
                 .Parent<IUpCommandRequestBuilder>()
                 .WithProvision(false)
                 .Build(),
-            (string workingDirectory) =>
+            (string workingDirectory, IServiceProvider sp) =>
             {
-                var factory = 
-                sp
-                    .GetRequiredService<IProvisionCommandRequestBuilderFactory>();
+                var factory =
+                    sp.GetRequiredService<IProvisionCommandRequestBuilderFactory>();
 
                 var builder = factory.Factory();
 
-                builder.BaseBuilder
+                builder
+                    .BaseBuilder
                     .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(1).TotalMilliseconds)
-                    .UsingWorkingDirectory(workingDirectory);
+                    .UsingWorkingDirectory(workingDirectory)
+                    .Parent<IProvisionCommandRequestBuilder>()
+                    .ProvisionWith(new[] {"docker.install"})
+                    ;
 
-                builder.ProvisionWith(new[] {"docker.install"});
-                
-                return builder.Build(); 
+                return builder.Build();
             },
-            (string workingDirectory) => sp
+            (string workingDirectory, IServiceProvider sp) => sp
                 .GetRequiredService<IStatusCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
                 .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(1).TotalMilliseconds)
                 .UsingWorkingDirectory(workingDirectory)
                 .Parent<IStatusCommandRequestBuilder>()
                 .Build(),
-            (string workingDirectory) => sp
+            (string workingDirectory, IServiceProvider sp) => sp
                 .GetRequiredService<ISshConfigCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
                 .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(1).TotalMilliseconds)
@@ -91,7 +77,7 @@ rc-update add docker default
                 .Parent<ISshConfigCommandRequestBuilder>()
                 .UsingName("default")
                 .Build(),
-            (string workingDirectory) => sp
+            (string workingDirectory, IServiceProvider sp) => sp
                 .GetRequiredService<ISshCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
                 .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(1).TotalMilliseconds)
@@ -100,14 +86,14 @@ rc-update add docker default
                 .UsingCommand("echo foo")
                 .UsingNameOrId("default")
                 .Build(),
-            (string workingDirectory) => sp
+            (string workingDirectory, IServiceProvider sp) => sp
                 .GetRequiredService<IHaltCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
                 .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(3).TotalMilliseconds)
                 .UsingWorkingDirectory(workingDirectory)
                 .Parent<IHaltCommandRequestBuilder>()
                 .Build(),
-            (string workingDirectory) => sp
+            (string workingDirectory, IServiceProvider sp) => sp
                 .GetRequiredService<IDestroyCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
                 .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(3).TotalMilliseconds)
@@ -118,6 +104,17 @@ rc-update add docker default
         };
     }
 
+    private class ExecutionContext : WithWorkingDirectoryExecutionContext
+    {
+
+    }
+
+    [TestInitialize]
+    public void TestInit()
+    {
+        UnitTest = VagrantUnitTestBase.CreateUnitTest<ExecutionContext>();
+    }
+    
     [TestMethod]
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     [TestCategory(TestCategories.NeedVagrant)]
@@ -134,7 +131,7 @@ rc-update add docker default
     {
         // directory is created by Init command
         var workingDirectory = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
-
+        
         var initRequest = initRequestBuilder.Invoke(workingDirectory);
         var upRequest = upRequestBuilder.Invoke(workingDirectory);
         var provisionRequest = provisionRequestBuilder.Invoke(workingDirectory);
@@ -143,8 +140,8 @@ rc-update add docker default
         var sshCommandRequest = sshCommandRequestBuilder.Invoke(workingDirectory);
         var haltRequest = haltRequestBuilder.Invoke(workingDirectory);
         var destroyRequest = destroyRequestBuilder.Invoke(workingDirectory);
-        
-        await UnitTest!.RunAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
+
+        await UnitTest!.ExecuteAndAssertAndCleanupAsync<ExecutionContext>(async (provider, _, _, _) =>
             {
                 await TestInner(
                     "init",
@@ -167,7 +164,7 @@ rc-update add docker default
                     new List<int> {0, 1},
                     true
                 );
-                
+
                 await TestInner(
                     "provision",
                     provider.GetRequiredService<IProvisionCommand>().StartProcess(provisionRequest),
@@ -202,7 +199,7 @@ rc-update add docker default
                     true
                 );
             },
-            async (provider, root, context) =>
+            async (_, _, _) =>
             {
                 await Task.Run(() =>
                 {
@@ -210,13 +207,14 @@ rc-update add docker default
                     Assert.IsTrue(File.Exists(Path.Join(initRequest.Base.WorkingDirectory, "Vagrantfile")));
                 });
             },
-            (provider, root, context) =>
+            (provider, _, _) =>
             {
                 provider.GetRequiredService<IFilesystem>().TryDirectoryDelete(initRequest.Base.WorkingDirectory!, true);
                 Assert.IsFalse(Directory.Exists(initRequest.Base.WorkingDirectory));
 
                 return Task.CompletedTask;
             },
+            UnitTest.ServiceProvider!,
             new UnitTest.VsCodeDebugging {Open = false, TellMe = true}
         );
     }
@@ -230,8 +228,8 @@ rc-update add docker default
     {
         Assert.IsNotNull(response, $"{debug} response is not null");
         Assert.IsNotNull(response.ProcessExecutionResult, $"{debug} response.PER is not null");
-        Assert.IsNotNull(response.ProcessExecutionResult.WaitForCompleteExit, $"{debug} response.WaitForComplexeExit");
-        Assert.IsNotNull(response.ProcessExecutionResult.OutputStream, $"{debug} response outputstream");
+        Assert.IsNotNull(response.ProcessExecutionResult.WaitForCompleteExit, $"{debug} response.WaitForCompleteExit");
+        Assert.IsNotNull(response.ProcessExecutionResult.OutputStream, $"{debug} response outputsStream");
 
         await response.ProcessExecutionResult.WaitForCompleteExit;
 
@@ -257,4 +255,5 @@ rc-update add docker default
 
 public class ExecutionContext : WithWorkingDirectoryExecutionContext
 {
+    
 }

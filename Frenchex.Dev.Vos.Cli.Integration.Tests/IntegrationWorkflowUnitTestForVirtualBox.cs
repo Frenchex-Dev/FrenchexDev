@@ -9,7 +9,7 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
 {
     private const string WorkingDirectoryMarker = "##{{WORKING_DIRECTORY}}##";
 
-    public static IEnumerable<object[]> ProduceDataSets(
+    protected static IEnumerable<object[]> ProduceDataSets(
         TimeSpan timeout,
         string vagrantBinPath,
         int nbTestCases = 1,
@@ -32,7 +32,7 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
 
             for (var x = 0; x < nbVosInstances; x++)
             {
-                payload.ListOfListOfCommands.Add(ProduceTestData(timeout, vagrantBinPath).ToList());
+                payload.ListOfListOfCommands.Add(ProduceTestData(timeout).ToList());
             }
 
             listOfList.Add(obj.ToArray());
@@ -41,13 +41,10 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
         return listOfList;
     }
 
-    [TestInitialize]
-    public async Task Setup()
+    public async Task SetupUnitTest(UnitTest unitTest, UnitTest.VsCodeDebugging vsCodeDebugging)
     {
-        UnitTest = VosCliIntegrationUnitTestBase.CreateUnitTest<ExecutionContext>();
-
-        await UnitTest!.RunAsync<ExecutionContext>(
-            (provider, configuration, context, vsCode) =>
+        await unitTest.ExecuteAndAssertAsync<ExecutionContext>(
+            (provider, _, _, _) =>
             {
                 var sut = provider.GetRequiredService<SubjectUnderTest>().RootCommand;
                 var integration = provider.GetRequiredService<IIntegration>();
@@ -55,13 +52,16 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
 
                 return Task.CompletedTask;
             },
-            (provider, root, context) => Task.CompletedTask,
-            (provider, root, context) => Task.CompletedTask,
-            new UnitTest.VsCodeDebugging {TellMe = true});
+            (_, _, _) => Task.CompletedTask,
+            unitTest.ServiceProvider!,
+            vsCodeDebugging);
     }
 
-
-    private async Task InternalRunParsing(InputCommand[] commands, string workingDirectory)
+    public async Task InternalRunParsing(
+        InputCommand[] commands,
+        string workingDirectory,
+        UnitTest.VsCodeDebugging vsCodeDebugging
+    )
     {
         await RunInternal(new[] {
                 workingDirectory
@@ -77,26 +77,24 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
 
                 return Task.CompletedTask;
             },
-            false);
+            vsCodeDebugging);
     }
 
-    protected static string BuildCommandLineString(
+    private static string BuildCommandLineString(
         string command,
-        string timeOutOpt,
-        string vagrantBingPathOpt
+        string timeOutOpt
     )
     {
-        return $"{command} {timeOutOpt} --working-directory {WorkingDirectoryMarker} {vagrantBingPathOpt}";
+        return $"{command} {timeOutOpt} --working-directory {WorkingDirectoryMarker}";
     }
 
-    protected static InputCommand[] ProduceTestData(TimeSpan timeout, string vagrantBinPath)
+    private static InputCommand[] ProduceTestData(TimeSpan timeout)
     {
         var timeOutOpt = "--timeout-ms " + timeout.TotalMilliseconds;
-        var vagrantBinPathOpt = ""; // $"--vagrant-bin-path {vagrantBinPath}";
 
         string BuildInternalCommandLineString(string command)
         {
-            return BuildCommandLineString(command, timeOutOpt, vagrantBinPathOpt);
+            return BuildCommandLineString(command, timeOutOpt);
         }
 
         return new InputCommand[] {
@@ -124,11 +122,11 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
         string[] workingDirectories,
         InputCommand[] commands,
         Func<string, RootCommand, Task> execCommand,
-        bool openVsCode = true
+        UnitTest.VsCodeDebugging vsCodeDebugging
     )
     {
-        await UnitTest!.RunAsync<ExecutionContext>(
-            async (provider, configuration, context, vsCode) =>
+        await UnitTest!.ExecuteAndAssertAsync<ExecutionContext>(
+            async (provider, _, _, _) =>
             {
                 var sut = provider.GetRequiredService<SubjectUnderTest>().RootCommand;
 
@@ -141,9 +139,9 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
                     }
                 }
             },
-            (provider, root, context) => Task.CompletedTask,
-            (provider, root, context) => Task.CompletedTask,
-            new UnitTest.VsCodeDebugging {TellMe = true});
+            (_, _, _) => Task.CompletedTask,
+            UnitTest.ServiceProvider!,
+            vsCodeDebugging);
     }
 
     public class Payload

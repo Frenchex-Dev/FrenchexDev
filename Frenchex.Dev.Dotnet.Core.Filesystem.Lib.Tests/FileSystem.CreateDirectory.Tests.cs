@@ -22,7 +22,7 @@ public class FileSystemCreateDirectoryTests : AbstractUnitTest
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     public async Task CanCreateDirectory(string originalFile)
     {
-        await UnitTest!.RunAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
+        await UnitTest!.ExecuteAndAssertAndCleanupAsync<ExecutionContext>(async (provider, _, context, _) =>
             {
                 var fs = provider.GetRequiredService<IFilesystem>();
 
@@ -34,26 +34,28 @@ public class FileSystemCreateDirectoryTests : AbstractUnitTest
                     fs.DirectoryCreate(context.FullDestinationDirectory);
                 });
             },
-            async (provider, root, context) =>
+            async (_, _, context) =>
             {
                 await Task.Run(() =>
                 {
                     Assert.IsTrue(Directory.Exists(context.FullDestinationDirectory));
                 });
             },
-            async (provider, root, context) =>
+            async (_, _, context) =>
             {
                 await Task.Run(() =>
                 {
                     var fileToDelete = context.FullDestinationDirectory;
                     Directory.Delete(fileToDelete!, true);
                 });
-            }
+            },
+            UnitTest.ServiceProvider!
         );
     }
 
     private class ExecutionContext : WithWorkingDirectoryExecutionContext
     {
         public string? FullDestinationDirectory { get; set; }
+
     }
 }

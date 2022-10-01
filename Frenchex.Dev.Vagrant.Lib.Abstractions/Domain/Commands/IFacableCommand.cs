@@ -1,6 +1,6 @@
 ﻿namespace Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands;
 
-public interface IFaceableCommand
+public interface IFacableCommand
 {
     string GetCliCommandName();
 }

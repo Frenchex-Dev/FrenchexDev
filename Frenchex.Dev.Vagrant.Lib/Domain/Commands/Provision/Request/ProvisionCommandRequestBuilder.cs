@@ -6,24 +6,30 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Provision.Request;
 
 public class ProvisionCommandRequestBuilder : RootCommandRequestBuilder, IProvisionCommandRequestBuilder
 {
-    private string[] _with;
+    private string[]? _with;
+    private string? _vmName;
 
-    public ProvisionCommandRequestBuilder(IBaseCommandRequestBuilderFactory? baseRequestBuilderFactory) : base(
+    public ProvisionCommandRequestBuilder(
+        IBaseCommandRequestBuilderFactory? baseRequestBuilderFactory
+    ) : base(
         baseRequestBuilderFactory)
     {
     }
 
     public IProvisionCommandRequest Build()
     {
-        return new ProvisionCommandRequest() {
-            Base = BaseBuilder.Build(),
-            ProvisionWith = _with
-        };
+        return new ProvisionCommandRequest(BaseBuilder.Build(), _vmName, _with);
     }
 
     public IProvisionCommandRequestBuilder ProvisionWith(string[] with)
     {
         _with = with;
+        return this;
+    }
+
+    public IProvisionCommandRequestBuilder ProvisionVmName(string vmName)
+    {
+        _vmName = vmName;
         return this;
     }
 }

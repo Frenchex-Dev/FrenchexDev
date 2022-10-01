@@ -67,7 +67,7 @@ public class HaltCommandIntegration : ABaseCommandIntegration, IHaltCommandInteg
 
             BuildBase(requestBuilder, payload);
 
-            var response = await _command.Execute(requestBuilder
+            var response = await _command.ExecuteAsync(requestBuilder
                     .UsingNames(payload.Names)
                     .WithForce(payload.Force)
                     .UsingHaltTimeoutInMiliSeconds(payload.HaltTimeoutMs)

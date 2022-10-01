@@ -27,8 +27,8 @@ public class BaseCommandRequest : IBaseCommandRequest
         DebugTimestamp = debugTimestamp ?? false;
         Tty = tty ?? false;
         Help = help ?? false;
-        TimeoutInMiliSeconds = timeoutMs ?? (int) TimeSpan.FromMinutes(1).TotalMilliseconds;
-        VagrantBinPath = vagrantBinPath ?? "vagrant";
+        TimeoutMs = timeoutMs ?? (int) -1;
+        BinPath = vagrantBinPath ?? "vagrant";
     }
 
     public bool Color { get; }
@@ -40,6 +40,6 @@ public class BaseCommandRequest : IBaseCommandRequest
     public bool Tty { get; }
     public bool Help { get; }
     public string? WorkingDirectory { get; }
-    public int TimeoutInMiliSeconds { get; }
-    public string VagrantBinPath { get; }
+    public string? BinPath { get; }
+    public int TimeoutMs { get; }
 }

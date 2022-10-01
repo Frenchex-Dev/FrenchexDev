@@ -23,7 +23,7 @@ public class DefineMachineTypeAddCommand : RootCommand, IDefineMachineTypeAddCom
         _defineMachineTypeAddCommandResponseBuilderFactory = defineMachineTypeAddCommandResponseBuilderFactory;
     }
 
-    public async Task<IDefineMachineTypeAddCommandResponse> Execute(IDefineMachineTypeAddCommandRequest request)
+    public async Task<IDefineMachineTypeAddCommandResponse> ExecuteAsync(IDefineMachineTypeAddCommandRequest request)
     {
         var configFilePath = Path.Join(request.Base.WorkingDirectory, "config.json");
         var config = await ConfigurationLoadAction.Load(configFilePath);

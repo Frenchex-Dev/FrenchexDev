@@ -1,4 +1,5 @@
-﻿namespace Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands;
+﻿
+namespace Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands;
 
 public interface IFacade<out TR1, out TR2, out TR3>
     where TR1 : class

@@ -6,4 +6,6 @@ public interface IProvisionCommandRequestBuilder : IRootCommandRequestBuilder
 {
     IProvisionCommandRequest Build();
     IProvisionCommandRequestBuilder ProvisionWith(string[] with);
+    IProvisionCommandRequestBuilder ProvisionVmName(string vmName);
+
 }

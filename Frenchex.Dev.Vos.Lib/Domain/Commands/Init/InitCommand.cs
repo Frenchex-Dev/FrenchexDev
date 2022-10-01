@@ -29,7 +29,7 @@ public class InitCommand : RootCommand, IInitCommand
         _configurationActionSave = configurationActionSave;
     }
 
-    public async Task<IInitCommandResponse> Execute(IInitCommandRequest request)
+    public async Task<IInitCommandResponse> ExecuteAsync(IInitCommandRequest request)
     {
         if (request.Base.WorkingDirectory == null)
             throw new ArgumentNullException(nameof(request.Base.WorkingDirectory));

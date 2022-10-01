@@ -13,8 +13,8 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Root.Command;
 public abstract class RootCommand : IRootCommand
 {
     private readonly string _vagrantBinPath;
-    protected IFilesystem Filesystem;
-    protected IProcessBuilder ProcessBuilder;
+    protected readonly IFilesystem Filesystem;
+    protected readonly IProcessBuilder ProcessBuilder;
 
     protected RootCommand(
         IProcessBuilder processBuilder,
@@ -42,7 +42,7 @@ public abstract class RootCommand : IRootCommand
             GetBinary(),
             arguments,
             request.Base.WorkingDirectory,
-            request.Base.TimeoutInMiliSeconds,
+            request.Base.TimeoutMs,
             false,
             true,
             true,

@@ -9,5 +9,4 @@ public interface IBaseCommandRequest : Dotnet.Wrapping.Lib.Domain.Commands.Root.
     bool Timestamp { get; }
     bool DebugTimestamp { get; }
     bool Help { get; }
-    string VagrantBinPath { get; }
 }

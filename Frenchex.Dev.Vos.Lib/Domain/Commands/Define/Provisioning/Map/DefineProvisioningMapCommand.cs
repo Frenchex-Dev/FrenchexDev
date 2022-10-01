@@ -11,7 +11,7 @@ public class DefineProvisioningMapCommand : IDefineProvisioningMapCommand
         _responseBuilderFactory = responseBuilderFactory;
     }
 
-    public async Task<IDefineProvisioningMapCommandResponse> Execute(IDefineProvisioningMapCommandRequest request)
+    public async Task<IDefineProvisioningMapCommandResponse> ExecuteAsync(IDefineProvisioningMapCommandRequest request)
     {
         return await Task.FromResult(_responseBuilderFactory.Factory().Build());
     }

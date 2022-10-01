@@ -26,7 +26,7 @@ public class KernelInitializeAndBuildWorkflowTest : AbstractUnitTest
     {
         const string defaultScopeName = "default";
 
-        await UnitTest!.RunAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
+        await UnitTest!.ExecuteAndAssertAndCleanupAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
             {
                 var kernelBuilderFlow =
                     provider.GetRequiredService<IKernelInitializeAndBuildWorkflow>();
@@ -59,7 +59,8 @@ public class KernelInitializeAndBuildWorkflowTest : AbstractUnitTest
                 }
 
                 await context.Kernel.DisposeAsync();
-            }
+            },
+            UnitTest.ServiceProvider!
         );
     }
 }
@@ -68,4 +69,5 @@ public class ExecutionContext : WithWorkingDirectoryExecutionContext
 {
     public IKernel? Kernel { get; set; }
     public AsyncServiceScope DefaultScope { get; set; }
+
 }

@@ -50,7 +50,7 @@ public class NameCommandIntegration : ABaseCommandIntegration, INameCommandInteg
 
             BuildBase(requestBuilder, payload);
 
-            var response = await _command.Execute(requestBuilder
+            var response = await _command.ExecuteAsync(requestBuilder
                 .WithNames(payload.Names!)
                 .Build()
             );

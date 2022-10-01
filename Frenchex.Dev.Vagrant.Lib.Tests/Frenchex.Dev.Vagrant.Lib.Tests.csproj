@@ -21,4 +21,9 @@
         <ProjectReference Include="..\Frenchex.Dev.Vagrant.Lib\Frenchex.Dev.Vagrant.Lib.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Resources\alpine.install.docker.command.sh" />
+      <Content Include="Resources\alpine.install.docker.command.sh" />
+    </ItemGroup>
+
 </Project>

@@ -3,7 +3,7 @@
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Provisioning.New;
 
 public interface
-    IDefineProvisioningNewCommand : IRootCommand<IDefineProvisioningNewCommandRequest,
+    IDefineProvisioningNewCommand : IAsyncRootCommand<IDefineProvisioningNewCommandRequest,
         IDefineProvisioningNewCommandResponse>
 {
 }

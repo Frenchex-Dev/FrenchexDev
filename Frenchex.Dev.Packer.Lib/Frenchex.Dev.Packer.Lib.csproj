@@ -7,16 +7,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Domain\Commands\Build" />
-      <Folder Include="Domain\Commands\Console" />
-      <Folder Include="Domain\Commands\Fix" />
-      <Folder Include="Domain\Commands\Fmt" />
-      <Folder Include="Domain\Commands\Hcl2Upgrade" />
-      <Folder Include="Domain\Commands\Init" />
-      <Folder Include="Domain\Commands\Inspect" />
-      <Folder Include="Domain\Commands\Plugins" />
-      <Folder Include="Domain\Commands\Validate" />
-      <Folder Include="Domain\Commands\Version" />
+        <Folder Include="Domain\Commands\Version\Command"/>
+        <Folder Include="Domain\Commands\Version\DependencyInjection"/>
+        <Folder Include="Domain\Commands\Version\Facade"/>
+        <Folder Include="Domain\Commands\Version\Request"/>
+        <Folder Include="Domain\Commands\Version\Response"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Filesystem.Lib\Frenchex.Dev.Dotnet.Core.Filesystem.Lib.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Process.Lib\Frenchex.Dev.Dotnet.Core.Process.Lib.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Wrapping.Lib\Frenchex.Dev.Dotnet.Core.Wrapping.Lib.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Packer.Lib.Abstractions\Frenchex.Dev.Packer.Lib.Abstractions.csproj"/>
     </ItemGroup>
 
 </Project>

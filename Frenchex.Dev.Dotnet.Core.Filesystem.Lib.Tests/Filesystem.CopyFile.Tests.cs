@@ -5,8 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Tests;
 
 [TestClass]
-public class FilesystemCopyFileTests : AbstractUnitTest
+public abstract class FilesystemCopyFileTests : AbstractUnitTest
 {
+    
     [TestInitialize]
     public void CreateUnitTest()
     {
@@ -22,7 +23,7 @@ public class FilesystemCopyFileTests : AbstractUnitTest
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     public async Task CanCopyFile(string originalFile)
     {
-        await UnitTest!.RunAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
+        await UnitTest!.ExecuteAndAssertAndCleanupAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
             {
                 var fs = provider.GetRequiredService<IFilesystem>();
 
@@ -57,12 +58,14 @@ public class FilesystemCopyFileTests : AbstractUnitTest
                     var fileToDelete = context.FullDestinationFile;
                     File.Delete(fileToDelete!);
                 });
-            }
+            },
+            UnitTest.ServiceProvider!
         );
     }
 
-    public class ExecutionContext : WithWorkingDirectoryExecutionContext
+    public abstract class ExecutionContext : WithWorkingDirectoryExecutionContext
     {
         public string? FullDestinationFile { get; set; }
+
     }
 }

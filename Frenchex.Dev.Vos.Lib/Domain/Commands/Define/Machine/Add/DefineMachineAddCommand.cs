@@ -21,7 +21,7 @@ public class DefineMachineAddCommand : RootCommand, IDefineMachineAddCommand
         _responseBuilderFactory = responseBuilderFactory;
     }
 
-    public async Task<IDefineMachineAddCommandResponse> Execute(IDefineMachineAddCommandRequest request)
+    public async Task<IDefineMachineAddCommandResponse> ExecuteAsync(IDefineMachineAddCommandRequest request)
     {
         if (null == request.DefinitionDeclaration.Name)
             throw new InvalidOperationException("request or definitionDeclaration or name is null");

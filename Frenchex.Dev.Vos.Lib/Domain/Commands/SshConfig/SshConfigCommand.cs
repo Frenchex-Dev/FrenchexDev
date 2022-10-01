@@ -26,7 +26,7 @@ public class SshConfigCommand : RootCommand, ISshConfigCommand
         _vagrantSshConfigCommandRequestBuilderFactory = vagrantSshConfigCommandRequestBuilder;
     }
 
-    public async Task<ISshConfigCommandResponse> Execute(ISshConfigCommandRequest request)
+    public async Task<ISshConfigCommandResponse> ExecuteAsync(ISshConfigCommandRequest request)
     {
         var process = _vagrantSshConfigCommand.StartProcess(_vagrantSshConfigCommandRequestBuilderFactory.Factory()
             .BaseBuilder

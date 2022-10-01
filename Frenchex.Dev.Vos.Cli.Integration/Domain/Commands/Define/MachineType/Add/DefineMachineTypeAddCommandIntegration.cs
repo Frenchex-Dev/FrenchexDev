@@ -123,7 +123,7 @@ public class DefineMachineTypeAddCommandIntegration : ABaseCommandIntegration, I
                 )
                 .Build();
 
-            var response = await _command.Execute(request);
+            var response = await _command.ExecuteAsync(request);
         });
 
         rootCommand.AddCommand(command);

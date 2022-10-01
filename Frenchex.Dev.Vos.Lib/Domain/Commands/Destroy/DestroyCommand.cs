@@ -25,7 +25,7 @@ public class DestroyCommand : RootCommand, IDestroyCommand
         _vagrantDestroyCommandRequestBuilderFactory = destroyCommandRequestBuilderFactory;
     }
 
-    public async Task<IDestroyCommandResponse> Execute(IDestroyCommandRequest request)
+    public async Task<IDestroyCommandResponse> ExecuteAsync(IDestroyCommandRequest request)
     {
         var process = _vagrantDestroyCommand.StartProcess(_vagrantDestroyCommandRequestBuilderFactory.Factory()
             .BaseBuilder

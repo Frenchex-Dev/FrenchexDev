@@ -29,7 +29,7 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
         int timeoutInMiliSeconds
     )
     {
-        await UnitTest!.RunAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
+        await UnitTest!.ExecuteAndAssertAndCleanupAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
             {
                 context.WorkingDirectory = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
 
@@ -83,7 +83,8 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
                 provider.GetRequiredService<IFilesystem>().DirectoryDelete(context.WorkingDirectory!, true);
 
                 return Task.CompletedTask;
-            });
+            },
+            UnitTest.ServiceProvider!);
     }
 
     public class ExecutionContext : WithWorkingDirectoryExecutionContext

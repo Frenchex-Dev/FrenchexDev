@@ -23,7 +23,7 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     public async Task CanCopyDirectory(string directoryToCopy)
     {
-        await UnitTest!.RunAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
+        await UnitTest!.ExecuteAndAssertAsync<ExecutionContext>(async (provider, _, context, _) =>
             {
                 var fs = provider.GetRequiredService<IFilesystem>();
 
@@ -36,7 +36,7 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
                     fs.DirectoryCopy(context.DirectoryToCopy!, context.Destination);
                 });
             },
-            async (provider, root, context) =>
+            async (_, _, context) =>
             {
                 await Task.Run(() =>
                 {
@@ -56,13 +56,15 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
                         }
                     }
                 });
-            }
+            },
+            UnitTest.ServiceProvider!
         );
     }
 
-    public class ExecutionContext : WithWorkingDirectoryExecutionContext
+    private class ExecutionContext : WithWorkingDirectoryExecutionContext
     {
         public string? DirectoryToCopy { get; set; }
         public string? Destination { get; set; }
+
     }
 }

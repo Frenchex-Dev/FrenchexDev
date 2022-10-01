@@ -2,6 +2,6 @@
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Up;
 
-public interface IUpCommand : IRootCommand<IUpCommandRequest, IUpCommandResponse>
+public interface IUpCommand : IAsyncRootCommand<IUpCommandRequest, IUpCommandResponse>
 {
 }

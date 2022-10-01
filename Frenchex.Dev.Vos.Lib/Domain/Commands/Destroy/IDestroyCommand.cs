@@ -2,6 +2,6 @@
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Destroy;
 
-public interface IDestroyCommand : IRootCommand<IDestroyCommandRequest, IDestroyCommandResponse>
+public interface IDestroyCommand : IAsyncRootCommand<IDestroyCommandRequest, IDestroyCommandResponse>
 {
 }

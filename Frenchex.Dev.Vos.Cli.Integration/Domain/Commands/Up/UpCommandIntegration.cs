@@ -89,7 +89,7 @@ public class UpCommandIntegration : ABaseCommandIntegration, IUpCommandIntegrati
             BuildBase(requestBuilder, payload);
 
             var response = await _command
-                    .Execute(requestBuilder
+                    .ExecuteAsync(requestBuilder
                         .UsingNames(payload.Names!.ToArray())
                         .WithProvision(payload.Provision)
                         .UsingProvisionWith(payload.ProvisionWith!)

@@ -26,7 +26,7 @@ public class HaltCommand : RootCommand, IHaltCommand
         _vagrantHaltCommandRequestBuilderFactory = vagrantHaltCommandRequestBuilderFactory;
     }
 
-    public async Task<IHaltCommandResponse> Execute(IHaltCommandRequest request)
+    public async Task<IHaltCommandResponse> ExecuteAsync(IHaltCommandRequest request)
     {
         var libRequest = _vagrantHaltCommandRequestBuilderFactory.Factory()
             .BaseBuilder

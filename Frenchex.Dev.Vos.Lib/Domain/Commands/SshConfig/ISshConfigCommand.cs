@@ -2,6 +2,6 @@
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.SshConfig;
 
-public interface ISshConfigCommand : IRootCommand<ISshConfigCommandRequest, ISshConfigCommandResponse>
+public interface ISshConfigCommand : IAsyncRootCommand<ISshConfigCommandRequest, ISshConfigCommandResponse>
 {
 }

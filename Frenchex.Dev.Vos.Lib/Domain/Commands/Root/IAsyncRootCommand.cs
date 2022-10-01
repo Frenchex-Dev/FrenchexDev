@@ -1,8 +1,8 @@
 ﻿namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Root;
 
-public interface IRootCommand<in TU, TR>
+public interface IAsyncRootCommand<in TU, TR>
     where TU : IRootCommandRequest
     where TR : IRootCommandResponse
 {
-    Task<TR> Execute(TU request);
+    Task<TR> ExecuteAsync(TU request);
 }

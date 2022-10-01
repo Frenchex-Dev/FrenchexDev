@@ -58,7 +58,7 @@ public class ProvisionCommand : RootCommand, IProvisionCommand
             sb.Append(request.VmName);
         }
 
-        if (request.ProvisionWith.Any())
+        if (request.ProvisionWith != null && request.ProvisionWith.Any())
         {
             foreach (var provisionWith in request.ProvisionWith)
             {

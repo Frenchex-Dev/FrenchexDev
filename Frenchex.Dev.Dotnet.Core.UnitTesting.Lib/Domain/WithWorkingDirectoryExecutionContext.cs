@@ -2,5 +2,7 @@
 
 public abstract class WithWorkingDirectoryExecutionContext
 {
-    public string? WorkingDirectory { get; set; }
+    public string WorkingDirectory { get; set; }
+
+    public static string CreateTemporaryDirectory() => Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
 }

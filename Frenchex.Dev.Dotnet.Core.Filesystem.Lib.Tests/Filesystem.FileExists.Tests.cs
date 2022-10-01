@@ -23,7 +23,7 @@ public class FilesystemFileExistsTests : AbstractUnitTest
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     public async Task CanTestFileExists(string originalFile, bool shouldExist)
     {
-        await UnitTest!.RunAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
+        await UnitTest!.ExecuteAndAssertAndCleanupAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
             {
                 var fs = provider.GetRequiredService<IFilesystem>();
 
@@ -49,7 +49,8 @@ public class FilesystemFileExistsTests : AbstractUnitTest
                     var fileToDelete = context.FullDestinationFile;
                     File.Delete(fileToDelete!);
                 });
-            }
+            },
+            UnitTest.ServiceProvider!
         );
     }
 
@@ -58,5 +59,6 @@ public class FilesystemFileExistsTests : AbstractUnitTest
         public string? FullDestinationFile { get; set; }
         public bool? FileShouldExists { get; set; }
         public bool? FileExists { get; set; }
+
     }
 }

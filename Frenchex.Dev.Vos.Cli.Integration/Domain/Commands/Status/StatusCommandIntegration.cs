@@ -48,7 +48,7 @@ public class StatusCommandIntegration : ABaseCommandIntegration, IStatusCommandI
 
             BuildBase(requestBuilder, payload);
 
-            await _command.Execute(requestBuilder
+            await _command.ExecuteAsync(requestBuilder
                 .WithNames(payload.Names!)
                 .Build()
             );

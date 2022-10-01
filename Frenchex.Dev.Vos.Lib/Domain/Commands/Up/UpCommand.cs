@@ -25,7 +25,7 @@ public class UpCommand : RootCommand, IUpCommand
         _vagrantUpCommandRequestBuilderFactory = vagrantUpCommandRequestBuilderFactory;
     }
 
-    public async Task<IUpCommandResponse> Execute(IUpCommandRequest request)
+    public async Task<IUpCommandResponse> ExecuteAsync(IUpCommandRequest request)
     {
         var libRequest = _vagrantUpCommandRequestBuilderFactory.Factory()
             .BaseBuilder

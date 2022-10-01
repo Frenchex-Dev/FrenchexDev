@@ -66,7 +66,7 @@ public class SshConfigCommandIntegration : ABaseCommandIntegration, ISshConfigCo
             var payload = binder.GetBoundValue(context);
 
             await _command
-                    .Execute(_requestBuilderFactory.Factory()
+                    .ExecuteAsync(_requestBuilderFactory.Factory()
                         .BaseBuilder
                         .UsingTimeoutMs(payload.TimeoutMs ?? 0)
                         .UsingWorkingDirectory(payload.WorkingDirectory)

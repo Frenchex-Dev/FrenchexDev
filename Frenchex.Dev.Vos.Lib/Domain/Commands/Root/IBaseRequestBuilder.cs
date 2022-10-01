@@ -14,5 +14,6 @@ public interface IBaseRequestBuilder
     IBaseRequestBuilder WithHelp(bool with);
     IBaseRequestBuilder UsingWorkingDirectory(string? workingDirectory);
     IBaseRequestBuilder UsingTimeoutMs(int timeoutMs);
+    IBaseRequestBuilder UsingTimeoutMs(TimeSpan timeoutMsTimespan);
     IBaseRequestBuilder UsingVagrantBinPath(string? vagrantBinPath);
 }

@@ -132,7 +132,7 @@ public class DefineMachineAddCommandIntegration : ABaseCommandIntegration, IDefi
                 })
                 .Build();
 
-            await _command.Execute(request);
+            await _command.ExecuteAsync(request);
 
             context.ExitCode = 0;
         });

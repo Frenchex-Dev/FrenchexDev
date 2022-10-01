@@ -2,8 +2,9 @@
 
 namespace Frenchex.Dev.Dotnet.Wrapping.Lib.Domain.Commands.Root;
 
-public interface IRootCommandResponseBuilder
+public interface IRootCommandResponseBuilder 
 {
     IRootCommandResponseBuilder SetProcess(IProcess process);
     IRootCommandResponseBuilder SetProcessExecutionResult(ProcessExecutionResult processExecutionResult);
+
 }

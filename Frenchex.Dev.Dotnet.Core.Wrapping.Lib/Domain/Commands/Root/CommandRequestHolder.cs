@@ -11,12 +11,12 @@ public class CommandRequestHolder : IBaseCommandRequest
     {
         WorkingDirectory = workingDirectory;
         BinPath = binPath;
-        TimeoutInMiliSeconds = timeoutMs ?? (int) -1;
+        TimeoutMs = timeoutMs ?? (int) -1;
         Tty = tty ?? false;
     }
 
     public bool Tty { get; }
     public string? WorkingDirectory { get; }
     public string? BinPath { get; }
-    public int TimeoutInMiliSeconds { get; }
+    public int TimeoutMs { get; }
 }

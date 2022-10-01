@@ -3,6 +3,6 @@
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Machine.Add;
 
 public interface
-    IDefineMachineAddCommand : IRootCommand<IDefineMachineAddCommandRequest, IDefineMachineAddCommandResponse>
+    IDefineMachineAddCommand : IAsyncRootCommand<IDefineMachineAddCommandRequest, IDefineMachineAddCommandResponse>
 {
 }

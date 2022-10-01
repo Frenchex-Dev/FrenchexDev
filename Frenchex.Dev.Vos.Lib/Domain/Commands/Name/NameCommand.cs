@@ -17,7 +17,7 @@ public class NameCommand : RootCommand, INameCommand
         _responseBuilderFactory = responseBuilderFactory;
     }
 
-    public async Task<INameCommandResponse> Execute(INameCommandRequest request)
+    public async Task<INameCommandResponse> ExecuteAsync(INameCommandRequest request)
     {
         var config = await ConfigurationLoad(request.Base.WorkingDirectory);
 

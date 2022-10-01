@@ -26,7 +26,7 @@ public class SshCommand : RootCommand, ISshCommand
         _vagrantSshCommandRequestBuilderFactory = sshCommandRequestBuilderFactory;
     }
 
-    public async Task<ISshCommandResponse> Execute(ISshCommandRequest request)
+    public async Task<ISshCommandResponse> ExecuteAsync(ISshCommandRequest request)
     {
         foreach (var command in request.Commands)
         {

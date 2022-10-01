@@ -70,7 +70,7 @@ public class DestroyCommandIntegration : ABaseCommandIntegration, IDestroyComman
 
             BuildBase(requestBuilder, payload);
 
-            await _command.Execute(requestBuilder
+            await _command.ExecuteAsync(requestBuilder
                 .UsingName(payload.NameOrId!.FirstOrDefault())
                 .WithForce(payload.Force)
                 .WithParallel(payload.Parallel)

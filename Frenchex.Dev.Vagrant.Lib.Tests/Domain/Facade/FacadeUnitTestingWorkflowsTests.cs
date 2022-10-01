@@ -8,68 +8,37 @@ namespace Frenchex.Dev.Vagrant.Lib.Tests.Domain.Facade;
 public class FacadeUnitTestingWorkflowsTests : AbstractUnitTest
 {
     [TestInitialize]
-    public static void Setup()
+    public void Setup()
     {
         UnitTest = VagrantUnitTestBase.CreateUnitTest<ExecutionContext>();
         UnitTest.BuildIfNecessary();
     }
-    
-    /** @template.start 
-    [TestMethod]
-    public async Task Can()
-    {
-        await UnitTest!.RunAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
-            {
-                await Task.Run(() =>
-                {
-                });
-            },
-            async (provider, root, context) =>
-            {
-                await Task.Run(() =>
-                {
-                });
-            },
-            async (provider, root, context) =>
-            {
-                await Task.Run(() =>
-                {
-                });
-            },
-            new UnitTest.VsCodeDebugging {Open = false, TellMe = true}
-        );
-    }
-     **/
 
     [TestMethod]
     public async Task CanLoadFacadeFromProvider()
     {
-        await UnitTest!.RunAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
+        await UnitTest!.ExecuteAndAssertAsync<ExecutionContext>(async (provider, _, context, _) =>
             {
                 await Task.Run(() =>
                 {
                     context.Facade = provider.GetRequiredService<ICommandsFacade>();
                 });
             },
-            async (provider, root, context) =>
+            async (_, _, context) =>
             {
                 await Task.Run(() =>
                 {
                     Assert.IsInstanceOfType(context.Facade, typeof(ICommandsFacade));
                 });
             },
-            async (provider, root, context) =>
-            {
-                await Task.Run(() =>
-                {
-                });
-            },
+            UnitTest.ServiceProvider!,
             new UnitTest.VsCodeDebugging {Open = false, TellMe = true}
         );
     }
 }
 
-public class ExecutionContext : WithWorkingDirectoryExecutionContext
+internal class ExecutionContext : WithWorkingDirectoryExecutionContext
 {
     public ICommandsFacade? Facade { get; set; }
+
 }

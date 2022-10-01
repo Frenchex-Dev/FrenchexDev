@@ -3,6 +3,6 @@ using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Provision.Response;
 
 namespace Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Provision.Command;
 
-public interface IProvisionCommand : IFaceableCommand, ICommand<IProvisionCommandRequest, IProvisionCommandResponse>
+public interface IProvisionCommand : IFacableCommand, ICommand<IProvisionCommandRequest, IProvisionCommandResponse>
 {
 }

@@ -4,5 +4,6 @@ public interface IBaseCommandRequest
 {
     bool Tty { get; }
     string? WorkingDirectory { get; }
-    int TimeoutInMiliSeconds { get; }
+    string? BinPath { get; }
+    int TimeoutMs { get; }
 }

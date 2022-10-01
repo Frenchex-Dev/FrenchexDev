@@ -27,7 +27,7 @@ public class StatusCommand : RootCommand, IStatusCommand
         _vagrantStatusCommandRequestBuilderFactory = statusCommandRequestBuilderFactory;
     }
 
-    public async Task<IStatusCommandResponse> Execute(IStatusCommandRequest request)
+    public async Task<IStatusCommandResponse> ExecuteAsync(IStatusCommandRequest request)
     {
         var process = _vagrantStatusCommand.StartProcess(
             _vagrantStatusCommandRequestBuilderFactory.Factory()
