@@ -27,36 +27,51 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
 
     private UnitTest? _unitTest;
 
-    public static IEnumerable<object[]> DataSource()
+    public static IEnumerable<object[]> DataSource(int maxX, int maxY)
     {
-        var max = 2;
-        for (var i = 0; i < max; i++)
+        for (var i = 0; i < maxX; i++)
         {
-            yield return new object[] {
-                (string workingDirectory, IServiceProvider serviceProvider) =>
-                    BuildInitCommandRequest(workingDirectory, serviceProvider),
-                (string workingDirectory, IServiceProvider serviceProvider) =>
-                    BuildDefineMachineTypeAddCommandRequestsList(workingDirectory, serviceProvider),
-                (string workingDirectory, IServiceProvider serviceProvider) =>
-                    BuildDefineMachineAddCommandRequestsList(workingDirectory, serviceProvider),
-                (string workingDirectory, IServiceProvider serviceProvider) =>
-                    BuildNameCommandRequestsList(workingDirectory, serviceProvider),
-                (string workingDirectory, IServiceProvider serviceProvider) =>
-                    BuildStatusBeforeUpCommandRequestsList(workingDirectory, serviceProvider),
-                (string workingDirectory, IServiceProvider serviceProvider) =>
-                    BuildUpCommandRequestsList(workingDirectory, serviceProvider),
-                (string workingDirectory, IServiceProvider serviceProvider) =>
-                    BuildStatusAfterUpCommandRequestsList(workingDirectory, serviceProvider),
-                (string workingDirectory, IServiceProvider serviceProvider) =>
-                    BuildSshConfigCommandRequestsList(workingDirectory, serviceProvider),
-                (string workingDirectory, IServiceProvider serviceProvider) =>
-                    BuildSshCommandRequestsList(workingDirectory, serviceProvider),
-                (string workingDirectory, IServiceProvider serviceProvider) =>
-                    BuildHaltCommandRequestsList(workingDirectory, serviceProvider),
-                (string workingDirectory, IServiceProvider serviceProvider) =>
-                    BuildDestroyCommandRequestsList(workingDirectory, serviceProvider)
-            };
+            var list = new List<Builder>();
+
+            for (var j = 0; j < maxY; j++)
+            {
+                var builder = new Builder();
+
+                builder.BuildInitCommandRequestBuilder = BuildInitCommandRequest;
+                builder.BuildDefineMachineTypeAddCommandRequestsListBuilder =
+                    BuildDefineMachineTypeAddCommandRequestsList;
+
+                builder.BuildDefineMachineAddCommandRequestsListBuilder = BuildDefineMachineAddCommandRequestsList;
+                builder.BuildNameCommandRequestsListBuilder = BuildNameCommandRequestsList;
+                builder.BuildStatusBeforeUpCommandRequestsListBuilder = BuildStatusBeforeUpCommandRequestsList;
+                builder.BuildUpCommandRequestsListBuilder = BuildUpCommandRequestsList;
+                builder.BuildStatusAfterUpCommandRequestsListBuilder = BuildStatusAfterUpCommandRequestsList;
+                builder.BuildSshConfigCommandRequestsListBuilder = BuildSshConfigCommandRequestsList;
+                builder.BuildSshCommandRequestsListBuilder = BuildSshCommandRequestsList;
+                builder.BuildHaltCommandRequestsListBuilder = BuildHaltCommandRequestsList;
+                builder.BuildDestroyCommandRequestsListBuilder = BuildDestroyCommandRequestsList;
+
+                list.Add(builder);
+            }
+
+            yield return new object[] {list.ToArray()};
         }
+    }
+
+    public static IEnumerable<object[]> DataSourceMaximal()
+    {
+        var maxX = 2;
+        var maxY = 2;
+
+        return DataSource(maxX, maxY);
+    }
+
+    public static IEnumerable<object[]> DataSourceMinimal()
+    {
+        var maxX = 1;
+        var maxY = 1;
+
+        return DataSource(maxX, maxY);
     }
 
     [TestCleanup]
@@ -66,9 +81,50 @@ public class CompleteWorkflowTests1 : AbstractUnitTest
     }
 
     [TestMethod]
-    [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
+    [DynamicData(nameof(DataSourceMaximal), DynamicDataSourceType.Method)]
     [TestCategory(TestCategories.NeedVagrant)]
-    public async Task VosWorkflowUnitTest(
+    [TestCategory(TestCategories.TestingLevelMaximal)]
+    public async Task VosWorkflowUnitTestMaximal(Builder[] builders)
+    {
+        await VosWorkflowUnitTestInternal(builders);
+    }
+
+    [TestMethod]
+    [DynamicData(nameof(DataSourceMinimal), DynamicDataSourceType.Method)]
+    [TestCategory(TestCategories.NeedVagrant)]
+    [TestCategory(TestCategories.TestingLevelMinimal)]
+    public async Task VosWorkflowUnitTestMinimal(Builder[] builders)
+    {
+        await VosWorkflowUnitTestInternal(builders);
+    }
+
+
+    private async Task VosWorkflowUnitTestInternal(Builder[] builders)
+    {
+        var timeoutTs = TimeSpan.FromMinutes(10);
+        var globalTimeoutTask = Task.Delay((int) timeoutTs.TotalMilliseconds);
+
+        var taskBuilder = (Builder builder) => VosWorkflowUnitTestInternalInternal(
+            builder.BuildInitCommandRequestBuilder!,
+            builder.BuildDefineMachineTypeAddCommandRequestsListBuilder!,
+            builder.BuildDefineMachineAddCommandRequestsListBuilder!,
+            builder.BuildNameCommandRequestsListBuilder!,
+            builder.BuildStatusBeforeUpCommandRequestsListBuilder!,
+            builder.BuildUpCommandRequestsListBuilder!,
+            builder.BuildStatusAfterUpCommandRequestsListBuilder!,
+            builder.BuildSshConfigCommandRequestsListBuilder!,
+            builder.BuildSshCommandRequestsListBuilder!,
+            builder.BuildHaltCommandRequestsListBuilder!,
+            builder.BuildDestroyCommandRequestsListBuilder!
+        );
+
+        var allTasks = builders.Select(x => taskBuilder(x)).ToList();
+        var tasks = Task.WhenAll(allTasks);
+
+        await Task.WhenAny(tasks, globalTimeoutTask);
+    }
+
+    private async Task VosWorkflowUnitTestInternalInternal(
         Func<string, IServiceProvider, IInitCommandRequest> initRequestBuilder,
         Func<string, IServiceProvider, IList<IDefineMachineTypeAddCommandRequest>>
             defineMachineTypeAddCommandRequestsListBuilder,
