@@ -1,5 +1,4 @@
 ﻿using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Response;
-using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Root;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Root.Request;
 
 namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Destroy.Response;

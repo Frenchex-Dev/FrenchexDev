@@ -5,12 +5,14 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Tests;
 
 [TestClass]
+[TestCategory("component:filesystem")]
 public class FilesystemDeleteFileTests : AbstractUnitTest
 {
     [TestInitialize]
     public void CreateUnitTest()
     {
         UnitTest = FilesystemUnitTestBase.CreateNewUnitTest<ExecutionContext>();
+        UnitTest.BuildIfNecessary();
     }
 
     public static IEnumerable<object[]> DataSource()
@@ -47,6 +49,5 @@ public class FilesystemDeleteFileTests : AbstractUnitTest
     public class ExecutionContext : WithWorkingDirectoryExecutionContext
     {
         public string? FileToDelete { get; set; }
-
     }
 }

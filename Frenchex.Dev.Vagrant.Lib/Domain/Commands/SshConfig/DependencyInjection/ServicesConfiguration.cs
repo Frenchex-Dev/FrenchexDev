@@ -1,7 +1,9 @@
 ﻿using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.SshConfig.Command;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.SshConfig.Facade;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.SshConfig.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.SshConfig.Response;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.SshConfig.Command;
+using Frenchex.Dev.Vagrant.Lib.Domain.Commands.SshConfig.Facade;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.SshConfig.Request;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.SshConfig.Response;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,7 @@ public static class ServicesConfiguration
     {
         services
             .AddScoped<ISshConfigCommand, SshConfigCommand>()
+            .AddScoped<ISshConfigFacade, SshConfigFacade>()
             .AddScoped<ISshConfigCommandRequestBuilder, SshConfigCommandRequestBuilder>()
             .AddScoped<ISshConfigCommandRequestBuilderFactory, SshConfigCommandRequestBuilderFactory>()
             .AddScoped<ISshConfigCommandResponseBuilder, SshConfigCommandResponseBuilder>()

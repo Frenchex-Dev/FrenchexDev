@@ -104,17 +104,12 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
         };
     }
 
-    private class ExecutionContext : WithWorkingDirectoryExecutionContext
-    {
-
-    }
-
     [TestInitialize]
     public void TestInit()
     {
         UnitTest = VagrantUnitTestBase.CreateUnitTest<ExecutionContext>();
     }
-    
+
     [TestMethod]
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     [TestCategory(TestCategories.NeedVagrant)]
@@ -131,7 +126,7 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
     {
         // directory is created by Init command
         var workingDirectory = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
-        
+
         var initRequest = initRequestBuilder.Invoke(workingDirectory);
         var upRequest = upRequestBuilder.Invoke(workingDirectory);
         var provisionRequest = provisionRequestBuilder.Invoke(workingDirectory);
@@ -251,9 +246,12 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
         else
             Assert.IsTrue(!string.IsNullOrEmpty(output), $"{debug} output is neither empty nor null");
     }
+
+    private class ExecutionContext : WithWorkingDirectoryExecutionContext
+    {
+    }
 }
 
 public class ExecutionContext : WithWorkingDirectoryExecutionContext
 {
-    
 }

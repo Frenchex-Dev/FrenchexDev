@@ -7,12 +7,14 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Frenchex.Dev.OnSteroid.Lib.Tests.Domain;
 
 [TestClass]
+[TestCategory("component:on-steroid")]
 public class KernelInitializeAndBuildWorkflowTest : AbstractUnitTest
 {
     [TestInitialize]
     public void Setup()
     {
         UnitTest = OnSteroidLibUnitTestTest.CreateUnitTest<ExecutionContext>();
+        UnitTest.BuildIfNecessary();
     }
 
     [TestCleanup]
@@ -69,5 +71,4 @@ public class ExecutionContext : WithWorkingDirectoryExecutionContext
 {
     public IKernel? Kernel { get; set; }
     public AsyncServiceScope DefaultScope { get; set; }
-
 }

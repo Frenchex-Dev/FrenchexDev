@@ -4,7 +4,7 @@ using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Request;
 
 namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Destroy.Facade;
 
-class DestroyFacade : IDestroyFacade
+internal class DestroyFacade : IDestroyFacade
 {
     public DestroyFacade(IDestroyCommand command, IDestroyCommandRequestBuilderFactory requestBuilderFactory)
     {

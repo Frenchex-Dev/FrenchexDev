@@ -31,7 +31,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
     {
         for (var i = 0; i < maxX; i++)
         {
-            var list = new List<Builder>();
+            List<Builder> list = new List<Builder>();
 
             for (var j = 0; j < maxY; j++)
             {
@@ -104,7 +104,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         var timeoutTs = TimeSpan.FromMinutes(10);
         var globalTimeoutTask = Task.Delay((int) timeoutTs.TotalMilliseconds);
 
-        var taskBuilder = (Builder builder) => VosWorkflowUnitTestInternalInternal(
+        Func<Builder, Task> taskBuilder = (Builder builder) => VosWorkflowUnitTestInternalInternal(
             builder.BuildInitCommandRequestBuilder!,
             builder.BuildDefineMachineTypeAddCommandRequestsListBuilder!,
             builder.BuildDefineMachineAddCommandRequestsListBuilder!,
@@ -118,7 +118,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             builder.BuildDestroyCommandRequestsListBuilder!
         );
 
-        var allTasks = builders.Select(x => taskBuilder(x)).ToList();
+        List<Task> allTasks = builders.Select(x => taskBuilder(x)).ToList();
         var tasks = Task.WhenAll(allTasks);
 
         await Task.WhenAny(tasks, globalTimeoutTask);
@@ -140,7 +140,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         Func<string, IServiceProvider, IList<IDestroyCommandRequest>> destroyRequestsListBuilder
     )
     {
-        var vsDebuggingContext = new UnitTest.VsCodeDebugging() {TellMe = true, Keep = true, DevDebugging = true};
+        var vsDebuggingContext = new UnitTest.VsCodeDebugging {TellMe = true, Keep = true, DevDebugging = true};
         var workingDirectory = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
 
         var unitTest = _unitTest = VosUnitTestBase.CreateUnitTest<ExecutionContext>();
@@ -232,7 +232,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             timeBox,
             async (provider, _, context, _) =>
             {
-                var list = destroyRequestsListBuilder(context.WorkingDirectory, provider);
+                IList<IDestroyCommandRequest> list = destroyRequestsListBuilder(context.WorkingDirectory, provider);
                 var command = provider.GetRequiredService<IDestroyCommand>();
                 context.DestroyCommandsResponses = new List<(IDestroyCommandRequest, IDestroyCommandResponse)>();
 
@@ -255,7 +255,8 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
 
                 var statusCommandResponse = await statusCommand.ExecuteAsync(statusCommandRequest);
 
-                foreach (var name in statusCommandResponse.Statuses)
+                foreach (KeyValuePair<string, (string, VagrantMachineStatusEnum)> name in
+                         statusCommandResponse.Statuses)
                 {
                     Assert.AreEqual(VagrantMachineStatusEnum.NotCreated.ToString(), name.Value.ToString());
                 }
@@ -281,7 +282,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             timeBox,
             async (provider, _, context, _) =>
             {
-                var list = haltRequestsListBuilder(context.WorkingDirectory, provider);
+                IList<IHaltCommandRequest> list = haltRequestsListBuilder(context.WorkingDirectory, provider);
                 var command = provider.GetRequiredService<IHaltCommand>();
 
                 context.HaltCommandsResponses = new List<(IHaltCommandRequest, IHaltCommandResponse)>();
@@ -312,7 +313,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             timeBox,
             async (provider, _, context, _) =>
             {
-                var list = sshCommandRequestsListBuilder(context.WorkingDirectory, provider);
+                IList<ISshCommandRequest> list = sshCommandRequestsListBuilder(context.WorkingDirectory, provider);
                 var command = provider.GetRequiredService<ISshCommand>();
                 context.SshCommandsResponses = new List<(ISshCommandRequest, ISshCommandResponse)>();
 
@@ -342,7 +343,9 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             timeSpan,
             async (provider, _, context, _) =>
             {
-                var list = sshConfigCommandRequestsListBuilder(context.WorkingDirectory, provider);
+                IList<ISshConfigCommandRequest> list =
+                    sshConfigCommandRequestsListBuilder(context.WorkingDirectory, provider);
+
                 var command = provider.GetRequiredService<ISshConfigCommand>();
                 context.SshConfigCommandsResponses = new List<(ISshConfigCommandRequest, ISshConfigCommandResponse)>();
 
@@ -358,8 +361,8 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
 
                 foreach (var runningContext in context.SshConfigCommandsResponses!)
                 {
-                    ISshConfigCommandRequest request = runningContext.Item1;
-                    ISshConfigCommandResponse response = runningContext.Item2;
+                    var request = runningContext.Item1;
+                    var response = runningContext.Item2;
 
                     Assert.IsNotNull(request);
                     Assert.IsNotNull(response);
@@ -384,7 +387,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             async (provider, _, context, _) =>
             {
                 context.WillBeUp = new List<string>();
-                var list = upRequestsListBuilder(context.WorkingDirectory, provider);
+                IList<IUpCommandRequest> list = upRequestsListBuilder(context.WorkingDirectory, provider);
                 context.UpCommandsResponses = new List<(IUpCommandRequest, IUpCommandResponse)>();
                 var command = provider.GetRequiredService<IUpCommand>();
 
@@ -420,7 +423,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             },
             async (provider, _, context) =>
             {
-                var listStatusRequestAfterUp =
+                IList<IStatusCommandRequest> listStatusRequestAfterUp =
                     statusAfterUpCommandRequestsListBuilder(context.WorkingDirectory, provider);
 
                 var statusCommand = provider.GetRequiredService<IStatusCommand>();
@@ -456,7 +459,8 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             async (provider, _, context, _) =>
             {
                 var statusCommand = provider.GetRequiredService<IStatusCommand>();
-                var list = statusBeforeUpCommandRequestsListBuilder(context.WorkingDirectory, provider);
+                IList<IStatusCommandRequest> list =
+                    statusBeforeUpCommandRequestsListBuilder(context.WorkingDirectory, provider);
 
                 context.StatusCommandsResponseBeforeUp = new List<IStatusCommandResponse>();
                 foreach (var item in list)
@@ -497,7 +501,9 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             async (provider, _, context, _) =>
             {
                 var nameCommand = provider.GetRequiredService<INameCommand>();
-                var list = nameCommandRequestsListBuilder(context.WorkingDirectory, provider);
+                IList<NameCommandRequestPayload> list =
+                    nameCommandRequestsListBuilder(context.WorkingDirectory, provider);
+
                 context.NameCommandsResponses = new List<(NameCommandRequestPayload, INameCommandResponse)>();
 
                 foreach (var item in list)
@@ -537,11 +543,13 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             async (provider, _, context, _) =>
             {
                 var defineMachineAddCommand = provider.GetRequiredService<IDefineMachineAddCommand>();
-                var list = defineMachineAddCommandRequestsListBuilder(context.WorkingDirectory, provider);
+                IList<IDefineMachineAddCommandRequest> list =
+                    defineMachineAddCommandRequestsListBuilder(context.WorkingDirectory, provider);
+
                 context.DefineMachineAddCommandsResponses = new List<IDefineMachineAddCommandResponse>();
                 foreach (var item in list)
                 {
-                    IDefineMachineAddCommandResponse response = await defineMachineAddCommand.ExecuteAsync(item);
+                    var response = await defineMachineAddCommand.ExecuteAsync(item);
                     context.DefineMachineAddCommandsResponses.Add(response);
                 }
             },
@@ -568,7 +576,9 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             async (provider, _, context, _) =>
             {
                 var defineMachineTypeAddCommand = provider.GetRequiredService<IDefineMachineTypeAddCommand>();
-                var list = defineMachineTypeAddCommandRequestsListBuilder(context.WorkingDirectory, provider);
+                IList<IDefineMachineTypeAddCommandRequest> list =
+                    defineMachineTypeAddCommandRequestsListBuilder(context.WorkingDirectory, provider);
+
                 context.DefineMachineTypeAddCommandsResponses = new List<IDefineMachineTypeAddCommandResponse>();
                 foreach (var item in list)
                 {
@@ -816,20 +826,6 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         };
     }
 
-    private class DefineMachineAddCommandRequestPayload
-    {
-        public DefineMachineAddCommandRequestPayload(string name, string ipv4Pattern, bool isPrimary)
-        {
-            Name = name;
-            Ipv4Pattern = ipv4Pattern;
-            IsPrimary = isPrimary;
-        }
-
-        public string Name { get; init; }
-        public string Ipv4Pattern { get; init; }
-        public bool IsPrimary { get; init; }
-    }
-
     private static List<IDefineMachineAddCommandRequest> BuildDefineMachineAddCommandRequestsList(
         string? tempDir,
         IServiceProvider serviceProvider
@@ -839,9 +835,9 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             .GetRequiredService<IDefaultGatewayGetterAction>()
             .GetDefaultGateway();
 
-        var list = new List<IDefineMachineAddCommandRequest>();
+        List<IDefineMachineAddCommandRequest> list = new List<IDefineMachineAddCommandRequest>();
 
-        var payloads = new List<DefineMachineAddCommandRequestPayload>() {
+        List<DefineMachineAddCommandRequestPayload> payloads = new List<DefineMachineAddCommandRequestPayload> {
             new("foo", "10.100.2.#INSTANCE#", true),
             new("bar", "10.100.3.#INSTANCE#", false)
         };
@@ -859,10 +855,10 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
                 "10.9.0",
                 false,
                 ProviderEnum.Virtualbox,
-                new Dictionary<string, ProvisioningDefinition>() {
+                new Dictionary<string, ProvisioningDefinition> {
                     {
-                        "docker.install", new ProvisioningDefinition() {
-                            Env = new Dictionary<string, string>() {
+                        "docker.install", new ProvisioningDefinition {
+                            Env = new Dictionary<string, string> {
                                 {"DOCKER_VERSION", "20.9"}
                             }
                         }
@@ -1033,7 +1029,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
     )
     {
         var factory = serviceProvider.GetRequiredService<INameCommandRequestBuilderFactory>();
-        var list = new List<NameCommandRequestPayload>();
+        List<NameCommandRequestPayload> list = new List<NameCommandRequestPayload>();
 
         var nameCommandRequest = factory.Factory()
             .BaseBuilder
@@ -1044,11 +1040,25 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             .Build();
 
         var payload = new NameCommandRequestPayload(nameCommandRequest) {
-            ExpectedNames = new List<string>() {"foo-00", "bar-02"}
+            ExpectedNames = new List<string> {"foo-00", "bar-02"}
         };
 
         list.Add(payload);
 
         return list;
+    }
+
+    private class DefineMachineAddCommandRequestPayload
+    {
+        public DefineMachineAddCommandRequestPayload(string name, string ipv4Pattern, bool isPrimary)
+        {
+            Name = name;
+            Ipv4Pattern = ipv4Pattern;
+            IsPrimary = isPrimary;
+        }
+
+        public string Name { get; }
+        public string Ipv4Pattern { get; }
+        public bool IsPrimary { get; }
     }
 }

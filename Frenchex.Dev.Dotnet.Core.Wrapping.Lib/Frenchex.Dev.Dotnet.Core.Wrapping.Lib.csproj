@@ -8,9 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib.csproj" />
-        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Filesystem.Lib\Frenchex.Dev.Dotnet.Core.Filesystem.Lib.csproj" />
-        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Process.Lib\Frenchex.Dev.Dotnet.Core.Process.Lib.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Filesystem.Lib\Frenchex.Dev.Dotnet.Core.Filesystem.Lib.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Process.Lib\Frenchex.Dev.Dotnet.Core.Process.Lib.csproj"/>
     </ItemGroup>
 
 </Project>

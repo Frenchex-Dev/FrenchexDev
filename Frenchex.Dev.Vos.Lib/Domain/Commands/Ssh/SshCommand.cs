@@ -18,7 +18,8 @@ public class SshCommand : RootCommand, ISshCommand
         IConfigurationLoadAction configurationLoadAction,
         IVexNameToVagrantNameConverter nameConverter,
         Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Command.ISshCommand vagrantSshCommand,
-        Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Request.ISshCommandRequestBuilderFactory sshCommandRequestBuilderFactory
+        Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Request.ISshCommandRequestBuilderFactory
+            sshCommandRequestBuilderFactory
     ) : base(configurationLoadAction, nameConverter)
     {
         _responseBuilderFactory = responseBuilderFactory;

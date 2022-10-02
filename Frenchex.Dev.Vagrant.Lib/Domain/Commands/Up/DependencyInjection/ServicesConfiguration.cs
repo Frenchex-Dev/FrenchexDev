@@ -1,6 +1,8 @@
-﻿using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Request;
+﻿using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Facade;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Response;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Up.Command;
+using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Up.Facade;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Up.Request;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Up.Response;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,6 +15,7 @@ public static class ServicesConfiguration
     {
         services
             .AddScoped<IUpCommand, UpCommand>()
+            .AddScoped<IUpFacade, UpFacade>()
             .AddScoped<IUpCommandRequestBuilder, UpCommandRequestBuilder>()
             .AddScoped<IUpCommandRequestBuilderFactory, UpCommandRequestBuilderFactory>()
             .AddScoped<IUpCommandResponseBuilder, UpCommandResponseBuilder>()

@@ -1,22 +1,17 @@
-﻿using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Status.Command;
-using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Status.Facade;
-using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Status.Request;
+﻿using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Facade;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Request;
 
 namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Up.Facade;
 
-public class UpFacade : IStatusFacade
+public class UpFacade : IUpFacade
 {
-    public UpFacade(IStatusCommand command, IStatusCommandRequestBuilderFactory requestBuilderFactory)
+    public UpFacade(IUpCommand command, IUpCommandRequestBuilderFactory requestBuilderFactory)
     {
         Command = command;
         RequestBuilderFactory = requestBuilderFactory;
     }
 
-    public IStatusCommand Command { get; }
-    public IStatusCommandRequestBuilderFactory RequestBuilderFactory { get; }
-
-    public IStatusCommandRequestBuilder RequestBuilder
-    {
-        get => RequestBuilderFactory.Factory();
-    }
+    public IUpCommand Command { get; }
+    public IUpCommandRequestBuilderFactory RequestBuilderFactory { get; }
+    public IUpCommandRequestBuilder RequestBuilder => RequestBuilderFactory.Factory();
 }

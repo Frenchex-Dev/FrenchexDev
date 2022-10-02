@@ -14,7 +14,9 @@ public class HaltCommandResponseBuilder : RootResponseBuilder, IHaltCommandRespo
         return new HaltCommandResponse(_haltCommandResponse);
     }
 
-    public IHaltCommandResponseBuilder WithHaltResponse(Vagrant.Lib.Abstractions.Domain.Commands.Halt.Response.IHaltCommandResponse response)
+    public IHaltCommandResponseBuilder WithHaltResponse(
+        Vagrant.Lib.Abstractions.Domain.Commands.Halt.Response.IHaltCommandResponse response
+    )
     {
         _haltCommandResponse = response;
         return this;

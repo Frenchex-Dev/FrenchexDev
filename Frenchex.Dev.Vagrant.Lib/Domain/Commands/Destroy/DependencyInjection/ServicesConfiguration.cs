@@ -1,7 +1,9 @@
 ﻿using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Command;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Facade;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Response;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Destroy.Command;
+using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Destroy.Facade;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Destroy.Request;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Destroy.Response;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +16,7 @@ public static class ServicesConfiguration
     {
         services
             .AddScoped<IDestroyCommand, DestroyCommand>()
+            .AddScoped<IDestroyFacade, DestroyFacade>()
             .AddScoped<IDestroyCommandRequestBuilder, DestroyCommandRequestBuilder>()
             .AddScoped<IDestroyCommandRequestBuilderFactory, DestroyCommandRequestBuilderFactory>()
             .AddScoped<IDestroyCommandResponseBuilder, DestroyCommandResponseBuilder>()

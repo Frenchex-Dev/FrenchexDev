@@ -4,9 +4,9 @@ using Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.Process;
 using Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.ProcessBuilder;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Root.Base.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Root.Command;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Root.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Root.Response;
 using Microsoft.Extensions.Configuration;
-using IRootCommandRequest = Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Root.Request.IRootCommandRequest;
 
 namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Root.Command;
 
@@ -31,7 +31,7 @@ public abstract class RootCommand : IRootCommand
     {
         return _vagrantBinPath;
     }
-    
+
     protected ProcessExecutionResult BuildAndStartProcess(
         IRootCommandRequest request,
         IRootCommandResponseBuilder responseBuilder,

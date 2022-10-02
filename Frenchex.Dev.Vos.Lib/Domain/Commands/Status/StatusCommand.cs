@@ -19,7 +19,8 @@ public class StatusCommand : RootCommand, IStatusCommand
         IStatusCommandResponseBuilderFactory statusCommandResponseBuilderFactory,
         IVexNameToVagrantNameConverter nameConverter,
         Vagrant.Lib.Abstractions.Domain.Commands.Status.Command.IStatusCommand statusCommand,
-        Vagrant.Lib.Abstractions.Domain.Commands.Status.Request.IStatusCommandRequestBuilderFactory statusCommandRequestBuilderFactory
+        Vagrant.Lib.Abstractions.Domain.Commands.Status.Request.IStatusCommandRequestBuilderFactory
+            statusCommandRequestBuilderFactory
     ) : base(configurationLoadAction, nameConverter)
     {
         _statusCommandResponseBuilderFactory = statusCommandResponseBuilderFactory;

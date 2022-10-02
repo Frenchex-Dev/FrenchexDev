@@ -27,7 +27,7 @@ public class BaseCommandRequest : IBaseCommandRequest
         DebugTimestamp = debugTimestamp ?? false;
         Tty = tty ?? false;
         Help = help ?? false;
-        TimeoutMs = timeoutMs ?? (int) -1;
+        TimeoutMs = timeoutMs ?? -1;
         BinPath = vagrantBinPath ?? "vagrant";
     }
 

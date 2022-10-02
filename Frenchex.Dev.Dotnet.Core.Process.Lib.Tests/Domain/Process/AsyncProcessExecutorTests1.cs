@@ -7,12 +7,14 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Frenchex.Dev.Dotnet.Core.Process.Lib.Tests.Domain.Process;
 
 [TestClass]
+[TestCategory("component:process")]
 public class FilesystemCopyDirectoryTests : AbstractUnitTest
 {
     [TestInitialize]
     public void CreateUnitTest()
     {
         UnitTest = ProcessUnitTestBase.CreateNewUnitTest<ExecutionContext>();
+        UnitTest.BuildIfNecessary();
     }
 
     public static IEnumerable<object[]> DataSource()

@@ -1,5 +1,4 @@
-﻿
-using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Root.Request;
+﻿using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Root.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Root.Response;
 
 namespace Frenchex.Dev.Vagrant.Lib.Abstractions.Domain;

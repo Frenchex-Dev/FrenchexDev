@@ -25,5 +25,4 @@ public class ExecutionContext : WithWorkingDirectoryExecutionContext
     public List<(ISshCommandRequest, ISshCommandResponse)>? SshCommandsResponses { get; set; }
     public List<(IHaltCommandRequest, IHaltCommandResponse)>? HaltCommandsResponses { get; set; }
     public List<(IDestroyCommandRequest, IDestroyCommandResponse)>? DestroyCommandsResponses { get; set; }
-
 }

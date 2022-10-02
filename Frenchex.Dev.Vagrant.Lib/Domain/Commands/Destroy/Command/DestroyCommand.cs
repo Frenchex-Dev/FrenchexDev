@@ -36,14 +36,14 @@ public class DestroyCommand : RootCommand, IDestroyCommand
         return responseBuilder.Build();
     }
 
-    public string BuildArguments(IDestroyCommandRequest request)
-    {
-        return GetCliCommandName() + " " + BuildVagrantOptions(request) + " " + BuildVagrantArguments(request);
-    }
-
     public string GetCliCommandName()
     {
         return "destroy";
+    }
+
+    public string BuildArguments(IDestroyCommandRequest request)
+    {
+        return GetCliCommandName() + " " + BuildVagrantOptions(request) + " " + BuildVagrantArguments(request);
     }
 
     protected static string BuildVagrantOptions(IDestroyCommandRequest request)

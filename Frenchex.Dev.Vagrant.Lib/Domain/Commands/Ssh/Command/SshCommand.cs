@@ -36,12 +36,17 @@ public class SshCommand : RootCommand, ISshCommand
         return responseBuilder.Build();
     }
 
-     public string BuildArguments(ISshCommandRequest request)
+    public string GetCliCommandName()
+    {
+        return "ssh";
+    }
+
+    public string BuildArguments(ISshCommandRequest request)
     {
         return GetCliCommandName() + " " + BuildVagrantOptions(request) + " " + BuildVagrantArguments(request);
     }
 
-     private static string BuildVagrantOptions(ISshCommandRequest request)
+    private static string BuildVagrantOptions(ISshCommandRequest request)
     {
         return new StringBuilder()
                 .Append(!string.IsNullOrEmpty(request.Command) ? $" --command \"{request.Command}\"" : "")
@@ -51,13 +56,8 @@ public class SshCommand : RootCommand, ISshCommand
             ;
     }
 
-     private static string BuildVagrantArguments(ISshCommandRequest request)
+    private static string BuildVagrantArguments(ISshCommandRequest request)
     {
         return request.NameOrId;
-    }
-
-    public string GetCliCommandName()
-    {
-        return "ssh";
     }
 }

@@ -11,7 +11,7 @@ public class CommandRequestHolder : IBaseCommandRequest
     {
         WorkingDirectory = workingDirectory;
         BinPath = binPath;
-        TimeoutMs = timeoutMs ?? (int) -1;
+        TimeoutMs = timeoutMs ?? -1;
         Tty = tty ?? false;
     }
 

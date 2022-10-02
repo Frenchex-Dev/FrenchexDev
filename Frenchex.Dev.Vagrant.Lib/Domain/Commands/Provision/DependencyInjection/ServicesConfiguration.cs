@@ -1,7 +1,9 @@
 ﻿using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Provision.Command;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Provision.Facade;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Provision.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Provision.Response;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Provision.Command;
+using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Provision.Facade;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Provision.Request;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Provision.Response;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,13 +16,11 @@ public static class ServicesConfiguration
     {
         services
             .AddScoped<IProvisionCommand, ProvisionCommand>()
-            
+            .AddScoped<IProvisionFacade, ProvisionFacade>()
             .AddScoped<IProvisionCommandRequestBuilder, ProvisionCommandRequestBuilder>()
             .AddScoped<IProvisionCommandRequestBuilderFactory, ProvisionCommandRequestBuilderFactory>()
-            
             .AddScoped<IProvisionCommandResponseBuilder, ProvisionCommandResponseBuilder>()
             .AddScoped<IProvisionCommandResponseBuilderFactory, ProvisionCommandResponseBuilderFactory>()
-            
             ;
     }
 }

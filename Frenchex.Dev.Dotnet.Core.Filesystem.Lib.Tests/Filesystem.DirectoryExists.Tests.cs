@@ -5,12 +5,14 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Tests;
 
 [TestClass]
+[TestCategory("component:filesystem")]
 public class FilesystemDirectoryExistsTests : AbstractUnitTest
 {
     [TestInitialize]
     public void CreateUnitTest()
     {
         UnitTest = FilesystemUnitTestBase.CreateNewUnitTest<ExecutionContext>();
+        UnitTest.BuildIfNecessary();
     }
 
     public static IEnumerable<object[]> DataSource()
@@ -45,6 +47,5 @@ public class FilesystemDirectoryExistsTests : AbstractUnitTest
     {
         public string? DirectoryToTestExistence { get; set; }
         public bool? DirectoryExists { get; set; }
-
     }
 }

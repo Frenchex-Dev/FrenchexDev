@@ -15,8 +15,5 @@ public class SshConfigFacade : ISshConfigFacade
     public ISshConfigCommand Command { get; }
     public ISshConfigCommandRequestBuilderFactory RequestBuilderFactory { get; }
 
-    public ISshConfigCommandRequestBuilder RequestBuilder
-    {
-        get => RequestBuilderFactory.Factory();
-    }
+    public ISshConfigCommandRequestBuilder RequestBuilder => RequestBuilderFactory.Factory();
 }

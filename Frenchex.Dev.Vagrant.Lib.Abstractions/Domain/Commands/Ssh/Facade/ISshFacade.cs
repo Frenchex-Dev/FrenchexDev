@@ -5,5 +5,4 @@ namespace Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Facade;
 
 public interface ISshFacade : IFacade<ISshCommand, ISshCommandRequestBuilderFactory, ISshCommandRequestBuilder>
 {
-    
 }

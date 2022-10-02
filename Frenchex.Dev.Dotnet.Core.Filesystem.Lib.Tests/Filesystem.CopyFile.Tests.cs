@@ -5,9 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Tests;
 
 [TestClass]
+[TestCategory("component:filesystem")]
 public abstract class FilesystemCopyFileTests : AbstractUnitTest
 {
-    
     [TestInitialize]
     public void CreateUnitTest()
     {
@@ -66,6 +66,5 @@ public abstract class FilesystemCopyFileTests : AbstractUnitTest
     public abstract class ExecutionContext : WithWorkingDirectoryExecutionContext
     {
         public string? FullDestinationFile { get; set; }
-
     }
 }

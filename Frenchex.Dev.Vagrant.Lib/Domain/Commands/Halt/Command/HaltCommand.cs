@@ -36,14 +36,14 @@ public class HaltCommand : RootCommand, IHaltCommand
         return responseBuilder.Build();
     }
 
-    public string BuildArguments(IHaltCommandRequest request)
-    {
-        return GetCliCommandName() + " " + BuildVagrantOptions(request) + " " + BuildVagrantArguments(request);
-    }
-
     public string GetCliCommandName()
     {
         return "halt";
+    }
+
+    public string BuildArguments(IHaltCommandRequest request)
+    {
+        return GetCliCommandName() + " " + BuildVagrantOptions(request) + " " + BuildVagrantArguments(request);
     }
 
     protected static string BuildVagrantOptions(IHaltCommandRequest request)

@@ -5,12 +5,14 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Tests;
 
 [TestClass]
+[TestCategory("component:filesystem")]
 public class FilesystemWriteAllTextAsyncTests : AbstractUnitTest
 {
     [TestInitialize]
     public void CreateUnitTest()
     {
         UnitTest = FilesystemUnitTestBase.CreateNewUnitTest<ExecutionContext>();
+        UnitTest.BuildIfNecessary();
     }
 
     public static IEnumerable<object[]> DataSource()
@@ -51,6 +53,5 @@ public class FilesystemWriteAllTextAsyncTests : AbstractUnitTest
     {
         public string? FileToRead { get; set; }
         public string? TextToWrite { get; set; }
-
     }
 }

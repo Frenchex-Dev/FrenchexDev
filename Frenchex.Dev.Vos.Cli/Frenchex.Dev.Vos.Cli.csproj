@@ -14,15 +14,15 @@
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+        <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib\Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib.csproj" />
-        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Cli.Lib\Frenchex.Dev.Dotnet.Core.Cli.Lib.csproj" />
-        <ProjectReference Include="..\Frenchex.Dev.OnSteroid.Cli.Lib\Frenchex.Dev.OnSteroid.Cli.Lib.csproj" />
-        <ProjectReference Include="..\Frenchex.Dev.Vos.Cli.Integration\Frenchex.Dev.Vos.Cli.Integration.csproj" />
-        <ProjectReference Include="..\Frenchex.Dev.Vos.Lib\Frenchex.Dev.Vos.Lib.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib\Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Cli.Lib\Frenchex.Dev.Dotnet.Core.Cli.Lib.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.OnSteroid.Cli.Lib\Frenchex.Dev.OnSteroid.Cli.Lib.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Vos.Cli.Integration\Frenchex.Dev.Vos.Cli.Integration.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Vos.Lib\Frenchex.Dev.Vos.Lib.csproj"/>
     </ItemGroup>
 
 </Project>

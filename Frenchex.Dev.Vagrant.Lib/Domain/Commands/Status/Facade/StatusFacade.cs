@@ -15,8 +15,5 @@ public class StatusFacade : IStatusFacade
     public IStatusCommand Command { get; }
     public IStatusCommandRequestBuilderFactory RequestBuilderFactory { get; }
 
-    public IStatusCommandRequestBuilder RequestBuilder
-    {
-        get => RequestBuilderFactory.Factory();
-    }
+    public IStatusCommandRequestBuilder RequestBuilder => RequestBuilderFactory.Factory();
 }

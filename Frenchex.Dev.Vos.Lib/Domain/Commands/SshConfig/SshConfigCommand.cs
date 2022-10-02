@@ -7,7 +7,9 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.SshConfig;
 public class SshConfigCommand : RootCommand, ISshConfigCommand
 {
     private readonly ISshConfigCommandResponseBuilderFactory _responseBuilderFactory;
-    private readonly Vagrant.Lib.Abstractions.Domain.Commands.SshConfig.Command.ISshConfigCommand _vagrantSshConfigCommand;
+
+    private readonly Vagrant.Lib.Abstractions.Domain.Commands.SshConfig.Command.ISshConfigCommand
+        _vagrantSshConfigCommand;
 
     private readonly Vagrant.Lib.Abstractions.Domain.Commands.SshConfig.Request.ISshConfigCommandRequestBuilderFactory
         _vagrantSshConfigCommandRequestBuilderFactory;

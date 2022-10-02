@@ -17,7 +17,8 @@ public class DestroyCommand : RootCommand, IDestroyCommand
         IConfigurationLoadAction configurationLoadAction,
         IVexNameToVagrantNameConverter nameConverter,
         Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Command.IDestroyCommand destroyCommand,
-        Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Request.IDestroyCommandRequestBuilderFactory destroyCommandRequestBuilderFactory
+        Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Request.IDestroyCommandRequestBuilderFactory
+            destroyCommandRequestBuilderFactory
     ) : base(configurationLoadAction, nameConverter)
     {
         _responseBuilderFactory = responseBuilderFactory;

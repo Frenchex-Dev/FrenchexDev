@@ -13,7 +13,9 @@ public class UpCommandResponseBuilder : RootResponseBuilder, IUpCommandResponseB
         return new UpCommandResponse(_upCommandResponse);
     }
 
-    public IUpCommandResponseBuilder WithUpResponse(Vagrant.Lib.Abstractions.Domain.Commands.Up.Response.IUpCommandResponse response)
+    public IUpCommandResponseBuilder WithUpResponse(
+        Vagrant.Lib.Abstractions.Domain.Commands.Up.Response.IUpCommandResponse response
+    )
     {
         _upCommandResponse = response;
         return this;

@@ -3,12 +3,12 @@
 public class BaseCommandRequestBuilder : IBaseCommandRequestBuilder
 {
     private readonly object _parent;
+    private string? _binPath;
 
     private int? _timeoutMs;
     private bool? _tty;
     private string? _workingDirectory;
-    private string? _binPath;
-    
+
 
     public BaseCommandRequestBuilder(object parent)
     {
@@ -40,12 +40,6 @@ public class BaseCommandRequestBuilder : IBaseCommandRequestBuilder
         return this;
     }
 
-    public IBaseCommandRequestBuilder WithTty(bool with)
-    {
-        _tty = with;
-        return this;
-    }
-
     public IBaseCommandRequestBuilder UsingBinPath(string binPath)
     {
         _binPath = binPath;
@@ -55,5 +49,11 @@ public class BaseCommandRequestBuilder : IBaseCommandRequestBuilder
     public T Parent<T>() where T : IRootCommandRequestBuilder
     {
         return (T) _parent;
+    }
+
+    public IBaseCommandRequestBuilder WithTty(bool with)
+    {
+        _tty = with;
+        return this;
     }
 }

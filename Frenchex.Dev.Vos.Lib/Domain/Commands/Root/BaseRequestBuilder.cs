@@ -43,8 +43,8 @@ public class BaseRequestBuilder : IBaseRequestBuilder
     {
         _timeoutMs = (int) timeoutMsTimespan.TotalMilliseconds;
         return this;
-        
     }
+
     public IBaseRequestBuilder UsingVagrantBinPath(string? vagrantBinPath)
     {
         _vagrantBinPath = vagrantBinPath;

@@ -6,8 +6,8 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Provision.Request;
 
 public class ProvisionCommandRequestBuilder : RootCommandRequestBuilder, IProvisionCommandRequestBuilder
 {
-    private string[]? _with;
     private string? _vmName;
+    private string[]? _with;
 
     public ProvisionCommandRequestBuilder(
         IBaseCommandRequestBuilderFactory? baseRequestBuilderFactory

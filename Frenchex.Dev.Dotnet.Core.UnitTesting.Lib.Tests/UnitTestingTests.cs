@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Tests;
 
 [TestClass]
+[TestCategory("component:unit-testing")]
 public class UnitTestingTests
 {
     [TestMethod]
@@ -25,6 +26,8 @@ public class UnitTestingTests
                 executionContext.HasRanConfigureMocksFunction.Mark();
                 services.AddScoped<ExecutionContext>();
             });
+        
+        unitTest.BuildIfNecessary();
 
         await unitTest.ExecuteAndAssertAsync<ExecutionContext>((provider, root, context, vsCode) =>
             {

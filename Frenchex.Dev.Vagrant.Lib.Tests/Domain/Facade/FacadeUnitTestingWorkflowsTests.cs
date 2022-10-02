@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Frenchex.Dev.Vagrant.Lib.Tests.Domain.Facade;
 
 [TestClass]
+[TestCategory("component:vagrant")]
 public class FacadeUnitTestingWorkflowsTests : AbstractUnitTest
 {
     [TestInitialize]
@@ -40,5 +41,4 @@ public class FacadeUnitTestingWorkflowsTests : AbstractUnitTest
 internal class ExecutionContext : WithWorkingDirectoryExecutionContext
 {
     public ICommandsFacade? Facade { get; set; }
-
 }

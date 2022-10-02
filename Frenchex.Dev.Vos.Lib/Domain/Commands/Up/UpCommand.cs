@@ -17,7 +17,8 @@ public class UpCommand : RootCommand, IUpCommand
         IConfigurationLoadAction configurationLoadAction,
         IVexNameToVagrantNameConverter vexNameToVagrantNameConverter,
         Vagrant.Lib.Domain.Commands.Up.IUpCommand vagrantUpCommand,
-        Vagrant.Lib.Abstractions.Domain.Commands.Up.Request.IUpCommandRequestBuilderFactory vagrantUpCommandRequestBuilderFactory
+        Vagrant.Lib.Abstractions.Domain.Commands.Up.Request.IUpCommandRequestBuilderFactory
+            vagrantUpCommandRequestBuilderFactory
     ) : base(configurationLoadAction, vexNameToVagrantNameConverter)
     {
         _responseBuilderFactory = responseBuilderFactory;

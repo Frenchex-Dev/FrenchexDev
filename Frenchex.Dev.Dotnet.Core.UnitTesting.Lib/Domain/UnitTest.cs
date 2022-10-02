@@ -41,7 +41,7 @@ public class UnitTest : IAsyncDisposable
         Func<IServiceProvider, IConfigurationRoot, T, Action<string>, Task> executeFunc,
         Func<IServiceProvider, IConfigurationRoot, T, Task>? assertFunc,
         IServiceProvider serviceProvider,
-        VsCodeDebugging? vsCodeDebugging
+        VsCodeDebugging? vsCodeDebugging = null
     ) where T : WithWorkingDirectoryExecutionContext
     {
         var timeout = Task.Delay((int) timeBox.TotalMilliseconds);
@@ -54,7 +54,7 @@ public class UnitTest : IAsyncDisposable
             vsCodeDebugging
         );
 
-        var tasks = new List<Task>() {run};
+        List<Task> tasks = new List<Task> {run};
 
         if (vsCodeDebugging?.DevDebugging == false || _vsCodeDebugging?.DevDebugging == false)
         {
@@ -67,7 +67,7 @@ public class UnitTest : IAsyncDisposable
         {
             return;
         }
-        
+
         if (firstFinishedTask == timeout)
         {
             throw new TimeoutException($"timeout {timeBox.TotalSeconds}s");
@@ -75,7 +75,7 @@ public class UnitTest : IAsyncDisposable
 
         if (firstFinishedTask.IsFaulted)
         {
-            throw new ApplicationException($"Task faulted: {firstFinishedTask?.Exception?.Message}");
+            throw new ApplicationException($"Task faulted: {firstFinishedTask.Exception?.Message}");
         }
     }
 
@@ -98,7 +98,7 @@ public class UnitTest : IAsyncDisposable
             vsCodeDebugging
         );
 
-        var tasks = new List<Task>() {run};
+        List<Task> tasks = new List<Task> {run};
 
         if (vsCodeDebugging?.DevDebugging == false || _vsCodeDebugging?.DevDebugging == false)
         {
@@ -124,7 +124,7 @@ public class UnitTest : IAsyncDisposable
             (_, _, _) => Task.CompletedTask,
             (_, _, _) => Task.CompletedTask,
             serviceProvider,
-            vsCodeDebugging
+            vsCodeDebugging ?? new VsCodeDebugging()
         );
     }
 
@@ -140,7 +140,7 @@ public class UnitTest : IAsyncDisposable
             assertFunc,
             (_, _, _) => Task.CompletedTask,
             serviceProvider,
-            vsCodeDebugging
+            vsCodeDebugging ?? new VsCodeDebugging()
         );
     }
 
@@ -157,7 +157,7 @@ public class UnitTest : IAsyncDisposable
             assertFunc,
             cleanupFunc,
             serviceProvider,
-            vsCodeDebugging
+            vsCodeDebugging ?? _vsCodeDebugging
         );
     }
 
@@ -166,7 +166,7 @@ public class UnitTest : IAsyncDisposable
         Func<IServiceProvider, IConfigurationRoot, T, Task>? assertFunc,
         Func<IServiceProvider, IConfigurationRoot, T, Task>? cleanupFunc,
         IServiceProvider serviceProvider,
-        VsCodeDebugging? vsCodeDebugging
+        VsCodeDebugging? vsCodeDebugging = null
     ) where T : WithWorkingDirectoryExecutionContext
     {
         BuildIfNecessary();
@@ -176,28 +176,29 @@ public class UnitTest : IAsyncDisposable
             throw new ArgumentNullException(nameof(executeFunc));
         }
 
-        if (vsCodeDebugging is null)
+        if (_vsCodeDebugging is null && vsCodeDebugging is not null)
         {
-            throw new ArgumentNullException(nameof(vsCodeDebugging));
+            _vsCodeDebugging = vsCodeDebugging;
         }
 
-        _vsCodeDebugging = vsCodeDebugging;
-
-        var openVsCodeDebugging = (string workingDirectory) =>
+        Action<string> openVsCodeDebugging = (workingDirectory) =>
         {
+            if (_vsCodeDebugging is null)
+                return;
+
+            if (_vsCodeDebugging?.VsProcess is not null)
+                return;
+
             var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
-            if (_vsCodeDebugging.VsProcess is null)
-            {
-                _vsCodeDebugging.VsProcess = Process.Start(
-                    vsCodeDebugging.Bin ?? (isWindows ? "C:\\Program Files\\Microsoft VS Code\\Code.exe" : "code"),
-                    "-n " + workingDirectory);    
-            }
+            _vsCodeDebugging!.VsProcess = Process.Start(
+                _vsCodeDebugging?.Bin ?? (isWindows ? "C:\\Program Files\\Microsoft VS Code\\Code.exe" : "code"),
+                "-n " + workingDirectory);
         };
 
         var executionContextObject = serviceProvider.GetRequiredService<T>();
 
-        if (vsCodeDebugging.Open)
+        if (_vsCodeDebugging?.Open == true)
         {
             openVsCodeDebugging.Invoke(executionContextObject.WorkingDirectory!);
         }
@@ -206,7 +207,8 @@ public class UnitTest : IAsyncDisposable
 
         try
         {
-            await executeFunc.Invoke(serviceProvider,
+            await executeFunc.Invoke(
+                serviceProvider,
                 Configuration!,
                 executionContextObject,
                 openVsCodeDebugging
@@ -226,8 +228,8 @@ public class UnitTest : IAsyncDisposable
             cleanupFunc?.Invoke(serviceProvider, Configuration!, ServiceProvider!.GetRequiredService<T>());
         }
 
-        if (vsCodeDebugging.Keep == false)
-            vsCodeDebugging.Stop();
+        if (_vsCodeDebugging?.Keep == false)
+            _vsCodeDebugging?.Stop();
 
         if (thrownException is not null)
         {
@@ -281,14 +283,9 @@ public class UnitTest : IAsyncDisposable
         public Process? VsProcess { get; set; }
         public bool DevDebugging { get; set; }
 
-        public bool? Start()
+        public async ValueTask DisposeAsync()
         {
-            return VsProcess?.Start();
-        }
-
-        public void Stop()
-        {
-            VsProcess?.Kill(true);
+            await Task.Run(Dispose);
         }
 
         public void Dispose()
@@ -297,9 +294,14 @@ public class UnitTest : IAsyncDisposable
             VsProcess?.Dispose();
         }
 
-        public async ValueTask DisposeAsync()
+        public bool? Start()
         {
-            await Task.Run(Dispose);
+            return VsProcess?.Start();
+        }
+
+        public void Stop()
+        {
+            VsProcess?.Kill(true);
         }
     }
 }

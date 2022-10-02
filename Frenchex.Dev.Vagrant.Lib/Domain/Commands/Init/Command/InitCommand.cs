@@ -39,14 +39,14 @@ public class InitCommand : RootCommand, IInitCommand
         return responseBuilder.Build();
     }
 
-    public string BuildArguments(IInitCommandRequest request)
-    {
-        return GetCliCommandName() + " " + BuildVagrantArguments(request) + BuildVagrantOptions(request);
-    }
-
     public string GetCliCommandName()
     {
         return "init";
+    }
+
+    public string BuildArguments(IInitCommandRequest request)
+    {
+        return GetCliCommandName() + " " + BuildVagrantArguments(request) + BuildVagrantOptions(request);
     }
 
     protected static string BuildVagrantOptions(IInitCommandRequest request)

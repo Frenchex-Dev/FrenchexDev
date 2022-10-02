@@ -16,7 +16,7 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
         int nbVosInstances = 3
     )
     {
-        List<object[]> listOfList = new List<object[]>();
+        List<object[]> listOfList = new();
 
         for (var i = 0; i < nbTestCases; i++)
         {
@@ -25,7 +25,7 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
                 ListOfListOfCommands = new List<List<InputCommand>>(nbVosInstances)
             };
 
-            List<object> obj = new List<object> {
+            List<object> obj = new() {
                 payload.TestCaseName,
                 payload
             };

@@ -44,14 +44,14 @@ public class VosCliIntegrationWorkflowTests : IntegrationWorkflowUnitTestForVirt
     {
         var numberOfWorkingDirectories = payload.ListOfListOfCommands!.Count;
 
-        List<string> workingDirectories = new List<string>(numberOfWorkingDirectories);
+        List<string> workingDirectories = new(numberOfWorkingDirectories);
 
         foreach (List<InputCommand> num in payload.ListOfListOfCommands)
         {
             workingDirectories.Add(Path.Join(Path.GetTempPath(), Path.GetRandomFileName()));
         }
 
-        List<Task> tasks = new List<Task>();
+        List<Task> tasks = new();
 
         var i = 0;
 
@@ -74,9 +74,9 @@ public class VosCliIntegrationWorkflowTests : IntegrationWorkflowUnitTestForVirt
         {
             throw new ArgumentNullException(nameof(UnitTest));
         }
-        
+
         await SetupUnitTest(UnitTest, vsCodeDebugging);
-        
+
         await RunInternal(new[] {
                 workingDirectory
             },

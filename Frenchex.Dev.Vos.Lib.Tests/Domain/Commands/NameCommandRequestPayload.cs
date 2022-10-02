@@ -10,5 +10,5 @@ public class NameCommandRequestPayload
     }
 
     public INameCommandRequest Request { get; init; }
-    public List<string> ExpectedNames { get; set; } = new List<string>();
+    public List<string> ExpectedNames { get; set; } = new();
 }

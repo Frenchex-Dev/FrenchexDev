@@ -4,16 +4,16 @@ using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Init.Request;
 
 namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Init.Facade;
 
-class InitFacade : IInitFacade
+internal class InitFacade : IInitFacade
 {
-    public IInitCommand Command { get; init; }
-    public IInitCommandRequestBuilderFactory RequestBuilderFactory { get; }
-
-    public IInitCommandRequestBuilder RequestBuilder => RequestBuilderFactory.Factory();
-
     public InitFacade(IInitCommand command, IInitCommandRequestBuilderFactory requestBuilderFactory)
     {
         Command = command;
         RequestBuilderFactory = requestBuilderFactory;
     }
+
+    public IInitCommand Command { get; init; }
+    public IInitCommandRequestBuilderFactory RequestBuilderFactory { get; }
+
+    public IInitCommandRequestBuilder RequestBuilder => RequestBuilderFactory.Factory();
 }
