@@ -16,9 +16,12 @@ public static class ServicesConfiguration
     {
         services
             .AddScoped<IDestroyCommand, DestroyCommand>()
-            .AddScoped<IDestroyFacade, DestroyFacade>()
+            
+            .AddScoped<IDestroyCommandFacade, DestroyCommandFacade>()
+            
             .AddScoped<IDestroyCommandRequestBuilder, DestroyCommandRequestBuilder>()
             .AddScoped<IDestroyCommandRequestBuilderFactory, DestroyCommandRequestBuilderFactory>()
+            
             .AddScoped<IDestroyCommandResponseBuilder, DestroyCommandResponseBuilder>()
             .AddScoped<IDestroyCommandResponseBuilderFactory, DestroyCommandResponseBuilderFactory>()
             ;

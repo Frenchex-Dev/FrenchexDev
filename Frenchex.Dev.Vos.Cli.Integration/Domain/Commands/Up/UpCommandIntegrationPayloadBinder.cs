@@ -14,7 +14,7 @@ public class UpCommandIntegrationPayloadBinder : IGenericBinder<UpCommandIntegra
     private readonly Option<string> _provider;
     private readonly Option<bool> _provision;
     private readonly Option<string[]> _provisionWith;
-    private readonly Option<int> _timeoutMs;
+    private readonly Option<String> _timeout;
     private readonly Option<string> _vagrantBinPath;
     private readonly Option<string> _workingDir;
 
@@ -28,7 +28,7 @@ public class UpCommandIntegrationPayloadBinder : IGenericBinder<UpCommandIntegra
         Option<int> parallelWait,
         Option<string> provider,
         Option<bool> installProvider,
-        Option<int> timeoutMs,
+        Option<String> timeout,
         Option<string> workingDir,
         Option<string> vagrantBinPath
     )
@@ -42,7 +42,7 @@ public class UpCommandIntegrationPayloadBinder : IGenericBinder<UpCommandIntegra
         _parallelWait = parallelWait;
         _provider = provider;
         _installProvider = installProvider;
-        _timeoutMs = timeoutMs;
+        _timeout = timeout;
         _workingDir = workingDir;
         _vagrantBinPath = vagrantBinPath;
     }
@@ -58,7 +58,7 @@ public class UpCommandIntegrationPayloadBinder : IGenericBinder<UpCommandIntegra
             Provider = bindingContext.ParseResult.GetValueForOption(_provider),
             Provision = bindingContext.ParseResult.GetValueForOption(_provision),
             ProvisionWith = bindingContext.ParseResult.GetValueForOption(_provisionWith),
-            TimeoutMs = bindingContext.ParseResult.GetValueForOption(_timeoutMs),
+            TimeoutString = bindingContext.ParseResult.GetValueForOption(_timeout),
             WorkingDirectory = bindingContext.ParseResult.GetValueForOption(_workingDir),
             VagrantBinPath = bindingContext.ParseResult.GetValueForOption(_vagrantBinPath)
         };

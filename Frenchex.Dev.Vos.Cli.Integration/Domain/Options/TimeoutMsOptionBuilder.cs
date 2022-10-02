@@ -4,24 +4,34 @@ namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 
 public interface ITimeoutMsOptionBuilder
 {
-    Option<int> Build();
-    Option<int> Build(string[] aliases, Func<int> getDefaultFunc, string description);
+    Option<string> Build();
+    Option<string> Build(string defaultTimespanStr);
+    Option<string> Build(string[] aliases, Func<string> getDefaultFunc, string description);
 }
 
 public class TimeoutMsOptionBuilder : ITimeoutMsOptionBuilder
 {
-    public Option<int> Build()
+    public Option<string> Build()
     {
         return Build(
-            new[] {"--timeout-ms", "-t"},
-            () => (int) TimeSpan.FromMinutes(10).TotalMilliseconds,
+            new[] {"--timeout", "-t"},
+            () => "1s",
             "TimeOut in ms"
         );
     }
 
-    public Option<int> Build(string[] aliases, Func<int> getDefaultFunc, string description)
+    public Option<string> Build(string defaultTimespanStr)
     {
-        return new Option<int>(
+        return Build(
+            new[] {"--timeout", "-t"},
+            () => defaultTimespanStr,
+            "TimeOut in ms"
+        );
+    }
+
+    public Option<string> Build(string[] aliases, Func<string> getDefaultFunc, string description)
+    {
+        return new Option<string>(
             aliases,
             getDefaultFunc,
             description

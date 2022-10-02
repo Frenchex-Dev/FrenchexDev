@@ -12,27 +12,27 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands;
 public class CommandsFacade : ICommandsFacade
 {
     public CommandsFacade(
-        IDestroyFacade destroy,
-        IHaltFacade halt,
-        IInitFacade init,
+        IDestroyCommandFacade destroyCommand,
+        IHaltCommandFacade haltCommand,
+        IInitCommandFacade initCommand,
         ISshFacade ssh,
         ISshConfigFacade sshConfig,
         IStatusFacade status,
         IUpFacade up
     )
     {
-        Destroy = destroy;
-        Halt = halt;
-        Init = init;
+        DestroyCommand = destroyCommand;
+        HaltCommand = haltCommand;
+        InitCommand = initCommand;
         Ssh = ssh;
         SshConfig = sshConfig;
         Status = status;
         Up = up;
     }
 
-    public IDestroyFacade Destroy { get; init; }
-    public IHaltFacade Halt { get; init; }
-    public IInitFacade Init { get; init; }
+    public IDestroyCommandFacade DestroyCommand { get; init; }
+    public IHaltCommandFacade HaltCommand { get; init; }
+    public IInitCommandFacade InitCommand { get; init; }
     public ISshFacade Ssh { get; init; }
     public ISshConfigFacade SshConfig { get; init; }
     public IStatusFacade Status { get; init; }

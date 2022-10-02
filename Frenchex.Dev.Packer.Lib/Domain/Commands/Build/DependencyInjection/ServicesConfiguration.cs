@@ -17,10 +17,8 @@ public static class ServicesConfiguration
         services
             .AddScoped<IBuildCommandFacade, BuildCommandFacade>()
             .AddScoped<IBuildCommand, BuildCommand>()
-            .AddTransient<IBuildCommandRequest, BuildCommandRequest>()
             .AddScoped<IBuildCommandRequestBuilder, BuildCommandRequestBuilder>()
             .AddScoped<IBuildCommandRequestBuilderFactory, BuildCommandRequestBuilderFactory>()
-            .AddTransient<IBuildCommandResponse, BuildCommandResponse>()
             .AddScoped<IBuildCommandResponseBuilder, BuildCommandResponseBuilder>()
             .AddScoped<IBuildCommandResponseBuilderFactory, BuildCommandResponseBuilderFactory>()
             ;

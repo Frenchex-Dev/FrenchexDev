@@ -1,10 +1,11 @@
-﻿using Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Fmt.Command;
-using Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Fmt.Facade;
-using Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Fmt.Request;
-using Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Fmt.Response;
-using Frenchex.Dev.Packer.Lib.Domain.Commands.Fmt.Command;
-using Frenchex.Dev.Packer.Lib.Domain.Commands.Fmt.Facade;
-using Frenchex.Dev.Packer.Lib.Domain.Commands.Fmt.Request;
+﻿using Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Init.Command;
+using Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Init.Facade;
+using Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Init.Request;
+using Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Init.Response;
+using Frenchex.Dev.Packer.Lib.Domain.Commands.Init.Command;
+using Frenchex.Dev.Packer.Lib.Domain.Commands.Init.Facade;
+using Frenchex.Dev.Packer.Lib.Domain.Commands.Init.Request;
+using Frenchex.Dev.Packer.Lib.Domain.Commands.Init.Response;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.Packer.Lib.Domain.Commands.Init.DependencyInjection;
@@ -14,12 +15,12 @@ public static class ServicesConfiguration
     public static void ConfigureServices(IServiceCollection serviceCollection)
     {
         serviceCollection
-            .AddScoped<IFmtCommand, FmtCommand>()
-            .AddScoped<IFmtCommandFacade, FmtCommandFacade>()
-            .AddScoped<IFmtCommandRequestBuilder, FmtCommandRequestBuilder>()
-            .AddScoped<IFmtCommandRequestBuilderFactory, FmtCommandRequestBuilderFactory>()
-            .AddScoped<IFmtCommandResponseBuilder, IFmtCommandResponseBuilder>()
-            .AddScoped<IFmtCommandResponseBuilderFactory, IFmtCommandResponseBuilderFactory>()
+            .AddScoped<IInitCommand, InitCommand>()
+            .AddScoped<IInitCommandFacade, InitCommandFacade>()
+            .AddScoped<IInitCommandRequestBuilder, InitCommandRequestBuilder>()
+            .AddScoped<IInitCommandRequestBuilderFactory, InitCommandRequestBuilderFactory>()
+            .AddScoped<IInitCommandResponseBuilder, InitCommandResponseBuilder>()
+            .AddScoped<IInitCommandResponseBuilderFactory, InitCommandResponseBuilderFactory>()
             ;
     }
 }

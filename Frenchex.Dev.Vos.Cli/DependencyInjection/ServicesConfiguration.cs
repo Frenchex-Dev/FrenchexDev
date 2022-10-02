@@ -15,9 +15,9 @@ public class ServicesConfiguration : IServicesConfiguration, IDiscoverableServic
         _servicesConfigurationServicesFactory = servicesConfigurationServicesFactory;
     }
 
-    public IServiceCollection ConfigureServices(IServiceCollection services)
+    public IServiceCollection ConfigureServices(IServiceCollection serviceCollection)
     {
-        return StaticConfigureServices(services, _servicesConfigurationServicesFactory.Factory());
+        return StaticConfigureServices(serviceCollection, _servicesConfigurationServicesFactory.Factory());
     }
 
     public static IServiceCollection StaticConfigureServices(

@@ -3,6 +3,6 @@ using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Status.Response;
 
 namespace Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Status.Command;
 
-public interface IStatusCommand : ICommand<IStatusCommandRequest, IStatusCommandResponse>
+public interface IStatusCommand : IFacableCommand, ICommand<IStatusCommandRequest, IStatusCommandResponse>
 {
 }

@@ -35,12 +35,12 @@ public class UpCommand : RootCommand, IUpCommand
         return responseBuilder.Build();
     }
 
-    private static string BuildArguments(IUpCommandRequest request)
+    private string BuildArguments(IUpCommandRequest request)
     {
         return GetCliCommandName() + " " + BuildVagrantOptions(request) + " " + BuildVagrantArguments(request);
     }
 
-    private static string GetCliCommandName()
+    public string GetCliCommandName()
     {
         return "up";
     }

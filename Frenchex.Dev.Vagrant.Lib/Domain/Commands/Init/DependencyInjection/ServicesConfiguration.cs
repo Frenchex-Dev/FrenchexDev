@@ -16,7 +16,7 @@ public static class ServicesConfiguration
     {
         services
             .AddScoped<IInitCommand, InitCommand>()
-            .AddScoped<IInitFacade, InitFacade>()
+            .AddScoped<IInitCommandFacade, InitCommandFacade>()
             .AddScoped<IInitCommandRequestBuilder, InitCommandRequestBuilder>()
             .AddScoped<IInitCommandRequestBuilderFactory, InitCommandRequestBuilderFactory>()
             .AddScoped<IInitCommandResponseBuilder, InitCommandResponseBuilder>()

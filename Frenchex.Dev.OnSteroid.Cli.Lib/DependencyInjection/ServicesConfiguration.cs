@@ -6,9 +6,9 @@ namespace Frenchex.Dev.OnSteroid.Cli.Lib.DependencyInjection;
 
 public class ServicesConfiguration : IServicesConfiguration
 {
-    public IServiceCollection ConfigureServices(IServiceCollection services)
+    public IServiceCollection ConfigureServices(IServiceCollection serviceCollection)
     {
-        return StaticConfigureServices(services);
+        return StaticConfigureServices(serviceCollection);
     }
 
     public static IServiceCollection StaticConfigureServices(IServiceCollection services)

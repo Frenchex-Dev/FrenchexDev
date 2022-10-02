@@ -14,7 +14,7 @@ public class DefineMachineAddCommandIntegrationPayloadBinder : IGenericBinder<De
     private readonly Option<string> _namingPattern;
     private readonly Option<string> _networkBridge;
     private readonly Option<int> _ramMb;
-    private readonly Option<int> _timeoutMs;
+    private readonly Option<String> _timeoutStr;
     private readonly Argument<string> _type;
     private readonly Option<string> _vagrantBinPath;
     private readonly Option<int> _vCpus;
@@ -32,7 +32,7 @@ public class DefineMachineAddCommandIntegrationPayloadBinder : IGenericBinder<De
         Option<string> ipv4Pattern,
         Option<int> ipv4Start,
         Option<string> networkBridge,
-        Option<int> timeoutMs,
+        Option<string> timeoutStr,
         Option<string> workingDir,
         Option<string> vagrantBinPath
     )
@@ -48,7 +48,7 @@ public class DefineMachineAddCommandIntegrationPayloadBinder : IGenericBinder<De
         _ipv4Pattern = ipv4Pattern;
         _ipv4Start = ipv4Start;
         _networkBridge = networkBridge;
-        _timeoutMs = timeoutMs;
+        _timeoutStr = timeoutStr;
         _workingDir = workingDir;
         _vagrantBinPath = vagrantBinPath;
     }
@@ -66,7 +66,7 @@ public class DefineMachineAddCommandIntegrationPayloadBinder : IGenericBinder<De
             Name = invocationContext.ParseResult.GetValueForArgument(_name),
             NamingPattern = invocationContext.ParseResult.GetValueForOption(_namingPattern),
             NetworkBridge = invocationContext.ParseResult.GetValueForOption(_networkBridge),
-            TimeoutMs = invocationContext.ParseResult.GetValueForOption(_timeoutMs),
+            TimeoutString = invocationContext.ParseResult.GetValueForOption(_timeoutStr),
             VCpus = invocationContext.ParseResult.GetValueForOption(_vCpus),
             WorkingDirectory = invocationContext.ParseResult.GetValueForOption(_workingDir)
         };

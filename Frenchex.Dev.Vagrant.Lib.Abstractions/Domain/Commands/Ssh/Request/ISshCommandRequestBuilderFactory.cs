@@ -1,6 +1,8 @@
-﻿namespace Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Request;
+﻿using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Root.Request;
 
-public interface ISshCommandRequestBuilderFactory
+namespace Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Request;
+
+public interface ISshCommandRequestBuilderFactory : IRootCommandRequestBuilderFactory
 {
     ISshCommandRequestBuilder Factory();
 }

@@ -14,5 +14,5 @@ public interface IBaseCommandRequestBuilder
     IBaseCommandRequestBuilder WithTty(bool with);
     IBaseCommandRequestBuilder WithHelp(bool with);
     IBaseCommandRequestBuilder UsingWorkingDirectory(string? workingDirectory);
-    IBaseCommandRequestBuilder UsingTimeoutMiliseconds(int timeoutMs);
+    IBaseCommandRequestBuilder UsingTimeout(string? timeout);
 }

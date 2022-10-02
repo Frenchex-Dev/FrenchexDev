@@ -1,7 +1,10 @@
 ﻿using System.CommandLine;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.SshConfig.Command;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.SshConfig.Request;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.SshConfig;
+using Frenchex.Dev.Vos.Lib.Domain.Commands.SshConfig.Request;
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.SshConfig;
 
@@ -18,11 +21,11 @@ public class SshConfigCommandIntegration : ABaseCommandIntegration, ISshConfigCo
         ISshConfigCommandRequestBuilderFactory requestBuilderFactory,
         INamesArgumentBuilder namesArgumentBuilder,
         IWorkingDirectoryOptionBuilder workingDirectoryOptionBuilder,
-        ITimeoutMsOptionBuilder timeoutMsOptionBuilder,
+        ITimeoutMsOptionBuilder timeoutStrOptionBuilder,
         IVagrantBinPathOptionBuilder vagrantBinPathOptionBuilder,
         IPlainTextOptionBuilder plainTextOptionBuilder,
         IExtraSshArgsOptionBuilder extraSshArgsOptionBuilder
-    ) : base(workingDirectoryOptionBuilder, timeoutMsOptionBuilder, vagrantBinPathOptionBuilder)
+    ) : base(workingDirectoryOptionBuilder, timeoutStrOptionBuilder, vagrantBinPathOptionBuilder)
     {
         _command = command;
         _requestBuilderFactory = requestBuilderFactory;
@@ -35,7 +38,7 @@ public class SshConfigCommandIntegration : ABaseCommandIntegration, ISshConfigCo
     {
         Argument<string[]> namesOrIdsOpt = _namesArgumentBuilder.Build();
         Option<string> workingDirOpt = WorkingDirectoryOptionBuilder.Build();
-        Option<int> timeOutMsOpt = TimeoutMsOptionBuilder.Build();
+        Option<String> timeOutMsOpt = TimeoutStrOptionBuilder.Build();
         Option<bool> color = new(new[] {"--color"}, "Color");
         Option<string> vagrantBinPathOpt = VagrantBinPathOptionBuilder.Build();
         Option<string> extraSshArgsOpt = _extraSshArgsOptionBuilder.Build();
@@ -68,7 +71,7 @@ public class SshConfigCommandIntegration : ABaseCommandIntegration, ISshConfigCo
             await _command
                     .ExecuteAsync(_requestBuilderFactory.Factory()
                         .BaseBuilder
-                        .UsingTimeoutMs(payload.TimeoutMs ?? 0)
+                        .UsingTimeout(payload.TimeoutString)
                         .UsingWorkingDirectory(payload.WorkingDirectory)
                         .UsingVagrantBinPath(payload.VagrantBinPath)
                         .WithColor(payload.WithColor ?? false)

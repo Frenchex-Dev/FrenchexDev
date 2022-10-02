@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Naming;
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Actions.Naming;
 
@@ -12,7 +13,7 @@ public class VexNameToVagrantNameConverter : IVexNameToVagrantNameConverter
     public string[] ConvertAll(
         string[] inputNamedPatterns,
         string? workingDirectory,
-        Domain.Configuration.Configuration configuration
+        Abstractions.Domain.Configuration.Configuration configuration
     )
     {
         List<string> list = new();

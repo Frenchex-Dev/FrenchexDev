@@ -7,7 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.NewtonSoft.Json\Frenchex.Dev.Dotnet.Core.Dependencies.NewtonSoft.Json.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.NewtonSoft.Json\Frenchex.Dev.Dotnet.Core.Dependencies.NewtonSoft.Json.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Vagrant.Lib.Abstractions\Frenchex.Dev.Vagrant.Lib.Abstractions.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Domain\Commands\Define\Provisioning\New\Facade" />
     </ItemGroup>
 
 </Project>

@@ -31,7 +31,7 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
             (string workingDirectory, IServiceProvider sp) => sp
                 .GetRequiredService<IInitCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
-                .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(1).TotalMilliseconds)
+                .UsingTimeout("1m")
                 .UsingWorkingDirectory(workingDirectory)
                 .Parent<IInitCommandRequestBuilder>()
                 .UsingBoxName("generic/alpine38")
@@ -40,7 +40,7 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
             (string workingDirectory, IServiceProvider sp) => sp
                 .GetRequiredService<IUpCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
-                .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(10).TotalMilliseconds)
+                .UsingTimeout("10m")
                 .UsingWorkingDirectory(workingDirectory)
                 .Parent<IUpCommandRequestBuilder>()
                 .WithProvision(false)
@@ -54,7 +54,7 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
 
                 builder
                     .BaseBuilder
-                    .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(1).TotalMilliseconds)
+                    .UsingTimeout("1m")
                     .UsingWorkingDirectory(workingDirectory)
                     .Parent<IProvisionCommandRequestBuilder>()
                     .ProvisionWith(new[] {"docker.install"})
@@ -65,14 +65,14 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
             (string workingDirectory, IServiceProvider sp) => sp
                 .GetRequiredService<IStatusCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
-                .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(1).TotalMilliseconds)
+                .UsingTimeout("1m")
                 .UsingWorkingDirectory(workingDirectory)
                 .Parent<IStatusCommandRequestBuilder>()
                 .Build(),
             (string workingDirectory, IServiceProvider sp) => sp
                 .GetRequiredService<ISshConfigCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
-                .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(1).TotalMilliseconds)
+                .UsingTimeout("1m")
                 .UsingWorkingDirectory(workingDirectory)
                 .Parent<ISshConfigCommandRequestBuilder>()
                 .UsingName("default")
@@ -80,7 +80,7 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
             (string workingDirectory, IServiceProvider sp) => sp
                 .GetRequiredService<ISshCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
-                .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(1).TotalMilliseconds)
+                .UsingTimeout("1m")
                 .UsingWorkingDirectory(workingDirectory)
                 .Parent<ISshCommandRequestBuilder>()
                 .UsingCommand("echo foo")
@@ -89,14 +89,14 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
             (string workingDirectory, IServiceProvider sp) => sp
                 .GetRequiredService<IHaltCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
-                .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(3).TotalMilliseconds)
+                .UsingTimeout("3m")
                 .UsingWorkingDirectory(workingDirectory)
                 .Parent<IHaltCommandRequestBuilder>()
                 .Build(),
             (string workingDirectory, IServiceProvider sp) => sp
                 .GetRequiredService<IDestroyCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
-                .UsingTimeoutMiliseconds((int) TimeSpan.FromMinutes(3).TotalMilliseconds)
+                .UsingTimeout("3m")
                 .UsingWorkingDirectory(workingDirectory)
                 .Parent<IDestroyCommandRequestBuilder>()
                 .WithForce(true)
@@ -108,33 +108,38 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
     public void TestInit()
     {
         UnitTest = VagrantUnitTestBase.CreateUnitTest<ExecutionContext>();
+        UnitTest.BuildIfNecessary();
     }
 
     [TestMethod]
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     [TestCategory(TestCategories.NeedVagrant)]
     public async Task Test_Complete_Workflow(
-        Func<string, IInitCommandRequest> initRequestBuilder,
-        Func<string, IUpCommandRequest> upRequestBuilder,
-        Func<string, IProvisionCommandRequest> provisionRequestBuilder,
-        Func<string, IStatusCommandRequest> statusRequestBuilder,
-        Func<string, ISshConfigCommandRequest> sshConfigCommandRequestBuilder,
-        Func<string, ISshCommandRequest> sshCommandRequestBuilder,
-        Func<string, IHaltCommandRequest> haltRequestBuilder,
-        Func<string, IDestroyCommandRequest> destroyRequestBuilder
+        Func<string, IServiceProvider, IInitCommandRequest> initRequestBuilder,
+        Func<string, IServiceProvider, IUpCommandRequest> upRequestBuilder,
+        Func<string, IServiceProvider, IProvisionCommandRequest> provisionRequestBuilder,
+        Func<string, IServiceProvider, IStatusCommandRequest> statusRequestBuilder,
+        Func<string, IServiceProvider, ISshConfigCommandRequest> sshConfigCommandRequestBuilder,
+        Func<string, IServiceProvider, ISshCommandRequest> sshCommandRequestBuilder,
+        Func<string, IServiceProvider, IHaltCommandRequest> haltRequestBuilder,
+        Func<string, IServiceProvider, IDestroyCommandRequest> destroyRequestBuilder
     )
     {
         // directory is created by Init command
         var workingDirectory = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
+        var sp = UnitTest!.ServiceProvider!;
 
-        var initRequest = initRequestBuilder.Invoke(workingDirectory);
-        var upRequest = upRequestBuilder.Invoke(workingDirectory);
-        var provisionRequest = provisionRequestBuilder.Invoke(workingDirectory);
-        var statusRequest = statusRequestBuilder.Invoke(workingDirectory);
-        var sshConfigCommandRequest = sshConfigCommandRequestBuilder.Invoke(workingDirectory);
-        var sshCommandRequest = sshCommandRequestBuilder.Invoke(workingDirectory);
-        var haltRequest = haltRequestBuilder.Invoke(workingDirectory);
-        var destroyRequest = destroyRequestBuilder.Invoke(workingDirectory);
+        if (sp == null)
+            throw new ArgumentNullException(nameof(sp));
+
+        var initRequest = initRequestBuilder.Invoke(workingDirectory, sp);
+        var upRequest = upRequestBuilder.Invoke(workingDirectory, sp);
+        var provisionRequest = provisionRequestBuilder.Invoke(workingDirectory, sp);
+        var statusRequest = statusRequestBuilder.Invoke(workingDirectory, sp);
+        var sshConfigCommandRequest = sshConfigCommandRequestBuilder.Invoke(workingDirectory, sp);
+        var sshCommandRequest = sshCommandRequestBuilder.Invoke(workingDirectory, sp);
+        var haltRequest = haltRequestBuilder.Invoke(workingDirectory, sp);
+        var destroyRequest = destroyRequestBuilder.Invoke(workingDirectory, sp);
 
         await UnitTest!.ExecuteAndAssertAndCleanupAsync<ExecutionContext>(async (provider, _, _, _) =>
             {
@@ -250,8 +255,4 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
     private class ExecutionContext : WithWorkingDirectoryExecutionContext
     {
     }
-}
-
-public class ExecutionContext : WithWorkingDirectoryExecutionContext
-{
 }

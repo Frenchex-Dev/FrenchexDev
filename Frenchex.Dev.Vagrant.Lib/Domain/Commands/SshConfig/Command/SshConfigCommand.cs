@@ -36,12 +36,12 @@ public class SshConfigCommand : RootCommand, ISshConfigCommand
         return responseBuilder.Build();
     }
 
-    private static string BuildArguments(ISshConfigCommandRequest request)
+    private string BuildArguments(ISshConfigCommandRequest request)
     {
         return GetCliCommandName() + " " + BuildVagrantOptions(request) + " " + BuildVagrantArguments(request);
     }
 
-    private static string GetCliCommandName()
+    public string GetCliCommandName()
     {
         return "ssh-config";
     }

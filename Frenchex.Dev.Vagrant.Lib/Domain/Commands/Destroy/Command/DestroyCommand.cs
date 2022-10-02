@@ -41,12 +41,12 @@ public class DestroyCommand : RootCommand, IDestroyCommand
         return "destroy";
     }
 
-    public string BuildArguments(IDestroyCommandRequest request)
+    private string BuildArguments(IDestroyCommandRequest request)
     {
         return GetCliCommandName() + " " + BuildVagrantOptions(request) + " " + BuildVagrantArguments(request);
     }
 
-    protected static string BuildVagrantOptions(IDestroyCommandRequest request)
+    private static string BuildVagrantOptions(IDestroyCommandRequest request)
     {
         if (null == request.Base) throw new InvalidOperationException("request.base is null");
 
@@ -59,7 +59,7 @@ public class DestroyCommand : RootCommand, IDestroyCommand
             ;
     }
 
-    protected static string BuildVagrantArguments(IDestroyCommandRequest request)
+    private static string BuildVagrantArguments(IDestroyCommandRequest request)
     {
         return request.NameOrId;
     }

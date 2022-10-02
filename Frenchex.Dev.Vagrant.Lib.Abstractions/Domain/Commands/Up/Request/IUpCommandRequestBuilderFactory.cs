@@ -1,6 +1,8 @@
-﻿namespace Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Request;
+﻿using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Root.Request;
 
-public interface IUpCommandRequestBuilderFactory
+namespace Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Request;
+
+public interface IUpCommandRequestBuilderFactory: IRootCommandRequestBuilderFactory
 {
     IUpCommandRequestBuilder Factory();
 }

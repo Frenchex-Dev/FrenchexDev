@@ -1,6 +1,8 @@
 ﻿using System.CommandLine;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Command;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Machine.Add;
 
@@ -36,10 +38,10 @@ public class DefineMachineAddCommandIntegration : ABaseCommandIntegration, IDefi
         IIpv4PatternOptionBuilder ipv4PatternOptionBuilder,
         IIpv4StartOptionBuilder ipv4StartOptionBuilder,
         INetworkBridgeOptionBuilder networkBridgeOptionBuilder,
-        ITimeoutMsOptionBuilder timeoutMsOptionBuilder,
+        ITimeoutMsOptionBuilder timeoutStrOptionBuilder,
         IWorkingDirectoryOptionBuilder workingDirectoryOptionBuilder,
         IVagrantBinPathOptionBuilder vagrantBinPathOptionBuilder
-    ) : base(workingDirectoryOptionBuilder, timeoutMsOptionBuilder, vagrantBinPathOptionBuilder)
+    ) : base(workingDirectoryOptionBuilder, timeoutStrOptionBuilder, vagrantBinPathOptionBuilder)
     {
         _command = command;
         _requestBuilderFactory = responseBuilderFactory;
@@ -70,7 +72,7 @@ public class DefineMachineAddCommandIntegration : ABaseCommandIntegration, IDefi
         Option<string> ipv4PatternOpt = _ipv4PatternOptionBuilder.Build();
         Option<int> ipv4StartOpt = _ipv4StartOptionBuilder.Build();
         Option<string> networkBridgeOpt = _networkBridgeOptionBuilder.Build();
-        Option<int>? timeoutMsOpt = TimeoutMsOptionBuilder?.Build();
+        Option<string>? timeoutStrOpt = TimeoutStrOptionBuilder?.Build();
         Option<string>? workingDirOpt = WorkingDirectoryOptionBuilder?.Build();
         Option<string>? vagrantBinPath = VagrantBinPathOptionBuilder?.Build();
 
@@ -86,7 +88,7 @@ public class DefineMachineAddCommandIntegration : ABaseCommandIntegration, IDefi
             ipv4PatternOpt,
             ipv4StartOpt,
             networkBridgeOpt,
-            timeoutMsOpt!,
+            timeoutStrOpt!,
             workingDirOpt!,
             vagrantBinPath!
         };
@@ -103,7 +105,7 @@ public class DefineMachineAddCommandIntegration : ABaseCommandIntegration, IDefi
             ipv4PatternOpt,
             ipv4StartOpt,
             networkBridgeOpt,
-            timeoutMsOpt!,
+            timeoutStrOpt!,
             workingDirOpt!,
             vagrantBinPath!
         );

@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.Packer.Lib.Domain.Commands.Fmt.Response;
 
-public class FmtCommandResponseBuilderFactory : IRootCommandResponseBuilderFactory
+public class FmtCommandResponseBuilderFactory : IFmtCommandResponseBuilderFactory
 {
     private readonly IServiceProvider _serviceProvider;
 

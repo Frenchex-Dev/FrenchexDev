@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.NetworkInformation;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Networking;
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Actions.Networking;
 

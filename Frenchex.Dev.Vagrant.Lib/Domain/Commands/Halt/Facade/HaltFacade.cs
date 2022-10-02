@@ -4,9 +4,9 @@ using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Halt.Request;
 
 namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Halt.Facade;
 
-internal class HaltFacade : IHaltFacade
+internal class HaltCommandFacade : IHaltCommandFacade
 {
-    public HaltFacade(IHaltCommand command, IHaltCommandRequestBuilderFactory requestBuilderFactory)
+    public HaltCommandFacade(IHaltCommand command, IHaltCommandRequestBuilderFactory requestBuilderFactory)
     {
         Command = command;
         RequestBuilderFactory = requestBuilderFactory;

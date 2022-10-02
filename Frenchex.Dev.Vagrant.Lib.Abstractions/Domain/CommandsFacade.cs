@@ -10,9 +10,9 @@ namespace Frenchex.Dev.Vagrant.Lib.Abstractions.Domain;
 
 public interface ICommandsFacade
 {
-    IDestroyFacade Destroy { get; init; }
-    IHaltFacade Halt { get; init; }
-    IInitFacade Init { get; init; }
+    IDestroyCommandFacade DestroyCommand { get; init; }
+    IHaltCommandFacade HaltCommand { get; init; }
+    IInitCommandFacade InitCommand { get; init; }
     ISshFacade Ssh { get; init; }
     ISshConfigFacade SshConfig { get; init; }
     IStatusFacade Status { get; init; }

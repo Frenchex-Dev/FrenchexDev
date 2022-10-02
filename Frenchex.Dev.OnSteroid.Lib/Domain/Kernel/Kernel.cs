@@ -30,8 +30,8 @@ public class Kernel : IKernel, IAsyncDisposable, IDisposable
 
     public async Task<AsyncServiceScope> CreateScopeAsync(string name)
     {
-        var scope = await ServiceProviderBuilder.Invoke();
-        var newScope = scope.CreateAsyncScope();
+        var serviceProvider = await ServiceProviderBuilder.Invoke();
+        var newScope = serviceProvider.CreateAsyncScope();
         Scopes.Add(name, newScope);
 
         return newScope;

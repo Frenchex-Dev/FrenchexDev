@@ -1,4 +1,5 @@
-﻿using Frenchex.Dev.Dotnet.Wrapping.Lib.Domain.Commands.Root;
+﻿using Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Root.Base.Request;
+using Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Root.Request;
 
 namespace Frenchex.Dev.Packer.Lib.Domain.Commands.Root.Base.Request;
 
@@ -11,9 +12,12 @@ public class BaseCommandRequestBuilder : IBaseCommandRequestBuilder
     private bool? _machineReadable;
     private string? _packerBinpath;
 
-    private int? _timeoutMs;
+    private string? _timeout;
     private bool? _version;
     private string? _workingDirectory;
+    private bool? _timeStamp;
+    private bool? _debugTimestamp;
+    private bool? _tty;
 
     public BaseCommandRequestBuilder(object parent)
     {
@@ -27,25 +31,38 @@ public class BaseCommandRequestBuilder : IBaseCommandRequestBuilder
 
         return new BaseCommandRequest(
             _workingDirectory,
+            _timeStamp ?? false,
+            _debugTimestamp ?? false,
+            _timeout,
             _machineReadable ?? false,
             _version ?? false,
             _debug ?? false,
             _packerBinpath ?? "packer",
-            _timeoutMs ?? -1,
             _help ?? false,
             _color ?? false
         );
     }
 
-    public IBaseCommandRequestBuilder UsingTimeoutMs(int timeoutMs)
+    T IBaseCommandRequestBuilder.Parent<T>()
     {
-        _timeoutMs = timeoutMs;
+        return (T) _parent;
+    }
+
+    public IBaseCommandRequestBuilder UsingTimeoutTs(string timeout)
+    {
+        _timeout = timeout;
         return this;
     }
 
     public IBaseCommandRequestBuilder UsingWorkingDirectory(string? workingDirectory)
     {
         _workingDirectory = workingDirectory;
+        return this;
+    }
+
+    public IBaseCommandRequestBuilder UsingTimeout(string timeout)
+    {
+        _timeout = timeout;
         return this;
     }
 
@@ -69,6 +86,24 @@ public class BaseCommandRequestBuilder : IBaseCommandRequestBuilder
     public IBaseCommandRequestBuilder WithDebug(bool with)
     {
         _debug = with;
+        return this;
+    }
+
+    public IBaseCommandRequestBuilder WithTimestamp(bool with)
+    {
+        _timeStamp = with;
+        return this;
+    }
+
+    public IBaseCommandRequestBuilder WithDebugTimestamp(bool with)
+    {
+        _debugTimestamp = with;
+        return this;
+    }
+
+    public IBaseCommandRequestBuilder WithTty(bool with)
+    {
+        _tty = with;
         return this;
     }
 

@@ -5,9 +5,9 @@ public class BaseCommandRequestBuilder : IBaseCommandRequestBuilder
     private readonly object _parent;
     private string? _binPath;
 
-    private int? _timeoutMs;
     private bool? _tty;
     private string? _workingDirectory;
+    private string? _timeout;
 
 
     public BaseCommandRequestBuilder(object parent)
@@ -23,14 +23,14 @@ public class BaseCommandRequestBuilder : IBaseCommandRequestBuilder
         return new CommandRequestHolder(
             _workingDirectory,
             _tty,
-            _timeoutMs,
+            _timeout,
             _binPath
         );
     }
 
-    public IBaseCommandRequestBuilder UsingTimeoutMs(int timeoutMs)
+    public IBaseCommandRequestBuilder UsingTimeout(string timeout)
     {
-        _timeoutMs = timeoutMs;
+        _timeout = timeout;
         return this;
     }
 

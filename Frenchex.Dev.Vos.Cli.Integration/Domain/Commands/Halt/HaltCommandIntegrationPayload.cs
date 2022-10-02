@@ -4,5 +4,5 @@ public class HaltCommandIntegrationPayload : CommandIntegrationPayload
 {
     public string[]? Names { get; set; }
     public bool Force { get; set; }
-    public int HaltTimeoutMs { get; set; }
+    public string? HaltTimeout { get; set; }
 }

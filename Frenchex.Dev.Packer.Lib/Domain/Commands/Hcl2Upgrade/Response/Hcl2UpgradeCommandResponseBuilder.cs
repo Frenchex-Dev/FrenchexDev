@@ -1,10 +1,11 @@
 ﻿using Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.Process;
 using Frenchex.Dev.Dotnet.Wrapping.Lib.Domain.Commands.Root;
 using Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Fmt.Response;
+using Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Hcl2Upgrade.Response;
 
 namespace Frenchex.Dev.Packer.Lib.Domain.Commands.Hcl2Upgrade.Response;
 
-public class Hcl2UpgradeCommandResponseBuilder : IFmtCommandResponseBuilder
+public class Hcl2UpgradeCommandResponseBuilder : IHcl2UpgradeCommandResponseBuilder
 {
     public IRootCommandResponseBuilder SetProcess(IProcess process)
     {
@@ -16,7 +17,7 @@ public class Hcl2UpgradeCommandResponseBuilder : IFmtCommandResponseBuilder
         throw new NotImplementedException();
     }
 
-    public IFmtCommandResponse Build()
+    public IHcl2UpgradeCommandResponse Build()
     {
         throw new NotImplementedException();
     }

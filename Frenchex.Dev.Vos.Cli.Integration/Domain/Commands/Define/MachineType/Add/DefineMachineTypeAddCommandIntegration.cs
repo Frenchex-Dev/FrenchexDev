@@ -1,6 +1,8 @@
 ﻿using System.CommandLine;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Command;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Define.MachineType.Add;
 
@@ -34,10 +36,10 @@ public class DefineMachineTypeAddCommandIntegration : ABaseCommandIntegration, I
         IEnabledOptionBuilder enabledOptionBuilder,
         IEnabled3dOptionBuilder enabled3dOptionBuilder,
         IVirtualRamMbOptionBuilder virtualRamMbOptionBuilder,
-        ITimeoutMsOptionBuilder timeoutMsOptionBuilder,
+        ITimeoutMsOptionBuilder timeoutStrOptionBuilder,
         IWorkingDirectoryOptionBuilder workingDirectoryOptionBuilder,
         IVagrantBinPathOptionBuilder vagrantBinPathOptionBuilder
-    ) : base(workingDirectoryOptionBuilder, timeoutMsOptionBuilder, vagrantBinPathOptionBuilder)
+    ) : base(workingDirectoryOptionBuilder, timeoutStrOptionBuilder, vagrantBinPathOptionBuilder)
     {
         _command = command;
         _requestBuilderFactory = responseBuilderFactory;
@@ -64,7 +66,7 @@ public class DefineMachineTypeAddCommandIntegration : ABaseCommandIntegration, I
         Option<bool> isEnabledOpt = _enabledOptionBuilder.Build();
         Option<bool> isEnabled3dOpt = _enabled3dOptionBuilder.Build();
         Option<int> vramMbOpt = _virtualRamMbOptionBuilder.Build();
-        Option<int> timeoutMsOpt = TimeoutMsOptionBuilder.Build();
+        Option<string> timeoutStrOpt = TimeoutStrOptionBuilder.Build();
         Option<string> workingDirOpt = WorkingDirectoryOptionBuilder.Build();
 
         var command = new Command("add", "Define Machine-Types") {
@@ -77,7 +79,7 @@ public class DefineMachineTypeAddCommandIntegration : ABaseCommandIntegration, I
             isEnabledOpt,
             isEnabled3dOpt,
             vramMbOpt,
-            timeoutMsOpt,
+            timeoutStrOpt,
             workingDirOpt
         };
 
@@ -91,7 +93,7 @@ public class DefineMachineTypeAddCommandIntegration : ABaseCommandIntegration, I
             isEnabledOpt,
             isEnabled3dOpt,
             vramMbOpt,
-            timeoutMsOpt,
+            timeoutStrOpt,
             workingDirOpt
         );
 

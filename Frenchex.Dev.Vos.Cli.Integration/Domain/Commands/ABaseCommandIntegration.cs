@@ -1,22 +1,22 @@
 ﻿using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Root;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root;
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands;
 
 public class ABaseCommandIntegration
 {
-    protected readonly ITimeoutMsOptionBuilder TimeoutMsOptionBuilder;
+    protected readonly ITimeoutMsOptionBuilder TimeoutStrOptionBuilder;
     protected readonly IVagrantBinPathOptionBuilder VagrantBinPathOptionBuilder;
     protected readonly IWorkingDirectoryOptionBuilder WorkingDirectoryOptionBuilder;
 
     public ABaseCommandIntegration(
         IWorkingDirectoryOptionBuilder workingDirectoryOptionBuilder,
-        ITimeoutMsOptionBuilder timeoutMsOptionBuilder,
+        ITimeoutMsOptionBuilder timeoutStrOptionBuilder,
         IVagrantBinPathOptionBuilder vagrantBinPathOptionBuilder
     )
     {
         WorkingDirectoryOptionBuilder = workingDirectoryOptionBuilder;
-        TimeoutMsOptionBuilder = timeoutMsOptionBuilder;
+        TimeoutStrOptionBuilder = timeoutStrOptionBuilder;
         VagrantBinPathOptionBuilder = vagrantBinPathOptionBuilder;
     }
 
@@ -26,7 +26,7 @@ public class ABaseCommandIntegration
             .BaseBuilder
             .WithDebug(true)
             .UsingWorkingDirectory(payload.WorkingDirectory)
-            .UsingTimeoutMs(payload.TimeoutMs ?? 0)
+            .UsingTimeout(payload.TimeoutString)
             .UsingVagrantBinPath(payload.VagrantBinPath)
             ;
     }

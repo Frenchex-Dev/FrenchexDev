@@ -1,4 +1,5 @@
-﻿using Frenchex.Dev.Dotnet.Wrapping.Lib.Domain.Commands.Root;
+﻿
+using Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Root.Base.Request;
 
 namespace Frenchex.Dev.Packer.Lib.Domain.Commands.Root.Base.Request;
 
@@ -6,32 +7,38 @@ public class BaseCommandRequest : IBaseCommandRequest
 {
     public BaseCommandRequest(
         string workingDirectory,
+        bool timestamp,
+        bool debugTimestamp,
+        string? timeout,
         bool machineReadable = false,
         bool version = false,
         bool debug = false,
         string packerBinPath = "packer",
-        int timeoutMs = -1,
         bool help = false,
         bool color = false
     )
     {
         WorkingDirectory = workingDirectory;
+        Timestamp = timestamp;
+        DebugTimestamp = debugTimestamp;
         Color = color;
         MachineReadable = machineReadable;
         Version = version;
         Help = help;
-        TimeoutMs = timeoutMs;
+        Timeout = timeout;
         BinPath = packerBinPath ?? "packer";
         Debug = debug;
     }
 
     public bool MachineReadable { get; }
     public bool Version { get; }
+    public bool DebugTimestamp { get; }
     public bool Help { get; }
     public bool Debug { get; }
+    public bool Timestamp { get; }
     public bool Color { get; }
     public bool Tty { get; }
     public string? WorkingDirectory { get; }
     public string? BinPath { get; }
-    public int TimeoutMs { get; }
+    public string? Timeout { get; }
 }

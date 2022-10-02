@@ -1,19 +1,19 @@
 ﻿using Frenchex.Dev.Dotnet.Wrapping.Lib.Domain.Commands.Root;
 using Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Build.Request;
+using RootCommandRequestBuilder = Frenchex.Dev.Packer.Lib.Domain.Commands.Root.Request.RootCommandRequestBuilder;
 
 namespace Frenchex.Dev.Packer.Lib.Domain.Commands.Build.Request;
 
-public class BuildCommandRequestBuilder : IBuildCommandRequestBuilder
+public class BuildCommandRequestBuilder : RootCommandRequestBuilder, IBuildCommandRequestBuilder
 {
-    public BuildCommandRequestBuilder(IBaseCommandRequestBuilder baseBuilder)
+    public BuildCommandRequestBuilder(IBaseCommandRequestBuilderFactory? baseRequestBuilderFactory) : base(
+        baseRequestBuilderFactory)
     {
-        BaseBuilder = baseBuilder;
     }
-
-    public IBaseCommandRequestBuilder BaseBuilder { get; }
-
+    
     public IBuildCommandRequest Build()
     {
         throw new NotImplementedException();
     }
+
 }

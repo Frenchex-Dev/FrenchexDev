@@ -5,6 +5,6 @@ public interface IBaseCommandRequestBuilder
     IBaseCommandRequest Build();
     T Parent<T>() where T : IRootCommandRequestBuilder;
     IBaseCommandRequestBuilder UsingWorkingDirectory(string? workingDirectory);
-    IBaseCommandRequestBuilder UsingTimeoutMs(int timeoutMs);
+    IBaseCommandRequestBuilder UsingTimeout(string timeout);
     IBaseCommandRequestBuilder UsingBinPath(string binPath);
 }

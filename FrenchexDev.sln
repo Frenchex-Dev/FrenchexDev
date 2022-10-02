@@ -158,6 +158,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Packer.Lib.Abs
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{4A138B57-E867-45DF-98ED-FF0493067EF9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DevTools", "DevTools\DevTools.csproj", "{17231BEF-445A-4602-B9A7-55B50F503633}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevelopmentPatterns", "DevelopmentPatterns", "{4C7805B9-0019-484F-98B2-57098A24173D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.DevelopmentPatterns.Lib.Abstractions", "Frenchex.Dev.DevelopmentPatterns.Lib.Abstractions\Frenchex.Dev.DevelopmentPatterns.Lib.Abstractions.csproj", "{21A3894C-2C14-452B-86DF-C31360FC624C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -235,6 +241,7 @@ Global
 		{893F556E-6C9F-440C-BE8C-196B9A65CEF7} = {4A138B57-E867-45DF-98ED-FF0493067EF9}
 		{0967AF42-F1BD-4B88-ABEA-28DCFB6A2576} = {4A138B57-E867-45DF-98ED-FF0493067EF9}
 		{3C665AEA-04B0-4D16-AC32-EE20BBBAF25E} = {4A138B57-E867-45DF-98ED-FF0493067EF9}
+		{21A3894C-2C14-452B-86DF-C31360FC624C} = {4C7805B9-0019-484F-98B2-57098A24173D}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{5BA9259E-5B3E-4253-B44A-E30E341322F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -445,5 +452,13 @@ Global
 		{BC2463B6-2CEA-4DF1-B8F0-D2ED8527CB05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC2463B6-2CEA-4DF1-B8F0-D2ED8527CB05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC2463B6-2CEA-4DF1-B8F0-D2ED8527CB05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17231BEF-445A-4602-B9A7-55B50F503633}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17231BEF-445A-4602-B9A7-55B50F503633}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17231BEF-445A-4602-B9A7-55B50F503633}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17231BEF-445A-4602-B9A7-55B50F503633}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21A3894C-2C14-452B-86DF-C31360FC624C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21A3894C-2C14-452B-86DF-C31360FC624C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21A3894C-2C14-452B-86DF-C31360FC624C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21A3894C-2C14-452B-86DF-C31360FC624C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

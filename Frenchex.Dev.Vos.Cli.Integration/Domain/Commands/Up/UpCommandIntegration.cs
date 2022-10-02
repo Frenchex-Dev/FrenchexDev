@@ -1,6 +1,8 @@
 ﻿using System.CommandLine;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Command;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Up;
 
@@ -22,10 +24,10 @@ public class UpCommandIntegration : ABaseCommandIntegration, IUpCommandIntegrati
         IParallelOptionBuilder parallelOptionBuilder,
         IParallelWorkersOptionBuilder parallelWorkersOptionBuilder,
         IParallelWaitOptionBuilder parallelWaitOptionBuilder,
-        ITimeoutMsOptionBuilder timeoutMsOptionBuilder,
+        ITimeoutMsOptionBuilder timeoutStrOptionBuilder,
         IWorkingDirectoryOptionBuilder workingDirectoryOptionBuilder,
         IVagrantBinPathOptionBuilder vagrantBinPathOptionBuilder
-    ) : base(workingDirectoryOptionBuilder, timeoutMsOptionBuilder, vagrantBinPathOptionBuilder)
+    ) : base(workingDirectoryOptionBuilder, timeoutStrOptionBuilder, vagrantBinPathOptionBuilder)
     {
         _command = command;
         _requestBuilderFactory = requestBuilderFactory;
@@ -47,7 +49,7 @@ public class UpCommandIntegration : ABaseCommandIntegration, IUpCommandIntegrati
         Option<string> providerOpt = new(new[] {"--provider"}, () => ProviderEnum.Virtualbox.ToString(), "Provider");
 
         Option<bool> installProviderOpt = new(new[] {"--install-provider", "-i"}, "Install provider");
-        Option<int> timeoutMs = TimeoutMsOptionBuilder.Build();
+        Option<String> timeout = TimeoutStrOptionBuilder.Build();
         Option<string> workingDirOpt = WorkingDirectoryOptionBuilder.Build();
         Option<string> vagrantBinPath = VagrantBinPathOptionBuilder.Build();
 
@@ -61,7 +63,7 @@ public class UpCommandIntegration : ABaseCommandIntegration, IUpCommandIntegrati
             parallelWait,
             providerOpt,
             installProviderOpt,
-            timeoutMs,
+            timeout,
             workingDirOpt,
             vagrantBinPath
         };
@@ -76,7 +78,7 @@ public class UpCommandIntegration : ABaseCommandIntegration, IUpCommandIntegrati
             parallelWait,
             providerOpt,
             installProviderOpt,
-            timeoutMs,
+            timeout,
             workingDirOpt,
             vagrantBinPath
         );

@@ -12,7 +12,7 @@ public class BaseCommandRequestBuilder : IBaseCommandRequestBuilder
     private bool? _help;
     private bool? _machineReadable;
 
-    private int? _timeoutMs;
+    private string? _timeout;
     private bool? _timestamp;
     private bool? _tty;
     private string? _vagrantBinpath;
@@ -39,20 +39,20 @@ public class BaseCommandRequestBuilder : IBaseCommandRequestBuilder
             _debugTimestamp,
             _tty,
             _help,
-            _timeoutMs,
+            _timeout,
             _vagrantBinpath
         );
-    }
-
-    public IBaseCommandRequestBuilder UsingTimeoutMiliseconds(int timeoutMs)
-    {
-        _timeoutMs = timeoutMs;
-        return this;
     }
 
     public IBaseCommandRequestBuilder UsingWorkingDirectory(string? workingDirectory)
     {
         _workingDirectory = workingDirectory;
+        return this;
+    }
+
+    public IBaseCommandRequestBuilder UsingTimeout(string? timeout)
+    {
+        _timeout = timeout;
         return this;
     }
 

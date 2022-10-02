@@ -42,7 +42,7 @@ public abstract class RootCommand : IRootCommand
             GetBinary(),
             arguments,
             request.Base.WorkingDirectory,
-            request.Base.TimeoutMs,
+            request.Base.Timeout,
             false,
             true,
             true,

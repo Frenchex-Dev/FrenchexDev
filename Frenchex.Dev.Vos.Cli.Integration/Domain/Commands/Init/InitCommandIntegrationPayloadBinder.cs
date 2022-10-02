@@ -6,20 +6,20 @@ namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Init;
 public class InitCommandIntegrationPayloadBinder : IGenericBinder<InitCommandIntegrationPayload>
 {
     private readonly Option<string> _nameOpt;
-    private readonly Option<int> _timeoutMsOpt;
+    private readonly Option<string> _timeoutStrOpt;
     private readonly Option<string> _workingDirOpt;
     private readonly Option<int> _zeroesOpt;
 
     public InitCommandIntegrationPayloadBinder(
         Option<string> nameOpt,
         Option<int> zeroesOpt,
-        Option<int> timeoutMsOpt,
+        Option<string> timeoutStrOpt,
         Option<string> workingDirOpt
     )
     {
         _nameOpt = nameOpt;
         _zeroesOpt = zeroesOpt;
-        _timeoutMsOpt = timeoutMsOpt;
+        _timeoutStrOpt = timeoutStrOpt;
         _workingDirOpt = workingDirOpt;
     }
 
@@ -27,7 +27,7 @@ public class InitCommandIntegrationPayloadBinder : IGenericBinder<InitCommandInt
     {
         return new InitCommandIntegrationPayload {
             Naming = invocationContext.ParseResult.GetValueForOption(_nameOpt)!,
-            TimeoutMs = invocationContext.ParseResult.GetValueForOption(_timeoutMsOpt),
+            TimeoutString = invocationContext.ParseResult.GetValueForOption(_timeoutStrOpt),
             WorkingDirectory = invocationContext.ParseResult.GetValueForOption(_workingDirOpt),
             Zeroes = invocationContext.ParseResult.GetValueForOption(_zeroesOpt)
         };

@@ -78,17 +78,31 @@ public class Process : IProcess
         // Creates task to wait for process exit using timeout
         Result.WaitForExitOrTimeOut = Task.Run(() =>
         {
-            if (_processBuildingParameters.TimeOutInMiliSeconds > 0)
-                _wrappedProcess.WaitForExit(_processBuildingParameters.TimeOutInMiliSeconds);
+            if (!string.IsNullOrEmpty(_processBuildingParameters.TimeOut))
+            {
+                var timeout = TimeSpanStringConversion.ConvertToTimeSpan(_processBuildingParameters.TimeOut);
+                var understood = timeout is not null;
+                if (!understood)
+                {
+                    throw new ArgumentException(nameof(timeout));
+                }
+
+                _wrappedProcess.WaitForExit((int) timeout!.Value.TotalMilliseconds);
+            }
             else
+            {
                 _wrappedProcess.WaitForExit();
+            }
         });
 
-        if (null == Result.WaitForExitOrTimeOut) throw new ArgumentNullException(nameof(Result.WaitForExitOrTimeOut));
+        if (null == Result.WaitForExitOrTimeOut)
+        {
+            throw new ArgumentNullException(nameof(Result.WaitForExitOrTimeOut));
+        }
 
-        if (null == Result.OutputCloseEvent) throw new ArgumentNullException(nameof(Result.OutputCloseEvent));
+        if (null == Result.OutputCloseEvent) { throw new ArgumentNullException(nameof(Result.OutputCloseEvent)); }
 
-        if (null == Result.ErrorCloseEvent) throw new ArgumentNullException(nameof(Result.ErrorCloseEvent));
+        if (null == Result.ErrorCloseEvent) { throw new ArgumentNullException(nameof(Result.ErrorCloseEvent)); }
 
         // Create task to wait for process exit and closing all output streams
         Result.WaitForCompleteExit = Task
@@ -106,9 +120,11 @@ public class Process : IProcess
                 })
             ;
 
+        var timeoutDelayTs = TimeSpanStringConversion.ConvertToTimeSpan(_processBuildingParameters.TimeOut);
+
         Result.WaitForAny = Task
             .WhenAny(
-                Task.Delay(_processBuildingParameters.TimeOutInMiliSeconds),
+                Task.Delay(timeoutDelayTs.HasValue ? (int) timeoutDelayTs.Value.TotalMilliseconds : -1), // we should avoid this -1
                 Result.WaitForCompleteExit
             );
 

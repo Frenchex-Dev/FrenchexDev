@@ -1,6 +1,9 @@
 ﻿using System.CommandLine;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Command;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Request;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Ssh;
+using Frenchex.Dev.Vos.Lib.Domain.Commands.Ssh.Request;
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Ssh;
 
@@ -17,13 +20,13 @@ public class SshCommandIntegration : ABaseCommandIntegration, ISshCommandIntegra
         ISshCommand command,
         ISshCommandRequestBuilderFactory requestBuilderFactory,
         INamesOptionBuilder namesOptionBuilder,
-        ITimeoutMsOptionBuilder timeoutMsOptionBuilder,
+        ITimeoutMsOptionBuilder timeoutStrOptionBuilder,
         IWorkingDirectoryOptionBuilder workingDirectoryOptionBuilder,
         IVagrantBinPathOptionBuilder vagrantBinPathOptionBuilder,
         ICommandsOptionBuilder commandsOptionBuilder,
         IPlainTextOptionBuilder plainTextOptionBuilder,
         IExtraSshArgsOptionBuilder extraSshArgsOptionBuilder
-    ) : base(workingDirectoryOptionBuilder, timeoutMsOptionBuilder, vagrantBinPathOptionBuilder)
+    ) : base(workingDirectoryOptionBuilder, timeoutStrOptionBuilder, vagrantBinPathOptionBuilder)
     {
         _command = command;
         _requestBuilderFactory = requestBuilderFactory;
@@ -39,14 +42,14 @@ public class SshCommandIntegration : ABaseCommandIntegration, ISshCommandIntegra
         Option<string[]> commandsOpt = _commandsOptionBuilder.Build();
         Option<bool> plainTextOpt = _plainTextOptionBuilder.Build();
         Option<string> extraSshArgsOpt = _extraSshArgsOptionBuilder.Build();
-        Option<int> timeOutMsOpt = TimeoutMsOptionBuilder.Build();
+        Option<string> timeOutStrOpt = TimeoutStrOptionBuilder.Build();
         Option<string> vagrantBinPath = VagrantBinPathOptionBuilder.Build();
         Option<string> workingDir = WorkingDirectoryOptionBuilder.Build();
 
         var command = new Command("ssh", "Runs ssh command") {
             namesOpts,
             commandsOpt,
-            timeOutMsOpt,
+            timeOutStrOpt,
             vagrantBinPath,
             workingDir,
             plainTextOpt,
@@ -56,7 +59,7 @@ public class SshCommandIntegration : ABaseCommandIntegration, ISshCommandIntegra
         var binder = new SshCommandIntegrationPayloadBinder(
             namesOpts,
             commandsOpt,
-            timeOutMsOpt,
+            timeOutStrOpt,
             vagrantBinPath,
             workingDir,
             plainTextOpt,
@@ -70,7 +73,7 @@ public class SshCommandIntegration : ABaseCommandIntegration, ISshCommandIntegra
             var request = requestBuilder
                 .BaseBuilder
                 .UsingWorkingDirectory(payload.WorkingDirectory)
-                .UsingTimeoutMs(payload.TimeoutMs ?? 0)
+                .UsingTimeout(payload.TimeoutString)
                 .UsingVagrantBinPath(payload.VagrantBinPath)
                 .Parent<SshCommandRequestBuilder>()
                 .UsingCommands(payload.Commands ?? Array.Empty<string>())

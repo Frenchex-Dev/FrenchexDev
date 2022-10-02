@@ -6,7 +6,7 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Halt.Request;
 
 public class HaltCommandRequestBuilder : RootCommandRequestBuilder, IHaltCommandRequestBuilder
 {
-    private int? _usingHaltTimeoutMs;
+    private String? _usingHaltTimeout;
     private string[]? _usingNamesOrIds;
     private bool? _withForce;
 
@@ -21,8 +21,8 @@ public class HaltCommandRequestBuilder : RootCommandRequestBuilder, IHaltCommand
         return new HaltCommandRequest(
             _usingNamesOrIds ?? Array.Empty<string>(),
             _withForce ?? false,
-            _usingHaltTimeoutMs ?? (int) TimeSpan.FromMinutes(10).TotalMilliseconds,
-            BaseBuilder.Build()
+            BaseBuilder.Build(),
+            _usingHaltTimeout
         );
     }
 
@@ -32,9 +32,9 @@ public class HaltCommandRequestBuilder : RootCommandRequestBuilder, IHaltCommand
         return this;
     }
 
-    public IHaltCommandRequestBuilder UsingHaltTimeoutInMiliSeconds(int timeoutMs)
+    public IHaltCommandRequestBuilder UsingHaltTimeout(string? timeout)
     {
-        _usingHaltTimeoutMs = timeoutMs;
+        _usingHaltTimeout = timeout;
         return this;
     }
 

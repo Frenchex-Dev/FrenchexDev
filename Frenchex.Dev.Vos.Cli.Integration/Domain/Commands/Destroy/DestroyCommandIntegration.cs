@@ -1,6 +1,8 @@
 ﻿using System.CommandLine;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Destroy.Command;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Destroy.Request;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Destroy;
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Destroy;
@@ -21,10 +23,10 @@ public class DestroyCommandIntegration : ABaseCommandIntegration, IDestroyComman
         IForceOptionBuilder forceOptionBuilder,
         IParallelOptionBuilder parallelOptionBuilder,
         IGracefulOptionBuilder gracefulOptionBuilder,
-        ITimeoutMsOptionBuilder timeoutMsOptionBuilder,
+        ITimeoutMsOptionBuilder timeoutStrOptionBuilder,
         IWorkingDirectoryOptionBuilder workingDirectoryOptionBuilder,
         IVagrantBinPathOptionBuilder vagrantBinPathOptionBuilder
-    ) : base(workingDirectoryOptionBuilder, timeoutMsOptionBuilder, vagrantBinPathOptionBuilder)
+    ) : base(workingDirectoryOptionBuilder, timeoutStrOptionBuilder, vagrantBinPathOptionBuilder)
     {
         _command = command;
         _requestBuilderFactory = responseBuilderFactory;
@@ -40,7 +42,7 @@ public class DestroyCommandIntegration : ABaseCommandIntegration, IDestroyComman
         Option<bool> forceOpt = _forceOptionBuilder.Build();
         Option<bool> parallelOpt = _parallelOptionBuilder.Build();
         Option<bool> gracefulOpt = _gracefulOptionBuilder.Build();
-        Option<int> timeoutMsOpt = TimeoutMsOptionBuilder.Build();
+        Option<string> timeoutStrOpt = TimeoutStrOptionBuilder.Build();
         Option<string> workingDirOpt = WorkingDirectoryOptionBuilder.Build();
         Option<string> vagrantBinPath = VagrantBinPathOptionBuilder.Build();
 
@@ -49,7 +51,7 @@ public class DestroyCommandIntegration : ABaseCommandIntegration, IDestroyComman
             forceOpt,
             parallelOpt,
             gracefulOpt,
-            timeoutMsOpt,
+            timeoutStrOpt,
             workingDirOpt,
             vagrantBinPath
         };
@@ -58,7 +60,7 @@ public class DestroyCommandIntegration : ABaseCommandIntegration, IDestroyComman
             namesArg,
             forceOpt,
             gracefulOpt,
-            timeoutMsOpt,
+            timeoutStrOpt,
             workingDirOpt,
             vagrantBinPath
         );

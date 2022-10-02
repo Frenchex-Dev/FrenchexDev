@@ -42,12 +42,12 @@ public class StatusCommand : RootCommand, IStatusCommand
             .Build();
     }
 
-    private static string BuildArguments(IStatusCommandRequest request)
+    private string BuildArguments(IStatusCommandRequest request)
     {
         return $"{GetCliCommandName()} {string.Join(" ", request.NamesOrIds)}";
     }
 
-    private static string GetCliCommandName()
+    public string GetCliCommandName()
     {
         return "status";
     }

@@ -1,5 +1,6 @@
 ﻿using System.CommandLine;
 using System.CommandLine.Invocation;
+using System.ComponentModel;
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Destroy;
 
@@ -8,7 +9,7 @@ public class DestroyCommandIntegrationPayloadBinder : IGenericBinder<DestroyComm
     private readonly Option<bool> _forceOpt;
     private readonly Option<bool> _gracefulOpt;
     private readonly Argument<string[]> _nameOpt;
-    private readonly Option<int> _timeoutMsOpt;
+    private readonly Option<string> _timeoutStrOpt;
     private readonly Option<string> _vagrantBinPath;
     private readonly Option<string> _workingDirOpt;
 
@@ -16,7 +17,7 @@ public class DestroyCommandIntegrationPayloadBinder : IGenericBinder<DestroyComm
         Argument<string[]> nameOpt,
         Option<bool> forceOpt,
         Option<bool> gracefulOpt,
-        Option<int> timeoutMsOpt,
+        Option<string> timeoutStrOpt,
         Option<string> workingDirOpt,
         Option<string> vagrantBinPath
     )
@@ -24,7 +25,7 @@ public class DestroyCommandIntegrationPayloadBinder : IGenericBinder<DestroyComm
         _nameOpt = nameOpt;
         _forceOpt = forceOpt;
         _gracefulOpt = gracefulOpt;
-        _timeoutMsOpt = timeoutMsOpt;
+        _timeoutStrOpt = timeoutStrOpt;
         _workingDirOpt = workingDirOpt;
         _vagrantBinPath = vagrantBinPath;
     }
@@ -35,7 +36,7 @@ public class DestroyCommandIntegrationPayloadBinder : IGenericBinder<DestroyComm
             Force = invocationContext.ParseResult.GetValueForOption(_forceOpt),
             Graceful = invocationContext.ParseResult.GetValueForOption(_gracefulOpt),
             NameOrId = invocationContext.ParseResult.GetValueForArgument(_nameOpt),
-            TimeoutMs = invocationContext.ParseResult.GetValueForOption(_timeoutMsOpt),
+            TimeoutString = invocationContext.ParseResult.GetValueForOption(_timeoutStrOpt),
             WorkingDirectory = invocationContext.ParseResult.GetValueForOption(_workingDirOpt),
             VagrantBinPath = invocationContext.ParseResult.GetValueForOption(_vagrantBinPath)
         };

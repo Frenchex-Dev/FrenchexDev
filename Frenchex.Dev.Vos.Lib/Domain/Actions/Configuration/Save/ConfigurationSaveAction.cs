@@ -1,4 +1,5 @@
 ﻿using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Configuration.Save;
 using Newtonsoft.Json;
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Actions.Configuration.Save;
@@ -14,7 +15,7 @@ public class ConfigurationSaveAction : IConfigurationSaveAction
         _fileSystemOperator = fileSystem;
     }
 
-    public async Task Save(Domain.Configuration.Configuration configuration, string path)
+    public async Task Save(Abstractions.Domain.Configuration.Configuration configuration, string path)
     {
         var serialized = JsonConvert.SerializeObject(configuration,
             Formatting.Indented,

@@ -1,6 +1,8 @@
-﻿namespace Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Init.Request;
+﻿using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Root.Request;
 
-public interface IInitCommandRequestBuilderFactory
+namespace Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Init.Request;
+
+public interface IInitCommandRequestBuilderFactory : IRootCommandRequestBuilderFactory
 {
     IInitCommandRequestBuilder Factory();
 }

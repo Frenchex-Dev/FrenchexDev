@@ -1,6 +1,8 @@
 ﻿using System.CommandLine;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Halt.Command;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Halt.Request;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Halt;
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Halt;
@@ -17,10 +19,10 @@ public class HaltCommandIntegration : ABaseCommandIntegration, IHaltCommandInteg
         IHaltCommandRequestBuilderFactory responseBuilder,
         INamesArgumentBuilder namesArgumentBuilder,
         IForceOptionBuilder forceOptionBuilder,
-        ITimeoutMsOptionBuilder timeoutMsOptionBuilder,
+        ITimeoutMsOptionBuilder timeoutStrOptionBuilder,
         IWorkingDirectoryOptionBuilder workingDirectoryOptionBuilder,
         IVagrantBinPathOptionBuilder vagrantBinPathOptionBuilder
-    ) : base(workingDirectoryOptionBuilder, timeoutMsOptionBuilder, vagrantBinPathOptionBuilder)
+    ) : base(workingDirectoryOptionBuilder, timeoutStrOptionBuilder, vagrantBinPathOptionBuilder)
     {
         _command = command;
         _responseBuilderFactory = responseBuilder;
@@ -32,20 +34,20 @@ public class HaltCommandIntegration : ABaseCommandIntegration, IHaltCommandInteg
     {
         Argument<string[]> namesArg = _namesArgumentBuilder.Build();
         Option<bool> forceOpt = _forceOptionBuilder.Build();
-        Option<int> haltTimeoutMsOpt = TimeoutMsOptionBuilder.Build(
+        Option<string> haltTimeoutStrOpt = TimeoutStrOptionBuilder.Build(
             new[] {"--halt-timeoutms"},
-            () => (int) TimeSpan.FromMinutes(1).TotalMilliseconds,
-            "Halt timeout in ms"
+            getDefaultFunc: () => "10s",
+            "Halt timeout"
         );
 
-        Option<int> timeoutMsOpt = TimeoutMsOptionBuilder.Build();
+        Option<string> timeoutMsOpt = TimeoutStrOptionBuilder.Build("10s");
         Option<string> workingDirOpt = WorkingDirectoryOptionBuilder.Build();
         Option<string> vagrantBinPath = VagrantBinPathOptionBuilder.Build();
 
         var command = new Command("halt", "Runs Vagrant halt") {
             namesArg,
             forceOpt,
-            haltTimeoutMsOpt,
+            haltTimeoutStrOpt,
             timeoutMsOpt,
             workingDirOpt,
             vagrantBinPath
@@ -54,7 +56,7 @@ public class HaltCommandIntegration : ABaseCommandIntegration, IHaltCommandInteg
         var binder = new HaltCommandIntegrationPayloadBinder(
             namesArg,
             forceOpt,
-            haltTimeoutMsOpt,
+            haltTimeoutStrOpt,
             timeoutMsOpt,
             workingDirOpt,
             vagrantBinPath
@@ -70,7 +72,7 @@ public class HaltCommandIntegration : ABaseCommandIntegration, IHaltCommandInteg
             var response = await _command.ExecuteAsync(requestBuilder
                     .UsingNames(payload.Names)
                     .WithForce(payload.Force)
-                    .UsingHaltTimeoutInMiliSeconds(payload.HaltTimeoutMs)
+                    .UsingHaltTimeout(payload.HaltTimeout)
                     .Build()
                 )
                 ;

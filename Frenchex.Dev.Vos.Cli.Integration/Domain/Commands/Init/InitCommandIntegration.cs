@@ -1,5 +1,7 @@
 ﻿using System.CommandLine;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Init.Command;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Init.Request;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Init;
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Init;
@@ -16,10 +18,10 @@ public class InitCommandIntegration : ABaseCommandIntegration, IInitCommandInteg
         IInitCommandRequestBuilderFactory responseBuilderFactory,
         INamingPatternOptionBuilder namingPatternOptionBuilder,
         IZeroesOptionBuilder zeroesOptionBuilder,
-        ITimeoutMsOptionBuilder timeoutMsOptionBuilder,
+        ITimeoutMsOptionBuilder timeoutStrOptionBuilder,
         IWorkingDirectoryOptionBuilder workingDirectoryOptionBuilder,
         IVagrantBinPathOptionBuilder vagrantBinPathOptionBuilder
-    ) : base(workingDirectoryOptionBuilder, timeoutMsOptionBuilder, vagrantBinPathOptionBuilder)
+    ) : base(workingDirectoryOptionBuilder, timeoutStrOptionBuilder, vagrantBinPathOptionBuilder)
     {
         _command = command;
         _responseBuilderFactory = responseBuilderFactory;
@@ -31,20 +33,20 @@ public class InitCommandIntegration : ABaseCommandIntegration, IInitCommandInteg
     {
         Option<string> namingPatternOpt = _namingPatternOptionBuilder.Build();
         Option<int> zeroesOpt = _zeroesOptionBuilder.Build();
-        Option<int> timeoutMsOpt = TimeoutMsOptionBuilder.Build();
+        Option<string> timeoutStrOpt = TimeoutStrOptionBuilder.Build();
         Option<string> workingDirOpt = WorkingDirectoryOptionBuilder.Build();
 
         var command = new Command("init", "Runs Vex init") {
             namingPatternOpt,
             zeroesOpt,
-            timeoutMsOpt,
+            timeoutStrOpt,
             workingDirOpt
         };
 
         var binder = new InitCommandIntegrationPayloadBinder(
             namingPatternOpt,
             zeroesOpt,
-            timeoutMsOpt,
+            timeoutStrOpt,
             workingDirOpt
         );
 

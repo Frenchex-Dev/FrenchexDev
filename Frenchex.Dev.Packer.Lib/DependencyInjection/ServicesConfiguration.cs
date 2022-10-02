@@ -1,31 +1,38 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands;
+using Frenchex.Dev.Packer.Lib.Domain.Commands;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.Packer.Lib.DependencyInjection;
 
 public static class ServicesConfiguration
 {
-    public static IServiceCollection ConfigureServices(IServiceCollection services)
+    public static IServiceCollection ConfigureServices(IServiceCollection serviceCollection)
     {
-        ConfigureExternalDependencies(services);
+        ConfigureExternalDependencies(serviceCollection);
 
-        Domain.Commands.Build.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
-        Domain.Commands.Console.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
-        Domain.Commands.Fix.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
-        Domain.Commands.Fmt.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
-        Domain.Commands.Hcl2Upgrade.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
-        Domain.Commands.Init.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
-        Domain.Commands.Inspect.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
-        Domain.Commands.Plugins.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
+        serviceCollection.AddScoped<ICommandsFacade, CommandsFacade>();
 
-        return services;
+        Domain.Commands.Build.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
+        Domain.Commands.Console.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
+        Domain.Commands.Fix.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
+        Domain.Commands.Fmt.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
+        Domain.Commands.Hcl2Upgrade.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
+        Domain.Commands.Init.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
+        Domain.Commands.Inspect.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
+        Domain.Commands.Plugins.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
+        Domain.Commands.Validate.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
+
+        return serviceCollection;
     }
 
-    private static void ConfigureExternalDependencies(IServiceCollection services)
+    private static void ConfigureExternalDependencies(IServiceCollection serviceCollection)
     {
         Dotnet.Core.Filesystem.Lib.DependencyInjection.ServicesConfiguration
-            .ConfigureServices(services);
+            .ConfigureServices(serviceCollection);
 
         Dotnet.Core.Process.Lib.DependencyInjection.ServicesConfiguration
-            .ConfigureServices(services);
+            .ConfigureServices(serviceCollection);
+
+        Dotnet.Wrapping.Lib.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
     }
 }

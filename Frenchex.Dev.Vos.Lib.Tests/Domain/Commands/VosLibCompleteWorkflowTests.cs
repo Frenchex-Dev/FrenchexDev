@@ -1,8 +1,40 @@
 ﻿using System.Net;
 using System.Net.NetworkInformation;
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain;
 using Frenchex.Dev.Vagrant.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Tests.Abstractions.Domain;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Networking;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Command;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Response;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Command;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Response;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Destroy.Command;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Destroy.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Destroy.Response;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Halt.Command;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Halt.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Halt.Response;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Init.Command;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Init.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Init.Response;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Name.Command;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Name.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Name.Response;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Command;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Response;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.SshConfig.Command;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.SshConfig.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.SshConfig.Response;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Command;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Response;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Command;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Response;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
 using Frenchex.Dev.Vos.Lib.Domain.Actions.Networking;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Machine.Add;
@@ -101,8 +133,8 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
 
     private async Task VosWorkflowUnitTestInternal(Builder[] builders)
     {
-        var timeoutTs = TimeSpan.FromMinutes(10);
-        var globalTimeoutTask = Task.Delay((int) timeoutTs.TotalMilliseconds);
+        var timeout = TimeSpan.FromMinutes(10);
+        var globalTimeoutTask = Task.Delay((int) timeout.TotalMilliseconds);
 
         Func<Builder, Task> taskBuilder = (Builder builder) => VosWorkflowUnitTestInternalInternal(
             builder.BuildInitCommandRequestBuilder!,
@@ -122,6 +154,11 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         var tasks = Task.WhenAll(allTasks);
 
         await Task.WhenAny(tasks, globalTimeoutTask);
+
+        if (tasks.IsFaulted)
+        {
+            throw new Exception(tasks?.Exception?.Message);
+        }
     }
 
     private async Task VosWorkflowUnitTestInternalInternal(
@@ -232,7 +269,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             timeBox,
             async (provider, _, context, _) =>
             {
-                IList<IDestroyCommandRequest> list = destroyRequestsListBuilder(context.WorkingDirectory, provider);
+                IList<IDestroyCommandRequest> list = destroyRequestsListBuilder(context.WorkingDirectory!, provider);
                 var command = provider.GetRequiredService<IDestroyCommand>();
                 context.DestroyCommandsResponses = new List<(IDestroyCommandRequest, IDestroyCommandResponse)>();
 
@@ -248,7 +285,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
                 var statusCommandRequest = provider.GetRequiredService<IStatusCommandRequestBuilderFactory>().Factory()
                     .BaseBuilder
                     .UsingWorkingDirectory(context.WorkingDirectory)
-                    .UsingTimeoutMs(TimeSpan.FromSeconds(10))
+                    .UsingTimeout("10s")
                     .Parent<IStatusCommandRequestBuilder>()
                     .WithNames(context.WillBeUp!.ToArray())
                     .Build();
@@ -263,7 +300,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             },
             async (_, _, context) =>
             {
-                Directory.Delete(context.WorkingDirectory, true);
+                Directory.Delete(context.WorkingDirectory!, true);
                 await Task.Delay((int) TimeSpan.FromSeconds(2).TotalMilliseconds);
                 Assert.IsFalse(Directory.Exists(context.WorkingDirectory));
             },
@@ -282,7 +319,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             timeBox,
             async (provider, _, context, _) =>
             {
-                IList<IHaltCommandRequest> list = haltRequestsListBuilder(context.WorkingDirectory, provider);
+                IList<IHaltCommandRequest> list = haltRequestsListBuilder(context.WorkingDirectory!, provider);
                 var command = provider.GetRequiredService<IHaltCommand>();
 
                 context.HaltCommandsResponses = new List<(IHaltCommandRequest, IHaltCommandResponse)>();
@@ -313,7 +350,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             timeBox,
             async (provider, _, context, _) =>
             {
-                IList<ISshCommandRequest> list = sshCommandRequestsListBuilder(context.WorkingDirectory, provider);
+                IList<ISshCommandRequest> list = sshCommandRequestsListBuilder(context.WorkingDirectory!, provider);
                 var command = provider.GetRequiredService<ISshCommand>();
                 context.SshCommandsResponses = new List<(ISshCommandRequest, ISshCommandResponse)>();
 
@@ -344,7 +381,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             async (provider, _, context, _) =>
             {
                 IList<ISshConfigCommandRequest> list =
-                    sshConfigCommandRequestsListBuilder(context.WorkingDirectory, provider);
+                    sshConfigCommandRequestsListBuilder(context.WorkingDirectory!, provider);
 
                 var command = provider.GetRequiredService<ISshConfigCommand>();
                 context.SshConfigCommandsResponses = new List<(ISshConfigCommandRequest, ISshConfigCommandResponse)>();
@@ -387,7 +424,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             async (provider, _, context, _) =>
             {
                 context.WillBeUp = new List<string>();
-                IList<IUpCommandRequest> list = upRequestsListBuilder(context.WorkingDirectory, provider);
+                IList<IUpCommandRequest> list = upRequestsListBuilder(context.WorkingDirectory!, provider);
                 context.UpCommandsResponses = new List<(IUpCommandRequest, IUpCommandResponse)>();
                 var command = provider.GetRequiredService<IUpCommand>();
 
@@ -424,7 +461,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             async (provider, _, context) =>
             {
                 IList<IStatusCommandRequest> listStatusRequestAfterUp =
-                    statusAfterUpCommandRequestsListBuilder(context.WorkingDirectory, provider);
+                    statusAfterUpCommandRequestsListBuilder(context.WorkingDirectory!, provider);
 
                 var statusCommand = provider.GetRequiredService<IStatusCommand>();
 
@@ -460,7 +497,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             {
                 var statusCommand = provider.GetRequiredService<IStatusCommand>();
                 IList<IStatusCommandRequest> list =
-                    statusBeforeUpCommandRequestsListBuilder(context.WorkingDirectory, provider);
+                    statusBeforeUpCommandRequestsListBuilder(context.WorkingDirectory!, provider);
 
                 context.StatusCommandsResponseBeforeUp = new List<IStatusCommandResponse>();
                 foreach (var item in list)
@@ -502,7 +539,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             {
                 var nameCommand = provider.GetRequiredService<INameCommand>();
                 IList<NameCommandRequestPayload> list =
-                    nameCommandRequestsListBuilder(context.WorkingDirectory, provider);
+                    nameCommandRequestsListBuilder(context.WorkingDirectory!, provider);
 
                 context.NameCommandsResponses = new List<(NameCommandRequestPayload, INameCommandResponse)>();
 
@@ -544,7 +581,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             {
                 var defineMachineAddCommand = provider.GetRequiredService<IDefineMachineAddCommand>();
                 IList<IDefineMachineAddCommandRequest> list =
-                    defineMachineAddCommandRequestsListBuilder(context.WorkingDirectory, provider);
+                    defineMachineAddCommandRequestsListBuilder(context.WorkingDirectory!, provider);
 
                 context.DefineMachineAddCommandsResponses = new List<IDefineMachineAddCommandResponse>();
                 foreach (var item in list)
@@ -577,7 +614,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             {
                 var defineMachineTypeAddCommand = provider.GetRequiredService<IDefineMachineTypeAddCommand>();
                 IList<IDefineMachineTypeAddCommandRequest> list =
-                    defineMachineTypeAddCommandRequestsListBuilder(context.WorkingDirectory, provider);
+                    defineMachineTypeAddCommandRequestsListBuilder(context.WorkingDirectory!, provider);
 
                 context.DefineMachineTypeAddCommandsResponses = new List<IDefineMachineTypeAddCommandResponse>();
                 foreach (var item in list)
@@ -637,28 +674,28 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             factory.Factory()
                 .BaseBuilder
                 .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeoutMs(TimeSpan.FromMinutes(1))
+                .UsingTimeout("1m")
                 .Parent<IStatusCommandRequestBuilder>()
                 .WithNames(new[] {"foo-0", "foo-1"})
                 .Build(),
             factory.Factory()
                 .BaseBuilder
                 .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeoutMs(TimeSpan.FromMinutes(1))
+                .UsingTimeout("1m")
                 .Parent<IStatusCommandRequestBuilder>()
                 .WithNames(new[] {"bar-1"})
                 .Build(),
             factory.Factory()
                 .BaseBuilder
                 .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeoutMs(TimeSpan.FromMinutes(1))
+                .UsingTimeout("1m")
                 .Parent<IStatusCommandRequestBuilder>()
                 .WithNames(new[] {"bar-0"})
                 .Build(),
             factory.Factory()
                 .BaseBuilder
                 .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeoutMs(TimeSpan.FromMinutes(1))
+                .UsingTimeout("1m")
                 .Parent<IStatusCommandRequestBuilder>()
                 .WithNames(new[] {"bar-[0-*]", "foo-[0-*]"})
                 .Build()
@@ -674,7 +711,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             serviceProvider.GetRequiredService<IStatusCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
                 .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeoutMs(TimeSpan.FromMinutes(1))
+                .UsingTimeout("1m")
                 .Parent<IStatusCommandRequestBuilder>()
                 .Build()
         };
@@ -689,7 +726,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             serviceProvider.GetRequiredService<IDestroyCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
                 .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeoutMs(TimeSpan.FromMinutes(1))
+                .UsingTimeout("1m")
                 .Parent<IDestroyCommandRequestBuilder>()
                 .WithForce(true)
                 .UsingName("foo-0")
@@ -697,7 +734,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             serviceProvider.GetRequiredService<IDestroyCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
                 .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeoutMs(TimeSpan.FromMinutes(1))
+                .UsingTimeout("1m")
                 .Parent<IDestroyCommandRequestBuilder>()
                 .WithForce(true)
                 .UsingName("foo-1")
@@ -705,7 +742,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             serviceProvider.GetRequiredService<IDestroyCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
                 .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeoutMs(TimeSpan.FromMinutes(1))
+                .UsingTimeout("1m")
                 .Parent<IDestroyCommandRequestBuilder>()
                 .WithForce(true)
                 .Build()
@@ -723,21 +760,21 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             factory.Factory()
                 .BaseBuilder
                 .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeoutMs(TimeSpan.FromMinutes(1))
+                .UsingTimeout("1m")
                 .Parent<IHaltCommandRequestBuilder>()
                 .UsingNames(new[] {"foo-0", "foo-1"})
                 .Build(),
             factory.Factory()
                 .BaseBuilder
                 .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeoutMs(TimeSpan.FromMinutes(1))
+                .UsingTimeout("1m")
                 .Parent<IHaltCommandRequestBuilder>()
                 .UsingNames(new[] {"bar-0"})
                 .Build(),
             factory.Factory()
                 .BaseBuilder
                 .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeoutMs(TimeSpan.FromMinutes(1))
+                .UsingTimeout("1m")
                 .Parent<IHaltCommandRequestBuilder>()
                 .Build()
         };
@@ -752,7 +789,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             serviceProvider.GetRequiredService<ISshCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
                 .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeoutMs(TimeSpan.FromMinutes(1))
+                .UsingTimeout("1m")
                 .Parent<ISshCommandRequestBuilder>()
                 .UsingNames(new[] {"foo-1"})
                 .UsingCommands(new[] {"echo foo"})
@@ -760,7 +797,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             serviceProvider.GetRequiredService<ISshCommandRequestBuilderFactory>().Factory()
                 .BaseBuilder
                 .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeoutMs(TimeSpan.FromMinutes(1))
+                .UsingTimeout("1m")
                 .Parent<ISshCommandRequestBuilder>()
                 .UsingNames(new[] {"bar-0"})
                 .UsingCommands(new[] {"echo bar"})
@@ -779,7 +816,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             factory.Factory()
                 .BaseBuilder
                 .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeoutMs(TimeSpan.FromMinutes(1))
+                .UsingTimeout("1m")
                 .Parent<ISshConfigCommandRequestBuilder>()
                 .UsingNamesOrIds(new[] {
                     "foo-0"
@@ -788,7 +825,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             factory.Factory()
                 .BaseBuilder
                 .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeoutMs(TimeSpan.FromMinutes(1))
+                .UsingTimeout("1m")
                 .Parent<ISshConfigCommandRequestBuilder>()
                 .UsingNamesOrIds(new[] {
                     "bar-1"
@@ -808,7 +845,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             factory.Factory()
                 .BaseBuilder
                 .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeoutMs(TimeSpan.FromMinutes(1))
+                .UsingTimeout("1m")
                 .Parent<IUpCommandRequestBuilder>()
                 .UsingNames(new[] {"foo-0", "foo-1"})
                 .WithParallel(true)
@@ -817,7 +854,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             factory.Factory()
                 .BaseBuilder
                 .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeoutMs(TimeSpan.FromMinutes(1))
+                .UsingTimeout("1m")
                 .Parent<IUpCommandRequestBuilder>()
                 .UsingNames(new[] {"foo-2"})
                 .WithParallel(true)
@@ -846,7 +883,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         {
             var def = BuildDefineMachineAddCommandRequest(
                 tempDir,
-                TimeSpan.FromSeconds(20),
+                "20s",
                 true,
                 "",
                 new Dictionary<string, FileCopyDefinition>(),
@@ -887,7 +924,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
 
     private static IDefineMachineAddCommandRequest BuildDefineMachineAddCommandRequest(
         string? workingDirectory,
-        TimeSpan fromSecondsTs,
+        string timeoutStr,
         bool enable3d,
         string biosLogoImage,
         Dictionary<string, FileCopyDefinition> withFiles,
@@ -917,7 +954,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             .Factory()
             .BaseBuilder
             .UsingWorkingDirectory(workingDirectory)
-            .UsingTimeoutMs((int) fromSecondsTs.TotalMilliseconds)
+            .UsingTimeout(timeoutStr)
             .Parent<IDefineMachineAddCommandRequestBuilder>()
             .UsingDefinition(machineDefinitionBuilderFactory
                 .Factory()
@@ -961,7 +998,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         return serviceProvider.GetRequiredService<IDefineMachineTypeAddCommandRequestBuilderFactory>()
             .Factory()
             .BaseBuilder.UsingWorkingDirectory(workingDirectory)
-            .UsingTimeoutMs((int) TimeSpan.FromMinutes(2).TotalMilliseconds)
+            .UsingTimeout("2m")
             .Parent<IDefineMachineTypeAddCommandRequestBuilder>()
             .UsingDefinition(serviceProvider.GetRequiredService<IMachineTypeDefinitionBuilderFactory>()
                 .Factory()
@@ -1016,7 +1053,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         return serviceProvider.GetRequiredService<IInitCommandRequestBuilderFactory>().Factory()
             .BaseBuilder
             .UsingWorkingDirectory(tempDir)
-            .UsingTimeoutMs((int) TimeSpan.FromSeconds(20).TotalMilliseconds)
+            .UsingTimeout("20s")
             .Parent<IInitCommandRequestBuilder>()
             .WithGivenLeadingZeroes(2)
             .Build();
@@ -1034,7 +1071,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         var nameCommandRequest = factory.Factory()
             .BaseBuilder
             .UsingWorkingDirectory(tempDir)
-            .UsingTimeoutMs((int) TimeSpan.FromSeconds(20).TotalMilliseconds)
+            .UsingTimeout("20s")
             .Parent<INameCommandRequestBuilder>()
             .WithNames(new[] {"foo-0", "bar-[2-*]"})
             .Build();

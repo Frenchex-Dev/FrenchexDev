@@ -1,6 +1,8 @@
-﻿namespace Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Status.Request;
+﻿using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Root.Request;
 
-public interface IStatusCommandRequestBuilderFactory
+namespace Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Status.Request;
+
+public interface IStatusCommandRequestBuilderFactory: IRootCommandRequestBuilderFactory
 {
     IStatusCommandRequestBuilder Factory();
 }

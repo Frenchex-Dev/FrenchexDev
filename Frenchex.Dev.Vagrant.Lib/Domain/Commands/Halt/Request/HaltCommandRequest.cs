@@ -9,17 +9,15 @@ public class HaltCommandRequest : RootCommandRequest, IHaltCommandRequest
     public HaltCommandRequest(
         string[] namesOrIds,
         bool force,
-        int haltTimeoutMs,
-        IBaseCommandRequest baseRequest
+        IBaseCommandRequest baseRequest,
+        String? haltTimeout
     ) : base(baseRequest)
     {
         NamesOrIds = namesOrIds;
         Force = force;
-        HaltTimeoutInMiliSeconds = haltTimeoutMs;
+        HaltTimeout = haltTimeout;
     }
-
-    public int HaltTimeoutInMiliSeconds { get; }
-
+    public string? HaltTimeout { get; }
     public string[] NamesOrIds { get; }
     public bool Force { get; }
 }

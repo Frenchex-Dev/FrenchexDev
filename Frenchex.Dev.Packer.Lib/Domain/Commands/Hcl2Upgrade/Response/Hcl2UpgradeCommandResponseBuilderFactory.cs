@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.Packer.Lib.Domain.Commands.Hcl2Upgrade.Response;
 
-public class Hcl2UpgradeCommandResponseBuilderFactory : IRootCommandResponseBuilderFactory
+public class Hcl2UpgradeCommandResponseBuilderFactory : IHcl2UpgradeCommandResponseBuilderFactory
 {
     private readonly IServiceProvider _serviceProvider;
 

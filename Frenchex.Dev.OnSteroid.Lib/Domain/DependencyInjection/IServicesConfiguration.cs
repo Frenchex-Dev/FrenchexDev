@@ -4,5 +4,5 @@ namespace Frenchex.Dev.OnSteroid.Lib.Domain.DependencyInjection;
 
 public interface IServicesConfiguration
 {
-    public IServiceCollection ConfigureServices(IServiceCollection services);
+    public IServiceCollection ConfigureServices(IServiceCollection serviceCollection);
 }

@@ -1,4 +1,13 @@
-﻿using Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Machine.Add;
+﻿using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Destroy.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Halt.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Init.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.SshConfig.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Request;
+using Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Machine.Add;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Define.MachineType.Add;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Destroy;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Halt;

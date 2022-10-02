@@ -7,10 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib.csproj"/>
-        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib.csproj"/>
-        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Wrapping.Lib\Frenchex.Dev.Dotnet.Core.Wrapping.Lib.csproj"/>
-        <ProjectReference Include="..\Frenchex.Dev.Vagrant.Lib.Abstractions\Frenchex.Dev.Vagrant.Lib.Abstractions.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Wrapping.Lib\Frenchex.Dev.Dotnet.Core.Wrapping.Lib.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Vagrant.Lib.Abstractions\Frenchex.Dev.Vagrant.Lib.Abstractions.csproj" />
     </ItemGroup>
 
 </Project>

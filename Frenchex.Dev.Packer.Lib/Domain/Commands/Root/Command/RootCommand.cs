@@ -39,7 +39,7 @@ public abstract class RootCommand : IRootCommand
             GetBinary(),
             arguments,
             request.Base.WorkingDirectory,
-            request.Base.TimeoutMs,
+            request.Base.Timeout,
             false,
             true,
             true,
@@ -62,7 +62,7 @@ public abstract class RootCommand : IRootCommand
         return ProcessBuilder.Build(buildParameters);
     }
 
-    protected static string BuildRootVagrantOptions(IBaseCommandRequest request)
+    protected static string BuildRootPackerOptions(IBaseCommandRequest request)
     {
         return new StringBuilder()
                 .ToString()

@@ -13,7 +13,7 @@ public class
     private readonly Argument<string> _osType;
     private readonly Argument<string> _osVersion;
     private readonly Argument<int> _ramMb;
-    private readonly Option<int> _timeoutMs;
+    private readonly Option<string> _timeoutStr;
     private readonly Argument<int> _vCpus;
     private readonly Option<int> _videoRamMb;
     private readonly Option<string> _workingDir;
@@ -28,7 +28,7 @@ public class
         Option<bool> isEnabled,
         Option<bool> is3DEnabled,
         Option<int> videoRamMb,
-        Option<int> timeoutMs,
+        Option<string> timeoutStr,
         Option<string> workingDir
     )
     {
@@ -41,7 +41,7 @@ public class
         _ramMb = ramMb;
         _osType = osType;
         _osVersion = osVersion;
-        _timeoutMs = timeoutMs;
+        _timeoutStr = timeoutStr;
         _workingDir = workingDir;
     }
 
@@ -55,7 +55,7 @@ public class
             VCpus = invocationContext.ParseResult.GetValueForArgument(_vCpus),
             Enable3D = invocationContext.ParseResult.GetValueForOption(_is3DEnabled),
             VideoRamInMb = invocationContext.ParseResult.GetValueForOption(_videoRamMb),
-            TimeoutMs = invocationContext.ParseResult.GetValueForOption(_timeoutMs),
+            TimeoutString = invocationContext.ParseResult.GetValueForOption(_timeoutStr),
             OsType = invocationContext.ParseResult.GetValueForArgument(_osType),
             OsVersion = invocationContext.ParseResult.GetValueForArgument(_osVersion),
             WorkingDirectory = invocationContext.ParseResult.GetValueForOption(_workingDir)

@@ -20,7 +20,7 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
     public static IEnumerable<object[]> DataSource()
     {
         yield return new object[]
-            {"dotnet", "--help", 10000};
+            {"dotnet", "--help", "1s"};
     }
 
     [TestMethod]
@@ -28,7 +28,7 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
     public async Task CanBuildAndExecuteProcess(
         string binary,
         string arguments,
-        int timeoutInMiliSeconds
+        string timeout
     )
     {
         await UnitTest!.ExecuteAndAssertAndCleanupAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
@@ -44,7 +44,7 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
                     binary,
                     arguments,
                     context.WorkingDirectory,
-                    timeoutInMiliSeconds,
+                    timeout,
                     false,
                     true,
                     true,

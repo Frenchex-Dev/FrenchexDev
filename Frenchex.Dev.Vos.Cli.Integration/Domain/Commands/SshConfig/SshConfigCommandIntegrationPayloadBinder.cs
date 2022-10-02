@@ -8,7 +8,7 @@ public class SshConfigCommandIntegrationPayloadBinder : IGenericBinder<SshConfig
     private readonly Option<string> _extraSshArgsOpt;
     private readonly Argument<string[]> _namesOrIdsArg;
     private readonly Option<bool> _plainTextOpt;
-    private readonly Option<int> _timeOutMsOpt;
+    private readonly Option<String> _timeOutMsOpt;
     private readonly Option<string> _vagrantBinPathOpt;
     private readonly Option<bool> _withColor;
     private readonly Option<string> _workingDirOpt;
@@ -16,7 +16,7 @@ public class SshConfigCommandIntegrationPayloadBinder : IGenericBinder<SshConfig
     public SshConfigCommandIntegrationPayloadBinder(
         Argument<string[]> namesOrIdsArg,
         Option<string> workingDirOpt,
-        Option<int> timeOutMsOpt,
+        Option<String> timeOutMsOpt,
         Option<string> vagrantBinPathOpt,
         Option<bool> plainTextOpt,
         Option<string> extraSshArgsOpt,
@@ -37,7 +37,7 @@ public class SshConfigCommandIntegrationPayloadBinder : IGenericBinder<SshConfig
     {
         return new SshConfigCommandIntegrationPayload {
             NamesOrIds = invocationContext.ParseResult.GetValueForArgument(_namesOrIdsArg),
-            TimeoutMs = invocationContext.ParseResult.GetValueForOption(_timeOutMsOpt),
+            TimeoutString = invocationContext.ParseResult.GetValueForOption(_timeOutMsOpt),
             WorkingDirectory = invocationContext.ParseResult.GetValueForOption(_workingDirOpt),
             VagrantBinPath = invocationContext.ParseResult.GetValueForOption(_vagrantBinPathOpt),
             Plain = invocationContext.ParseResult.GetValueForOption(_plainTextOpt),

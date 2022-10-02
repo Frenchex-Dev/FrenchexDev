@@ -1,4 +1,5 @@
-﻿using Frenchex.Dev.Vos.Lib.Domain.Commands.Name;
+﻿using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Name.Request;
+using Frenchex.Dev.Vos.Lib.Domain.Commands.Name;
 
 namespace Frenchex.Dev.Vos.Lib.Tests.Domain.Commands;
 
