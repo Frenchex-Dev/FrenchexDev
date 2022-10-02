@@ -8,7 +8,6 @@ public static class ServicesConfiguration
 {
     public static IServiceCollection ConfigureServices(IServiceCollection serviceCollection)
     {
-
         serviceCollection
 
             // Root
@@ -24,7 +23,6 @@ public static class ServicesConfiguration
             .AddTransient<IMachineTypeDefinitionBuilderFactory, MachineTypeDefinitionBuilderFactory>()
 
             ;
-
 
         return serviceCollection;
     }

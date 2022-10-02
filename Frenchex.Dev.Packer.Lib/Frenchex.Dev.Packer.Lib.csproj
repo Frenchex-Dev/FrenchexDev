@@ -19,7 +19,6 @@
         <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Process.Lib\Frenchex.Dev.Dotnet.Core.Process.Lib.csproj" />
         <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Wrapping.Lib\Frenchex.Dev.Dotnet.Core.Wrapping.Lib.csproj" />
         <ProjectReference Include="..\Frenchex.Dev.Packer.Lib.Abstractions\Frenchex.Dev.Packer.Lib.Abstractions.csproj" />
-        <ProjectReference Include="..\Frenchex.Dev.Vos.Lib.Abstractions\Frenchex.Dev.Vos.Lib.Abstractions.csproj" />
     </ItemGroup>
 
 </Project>
