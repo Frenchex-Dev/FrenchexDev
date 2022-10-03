@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
+using Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -26,8 +27,8 @@ public class UnitTest : IAsyncDisposable
     }
 
     public IServiceProvider? ServiceProvider { get; protected set; }
-    public AsyncServiceScope? AsyncScope { get; protected set; }
-    public IConfigurationRoot? Configuration { get; protected set; }
+    private AsyncServiceScope? AsyncScope { get; set; }
+    private IConfigurationRoot? Configuration { get; set; }
 
     public ValueTask DisposeAsync()
     {
@@ -37,14 +38,20 @@ public class UnitTest : IAsyncDisposable
     }
 
     public async Task ExecuteTimeBoxedAndAssertAsync<T>(
-        TimeSpan timeBox,
+        string timeBox,
         Func<IServiceProvider, IConfigurationRoot, T, Action<string>, Task> executeFunc,
         Func<IServiceProvider, IConfigurationRoot, T, Task>? assertFunc,
         IServiceProvider serviceProvider,
         VsCodeDebugging? vsCodeDebugging = null
     ) where T : WithWorkingDirectoryExecutionContext
     {
-        var timeout = Task.Delay((int) timeBox.TotalMilliseconds);
+        var timeoutMs = serviceProvider.GetRequiredService<ITimeSpanTooling>().GetTotalMsConvertedToInt(timeBox, -1);
+        if (timeoutMs == -1)
+        {
+            throw new CannotParseString("timeout cannot be -1");
+        }
+
+        var timeout = Task.Delay(timeoutMs);
 
         var run = RunInternalTaskAsync(
             executeFunc,
@@ -54,7 +61,7 @@ public class UnitTest : IAsyncDisposable
             vsCodeDebugging
         );
 
-        List<Task> tasks = new List<Task> {run};
+        var tasks = new List<Task> {run};
 
         if (vsCodeDebugging?.DevDebugging == false || _vsCodeDebugging?.DevDebugging == false)
         {
@@ -70,7 +77,7 @@ public class UnitTest : IAsyncDisposable
 
         if (firstFinishedTask == timeout)
         {
-            throw new TimeoutException($"timeout {timeBox.TotalSeconds}s");
+            throw new TimeoutException($"timeout {timeBox}");
         }
 
         if (firstFinishedTask.IsFaulted)
@@ -80,7 +87,7 @@ public class UnitTest : IAsyncDisposable
     }
 
     public async Task ExecuteTimeBoxedAndAssertAndCleanupAsync<T>(
-        TimeSpan timeBox,
+        string timeBox,
         Func<IServiceProvider, IConfigurationRoot, T, Action<string>, Task> executeFunc,
         Func<IServiceProvider, IConfigurationRoot, T, Task>? assertFunc,
         Func<IServiceProvider, IConfigurationRoot, T, Task>? cleanupFunc,
@@ -88,7 +95,13 @@ public class UnitTest : IAsyncDisposable
         VsCodeDebugging? vsCodeDebugging = null
     ) where T : WithWorkingDirectoryExecutionContext
     {
-        var timeout = Task.Delay((int) timeBox.TotalMilliseconds);
+        var timeoutMs = serviceProvider.GetRequiredService<ITimeSpanTooling>().GetTotalMsConvertedToInt(timeBox, -1);
+        if (timeoutMs == -1)
+        {
+            throw new CannotParseString("timeout cannot be -1");
+        }
+
+        var timeout = Task.Delay(timeoutMs);
 
         var run = RunInternalTaskAsync(
             executeFunc,
@@ -109,7 +122,7 @@ public class UnitTest : IAsyncDisposable
 
         if (firstFinishedTask == timeout)
         {
-            throw new TimeoutException($"timeout {timeBox.TotalSeconds}s");
+            throw new TimeoutException($"timeout {timeBox}");
         }
     }
 
@@ -274,14 +287,14 @@ public class UnitTest : IAsyncDisposable
 
     public class VsCodeDebugging : IDisposable, IAsyncDisposable
     {
-        public bool Open { get; set; }
+        public bool Open { get; init; }
         public string? Path { get; set; }
-        public string? Bin { get; init; }
-        public bool? TellMe { get; set; }
-        public bool? Keep { get; set; }
+        public string? Bin { get; init; } = "code";
+        public bool? TellMe { get; set; } = false;
+        public bool? Keep { get; init; } = true;
 
         public Process? VsProcess { get; set; }
-        public bool DevDebugging { get; set; }
+        public bool DevDebugging { get; init; } = false;
 
         public async ValueTask DisposeAsync()
         {

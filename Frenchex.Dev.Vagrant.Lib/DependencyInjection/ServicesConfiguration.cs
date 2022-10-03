@@ -8,28 +8,35 @@ namespace Frenchex.Dev.Vagrant.Lib.DependencyInjection;
 
 public static class ServicesConfiguration
 {
-    public static IServiceCollection ConfigureServices(IServiceCollection services)
+    public static IServiceCollection ConfigureServices(IServiceCollection serviceCollection)
     {
-        Dotnet.Core.Filesystem.Lib.DependencyInjection.ServicesConfiguration
-            .ConfigureServices(services);
+        ConfigureServicesDependencies(serviceCollection);
 
-        Dotnet.Core.Process.Lib.DependencyInjection.ServicesConfiguration
-            .ConfigureServices(services);
-
-        services
+        serviceCollection
             .AddScoped<ICommandsFacade, CommandsFacade>()
             .AddScoped<IBaseCommandRequestBuilderFactory, BaseCommandRequestBuilderFactory>()
             ;
 
-        Domain.Commands.Destroy.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
-        Domain.Commands.Halt.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
-        Domain.Commands.Init.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
-        Domain.Commands.Provision.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
-        Domain.Commands.Up.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
-        Domain.Commands.SshConfig.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
-        Domain.Commands.Ssh.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
-        Domain.Commands.Status.DependencyInjection.ServicesConfiguration.ConfigureServices(services);
+        Domain.Commands.Destroy.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
+        Domain.Commands.Halt.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
+        Domain.Commands.Init.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
+        Domain.Commands.Provision.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
+        Domain.Commands.Up.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
+        Domain.Commands.SshConfig.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
+        Domain.Commands.Ssh.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
+        Domain.Commands.Status.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
 
-        return services;
+        return serviceCollection;
+    }
+
+    private static void ConfigureServicesDependencies(IServiceCollection serviceCollection)
+    {
+        Dotnet.Core.Filesystem.Lib.DependencyInjection.ServicesConfiguration
+            .ConfigureServices(serviceCollection);
+
+        Dotnet.Core.Process.Lib.DependencyInjection.ServicesConfiguration
+            .ConfigureServices(serviceCollection);
+
+        Dotnet.Core.Tooling.TimeSpan.Lib.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.Process;
+using Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib;
 using Microsoft.Extensions.Logging;
 
 namespace Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.ProcessBuilder;
@@ -10,12 +11,15 @@ namespace Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.ProcessBuilder;
 /// </summary>
 public class AsyncProcessBuilder : IProcessBuilder
 {
+    private readonly ITimeSpanTooling _timeSpanTooling;
     private readonly ILogger<IProcess> _processLogger;
 
     public AsyncProcessBuilder(
+        ITimeSpanTooling timeSpanTooling,
         ILogger<IProcess> processLogger
     )
     {
+        _timeSpanTooling = timeSpanTooling;
         _processLogger = processLogger;
     }
 
@@ -39,7 +43,8 @@ public class AsyncProcessBuilder : IProcessBuilder
         var wrapper = new Process.Process(
             wrappedProcess,
             parameters,
-            _processLogger
+            _processLogger,
+            _timeSpanTooling
         );
 
         // If you run bash-script on Linux it is possible that ExitCode can be 255.

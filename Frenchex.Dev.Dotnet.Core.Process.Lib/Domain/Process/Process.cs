@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.ProcessBuilder;
+using Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib;
 using Microsoft.Extensions.Logging;
 
 namespace Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.Process;
@@ -11,6 +12,7 @@ public class Process : IProcess
     private readonly System.Diagnostics.Process _wrappedProcess;
     private readonly IProcessBuildingParameters _processBuildingParameters;
     private readonly ILogger<IProcess> _logger;
+    private readonly ITimeSpanTooling _timeSpanTooling;
 
     #endregion
 
@@ -21,12 +23,14 @@ public class Process : IProcess
     public Process(
         System.Diagnostics.Process wrappedProcess,
         IProcessBuildingParameters buildingParameters,
-        ILogger<IProcess> logger
+        ILogger<IProcess> logger,
+        ITimeSpanTooling timeSpanTooling
     )
     {
         _wrappedProcess = wrappedProcess;
         _processBuildingParameters = buildingParameters;
         _logger = logger;
+        _timeSpanTooling = timeSpanTooling;
         HasStarted = false;
     }
 
@@ -80,7 +84,7 @@ public class Process : IProcess
         {
             if (!string.IsNullOrEmpty(_processBuildingParameters.TimeOut))
             {
-                var timeout = TimeSpanStringConversion.ConvertToTimeSpan(_processBuildingParameters.TimeOut);
+                var timeout = _timeSpanTooling.ConvertToTimeSpan(_processBuildingParameters.TimeOut);
                 var understood = timeout is not null;
                 if (!understood)
                 {
@@ -120,13 +124,16 @@ public class Process : IProcess
                 })
             ;
 
-        var timeoutDelayTs = TimeSpanStringConversion.ConvertToTimeSpan(_processBuildingParameters.TimeOut);
+        var timeoutDelayTs = _timeSpanTooling.ConvertToTimeSpan(_processBuildingParameters.TimeOut);
 
-        Result.WaitForAny = Task
-            .WhenAny(
-                Task.Delay(timeoutDelayTs.HasValue ? (int) timeoutDelayTs.Value.TotalMilliseconds : -1), // we should avoid this -1
-                Result.WaitForCompleteExit
-            );
+        var listWaitForAny = new List<Task>() {Result.WaitForCompleteExit};
+
+        if (timeoutDelayTs is not null)
+        {
+            listWaitForAny.Add(Task.Delay((int) timeoutDelayTs.Value.TotalMilliseconds));
+        }
+
+        Result.WaitForAny = Task.WhenAny(listWaitForAny);
 
         return Result;
     }

@@ -11,16 +11,17 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="DeepEqual" Version="4.1.0"/>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.1"/>
-        <PackageReference Include="MSTest.TestAdapter" Version="2.2.10"/>
-        <PackageReference Include="MSTest.TestFramework" Version="2.2.10"/>
+        <PackageReference Include="DeepEqual" Version="4.1.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.3.1" />
+        <PackageReference Include="MSTest.TestAdapter" Version="2.2.10" />
+        <PackageReference Include="MSTest.TestFramework" Version="2.2.10" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib.csproj"/>
-        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Lib.csproj"/>
-        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.Moq\Frenchex.Dev.Dotnet.Core.Dependencies.Moq.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Lib.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.Moq\Frenchex.Dev.Dotnet.Core.Dependencies.Moq.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib\Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib.csproj" />
     </ItemGroup>
 
 </Project>

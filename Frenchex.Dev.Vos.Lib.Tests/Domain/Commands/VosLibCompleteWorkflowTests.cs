@@ -133,10 +133,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
 
     private async Task VosWorkflowUnitTestInternal(Builder[] builders)
     {
-        var timeout = TimeSpan.FromMinutes(10);
-        var globalTimeoutTask = Task.Delay((int) timeout.TotalMilliseconds);
-
-        Func<Builder, Task> taskBuilder = (Builder builder) => VosWorkflowUnitTestInternalInternal(
+        var taskBuilder = (Builder builder) => VosWorkflowUnitTestInternalInternal(
             builder.BuildInitCommandRequestBuilder!,
             builder.BuildDefineMachineTypeAddCommandRequestsListBuilder!,
             builder.BuildDefineMachineAddCommandRequestsListBuilder!,
@@ -151,9 +148,10 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         );
 
         List<Task> allTasks = builders.Select(x => taskBuilder(x)).ToList();
+        
         var tasks = Task.WhenAll(allTasks);
 
-        await Task.WhenAny(tasks, globalTimeoutTask);
+        await tasks;
 
         if (tasks.IsFaulted)
         {
@@ -188,35 +186,35 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             unitTest,
             workingDirectory,
             vsDebuggingContext,
-            TimeSpan.FromSeconds(10)
+            "10s"
         );
 
         await RunDefineMachineTypeAddCommandsAsyncUnitTest(
             defineMachineTypeAddCommandRequestsListBuilder,
             unitTest,
             vsDebuggingContext,
-            TimeSpan.FromSeconds(3)
+            "3s"
         );
 
         await RunDefineMachineAddCommandsAsyncUnitTest(
             defineMachineAddCommandRequestsListBuilder,
             unitTest,
             vsDebuggingContext,
-            TimeSpan.FromSeconds(3)
+            "3s"
         );
 
         await RunNameCommandsAsyncUnitTest(
             nameCommandRequestsListBuilder,
             unitTest,
             vsDebuggingContext,
-            TimeSpan.FromSeconds(2)
+            "2s"
         );
 
         await RunStatusCommandsResponseBeforeUpAsyncUnitTest(
             statusBeforeUpCommandRequestsListBuilder,
             unitTest,
             vsDebuggingContext,
-            TimeSpan.FromSeconds(30)
+            "30s"
         );
 
         await RunUpAndStatusAfterUpRequestsCommandsAsyncUnitTest(
@@ -224,35 +222,35 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             statusAfterUpCommandRequestsListBuilder,
             unitTest,
             vsDebuggingContext,
-            TimeSpan.FromMinutes(4)
+            "4m"
         );
 
         await RunSshConfigCommandRequestsAsyncUnitTest(
             sshConfigCommandRequestsListBuilder,
             unitTest,
             vsDebuggingContext,
-            TimeSpan.FromMinutes(4)
+            "4m"
         );
 
         await RunSshCommandsAsyncUnitTest(
             sshCommandRequestsListBuilder,
             unitTest,
             vsDebuggingContext,
-            TimeSpan.FromMinutes(4)
+            "4m"
         );
 
         await RunHaltCommandsAsyncUnitTest(
             haltRequestsListBuilder,
             unitTest,
             vsDebuggingContext,
-            TimeSpan.FromMinutes(4)
+            "4m"
         );
 
         await RunDestroyCommandsAsyncUnitTest(
             destroyRequestsListBuilder,
             unitTest,
             vsDebuggingContext,
-            TimeSpan.FromMinutes(4)
+            "4m"
         );
 
         vsDebuggingContext.Stop();
@@ -262,7 +260,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         Func<string, IServiceProvider, IList<IDestroyCommandRequest>> destroyRequestsListBuilder,
         UnitTest unitTest,
         UnitTest.VsCodeDebugging vsDebuggingContext,
-        TimeSpan timeBox
+        string timeBox
     )
     {
         await unitTest.ExecuteTimeBoxedAndAssertAndCleanupAsync<ExecutionContext>(
@@ -312,7 +310,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         Func<string, IServiceProvider, IList<IHaltCommandRequest>> haltRequestsListBuilder,
         UnitTest unitTest,
         UnitTest.VsCodeDebugging vsDebuggingContext,
-        TimeSpan timeBox
+        string timeBox
     )
     {
         await unitTest.ExecuteTimeBoxedAndAssertAsync<ExecutionContext>(
@@ -343,7 +341,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         Func<string, IServiceProvider, IList<ISshCommandRequest>> sshCommandRequestsListBuilder,
         UnitTest unitTest,
         UnitTest.VsCodeDebugging vsDebuggingContext,
-        TimeSpan timeBox
+        string timeBox
     )
     {
         await unitTest.ExecuteTimeBoxedAndAssertAsync<ExecutionContext>(
@@ -373,7 +371,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         Func<string, IServiceProvider, IList<ISshConfigCommandRequest>> sshConfigCommandRequestsListBuilder,
         UnitTest unitTest,
         UnitTest.VsCodeDebugging vsDebuggingContext,
-        TimeSpan timeSpan
+        string timeSpan
     )
     {
         await unitTest.ExecuteTimeBoxedAndAssertAsync<ExecutionContext>(
@@ -416,7 +414,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         Func<string, IServiceProvider, IList<IStatusCommandRequest>> statusAfterUpCommandRequestsListBuilder,
         UnitTest unitTest,
         UnitTest.VsCodeDebugging vsDebuggingContext,
-        TimeSpan totalTimeSpan
+        string totalTimeSpan
     )
     {
         await unitTest.ExecuteTimeBoxedAndAssertAsync<ExecutionContext>(
@@ -488,7 +486,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         Func<string, IServiceProvider, IList<IStatusCommandRequest>> statusBeforeUpCommandRequestsListBuilder,
         UnitTest unitTest,
         UnitTest.VsCodeDebugging vsDebuggingContext,
-        TimeSpan timeBox
+        string timeBox
     )
     {
         await unitTest.ExecuteTimeBoxedAndAssertAsync<ExecutionContext>(
@@ -530,7 +528,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         Func<string, IServiceProvider, IList<NameCommandRequestPayload>> nameCommandRequestsListBuilder,
         UnitTest unitTest,
         UnitTest.VsCodeDebugging vsDebuggingContext,
-        TimeSpan timeBox
+        string timeBox
     )
     {
         await unitTest.ExecuteTimeBoxedAndAssertAsync<ExecutionContext>(
@@ -572,7 +570,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             defineMachineAddCommandRequestsListBuilder,
         UnitTest unitTest,
         UnitTest.VsCodeDebugging vsDebuggingContext,
-        TimeSpan timeBox
+        string timeBox
     )
     {
         await unitTest.ExecuteTimeBoxedAndAssertAsync<ExecutionContext>(
@@ -605,7 +603,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             defineMachineTypeAddCommandRequestsListBuilder,
         UnitTest unitTest,
         UnitTest.VsCodeDebugging vsDebuggingContext,
-        TimeSpan timeBox
+        string timeBox
     )
     {
         await unitTest.ExecuteTimeBoxedAndAssertAsync<ExecutionContext>(
@@ -638,7 +636,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         UnitTest unitTest,
         string workingDirectory,
         UnitTest.VsCodeDebugging vsDebuggingContext,
-        TimeSpan timeBox
+        string timeBox
     )
     {
         await unitTest.ExecuteTimeBoxedAndAssertAsync<ExecutionContext>(
