@@ -10,6 +10,7 @@ using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.SshConfig.Command;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Status.Command;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Up;
 using Frenchex.Dev.Vagrant.Lib.Tests.Abstractions.Domain;
+using Frenchex.Dev.Vagrant.Lib.Tests.Domain.Workflows.WorkflowData;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.Vagrant.Lib.Tests.Domain.Workflows;
@@ -19,7 +20,9 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
 {
     public static IEnumerable<object[]> DataSource()
     {
-        yield return new object[] { new PayloadBuilder() };
+        yield return new object[] {
+            new VagrantLibWorkflowDataBuilderData1()
+        };
     }
 
     [TestInitialize]
@@ -32,23 +35,36 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
     [TestMethod]
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     [TestCategory(TestCategories.NeedVagrant)]
-    public async Task Test_Complete_Workflow(PayloadBuilder payloadBuilder)
+    public async Task Test_Complete_Workflow(
+        IVagrantLibWorkflowDataBuilder payloadBuilderPayload
+    )
     {
-        // directory is created by Init command
         var workingDirectory = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
         var sp = UnitTest!.ServiceProvider!;
+
+        var payloadBuilder = new PayloadBuilder();
+        var payload = payloadBuilderPayload.Build(workingDirectory, sp);
 
         if (sp == null)
             throw new ArgumentNullException(nameof(sp));
 
-        var initRequest = payloadBuilder.InitCommandRequestBuilder.Invoke(workingDirectory, sp);
-        var upRequest = payloadBuilder.UpCommandRequestBuilder.Invoke(workingDirectory, sp);
-        var provisionRequest = payloadBuilder.ProvisionCommandRequestBuilder.Invoke(workingDirectory, sp);
-        var statusRequest = payloadBuilder.StatusCommandRequestBuilder.Invoke(workingDirectory, sp);
-        var sshConfigCommandRequest = payloadBuilder.SshConfigCommandRequestBuilder.Invoke(workingDirectory, sp);
-        var sshCommandRequest = payloadBuilder.SshCommandRequestBuilder.Invoke(workingDirectory, sp);
-        var haltRequest = payloadBuilder.HaltCommandRequestBuilder.Invoke(workingDirectory, sp);
-        var destroyRequest = payloadBuilder.DestroyCommandRequestBuilder.Invoke(workingDirectory, sp);
+        var initRequest = payloadBuilder.InitCommandRequestBuilder.Invoke(payload.InitCommandRequestBuilderPayload!);
+        var upRequest = payloadBuilder.UpCommandRequestBuilder.Invoke(payload.UpCommandRequestBuilderPayload!);
+        var provisionRequest =
+            payloadBuilder.ProvisionCommandRequestBuilder.Invoke(payload.ProvisionCommandRequestBuilderPayload!);
+
+        var statusRequest =
+            payloadBuilder.StatusCommandRequestBuilder.Invoke(payload.StatusCommandRequestBuilderPayload!);
+
+        var sshConfigCommandRequest =
+            payloadBuilder.SshConfigCommandRequestBuilder.Invoke(payload.SshConfigCommandRequestBuilderPayload!);
+
+        var sshCommandRequest =
+            payloadBuilder.SshCommandRequestBuilder.Invoke(payload.SshCommandRequestBuilderPayload!);
+
+        var haltRequest = payloadBuilder.HaltCommandRequestBuilder.Invoke(payload.HaltCommandRequestBuilderPayload!);
+        var destroyRequest =
+            payloadBuilder.DestroyCommandRequestBuilder.Invoke(payload.DestroyCommandRequestBuilderPayload!);
 
         await UnitTest!.ExecuteAndAssertAndCleanupAsync<ExecutionContext>(async (provider, _, _, _) =>
             {
@@ -70,7 +86,7 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
                 await TestInner(
                     "up",
                     provider.GetRequiredService<IUpCommand>().StartProcess(upRequest),
-                    new List<int> {0, 1},
+                    new List<int> {0},
                     true
                 );
 

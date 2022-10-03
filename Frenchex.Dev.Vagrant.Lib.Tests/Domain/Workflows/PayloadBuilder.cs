@@ -12,93 +12,103 @@ namespace Frenchex.Dev.Vagrant.Lib.Tests.Domain.Workflows;
 
 public class PayloadBuilder
 {
-    public Func<string, IServiceProvider, IInitCommandRequest> InitCommandRequestBuilder =>
-        (string workingDirectory, IServiceProvider sp) => sp
+    public Func<InitCommandRequestBuilderPayload, IInitCommandRequest> InitCommandRequestBuilder =>
+        payload => payload.GetServiceProvider()
             .GetRequiredService<IInitCommandRequestBuilderFactory>().Factory()
             .BaseBuilder
-            .UsingTimeout("1m")
-            .UsingWorkingDirectory(workingDirectory)
+            .UsingTimeout(payload.Timeout)
+            .UsingWorkingDirectory(payload.WorkingDirectory)
             .Parent<IInitCommandRequestBuilder>()
-            .UsingBoxName("generic/alpine38")
-            .UsingBoxVersion("4.1.10")
+            .UsingBoxName(payload.GetRequest().BoxName!)
+            .UsingBoxVersion(payload.GetRequest().BoxVersion!)
             .Build();
 
-    public Func<string, IServiceProvider, IUpCommandRequest> UpCommandRequestBuilder =>
-        (string workingDirectory, IServiceProvider sp) => sp
+    public Func<UpCommandRequestBuilderPayload, IUpCommandRequest> UpCommandRequestBuilder =>
+        payload => payload.GetServiceProvider()
             .GetRequiredService<IUpCommandRequestBuilderFactory>().Factory()
             .BaseBuilder
-            .UsingTimeout("10m")
-            .UsingWorkingDirectory(workingDirectory)
+            .UsingTimeout(payload.Timeout)
+            .UsingWorkingDirectory(payload.WorkingDirectory)
             .Parent<IUpCommandRequestBuilder>()
-            .WithProvision(false)
+            .WithProvision(payload.GetRequest().Provision)
+            .UsingProvisionWith(payload.GetRequest().ProvisionWith)
+            .WithParallel(payload.GetRequest().Parallel)
+            .WithInstallProvider(payload.GetRequest().InstallProvider)
+            .UsingNamesOrIds(payload.GetRequest().NamesOrIds)
             .Build();
 
-    public Func<string, IServiceProvider, IProvisionCommandRequest> ProvisionCommandRequestBuilder =>
-        (string workingDirectory, IServiceProvider sp) =>
+    public Func<ProvisionCommandRequestBuilderPayload, IProvisionCommandRequest> ProvisionCommandRequestBuilder =>
+        payload =>
         {
             var factory =
-                sp.GetRequiredService<IProvisionCommandRequestBuilderFactory>();
+                payload.GetServiceProvider().GetRequiredService<IProvisionCommandRequestBuilderFactory>();
 
             var builder = factory.Factory();
 
             builder
                 .BaseBuilder
-                .UsingTimeout("1m")
-                .UsingWorkingDirectory(workingDirectory)
+                .UsingTimeout(payload.Timeout)
+                .UsingWorkingDirectory(payload.WorkingDirectory)
                 .Parent<IProvisionCommandRequestBuilder>()
-                .ProvisionWith(new[] {"docker.install"})
+                .ProvisionWith(payload.GetRequest().ProvisionWith!)
+                .ProvisionVmName(payload.GetRequest().VmName!)
                 ;
 
             return builder.Build();
         };
 
-    public Func<string, IServiceProvider, IStatusCommandRequest> StatusCommandRequestBuilder =>
-        (string workingDirectory, IServiceProvider sp) => sp
+    public Func<StatusCommandRequestBuilderPayload, IStatusCommandRequest> StatusCommandRequestBuilder =>
+        payload => payload.GetServiceProvider()
             .GetRequiredService<IStatusCommandRequestBuilderFactory>().Factory()
             .BaseBuilder
-            .UsingTimeout("1m")
-            .UsingWorkingDirectory(workingDirectory)
+            .UsingTimeout(payload.Timeout)
+            .UsingWorkingDirectory(payload.WorkingDirectory)
             .Parent<IStatusCommandRequestBuilder>()
+            .WithNamesOrIds(payload.GetRequest().NamesOrIds)
             .Build();
 
-    public Func<string, IServiceProvider, ISshConfigCommandRequest> SshConfigCommandRequestBuilder =>
-        (string workingDirectory, IServiceProvider sp) => sp
+    public Func<SshConfigCommandRequestBuilderPayload, ISshConfigCommandRequest> SshConfigCommandRequestBuilder =>
+        payload => payload.GetServiceProvider()
             .GetRequiredService<ISshConfigCommandRequestBuilderFactory>().Factory()
             .BaseBuilder
-            .UsingTimeout("1m")
-            .UsingWorkingDirectory(workingDirectory)
+            .UsingTimeout(payload.Timeout)
+            .UsingWorkingDirectory(payload.WorkingDirectory)
             .Parent<ISshConfigCommandRequestBuilder>()
-            .UsingName("default")
+            .UsingName(payload.GetRequest().NameOrId)
+            .UsingHost(payload.GetRequest().Host)
             .Build();
 
-    public Func<string, IServiceProvider, ISshCommandRequest> SshCommandRequestBuilder =>
-        (string workingDirectory, IServiceProvider sp) => sp
+    public Func<SshCommandRequestBuilderPayload, ISshCommandRequest> SshCommandRequestBuilder =>
+        payload => payload.GetServiceProvider()
             .GetRequiredService<ISshCommandRequestBuilderFactory>().Factory()
             .BaseBuilder
-            .UsingTimeout("1m")
-            .UsingWorkingDirectory(workingDirectory)
+            .UsingTimeout(payload.Timeout)
+            .UsingWorkingDirectory(payload.WorkingDirectory)
             .Parent<ISshCommandRequestBuilder>()
-            .UsingCommand("echo foo")
-            .UsingNameOrId("default")
+            .UsingCommand(payload.GetRequest().Command)
+            .UsingNameOrId(payload.GetRequest().NameOrId)
             .Build();
 
-    public Func<string, IServiceProvider, IHaltCommandRequest> HaltCommandRequestBuilder =>
-        (string workingDirectory, IServiceProvider sp) => sp
+    public Func<HaltCommandRequestBuilderPayload, IHaltCommandRequest> HaltCommandRequestBuilder =>
+        payload => payload.GetServiceProvider()
             .GetRequiredService<IHaltCommandRequestBuilderFactory>().Factory()
             .BaseBuilder
-            .UsingTimeout("3m")
-            .UsingWorkingDirectory(workingDirectory)
+            .UsingTimeout(payload.Timeout)
+            .UsingWorkingDirectory(payload.WorkingDirectory)
             .Parent<IHaltCommandRequestBuilder>()
+            .WithForce(payload.GetRequest().Force)
+            .UsingHaltTimeout(payload.GetRequest().HaltTimeout)
+            .UsingNamesOrIds(payload.GetRequest().NamesOrIds)
             .Build();
 
-    public Func<string, IServiceProvider, IDestroyCommandRequest> DestroyCommandRequestBuilder =>
-        (string workingDirectory, IServiceProvider sp) => sp
+    public Func<DestroyCommandRequestBuilderPayload, IDestroyCommandRequest> DestroyCommandRequestBuilder =>
+        payload => payload.GetServiceProvider()
             .GetRequiredService<IDestroyCommandRequestBuilderFactory>().Factory()
             .BaseBuilder
-            .UsingTimeout("3m")
-            .UsingWorkingDirectory(workingDirectory)
+            .UsingTimeout(payload.Timeout)
+            .UsingWorkingDirectory(payload.WorkingDirectory)
             .Parent<IDestroyCommandRequestBuilder>()
-            .WithForce(true)
+            .WithForce(payload.GetRequest().Force)
+            .UsingName(payload.GetRequest().NameOrId)
             .Build();
-    
 }
