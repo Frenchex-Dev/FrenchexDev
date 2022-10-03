@@ -1,10 +1,6 @@
-﻿using System.Net;
-using System.Net.NetworkInformation;
-using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
+﻿using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain;
-using Frenchex.Dev.Vagrant.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Tests.Abstractions.Domain;
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Networking;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Response;
@@ -35,18 +31,6 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Response;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Response;
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
-using Frenchex.Dev.Vos.Lib.Domain.Actions.Networking;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Machine.Add;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Define.MachineType.Add;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Destroy;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Halt;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Init;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Name;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Ssh;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.SshConfig;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Status;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Up;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.Vos.Lib.Tests.Domain.Commands;
@@ -54,35 +38,17 @@ namespace Frenchex.Dev.Vos.Lib.Tests.Domain.Commands;
 [TestClass]
 public class VosLibCompleteWorkflowTests : AbstractUnitTest
 {
-    private const string BoxTest = "generic/alpine316";
-    private const string BoxVersionTest = "4.1.10";
-
     private UnitTest? _unitTest;
 
     public static IEnumerable<object[]> DataSource(int maxX, int maxY)
     {
         for (var i = 0; i < maxX; i++)
         {
-            List<Builder> list = new List<Builder>();
+            List<Builder> list = new();
 
             for (var j = 0; j < maxY; j++)
             {
                 var builder = new Builder();
-
-                builder.BuildInitCommandRequestBuilder = BuildInitCommandRequest;
-                builder.BuildDefineMachineTypeAddCommandRequestsListBuilder =
-                    BuildDefineMachineTypeAddCommandRequestsList;
-
-                builder.BuildDefineMachineAddCommandRequestsListBuilder = BuildDefineMachineAddCommandRequestsList;
-                builder.BuildNameCommandRequestsListBuilder = BuildNameCommandRequestsList;
-                builder.BuildStatusBeforeUpCommandRequestsListBuilder = BuildStatusBeforeUpCommandRequestsList;
-                builder.BuildUpCommandRequestsListBuilder = BuildUpCommandRequestsList;
-                builder.BuildStatusAfterUpCommandRequestsListBuilder = BuildStatusAfterUpCommandRequestsList;
-                builder.BuildSshConfigCommandRequestsListBuilder = BuildSshConfigCommandRequestsList;
-                builder.BuildSshCommandRequestsListBuilder = BuildSshCommandRequestsList;
-                builder.BuildHaltCommandRequestsListBuilder = BuildHaltCommandRequestsList;
-                builder.BuildDestroyCommandRequestsListBuilder = BuildDestroyCommandRequestsList;
-
                 list.Add(builder);
             }
 
@@ -133,47 +99,21 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
 
     private async Task VosWorkflowUnitTestInternal(Builder[] builders)
     {
-        var taskBuilder = (Builder builder) => VosWorkflowUnitTestInternalInternal(
-            builder.BuildInitCommandRequestBuilder!,
-            builder.BuildDefineMachineTypeAddCommandRequestsListBuilder!,
-            builder.BuildDefineMachineAddCommandRequestsListBuilder!,
-            builder.BuildNameCommandRequestsListBuilder!,
-            builder.BuildStatusBeforeUpCommandRequestsListBuilder!,
-            builder.BuildUpCommandRequestsListBuilder!,
-            builder.BuildStatusAfterUpCommandRequestsListBuilder!,
-            builder.BuildSshConfigCommandRequestsListBuilder!,
-            builder.BuildSshCommandRequestsListBuilder!,
-            builder.BuildHaltCommandRequestsListBuilder!,
-            builder.BuildDestroyCommandRequestsListBuilder!
-        );
+        var taskBuilder = (Builder builder) => VosWorkflowUnitTestInternalInternal(builder);
 
         List<Task> allTasks = builders.Select(x => taskBuilder(x)).ToList();
-        
+
         var tasks = Task.WhenAll(allTasks);
 
         await tasks;
 
         if (tasks.IsFaulted)
         {
-            throw new Exception(tasks?.Exception?.Message);
+            throw new Exception(tasks.Exception?.Message);
         }
     }
 
-    private async Task VosWorkflowUnitTestInternalInternal(
-        Func<string, IServiceProvider, IInitCommandRequest> initRequestBuilder,
-        Func<string, IServiceProvider, IList<IDefineMachineTypeAddCommandRequest>>
-            defineMachineTypeAddCommandRequestsListBuilder,
-        Func<string, IServiceProvider, IList<IDefineMachineAddCommandRequest>>
-            defineMachineAddCommandRequestsListBuilder,
-        Func<string, IServiceProvider, IList<NameCommandRequestPayload>> nameCommandRequestsListBuilder,
-        Func<string, IServiceProvider, IList<IStatusCommandRequest>> statusBeforeUpCommandRequestsListBuilder,
-        Func<string, IServiceProvider, IList<IUpCommandRequest>> upRequestsListBuilder,
-        Func<string, IServiceProvider, IList<IStatusCommandRequest>> statusAfterUpCommandRequestsListBuilder,
-        Func<string, IServiceProvider, IList<ISshConfigCommandRequest>> sshConfigCommandRequestsListBuilder,
-        Func<string, IServiceProvider, IList<ISshCommandRequest>> sshCommandRequestsListBuilder,
-        Func<string, IServiceProvider, IList<IHaltCommandRequest>> haltRequestsListBuilder,
-        Func<string, IServiceProvider, IList<IDestroyCommandRequest>> destroyRequestsListBuilder
-    )
+    private async Task VosWorkflowUnitTestInternalInternal(Builder builder)
     {
         var vsDebuggingContext = new UnitTest.VsCodeDebugging {TellMe = true, Keep = true, DevDebugging = true};
         var workingDirectory = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
@@ -182,7 +122,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         unitTest.BuildIfNecessary();
 
         await RunInitCommandAsyncUnitTest(
-            initRequestBuilder,
+            builder.BuildInitCommandRequestBuilder!,
             unitTest,
             workingDirectory,
             vsDebuggingContext,
@@ -190,64 +130,64 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         );
 
         await RunDefineMachineTypeAddCommandsAsyncUnitTest(
-            defineMachineTypeAddCommandRequestsListBuilder,
+            builder.BuildDefineMachineTypeAddCommandRequestsListBuilder!,
             unitTest,
             vsDebuggingContext,
             "3s"
         );
 
         await RunDefineMachineAddCommandsAsyncUnitTest(
-            defineMachineAddCommandRequestsListBuilder,
+            builder.BuildDefineMachineAddCommandRequestsListBuilder!,
             unitTest,
             vsDebuggingContext,
             "3s"
         );
 
         await RunNameCommandsAsyncUnitTest(
-            nameCommandRequestsListBuilder,
+            builder.BuildNameCommandRequestsListBuilder!,
             unitTest,
             vsDebuggingContext,
             "2s"
         );
 
         await RunStatusCommandsResponseBeforeUpAsyncUnitTest(
-            statusBeforeUpCommandRequestsListBuilder,
+            builder.BuildStatusBeforeUpCommandRequestsListBuilder!,
             unitTest,
             vsDebuggingContext,
             "30s"
         );
 
         await RunUpAndStatusAfterUpRequestsCommandsAsyncUnitTest(
-            upRequestsListBuilder,
-            statusAfterUpCommandRequestsListBuilder,
+            builder.BuildUpCommandRequestsListBuilder!,
+            builder.BuildStatusAfterUpCommandRequestsListBuilder!,
             unitTest,
             vsDebuggingContext,
             "4m"
         );
 
         await RunSshConfigCommandRequestsAsyncUnitTest(
-            sshConfigCommandRequestsListBuilder,
+            builder.BuildSshConfigCommandRequestsListBuilder!,
             unitTest,
             vsDebuggingContext,
             "4m"
         );
 
         await RunSshCommandsAsyncUnitTest(
-            sshCommandRequestsListBuilder,
+            builder.BuildSshCommandRequestsListBuilder!,
             unitTest,
             vsDebuggingContext,
             "4m"
         );
 
         await RunHaltCommandsAsyncUnitTest(
-            haltRequestsListBuilder,
+            builder.BuildHaltCommandRequestsListBuilder!,
             unitTest,
             vsDebuggingContext,
             "4m"
         );
 
         await RunDestroyCommandsAsyncUnitTest(
-            destroyRequestsListBuilder,
+            builder.BuildDestroyCommandRequestsListBuilder!,
             unitTest,
             vsDebuggingContext,
             "4m"
@@ -659,441 +599,5 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             },
             unitTest.ServiceProvider ?? throw new ArgumentNullException(nameof(unitTest.ServiceProvider)),
             vsDebuggingContext);
-    }
-
-    private static List<IStatusCommandRequest> BuildStatusAfterUpCommandRequestsList(
-        string? workingDirectory,
-        IServiceProvider serviceProvider
-    )
-    {
-        var factory = serviceProvider.GetRequiredService<IStatusCommandRequestBuilderFactory>();
-
-        return new List<IStatusCommandRequest> {
-            factory.Factory()
-                .BaseBuilder
-                .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeout("1m")
-                .Parent<IStatusCommandRequestBuilder>()
-                .WithNames(new[] {"foo-0", "foo-1"})
-                .Build(),
-            factory.Factory()
-                .BaseBuilder
-                .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeout("1m")
-                .Parent<IStatusCommandRequestBuilder>()
-                .WithNames(new[] {"bar-1"})
-                .Build(),
-            factory.Factory()
-                .BaseBuilder
-                .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeout("1m")
-                .Parent<IStatusCommandRequestBuilder>()
-                .WithNames(new[] {"bar-0"})
-                .Build(),
-            factory.Factory()
-                .BaseBuilder
-                .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeout("1m")
-                .Parent<IStatusCommandRequestBuilder>()
-                .WithNames(new[] {"bar-[0-*]", "foo-[0-*]"})
-                .Build()
-        };
-    }
-
-    private static List<IStatusCommandRequest> BuildStatusBeforeUpCommandRequestsList(
-        string? workingDirectory,
-        IServiceProvider serviceProvider
-    )
-    {
-        return new List<IStatusCommandRequest> {
-            serviceProvider.GetRequiredService<IStatusCommandRequestBuilderFactory>().Factory()
-                .BaseBuilder
-                .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeout("1m")
-                .Parent<IStatusCommandRequestBuilder>()
-                .Build()
-        };
-    }
-
-    private static List<IDestroyCommandRequest> BuildDestroyCommandRequestsList(
-        string? workingDirectory,
-        IServiceProvider serviceProvider
-    )
-    {
-        return new List<IDestroyCommandRequest> {
-            serviceProvider.GetRequiredService<IDestroyCommandRequestBuilderFactory>().Factory()
-                .BaseBuilder
-                .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeout("1m")
-                .Parent<IDestroyCommandRequestBuilder>()
-                .WithForce(true)
-                .UsingName("foo-0")
-                .Build(),
-            serviceProvider.GetRequiredService<IDestroyCommandRequestBuilderFactory>().Factory()
-                .BaseBuilder
-                .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeout("1m")
-                .Parent<IDestroyCommandRequestBuilder>()
-                .WithForce(true)
-                .UsingName("foo-1")
-                .Build(),
-            serviceProvider.GetRequiredService<IDestroyCommandRequestBuilderFactory>().Factory()
-                .BaseBuilder
-                .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeout("1m")
-                .Parent<IDestroyCommandRequestBuilder>()
-                .WithForce(true)
-                .Build()
-        };
-    }
-
-    private static List<IHaltCommandRequest> BuildHaltCommandRequestsList(
-        string? workingDirectory,
-        IServiceProvider serviceProvider
-    )
-    {
-        var factory = serviceProvider.GetRequiredService<IHaltCommandRequestBuilderFactory>();
-
-        return new List<IHaltCommandRequest> {
-            factory.Factory()
-                .BaseBuilder
-                .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeout("1m")
-                .Parent<IHaltCommandRequestBuilder>()
-                .UsingNames(new[] {"foo-0", "foo-1"})
-                .Build(),
-            factory.Factory()
-                .BaseBuilder
-                .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeout("1m")
-                .Parent<IHaltCommandRequestBuilder>()
-                .UsingNames(new[] {"bar-0"})
-                .Build(),
-            factory.Factory()
-                .BaseBuilder
-                .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeout("1m")
-                .Parent<IHaltCommandRequestBuilder>()
-                .Build()
-        };
-    }
-
-    private static List<ISshCommandRequest> BuildSshCommandRequestsList(
-        string? workingDirectory,
-        IServiceProvider serviceProvider
-    )
-    {
-        return new List<ISshCommandRequest> {
-            serviceProvider.GetRequiredService<ISshCommandRequestBuilderFactory>().Factory()
-                .BaseBuilder
-                .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeout("1m")
-                .Parent<ISshCommandRequestBuilder>()
-                .UsingNames(new[] {"foo-1"})
-                .UsingCommands(new[] {"echo foo"})
-                .Build(),
-            serviceProvider.GetRequiredService<ISshCommandRequestBuilderFactory>().Factory()
-                .BaseBuilder
-                .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeout("1m")
-                .Parent<ISshCommandRequestBuilder>()
-                .UsingNames(new[] {"bar-0"})
-                .UsingCommands(new[] {"echo bar"})
-                .Build()
-        };
-    }
-
-    private static List<ISshConfigCommandRequest> BuildSshConfigCommandRequestsList(
-        string? workingDirectory,
-        IServiceProvider serviceProvider
-    )
-    {
-        var factory = serviceProvider.GetRequiredService<ISshConfigCommandRequestBuilderFactory>();
-
-        return new List<ISshConfigCommandRequest> {
-            factory.Factory()
-                .BaseBuilder
-                .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeout("1m")
-                .Parent<ISshConfigCommandRequestBuilder>()
-                .UsingNamesOrIds(new[] {
-                    "foo-0"
-                })
-                .Build(),
-            factory.Factory()
-                .BaseBuilder
-                .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeout("1m")
-                .Parent<ISshConfigCommandRequestBuilder>()
-                .UsingNamesOrIds(new[] {
-                    "bar-1"
-                })
-                .Build()
-        };
-    }
-
-    private static List<IUpCommandRequest> BuildUpCommandRequestsList(
-        string? workingDirectory,
-        IServiceProvider serviceProvider
-    )
-    {
-        var factory = serviceProvider.GetRequiredService<IUpCommandRequestBuilderFactory>();
-
-        return new List<IUpCommandRequest> {
-            factory.Factory()
-                .BaseBuilder
-                .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeout("1m")
-                .Parent<IUpCommandRequestBuilder>()
-                .UsingNames(new[] {"foo-0", "foo-1"})
-                .WithParallel(true)
-                .WithProvision(false)
-                .Build(),
-            factory.Factory()
-                .BaseBuilder
-                .UsingWorkingDirectory(workingDirectory)
-                .UsingTimeout("1m")
-                .Parent<IUpCommandRequestBuilder>()
-                .UsingNames(new[] {"foo-2"})
-                .WithParallel(true)
-                .WithProvision(false)
-                .Build()
-        };
-    }
-
-    private static List<IDefineMachineAddCommandRequest> BuildDefineMachineAddCommandRequestsList(
-        string? tempDir,
-        IServiceProvider serviceProvider
-    )
-    {
-        List<(NetworkInterface n, List<IPAddress?>?)> defaultSystemNetworkBridge = serviceProvider
-            .GetRequiredService<IDefaultGatewayGetterAction>()
-            .GetDefaultGateway();
-
-        List<IDefineMachineAddCommandRequest> list = new List<IDefineMachineAddCommandRequest>();
-
-        List<DefineMachineAddCommandRequestPayload> payloads = new List<DefineMachineAddCommandRequestPayload> {
-            new("foo", "10.100.2.#INSTANCE#", true),
-            new("bar", "10.100.3.#INSTANCE#", false)
-        };
-
-        foreach (var payload in payloads)
-        {
-            var def = BuildDefineMachineAddCommandRequest(
-                tempDir,
-                "20s",
-                true,
-                "",
-                new Dictionary<string, FileCopyDefinition>(),
-                false,
-                OsTypeEnum.Debian_64,
-                "10.9.0",
-                false,
-                ProviderEnum.Virtualbox,
-                new Dictionary<string, ProvisioningDefinition> {
-                    {
-                        "docker.install", new ProvisioningDefinition {
-                            Env = new Dictionary<string, string> {
-                                {"DOCKER_VERSION", "20.9"}
-                            }
-                        }
-                    }
-                },
-                new Dictionary<string, SharedFolderDefinition>(),
-                16,
-                128,
-                2,
-                "foo",
-                payload.Name,
-                4,
-                2,
-                payload.Ipv4Pattern,
-                true,
-                true,
-                defaultSystemNetworkBridge,
-                serviceProvider.GetRequiredService<IDefineMachineAddCommandRequestBuilderFactory>(),
-                serviceProvider.GetRequiredService<MachineDefinitionBuilderFactory>());
-
-            list.Add(def);
-        }
-
-        return list;
-    }
-
-    private static IDefineMachineAddCommandRequest BuildDefineMachineAddCommandRequest(
-        string? workingDirectory,
-        string timeoutStr,
-        bool enable3d,
-        string biosLogoImage,
-        Dictionary<string, FileCopyDefinition> withFiles,
-        bool withGui,
-        OsTypeEnum withOsTypeEnum,
-        string withOsVersion,
-        bool withPageFusion,
-        ProviderEnum withProvider,
-        Dictionary<string, ProvisioningDefinition> provisioningDefinitions,
-        Dictionary<string, SharedFolderDefinition> sharedFolderDefinitions,
-        int videoRamInMb,
-        int ramInMb,
-        int vCpus,
-        string machineTypeDefinitionName,
-        string name,
-        int instances,
-        int ipv4Start,
-        string ipv4Pattern,
-        bool isPrimary,
-        bool enabled,
-        List<(NetworkInterface n, List<IPAddress?>?)> defaultSystemNetworkBridge,
-        IDefineMachineAddCommandRequestBuilderFactory defineMachineAddCommandRequestBuilderFactory,
-        MachineDefinitionBuilderFactory machineDefinitionBuilderFactory
-    )
-    {
-        return defineMachineAddCommandRequestBuilderFactory
-            .Factory()
-            .BaseBuilder
-            .UsingWorkingDirectory(workingDirectory)
-            .UsingTimeout(timeoutStr)
-            .Parent<IDefineMachineAddCommandRequestBuilder>()
-            .UsingDefinition(machineDefinitionBuilderFactory
-                .Factory()
-                .BaseBuilder
-                .With3DEnabled(enable3d)
-                .WithBiosLogoImage(biosLogoImage)
-                .WithFiles(withFiles)
-                .WithGui(withGui)
-                .WithOsType(withOsTypeEnum)
-                .WithOsVersion(withOsVersion)
-                .WithPageFusion(withPageFusion)
-                .WithProvider(withProvider)
-                .WithProvisioning(provisioningDefinitions)
-                .WithSharedFolders(sharedFolderDefinitions)
-                .WithVideoRamInMb(videoRamInMb)
-                .WithRamInMb(ramInMb)
-                .WithVirtualCpus(vCpus)
-                .Parent<MachineDefinitionBuilder>()
-                .WithMachineType(machineTypeDefinitionName)
-                .WithName(name)
-                .WithInstances(instances)
-                .WithIPv4Start(ipv4Start)
-                .WithIPv4Pattern(ipv4Pattern)
-                .IsPrimary(isPrimary)
-                .Enabled(enabled)
-                .WithNetworkBridge(defaultSystemNetworkBridge.First().Item1.Description)
-                .Build()
-            )
-            .Build();
-    }
-
-    private static IDefineMachineTypeAddCommandRequest
-        BuildDefineMachineTypeAddCommandRequestWithSpecifiedBoxNameAndVersion(
-            string workingDirectory,
-            string typeName,
-            string boxName,
-            string boxVersion,
-            IServiceProvider serviceProvider
-        )
-    {
-        return serviceProvider.GetRequiredService<IDefineMachineTypeAddCommandRequestBuilderFactory>()
-            .Factory()
-            .BaseBuilder.UsingWorkingDirectory(workingDirectory)
-            .UsingTimeout("2m")
-            .Parent<IDefineMachineTypeAddCommandRequestBuilder>()
-            .UsingDefinition(serviceProvider.GetRequiredService<IMachineTypeDefinitionBuilderFactory>()
-                .Factory()
-                .BaseBuilder
-                .With3DEnabled(true)
-                .WithBiosLogoImage("")
-                .WithBox(boxName)
-                .WithBoxVersion(boxVersion)
-                .WithFiles(new Dictionary<string, FileCopyDefinition>())
-                .WithGui(false)
-                .WithOsType(OsTypeEnum.Debian_64)
-                .WithOsVersion("10.5.0")
-                .WithPageFusion(false)
-                .WithRamInMb(256)
-                .WithVideoRamInMb(16)
-                .WithVirtualCpus(4)
-                .WithFiles(new Dictionary<string, FileCopyDefinition>())
-                .WithProvisioning(new Dictionary<string, ProvisioningDefinition>())
-                .WithSharedFolders(new Dictionary<string, SharedFolderDefinition>())
-                .Enabled(true)
-                .Parent<IMachineTypeDefinitionBuilder>()
-                .WithName(typeName)
-                .Build())
-            .Build();
-    }
-
-    private static List<IDefineMachineTypeAddCommandRequest> BuildDefineMachineTypeAddCommandRequestsList(
-        string tempDir,
-        IServiceProvider serviceProvider
-    )
-    {
-        List<IDefineMachineTypeAddCommandRequest> list = new() {
-            BuildDefineMachineTypeAddCommandRequestWithSpecifiedBoxNameAndVersion(
-                tempDir,
-                "foo",
-                BoxTest,
-                BoxVersionTest,
-                serviceProvider),
-            BuildDefineMachineTypeAddCommandRequestWithSpecifiedBoxNameAndVersion(
-                tempDir,
-                "bar",
-                BoxTest,
-                BoxVersionTest,
-                serviceProvider)
-        };
-
-        return list;
-    }
-
-    private static IInitCommandRequest BuildInitCommandRequest(string tempDir, IServiceProvider serviceProvider)
-    {
-        return serviceProvider.GetRequiredService<IInitCommandRequestBuilderFactory>().Factory()
-            .BaseBuilder
-            .UsingWorkingDirectory(tempDir)
-            .UsingTimeout("20s")
-            .Parent<IInitCommandRequestBuilder>()
-            .WithGivenLeadingZeroes(2)
-            .Build();
-    }
-
-
-    private static List<NameCommandRequestPayload> BuildNameCommandRequestsList(
-        string? tempDir,
-        IServiceProvider serviceProvider
-    )
-    {
-        var factory = serviceProvider.GetRequiredService<INameCommandRequestBuilderFactory>();
-        List<NameCommandRequestPayload> list = new List<NameCommandRequestPayload>();
-
-        var nameCommandRequest = factory.Factory()
-            .BaseBuilder
-            .UsingWorkingDirectory(tempDir)
-            .UsingTimeout("20s")
-            .Parent<INameCommandRequestBuilder>()
-            .WithNames(new[] {"foo-0", "bar-[2-*]"})
-            .Build();
-
-        var payload = new NameCommandRequestPayload(nameCommandRequest) {
-            ExpectedNames = new List<string> {"foo-00", "bar-02"}
-        };
-
-        list.Add(payload);
-
-        return list;
-    }
-
-    private class DefineMachineAddCommandRequestPayload
-    {
-        public DefineMachineAddCommandRequestPayload(string name, string ipv4Pattern, bool isPrimary)
-        {
-            Name = name;
-            Ipv4Pattern = ipv4Pattern;
-            IsPrimary = isPrimary;
-        }
-
-        public string Name { get; }
-        public string Ipv4Pattern { get; }
-        public bool IsPrimary { get; }
     }
 }
