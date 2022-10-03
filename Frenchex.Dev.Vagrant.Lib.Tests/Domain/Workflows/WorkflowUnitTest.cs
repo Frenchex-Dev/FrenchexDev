@@ -1,21 +1,13 @@
 ﻿using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Command;
-using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Halt.Command;
-using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Halt.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Init.Command;
-using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Init.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Provision.Command;
-using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Provision.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Root.Response;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Command;
-using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.SshConfig.Command;
-using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.SshConfig.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Status.Command;
-using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Status.Request;
-using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Request;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Up;
 using Frenchex.Dev.Vagrant.Lib.Tests.Abstractions.Domain;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,81 +19,7 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
 {
     public static IEnumerable<object[]> DataSource()
     {
-        yield return new object[] {
-            (string workingDirectory, IServiceProvider sp) => sp
-                .GetRequiredService<IInitCommandRequestBuilderFactory>().Factory()
-                .BaseBuilder
-                .UsingTimeout("1m")
-                .UsingWorkingDirectory(workingDirectory)
-                .Parent<IInitCommandRequestBuilder>()
-                .UsingBoxName("generic/alpine38")
-                .UsingBoxVersion("4.1.10")
-                .Build(),
-            (string workingDirectory, IServiceProvider sp) => sp
-                .GetRequiredService<IUpCommandRequestBuilderFactory>().Factory()
-                .BaseBuilder
-                .UsingTimeout("10m")
-                .UsingWorkingDirectory(workingDirectory)
-                .Parent<IUpCommandRequestBuilder>()
-                .WithProvision(false)
-                .Build(),
-            (string workingDirectory, IServiceProvider sp) =>
-            {
-                var factory =
-                    sp.GetRequiredService<IProvisionCommandRequestBuilderFactory>();
-
-                var builder = factory.Factory();
-
-                builder
-                    .BaseBuilder
-                    .UsingTimeout("1m")
-                    .UsingWorkingDirectory(workingDirectory)
-                    .Parent<IProvisionCommandRequestBuilder>()
-                    .ProvisionWith(new[] {"docker.install"})
-                    ;
-
-                return builder.Build();
-            },
-            (string workingDirectory, IServiceProvider sp) => sp
-                .GetRequiredService<IStatusCommandRequestBuilderFactory>().Factory()
-                .BaseBuilder
-                .UsingTimeout("1m")
-                .UsingWorkingDirectory(workingDirectory)
-                .Parent<IStatusCommandRequestBuilder>()
-                .Build(),
-            (string workingDirectory, IServiceProvider sp) => sp
-                .GetRequiredService<ISshConfigCommandRequestBuilderFactory>().Factory()
-                .BaseBuilder
-                .UsingTimeout("1m")
-                .UsingWorkingDirectory(workingDirectory)
-                .Parent<ISshConfigCommandRequestBuilder>()
-                .UsingName("default")
-                .Build(),
-            (string workingDirectory, IServiceProvider sp) => sp
-                .GetRequiredService<ISshCommandRequestBuilderFactory>().Factory()
-                .BaseBuilder
-                .UsingTimeout("1m")
-                .UsingWorkingDirectory(workingDirectory)
-                .Parent<ISshCommandRequestBuilder>()
-                .UsingCommand("echo foo")
-                .UsingNameOrId("default")
-                .Build(),
-            (string workingDirectory, IServiceProvider sp) => sp
-                .GetRequiredService<IHaltCommandRequestBuilderFactory>().Factory()
-                .BaseBuilder
-                .UsingTimeout("3m")
-                .UsingWorkingDirectory(workingDirectory)
-                .Parent<IHaltCommandRequestBuilder>()
-                .Build(),
-            (string workingDirectory, IServiceProvider sp) => sp
-                .GetRequiredService<IDestroyCommandRequestBuilderFactory>().Factory()
-                .BaseBuilder
-                .UsingTimeout("3m")
-                .UsingWorkingDirectory(workingDirectory)
-                .Parent<IDestroyCommandRequestBuilder>()
-                .WithForce(true)
-                .Build()
-        };
+        yield return new object[] { new PayloadBuilder() };
     }
 
     [TestInitialize]
@@ -114,16 +32,7 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
     [TestMethod]
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     [TestCategory(TestCategories.NeedVagrant)]
-    public async Task Test_Complete_Workflow(
-        Func<string, IServiceProvider, IInitCommandRequest> initRequestBuilder,
-        Func<string, IServiceProvider, IUpCommandRequest> upRequestBuilder,
-        Func<string, IServiceProvider, IProvisionCommandRequest> provisionRequestBuilder,
-        Func<string, IServiceProvider, IStatusCommandRequest> statusRequestBuilder,
-        Func<string, IServiceProvider, ISshConfigCommandRequest> sshConfigCommandRequestBuilder,
-        Func<string, IServiceProvider, ISshCommandRequest> sshCommandRequestBuilder,
-        Func<string, IServiceProvider, IHaltCommandRequest> haltRequestBuilder,
-        Func<string, IServiceProvider, IDestroyCommandRequest> destroyRequestBuilder
-    )
+    public async Task Test_Complete_Workflow(PayloadBuilder payloadBuilder)
     {
         // directory is created by Init command
         var workingDirectory = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
@@ -132,14 +41,14 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
         if (sp == null)
             throw new ArgumentNullException(nameof(sp));
 
-        var initRequest = initRequestBuilder.Invoke(workingDirectory, sp);
-        var upRequest = upRequestBuilder.Invoke(workingDirectory, sp);
-        var provisionRequest = provisionRequestBuilder.Invoke(workingDirectory, sp);
-        var statusRequest = statusRequestBuilder.Invoke(workingDirectory, sp);
-        var sshConfigCommandRequest = sshConfigCommandRequestBuilder.Invoke(workingDirectory, sp);
-        var sshCommandRequest = sshCommandRequestBuilder.Invoke(workingDirectory, sp);
-        var haltRequest = haltRequestBuilder.Invoke(workingDirectory, sp);
-        var destroyRequest = destroyRequestBuilder.Invoke(workingDirectory, sp);
+        var initRequest = payloadBuilder.InitCommandRequestBuilder.Invoke(workingDirectory, sp);
+        var upRequest = payloadBuilder.UpCommandRequestBuilder.Invoke(workingDirectory, sp);
+        var provisionRequest = payloadBuilder.ProvisionCommandRequestBuilder.Invoke(workingDirectory, sp);
+        var statusRequest = payloadBuilder.StatusCommandRequestBuilder.Invoke(workingDirectory, sp);
+        var sshConfigCommandRequest = payloadBuilder.SshConfigCommandRequestBuilder.Invoke(workingDirectory, sp);
+        var sshCommandRequest = payloadBuilder.SshCommandRequestBuilder.Invoke(workingDirectory, sp);
+        var haltRequest = payloadBuilder.HaltCommandRequestBuilder.Invoke(workingDirectory, sp);
+        var destroyRequest = payloadBuilder.DestroyCommandRequestBuilder.Invoke(workingDirectory, sp);
 
         await UnitTest!.ExecuteAndAssertAndCleanupAsync<ExecutionContext>(async (provider, _, _, _) =>
             {
