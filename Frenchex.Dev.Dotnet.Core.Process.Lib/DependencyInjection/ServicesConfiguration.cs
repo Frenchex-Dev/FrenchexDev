@@ -3,14 +3,21 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.Dotnet.Core.Process.Lib.DependencyInjection;
 
-public class ServicesConfiguration
+public static class ServicesConfiguration
 {
-    public static void ConfigureServices(IServiceCollection services)
+    public static void ConfigureServices(IServiceCollection serviceCollection)
     {
-        services.AddLogging();
+        serviceCollection.AddLogging();
 
-        services
+        serviceCollection
             .AddScoped<IProcessBuilder, AsyncProcessBuilder>()
             ;
+
+        ConfigureDependencies(serviceCollection);
+    }
+
+    private static void ConfigureDependencies(IServiceCollection serviceCollection)
+    {
+        Tooling.TimeSpan.Lib.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
     }
 }

@@ -1,14 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions.Domain;
+using Microsoft.Extensions.Configuration;
 
 namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
-
-public interface IHostConfigurationConfiguration
-{
-    void Configure(
-        Context context,
-        IConfigurationBuilder hostConfiguration
-    );
-}
 
 public class HostConfigurationConfiguration : IHostConfigurationConfiguration
 {
@@ -22,7 +15,7 @@ public class HostConfigurationConfiguration : IHostConfigurationConfiguration
     }
 
     public void Configure(
-        Context context,
+        IContext context,
         IConfigurationBuilder hostConfiguration
     )
     {

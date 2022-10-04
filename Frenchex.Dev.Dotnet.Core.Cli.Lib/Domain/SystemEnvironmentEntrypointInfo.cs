@@ -1,4 +1,6 @@
-﻿namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
+﻿using Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions.Domain;
+
+namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
 
 public class SystemEnvironmentEntrypointInfo : IEntrypointInfo
 {

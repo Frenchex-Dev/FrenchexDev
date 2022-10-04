@@ -1,12 +1,13 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions.Domain;
+using Microsoft.Extensions.Hosting;
 
 namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
 
-public class Program : IProgram
+public class HostBasedProgram : IProgram
 {
     private readonly IHost _host;
 
-    public Program(
+    public HostBasedProgram(
         IHost host
     )
     {

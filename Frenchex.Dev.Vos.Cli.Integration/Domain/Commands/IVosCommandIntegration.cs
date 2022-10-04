@@ -4,5 +4,5 @@ namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands;
 
 public interface IVosCommandIntegration
 {
-    void Integrate(Command parentCommand);
+    void IntegrateInto(Command parentCommand);
 }

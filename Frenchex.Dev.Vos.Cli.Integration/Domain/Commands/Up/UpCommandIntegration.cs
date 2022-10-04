@@ -37,7 +37,7 @@ public class UpCommandIntegration : ABaseCommandIntegration, IUpCommandIntegrati
         _parallelWaitOptionBuilder = parallelWaitOptionBuilder;
     }
 
-    public void Integrate(Command parentCommand)
+    public void IntegrateInto(Command parentCommand)
     {
         Argument<string[]> namesArg = _namesArgumentBuilder.Build();
         Option<bool> provisionOpt = new(new[] {"--provision"}, "Provision");

@@ -3,7 +3,7 @@ using Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib.Domain;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
+namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions.Domain;
 
 public enum ExitCode
 {
@@ -86,7 +86,7 @@ public abstract class AbstractHostedService : IHostedService
         BuildCommands();
     }
 
-    protected void BuildCommands()
+    private void BuildCommands()
     {
         if (null == RootCommand)
             throw new ArgumentNullException(nameof(RootCommand));

@@ -1,6 +1,8 @@
-﻿namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
+﻿using Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions.Domain;
 
-public class Context
+namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
+
+public class Context : IContext
 {
     public Context(
         string hostSettings,

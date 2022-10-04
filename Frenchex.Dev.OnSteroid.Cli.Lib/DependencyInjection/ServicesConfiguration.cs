@@ -1,4 +1,4 @@
-﻿using Frenchex.Dev.OnSteroid.Cli.Lib.Domain.Workflows.Program;
+﻿using Frenchex.Dev.OnSteroid.Cli.Lib.Domain.Program;
 using Frenchex.Dev.OnSteroid.Lib.Domain.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,7 +17,7 @@ public class ServicesConfiguration : IServicesConfiguration
             () =>
             {
                 services
-                    .AddScoped<IBuildFlow, BuildFlow>()
+                    .AddScoped<IProgramBuilder, ProgramBuilder>()
                     ;
             },
             () =>

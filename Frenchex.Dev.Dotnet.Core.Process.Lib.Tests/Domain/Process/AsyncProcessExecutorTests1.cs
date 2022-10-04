@@ -1,4 +1,3 @@
-using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
 using Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.Process;
 using Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.ProcessBuilder;
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
@@ -31,19 +30,14 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
         string timeout
     )
     {
-        await UnitTest!.ExecuteAndAssertAndCleanupAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
+        await UnitTest!.ExecuteAndAssertAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
             {
-                context.WorkingDirectory = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
-
                 var processBuilder = provider.GetRequiredService<IProcessBuilder>();
-                var fs = provider.GetRequiredService<IFilesystem>();
-
-                fs.DirectoryCreate(context.WorkingDirectory);
 
                 var process = processBuilder.Build(new ProcessBuildingParameters(
                     binary,
                     arguments,
-                    context.WorkingDirectory,
+                    Path.GetTempPath(),
                     timeout,
                     false,
                     true,
@@ -80,16 +74,10 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
 
                 return Task.CompletedTask;
             },
-            (provider, root, context) =>
-            {
-                provider.GetRequiredService<IFilesystem>().DirectoryDelete(context.WorkingDirectory!, true);
-
-                return Task.CompletedTask;
-            },
             UnitTest.ServiceProvider!);
     }
 
-    public class ExecutionContext : WithWorkingDirectoryExecutionContext
+    private class ExecutionContext : WithWorkingDirectoryExecutionContext
     {
         public ProcessExecutionResult? ProcessExecution { get; set; }
         public MemoryStream? OutputStream { get; set; }

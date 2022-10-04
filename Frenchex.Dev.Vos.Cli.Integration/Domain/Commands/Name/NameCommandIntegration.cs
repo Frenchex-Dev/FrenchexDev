@@ -27,7 +27,7 @@ public class NameCommandIntegration : ABaseCommandIntegration, INameCommandInteg
         _namesArgumentBuilder = namesArgumentBuilder;
     }
 
-    public void Integrate(Command parentCommand)
+    public void IntegrateInto(Command parentCommand)
     {
         Argument<string[]> nameArg = _namesArgumentBuilder.Build();
         Option<string> workingDirOpt = WorkingDirectoryOptionBuilder.Build();

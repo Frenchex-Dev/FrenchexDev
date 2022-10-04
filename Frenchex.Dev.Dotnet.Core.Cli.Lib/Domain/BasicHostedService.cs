@@ -1,16 +1,17 @@
 ﻿using Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib.Domain;
+using Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions.Domain;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
 
-public class BasicHostedService : AbstractHostedService
+public class BasicHostedService<T> : AbstractHostedService where T : AbstractHostedService
 {
     private readonly string _rootCommandDescription;
 
     public BasicHostedService(
         string rootCommandDescription,
-        ILogger<AbstractHostedService> logger,
+        ILogger<T> logger,
         IHostApplicationLifetime hostApplicationLifetime,
         IEntrypointInfo entryPointInfo,
         IEnumerable<IIntegration> integrations

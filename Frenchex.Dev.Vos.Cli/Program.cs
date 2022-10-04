@@ -1,4 +1,4 @@
-﻿using Frenchex.Dev.OnSteroid.Cli.Lib.Domain.Workflows.Program;
+﻿using Frenchex.Dev.OnSteroid.Cli.Lib.Domain.Program;
 using Frenchex.Dev.Vos.Cli;
 using Frenchex.Dev.Vos.Cli.Integration.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,9 +6,9 @@ using Microsoft.Extensions.DependencyInjection;
 // make sure to us e very same ServiceCollection all around
 var serviceCollection = new ServiceCollection();
 
-var buildFlow = new BuildFlow();
+var programBuildFlow = new ProgramBuilder();
 
-await using var program = await buildFlow
+await using var program = await programBuildFlow
     .BuildAsync<Host>(
         serviceCollection,
         services =>

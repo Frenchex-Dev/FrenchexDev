@@ -1,16 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions.Domain;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
 namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
-
-public interface IAppConfigurationConfiguration
-{
-    void ConfigureApp(
-        Context context,
-        HostBuilderContext hostContext,
-        IConfigurationBuilder appConfiguration
-    );
-}
 
 public class AppConfigurationConfiguration : IAppConfigurationConfiguration
 {
@@ -24,7 +16,7 @@ public class AppConfigurationConfiguration : IAppConfigurationConfiguration
     }
 
     public void ConfigureApp(
-        Context context,
+        IContext context,
         HostBuilderContext hostContext,
         IConfigurationBuilder appConfiguration
     )

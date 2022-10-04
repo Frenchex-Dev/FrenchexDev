@@ -1,21 +1,9 @@
-﻿using Frenchex.Dev.Dotnet.Core.Cli.Lib.DependencyInjection;
+﻿using Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions.Domain;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
 
-public class ExecutionContextBuilder
-{
-    public ExecutionContext Build()
-    {
-        IServiceCollection coreServices = new ServiceCollection();
-        ServicesConfiguration.StaticConfigureServices(coreServices);
-        var coreServicesProvider = coreServices.BuildServiceProvider();
-
-        return new ExecutionContext {AsyncScope = coreServicesProvider.CreateAsyncScope()};
-    }
-}
-
-public class ExecutionContext : IAsyncDisposable
+public class ExecutionContext : IExecutionContext
 {
     public AsyncServiceScope AsyncScope { get; init; }
 

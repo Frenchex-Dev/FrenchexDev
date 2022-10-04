@@ -1,7 +1,9 @@
 ﻿using System.Reflection;
+using Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using IHostBuilder = Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions.Domain.IHostBuilder;
 
 namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
 
@@ -26,7 +28,7 @@ public class HostBuilder : IHostBuilder
     }
 
     public IHost Build(
-        Context context,
+        IContext context,
         Action<IServiceCollection> servicesConfigurationLambda,
         Action<ILoggingBuilder> loggingConfigurationLambda
     )
@@ -35,7 +37,7 @@ public class HostBuilder : IHostBuilder
     }
 
     public IHost Build(
-        Context context,
+        IContext context,
         AsyncServiceScope asyncServiceScope,
         Action<ILoggingBuilder> loggingConfigurationLambda
     )
@@ -44,7 +46,7 @@ public class HostBuilder : IHostBuilder
     }
 
     private IHost BuildInternal(
-        Context context,
+        IContext context,
         Action<ILoggingBuilder> loggingConfigurationLambda,
         Action<IServiceCollection>? servicesConfigurationLambda,
         AsyncServiceScope? asyncServiceScope

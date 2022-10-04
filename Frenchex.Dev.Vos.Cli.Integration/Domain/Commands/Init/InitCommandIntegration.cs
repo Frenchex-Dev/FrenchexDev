@@ -29,7 +29,7 @@ public class InitCommandIntegration : ABaseCommandIntegration, IInitCommandInteg
         _zeroesOptionBuilder = zeroesOptionBuilder;
     }
 
-    public void Integrate(Command parentCommand)
+    public void IntegrateInto(Command parentCommand)
     {
         Option<string> namingPatternOpt = _namingPatternOptionBuilder.Build();
         Option<int> zeroesOpt = _zeroesOptionBuilder.Build();

@@ -13,7 +13,7 @@ public class DefineCommandIntegration : IDefineCommandIntegration
         _defineSubCommandIntegrations = subDefineCommandsIntegrations;
     }
 
-    public void Integrate(Command parentCommand)
+    public void IntegrateInto(Command parentCommand)
     {
         var rootDefineCommand = new Command("define", "Defining configuration");
 

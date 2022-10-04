@@ -30,7 +30,7 @@ public class HaltCommandIntegration : ABaseCommandIntegration, IHaltCommandInteg
         _forceOptionBuilder = forceOptionBuilder;
     }
 
-    public void Integrate(Command parentCommand)
+    public void IntegrateInto(Command parentCommand)
     {
         Argument<string[]> namesArg = _namesArgumentBuilder.Build();
         Option<bool> forceOpt = _forceOptionBuilder.Build();

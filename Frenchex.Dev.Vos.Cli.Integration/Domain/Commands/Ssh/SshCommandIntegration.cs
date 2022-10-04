@@ -36,7 +36,7 @@ public class SshCommandIntegration : ABaseCommandIntegration, ISshCommandIntegra
         _extraSshArgsOptionBuilder = extraSshArgsOptionBuilder;
     }
 
-    public void Integrate(Command parentCommand)
+    public void IntegrateInto(Command parentCommand)
     {
         Option<string[]> namesOpts = _namesOptionBuilder.Build();
         Option<string[]> commandsOpt = _commandsOptionBuilder.Build();
