@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Frenchex.Dev.Vos.Cli": {
+      "commandName": "Project",
+      "commandLineArgs": "--help"
+    }
+  }
+}
