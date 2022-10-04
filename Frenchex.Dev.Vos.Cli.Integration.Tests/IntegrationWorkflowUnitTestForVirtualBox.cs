@@ -53,7 +53,7 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
                 return Task.CompletedTask;
             },
             (_, _, _) => Task.CompletedTask,
-            unitTest.ServiceProvider!,
+            unitTest.GetScopedServiceProvider(),
             vsCodeDebugging);
     }
 
@@ -125,7 +125,7 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
         UnitTest.VsCodeDebugging vsCodeDebugging
     )
     {
-        await UnitTest!.ExecuteAndAssertAsync<ExecutionContext>(
+        await GetUnitTest().ExecuteAndAssertAsync<ExecutionContext>(
             async (provider, _, _, _) =>
             {
                 var sut = provider.GetRequiredService<SubjectUnderTest>().RootCommand;
@@ -140,7 +140,7 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
                 }
             },
             (_, _, _) => Task.CompletedTask,
-            UnitTest.ServiceProvider!,
+            GetUnitTest().GetScopedServiceProvider(),
             vsCodeDebugging);
     }
 

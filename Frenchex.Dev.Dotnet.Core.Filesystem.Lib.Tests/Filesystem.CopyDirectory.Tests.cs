@@ -12,7 +12,7 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
     public void CreateUnitTest()
     {
         UnitTest = FilesystemUnitTestBase.CreateNewUnitTest<ExecutionContext>();
-        UnitTest.BuildIfNecessary();
+        GetUnitTest().BuildIfNecessary();
     }
 
     public static IEnumerable<object[]> DataSource()
@@ -25,7 +25,7 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     public async Task CanCopyDirectory(string directoryToCopy)
     {
-        await UnitTest!.ExecuteAndAssertAsync<ExecutionContext>(async (provider, _, context, _) =>
+        await GetUnitTest().ExecuteAndAssertAsync<ExecutionContext>(async (provider, _, context, _) =>
             {
                 var fs = provider.GetRequiredService<IFilesystem>();
 
@@ -46,7 +46,7 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
 
                     var dirInfo = new DirectoryInfo(context.DirectoryToCopy!);
 
-                    DirectoryInfo[] dirs = dirInfo.GetDirectories();
+                    IEnumerable<DirectoryInfo> dirs = dirInfo.EnumerateDirectories();
 
                     foreach (var dir in dirs)
                     {
@@ -59,10 +59,11 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
                     }
                 });
             },
-            UnitTest.ServiceProvider!
+            GetUnitTest().GetScopedServiceProvider()
         );
     }
 
+    // ReSharper disable once ClassNeverInstantiated.Local
     private class ExecutionContext : WithWorkingDirectoryExecutionContext
     {
         public string? DirectoryToCopy { get; set; }

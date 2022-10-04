@@ -24,7 +24,7 @@ public class FilesystemDirectoryExistsTests : AbstractUnitTest
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     public async Task CanCopyFile(string directoryToTestExistence)
     {
-        await UnitTest!.ExecuteAndAssertAsync<ExecutionContext>(async (provider, _, context, _) =>
+        await GetUnitTest().ExecuteAndAssertAsync<ExecutionContext>(async (provider, _, context, _) =>
             {
                 var fs = provider.GetRequiredService<IFilesystem>();
 
@@ -39,7 +39,7 @@ public class FilesystemDirectoryExistsTests : AbstractUnitTest
             {
                 await Task.Run(() => { Assert.IsTrue(context.DirectoryExists); });
             },
-            UnitTest.ServiceProvider!
+            GetUnitTest().GetScopedServiceProvider()
         );
     }
 

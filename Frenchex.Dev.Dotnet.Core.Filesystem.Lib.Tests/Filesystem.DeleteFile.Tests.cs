@@ -24,7 +24,7 @@ public class FilesystemDeleteFileTests : AbstractUnitTest
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     public async Task CanDeleteFile(string fileToDelete)
     {
-        await UnitTest!.ExecuteAndAssertAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
+        await GetUnitTest().ExecuteAndAssertAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
             {
                 var fs = provider.GetRequiredService<IFilesystem>();
 
@@ -42,7 +42,7 @@ public class FilesystemDeleteFileTests : AbstractUnitTest
                     Assert.IsFalse(File.Exists(context.FileToDelete));
                 });
             },
-            UnitTest.ServiceProvider!
+            GetUnitTest().GetScopedServiceProvider()
         );
     }
 

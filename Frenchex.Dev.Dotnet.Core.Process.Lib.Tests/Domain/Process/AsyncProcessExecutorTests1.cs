@@ -30,7 +30,7 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
         string timeout
     )
     {
-        await UnitTest!.ExecuteAndAssertAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
+        await GetUnitTest().ExecuteAndAssertAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
             {
                 var processBuilder = provider.GetRequiredService<IProcessBuilder>();
 
@@ -74,7 +74,8 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
 
                 return Task.CompletedTask;
             },
-            UnitTest.ServiceProvider!);
+            GetUnitTest().GetScopedServiceProvider()
+        );
     }
 
     private class ExecutionContext : WithWorkingDirectoryExecutionContext

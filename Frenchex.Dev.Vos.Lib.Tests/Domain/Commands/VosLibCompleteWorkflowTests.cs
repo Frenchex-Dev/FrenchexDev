@@ -242,7 +242,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
                 await Task.Delay((int) TimeSpan.FromSeconds(2).TotalMilliseconds);
                 Assert.IsFalse(Directory.Exists(context.WorkingDirectory));
             },
-            unitTest.ServiceProvider ?? throw new ArgumentNullException(nameof(unitTest.ServiceProvider)),
+            unitTest.GetScopedServiceProvider(),
             vsDebuggingContext);
     }
 
@@ -273,7 +273,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
                 Assert.IsTrue(context.HaltCommandsResponses!.Any());
                 return Task.CompletedTask;
             },
-            unitTest.ServiceProvider ?? throw new ArgumentNullException(nameof(unitTest.ServiceProvider)),
+            unitTest.GetScopedServiceProvider(),
             vsDebuggingContext);
     }
 
@@ -303,7 +303,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
                 Assert.IsTrue(context.SshCommandsResponses!.Any());
                 return Task.CompletedTask;
             },
-            unitTest.ServiceProvider ?? throw new ArgumentNullException(nameof(unitTest.ServiceProvider)),
+            unitTest.GetScopedServiceProvider(),
             vsDebuggingContext);
     }
 
@@ -345,7 +345,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
 
                 return Task.CompletedTask;
             },
-            unitTest.ServiceProvider ?? throw new ArgumentNullException(nameof(unitTest.ServiceProvider)),
+            unitTest.GetScopedServiceProvider(),
             vsDebuggingContext);
     }
 
@@ -418,8 +418,9 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
                     }
                 }
             },
-            unitTest.ServiceProvider ?? throw new ArgumentNullException(nameof(unitTest.ServiceProvider)),
-            vsDebuggingContext);
+            unitTest.GetScopedServiceProvider(),
+            vsDebuggingContext
+        );
     }
 
     private async static Task RunStatusCommandsResponseBeforeUpAsyncUnitTest(
@@ -460,7 +461,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
 
                 return Task.CompletedTask;
             },
-            unitTest.ServiceProvider ?? throw new ArgumentNullException(nameof(unitTest.ServiceProvider)),
+            unitTest.GetScopedServiceProvider(),
             vsDebuggingContext);
     }
 
@@ -501,7 +502,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
 
                 return Task.CompletedTask;
             },
-            unitTest.ServiceProvider ?? throw new ArgumentNullException(nameof(unitTest.ServiceProvider)),
+            unitTest.GetScopedServiceProvider(),
             vsDebuggingContext);
     }
 
@@ -533,7 +534,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
                 Assert.IsTrue(context.DefineMachineAddCommandsResponses!.Any());
                 return Task.CompletedTask;
             },
-            unitTest.ServiceProvider ?? throw new ArgumentNullException(nameof(unitTest.ServiceProvider)),
+            unitTest.GetScopedServiceProvider(),
             vsDebuggingContext
         );
     }
@@ -567,7 +568,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
 
                 return Task.CompletedTask;
             },
-            unitTest.ServiceProvider ?? throw new ArgumentNullException(nameof(unitTest.ServiceProvider)),
+            unitTest.GetScopedServiceProvider(),
             vsDebuggingContext);
     }
 
@@ -597,7 +598,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
 
                 return Task.CompletedTask;
             },
-            unitTest.ServiceProvider ?? throw new ArgumentNullException(nameof(unitTest.ServiceProvider)),
+            unitTest.GetScopedServiceProvider(),
             vsDebuggingContext);
     }
 }

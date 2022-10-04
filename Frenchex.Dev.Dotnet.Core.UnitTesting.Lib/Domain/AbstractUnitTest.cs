@@ -7,6 +7,8 @@ public abstract class AbstractUnitTest
 {
     protected UnitTest? UnitTest;
 
+    protected UnitTest GetUnitTest() => UnitTest ?? throw new ArgumentNullException(nameof(UnitTest));
+
     [TestCleanup]
     public async Task InstanceCleanup()
     {

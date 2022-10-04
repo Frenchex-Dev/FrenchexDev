@@ -29,7 +29,7 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
     public void TestInit()
     {
         UnitTest = VagrantUnitTestBase.CreateUnitTest<ExecutionContext>();
-        UnitTest.BuildIfNecessary();
+        GetUnitTest().BuildIfNecessary();
     }
 
     [TestMethod]
@@ -40,7 +40,7 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
     )
     {
         var workingDirectory = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
-        var sp = UnitTest!.ServiceProvider!;
+        var sp =  GetUnitTest().GetScopedServiceProvider();
 
         var payloadBuilder = new PayloadBuilder();
         var payload = payloadBuilderPayload.Build(workingDirectory, sp);
@@ -66,7 +66,7 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
         var destroyRequest =
             payloadBuilder.DestroyCommandRequestBuilder.Invoke(payload.DestroyCommandRequestBuilderPayload!);
 
-        await UnitTest!.ExecuteAndAssertAndCleanupAsync<ExecutionContext>(async (provider, _, _, _) =>
+        await GetUnitTest().ExecuteAndAssertAndCleanupAsync<ExecutionContext>(async (provider, _, _, _) =>
             {
                 await TestInner(
                     "init",
@@ -139,7 +139,7 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
 
                 return Task.CompletedTask;
             },
-            UnitTest.ServiceProvider!,
+            GetUnitTest().GetScopedServiceProvider(),
             new UnitTest.VsCodeDebugging {Open = false, TellMe = true}
         );
     }

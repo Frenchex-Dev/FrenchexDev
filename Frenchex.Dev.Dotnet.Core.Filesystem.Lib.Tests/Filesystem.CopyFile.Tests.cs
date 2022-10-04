@@ -23,7 +23,7 @@ public abstract class FilesystemCopyFileTests : AbstractUnitTest
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     public async Task CanCopyFile(string originalFile)
     {
-        await UnitTest!.ExecuteAndAssertAndCleanupAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
+        await GetUnitTest().ExecuteAndAssertAndCleanupAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
             {
                 var fs = provider.GetRequiredService<IFilesystem>();
 
@@ -59,7 +59,7 @@ public abstract class FilesystemCopyFileTests : AbstractUnitTest
                     File.Delete(fileToDelete!);
                 });
             },
-            UnitTest.ServiceProvider!
+            GetUnitTest().GetScopedServiceProvider()
         );
     }
 

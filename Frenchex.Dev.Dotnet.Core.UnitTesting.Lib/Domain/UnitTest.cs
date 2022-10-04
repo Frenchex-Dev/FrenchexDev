@@ -26,13 +26,28 @@ public class UnitTest : IAsyncDisposable
         _configureMocksFunc = configureMocksFunc;
     }
 
-    public IServiceProvider? ServiceProvider { get; protected set; }
-    private AsyncServiceScope? AsyncScope { get; set; }
+    private IServiceProvider? OriginalServiceProvider { get; set; }
+
+    public IServiceProvider GetOriginalServiceProvider() => OriginalServiceProvider ??
+                                                            throw new ArgumentNullException(
+                                                                nameof(OriginalServiceProvider));
+
+    private IServiceProvider? ScopedServiceProvider { get; set; }
+
+    public IServiceProvider GetScopedServiceProvider() =>
+        ScopedServiceProvider ?? throw new ArgumentNullException(nameof(ScopedServiceProvider));
+
+    private AsyncServiceScope? DefaultAsyncScope { get; set; }
+
+    public AsyncServiceScope GetDefaultAsyncScope() =>
+        DefaultAsyncScope ?? throw new ArgumentNullException(nameof(DefaultAsyncScope));
+
     private IConfigurationRoot? Configuration { get; set; }
+    public IConfiguration GetConfiguration() => Configuration ?? throw new ArgumentNullException(nameof(Configuration));
 
     public ValueTask DisposeAsync()
     {
-        AsyncScope?.DisposeAsync();
+        DefaultAsyncScope?.DisposeAsync();
         _vsCodeDebugging?.DisposeAsync();
         return ValueTask.CompletedTask;
     }
@@ -229,7 +244,9 @@ public class UnitTest : IAsyncDisposable
 
             if (assertFunc is not null)
             {
-                await assertFunc.Invoke(serviceProvider, Configuration!, ServiceProvider!.GetRequiredService<T>());
+                await assertFunc.Invoke(serviceProvider,
+                    Configuration!,
+                    ScopedServiceProvider!.GetRequiredService<T>());
             }
         }
         catch (Exception e)
@@ -238,7 +255,7 @@ public class UnitTest : IAsyncDisposable
         }
         finally
         {
-            cleanupFunc?.Invoke(serviceProvider, Configuration!, ServiceProvider!.GetRequiredService<T>());
+            cleanupFunc?.Invoke(serviceProvider, Configuration!, ScopedServiceProvider!.GetRequiredService<T>());
         }
 
         if (_vsCodeDebugging?.Keep == false)
@@ -277,9 +294,11 @@ public class UnitTest : IAsyncDisposable
         _configureServicesFunc?.Invoke(services, configuration);
         _configureMocksFunc?.Invoke(services, configuration);
 
-        var di = services.BuildServiceProvider();
-        AsyncScope = di.CreateAsyncScope();
-        ServiceProvider = AsyncScope.Value.ServiceProvider;
+        OriginalServiceProvider = services.BuildServiceProvider(new ServiceProviderOptions()
+            {ValidateScopes = true, ValidateOnBuild = true});
+
+        DefaultAsyncScope = OriginalServiceProvider.CreateAsyncScope();
+        ScopedServiceProvider = GetDefaultAsyncScope().ServiceProvider;
         Configuration = configuration;
 
         _alreadyBuild = true;

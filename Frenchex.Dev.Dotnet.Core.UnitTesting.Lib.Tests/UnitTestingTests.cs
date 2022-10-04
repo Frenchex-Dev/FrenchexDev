@@ -41,7 +41,7 @@ public class UnitTestingTests
 
                 return Task.CompletedTask;
             },
-            unitTest.ServiceProvider!
+            unitTest.GetScopedServiceProvider()
         );
 
         var buildingOk =

@@ -25,7 +25,7 @@ public class FilesystemWriteAllTextAsyncTests : AbstractUnitTest
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     public async Task CanWriteAllTextAsync(string textToWrite, string destination)
     {
-        await UnitTest!.ExecuteAndAssertAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
+        await GetUnitTest().ExecuteAndAssertAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
             {
                 var fs = provider.GetRequiredService<IFilesystem>();
 
@@ -45,7 +45,7 @@ public class FilesystemWriteAllTextAsyncTests : AbstractUnitTest
                     );
                 });
             },
-            UnitTest.ServiceProvider!
+            GetUnitTest().GetScopedServiceProvider()
         );
     }
 

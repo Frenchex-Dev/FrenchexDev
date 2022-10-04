@@ -18,7 +18,7 @@ public class FacadeUnitTestingWorkflowsTests : AbstractUnitTest
     [TestMethod]
     public async Task CanLoadFacadeFromProvider()
     {
-        await UnitTest!.ExecuteAndAssertAsync<ExecutionContext>(async (provider, _, context, _) =>
+        await GetUnitTest().ExecuteAndAssertAsync<ExecutionContext>(async (provider, _, context, _) =>
             {
                 await Task.Run(() =>
                 {
@@ -32,7 +32,7 @@ public class FacadeUnitTestingWorkflowsTests : AbstractUnitTest
                     Assert.IsInstanceOfType(context.Facade, typeof(ICommandsFacade));
                 });
             },
-            UnitTest.ServiceProvider!,
+            GetUnitTest().GetScopedServiceProvider(),
             new UnitTest.VsCodeDebugging {Open = false, TellMe = true}
         );
     }

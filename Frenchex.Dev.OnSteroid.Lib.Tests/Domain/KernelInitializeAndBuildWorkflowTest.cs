@@ -21,7 +21,7 @@ public class KernelInitializeAndBuildWorkflowTest : AbstractUnitTest
     [TestCleanup]
     public async Task Cleanup()
     {
-        await UnitTest!.DisposeAsync();
+        await GetUnitTest().DisposeAsync();
     }
 
     [TestMethod]
@@ -29,7 +29,7 @@ public class KernelInitializeAndBuildWorkflowTest : AbstractUnitTest
     {
         const string defaultScopeName = "default";
 
-        await UnitTest!.ExecuteAndAssertAndCleanupAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
+        await GetUnitTest().ExecuteAndAssertAndCleanupAsync<ExecutionContext>(async (provider, root, context, vsCode) =>
             {
                 var kernelBuilderFlow =
                     provider.GetRequiredService<IKernelInitializeAndBuildWorkflow>();
@@ -63,7 +63,7 @@ public class KernelInitializeAndBuildWorkflowTest : AbstractUnitTest
 
                 await context.Kernel.DisposeAsync();
             },
-            UnitTest.ServiceProvider!
+            GetUnitTest().GetScopedServiceProvider()
         );
     }
 }
