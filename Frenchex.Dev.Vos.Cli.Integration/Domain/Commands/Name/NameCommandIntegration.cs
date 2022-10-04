@@ -3,7 +3,6 @@ using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Name.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Name.Request;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Name;
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Name;
 

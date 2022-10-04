@@ -1,5 +1,6 @@
 ﻿using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.DependencyInjection;
 using Frenchex.Dev.OnSteroid.Lib.Domain.DependencyInjection;
+using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.DependencyInjection;
 using Frenchex.Dev.Vos.Lib.Domain.Resources;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -23,7 +24,9 @@ public class ServicesConfiguration : IServicesConfiguration
                         .AddScoped<IVagrantfileResource, VagrantfileResource>()
                         ;
 
-                    Vos.Lib.Abstractions.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
+                    Abstractions.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
+
+                    ServicesConfguration.ConfigureServices(serviceCollection);
 
                     Domain.Actions.DependencyInjection.ServicesConfiguration.ConfigureServices(
                         serviceCollection);

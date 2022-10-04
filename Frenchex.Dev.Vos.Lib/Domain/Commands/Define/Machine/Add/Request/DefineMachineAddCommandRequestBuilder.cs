@@ -1,5 +1,5 @@
 ﻿using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Request;
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root.Base.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Machine.Add.Request;
@@ -21,7 +21,7 @@ public class DefineMachineAddCommandRequestBuilder : IDefineMachineAddCommandReq
     {
         if (null == _definition) throw new InvalidOperationException("definitionDeclaration is null");
 
-        return new DefineMachineAddCommandRequest(
+        return new DefineMachineAddCommandCommandRequest(
             _definition,
             BaseBuilder.Build()
         );

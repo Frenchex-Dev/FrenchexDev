@@ -14,10 +14,8 @@ public static class ServicesConfiguration
     {
         serviceCollection
             .AddScoped<IDefineMachineAddCommand, DefineMachineAddCommand>()
-            
             .AddScoped<IDefineMachineAddCommandRequestBuilder, DefineMachineAddCommandRequestBuilder>()
             .AddScoped<IDefineMachineAddCommandRequestBuilderFactory, DefineMachineAddCommandRequestBuilderFactory>()
-            
             .AddScoped<IDefineMachineAddCommandResponseBuilder, DefineMachineAddCommandResponseBuilder>()
             .AddScoped<IDefineMachineAddCommandResponseBuilderFactory, DefineMachineAddCommandResponseBuilderFactory>()
             ;

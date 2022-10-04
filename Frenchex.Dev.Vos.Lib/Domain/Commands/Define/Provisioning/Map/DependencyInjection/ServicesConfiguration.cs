@@ -15,12 +15,12 @@ public static class ServicesConfiguration
         serviceCollection
             .AddScoped<IDefineProvisioningMapCommand, DefineProvisioningMapCommand>()
             .AddScoped<IDefineProvisioningMapCommandFacade, DefineProvisioningMapCommandFacade>()
-            
             .AddScoped<IDefineProvisioningMapCommandRequestBuilder, DefineProvisioningMapCommandRequestBuilder>()
-            .AddScoped<IDefineProvisioningMapCommandRequestBuilderFactory, DefineProvisioningMapCommandRequestBuilderFactory>()
-            
+            .AddScoped<IDefineProvisioningMapCommandRequestBuilderFactory,
+                DefineProvisioningMapCommandRequestBuilderFactory>()
             .AddScoped<IDefineProvisioningMapCommandResponseBuilder, DefineProvisioningMapCommandResponseBuilder>()
-            .AddScoped<IDefineProvisioningMapCommandResponseBuilderFactory, DefineProvisioningMapCommandResponseBuilderFactory>()
+            .AddScoped<IDefineProvisioningMapCommandResponseBuilderFactory,
+                DefineProvisioningMapCommandResponseBuilderFactory>()
             ;
 
         return serviceCollection;

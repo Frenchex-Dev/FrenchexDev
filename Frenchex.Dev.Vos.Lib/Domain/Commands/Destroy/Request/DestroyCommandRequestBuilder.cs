@@ -1,5 +1,6 @@
 ﻿using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Destroy.Request;
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root.Base.Request;
+using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Request;
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Destroy.Request;
 
@@ -18,7 +19,7 @@ public class DestroyCommandRequestBuilder : RootCommandRequestBuilder, IDestroyC
 
     public IDestroyCommandRequest Build()
     {
-        return new DestroyCommandRequest(
+        return new DestroyCommandCommandRequest(
             _withName ?? "",
             _withForce ?? false,
             _withParallel ?? false,

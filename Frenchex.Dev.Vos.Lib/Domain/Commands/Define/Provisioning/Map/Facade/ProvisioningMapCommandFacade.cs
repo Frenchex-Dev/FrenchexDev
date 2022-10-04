@@ -6,7 +6,10 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Provisioning.Map.Facade;
 
 public class DefineProvisioningMapCommandFacade : IDefineProvisioningMapCommandFacade
 {
-    public DefineProvisioningMapCommandFacade(IDefineProvisioningMapCommand command, IDefineProvisioningMapCommandRequestBuilderFactory requestBuilderFactory)
+    public DefineProvisioningMapCommandFacade(
+        IDefineProvisioningMapCommand command,
+        IDefineProvisioningMapCommandRequestBuilderFactory requestBuilderFactory
+    )
     {
         Command = command;
         RequestBuilderFactory = requestBuilderFactory;

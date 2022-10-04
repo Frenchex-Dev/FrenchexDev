@@ -5,8 +5,8 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Naming;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Init.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Init.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Init.Response;
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Configuration;
+using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Command;
 using Frenchex.Dev.Vos.Lib.Domain.Resources;
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Init.Command;
@@ -35,20 +35,20 @@ public class InitCommand : RootCommand, IInitCommand
 
     public async Task<IInitCommandResponse> ExecuteAsync(IInitCommandRequest request)
     {
-        if (request.Base.WorkingDirectory == null)
-            throw new ArgumentNullException(nameof(request.Base.WorkingDirectory));
+        if (request.BaseCommand.WorkingDirectory == null)
+            throw new ArgumentNullException(nameof(request.BaseCommand.WorkingDirectory));
 
-        if (!_filesystem.DirectoryExists(request.Base.WorkingDirectory))
-            _filesystem.DirectoryCreate(request.Base.WorkingDirectory);
+        if (!_filesystem.DirectoryExists(request.BaseCommand.WorkingDirectory))
+            _filesystem.DirectoryCreate(request.BaseCommand.WorkingDirectory);
 
-        _vagrantfileResource.Copy(request.Base.WorkingDirectory);
+        _vagrantfileResource.Copy(request.BaseCommand.WorkingDirectory);
 
         await _configurationActionSave.Save(
             new Configuration(), // @todo make it buildable via opts
-            Path.Join(request.Base.WorkingDirectory, "config.json")
+            Path.Join(request.BaseCommand.WorkingDirectory, "config.json")
         );
 
-        var provisioningPath = Path.GetFullPath("provisioning", request.Base.WorkingDirectory);
+        var provisioningPath = Path.GetFullPath("provisioning", request.BaseCommand.WorkingDirectory);
         var provisioningPathLink =
             Path.GetFullPath(Path.Join("Resources", "Provisioning"), AppDomain.CurrentDomain.BaseDirectory);
 

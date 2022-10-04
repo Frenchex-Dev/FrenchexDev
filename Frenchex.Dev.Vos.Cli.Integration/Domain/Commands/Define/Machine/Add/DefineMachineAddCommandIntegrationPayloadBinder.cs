@@ -14,7 +14,7 @@ public class DefineMachineAddCommandIntegrationPayloadBinder : IGenericBinder<De
     private readonly Option<string> _namingPattern;
     private readonly Option<string> _networkBridge;
     private readonly Option<int> _ramMb;
-    private readonly Option<String> _timeoutStr;
+    private readonly Option<string> _timeoutStr;
     private readonly Argument<string> _type;
     private readonly Option<string> _vagrantBinPath;
     private readonly Option<int> _vCpus;

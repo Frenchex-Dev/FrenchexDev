@@ -1,11 +1,12 @@
 ﻿using System.Collections.Immutable;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Status.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Configuration.Load;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Naming;
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Command;
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Response;
+using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Command;
+using IStatusCommandRequest = Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Request.IStatusCommandRequest;
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Status.Command;
 
@@ -14,7 +15,7 @@ public class StatusCommand : RootCommand, IStatusCommand
     private readonly IStatusCommandResponseBuilderFactory _statusCommandResponseBuilderFactory;
     private readonly Vagrant.Lib.Abstractions.Domain.Commands.Status.Command.IStatusCommand _vagrantStatusCommand;
 
-    private readonly Vagrant.Lib.Abstractions.Domain.Commands.Status.Request.IStatusCommandRequestBuilderFactory
+    private readonly IStatusCommandRequestBuilderFactory
         _vagrantStatusCommandRequestBuilderFactory;
 
     public StatusCommand(
@@ -22,7 +23,7 @@ public class StatusCommand : RootCommand, IStatusCommand
         IStatusCommandResponseBuilderFactory statusCommandResponseBuilderFactory,
         IVexNameToVagrantNameConverter nameConverter,
         Vagrant.Lib.Abstractions.Domain.Commands.Status.Command.IStatusCommand statusCommand,
-        Vagrant.Lib.Abstractions.Domain.Commands.Status.Request.IStatusCommandRequestBuilderFactory
+        IStatusCommandRequestBuilderFactory
             statusCommandRequestBuilderFactory
     ) : base(configurationLoadAction, nameConverter)
     {
@@ -36,12 +37,12 @@ public class StatusCommand : RootCommand, IStatusCommand
         var process = _vagrantStatusCommand.StartProcess(
             _vagrantStatusCommandRequestBuilderFactory.Factory()
                 .BaseBuilder
-                .UsingWorkingDirectory(request.Base.WorkingDirectory)
-                .Parent<Vagrant.Lib.Abstractions.Domain.Commands.Status.Request.IStatusCommandRequestBuilder>()
+                .UsingWorkingDirectory(request.BaseCommand.WorkingDirectory)
+                .Parent<IStatusCommandRequestBuilder>()
                 .WithNamesOrIds(MapNamesToVagrantNames(
                         request.Names,
-                        request.Base.WorkingDirectory,
-                        await ConfigurationLoad(request.Base.WorkingDirectory)
+                        request.BaseCommand.WorkingDirectory,
+                        await ConfigurationLoad(request.BaseCommand.WorkingDirectory)
                     )
                 )
                 .Build()

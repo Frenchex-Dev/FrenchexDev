@@ -4,7 +4,7 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.Map.
 namespace Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.Map.Facade;
 
 public interface IDefineProvisioningMapCommandFacade : IFacableCommand,
-    Domain.IFacade<IDefineProvisioningMapCommand, IDefineProvisioningMapCommandRequestBuilderFactory,
+    IFacade<IDefineProvisioningMapCommand, IDefineProvisioningMapCommandRequestBuilderFactory,
         IDefineProvisioningMapCommandRequestBuilder>
 {
 }

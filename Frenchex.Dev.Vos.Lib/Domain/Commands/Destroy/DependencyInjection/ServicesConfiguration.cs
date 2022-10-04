@@ -14,7 +14,6 @@ public static class ServicesConfiguration
 {
     public static IServiceCollection ConfigureServices(IServiceCollection serviceCollection)
     {
-
         serviceCollection
             .AddScoped<IDestroyCommand, DestroyCommand>()
             .AddScoped<IDestroyCommandFacade, DestroyCommandFacade>()
@@ -22,9 +21,8 @@ public static class ServicesConfiguration
             .AddScoped<IDestroyCommandRequestBuilderFactory, DestroyCommandRequestBuilderFactory>()
             .AddScoped<IDestroyCommandResponseBuilder, DestroyCommandResponseBuilder>()
             .AddScoped<IDestroyCommandResponseBuilderFactory, DestroyCommandResponseBuilderFactory>()
-
             ;
-        
+
         return serviceCollection;
     }
 }

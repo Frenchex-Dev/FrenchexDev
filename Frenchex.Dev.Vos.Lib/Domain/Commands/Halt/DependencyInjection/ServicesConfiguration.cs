@@ -21,7 +21,6 @@ public static class ServicesConfiguration
             .AddScoped<IHaltCommandRequestBuilderFactory, HaltCommandRequestBuilderFactory>()
             .AddScoped<IHaltCommandResponseBuilder, HaltCommandResponseBuilder>()
             .AddScoped<IHaltCommandResponseBuilderFactory, HaltCommandResponseBuilderFactory>()
-
             ;
 
         return serviceCollection;

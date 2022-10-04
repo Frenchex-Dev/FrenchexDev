@@ -3,7 +3,6 @@ using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Halt.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Halt.Request;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Halt;
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Halt;
 
@@ -36,7 +35,7 @@ public class HaltCommandIntegration : ABaseCommandIntegration, IHaltCommandInteg
         Option<bool> forceOpt = _forceOptionBuilder.Build();
         Option<string> haltTimeoutStrOpt = TimeoutStrOptionBuilder.Build(
             new[] {"--halt-timeoutms"},
-            getDefaultFunc: () => "10s",
+            () => "10s",
             "Halt timeout"
         );
 

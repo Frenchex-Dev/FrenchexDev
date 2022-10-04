@@ -2,7 +2,6 @@
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Request;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Ssh;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Ssh.Request;
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Ssh;

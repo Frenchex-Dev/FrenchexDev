@@ -1,9 +1,10 @@
-﻿using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Configuration.Load;
+﻿using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Configuration.Load;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Naming;
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Command;
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Response;
+using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Command;
+using IUpCommandRequest = Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Request.IUpCommandRequest;
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Up.Command;
 
@@ -12,7 +13,7 @@ public class UpCommand : RootCommand, IUpCommand
     private readonly IUpCommandResponseBuilderFactory _responseBuilderFactory;
     private readonly Vagrant.Lib.Domain.Commands.Up.IUpCommand _vagrantUpCommand;
 
-    private readonly Vagrant.Lib.Abstractions.Domain.Commands.Up.Request.IUpCommandRequestBuilderFactory
+    private readonly IUpCommandRequestBuilderFactory
         _vagrantUpCommandRequestBuilderFactory;
 
     public UpCommand(
@@ -20,7 +21,7 @@ public class UpCommand : RootCommand, IUpCommand
         IConfigurationLoadAction configurationLoadAction,
         IVexNameToVagrantNameConverter vexNameToVagrantNameConverter,
         Vagrant.Lib.Domain.Commands.Up.IUpCommand vagrantUpCommand,
-        Vagrant.Lib.Abstractions.Domain.Commands.Up.Request.IUpCommandRequestBuilderFactory
+        IUpCommandRequestBuilderFactory
             vagrantUpCommandRequestBuilderFactory
     ) : base(configurationLoadAction, vexNameToVagrantNameConverter)
     {
@@ -33,14 +34,14 @@ public class UpCommand : RootCommand, IUpCommand
     {
         var libRequest = _vagrantUpCommandRequestBuilderFactory.Factory()
             .BaseBuilder
-            .UsingWorkingDirectory(request.Base.WorkingDirectory)
-            .UsingTimeout(request.Base.Timeout)
-            .Parent<Vagrant.Lib.Abstractions.Domain.Commands.Up.Request.IUpCommandRequestBuilder>()
+            .UsingWorkingDirectory(request.BaseCommand.WorkingDirectory)
+            .UsingTimeout(request.BaseCommand.Timeout)
+            .Parent<IUpCommandRequestBuilder>()
             .UsingNamesOrIds(
                 MapNamesToVagrantNames(
                     request.Names,
-                    request.Base.WorkingDirectory,
-                    await ConfigurationLoad(request.Base.WorkingDirectory)
+                    request.BaseCommand.WorkingDirectory,
+                    await ConfigurationLoad(request.BaseCommand.WorkingDirectory)
                 )
             )
             .Build();

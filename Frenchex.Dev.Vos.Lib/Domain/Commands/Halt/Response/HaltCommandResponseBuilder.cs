@@ -1,13 +1,14 @@
 ﻿using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Halt.Response;
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root;
+using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Response;
+using IHaltCommandResponse = Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Halt.Response.IHaltCommandResponse;
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Halt.Response;
 
 public class HaltCommandResponseBuilder : RootResponseBuilder, IHaltCommandResponseBuilder
 {
-    private Vagrant.Lib.Abstractions.Domain.Commands.Halt.Response.IHaltCommandResponse? _haltCommandResponse;
+    private IHaltCommandResponse? _haltCommandResponse;
 
-    public IHaltCommandResponse Build()
+    public Abstractions.Domain.Commands.Halt.Response.IHaltCommandResponse Build()
     {
         if (null == _haltCommandResponse)
             throw new InvalidOperationException("Halt command response is null");
@@ -16,7 +17,7 @@ public class HaltCommandResponseBuilder : RootResponseBuilder, IHaltCommandRespo
     }
 
     public IHaltCommandResponseBuilder WithHaltResponse(
-        Vagrant.Lib.Abstractions.Domain.Commands.Halt.Response.IHaltCommandResponse response
+        IHaltCommandResponse response
     )
     {
         _haltCommandResponse = response;

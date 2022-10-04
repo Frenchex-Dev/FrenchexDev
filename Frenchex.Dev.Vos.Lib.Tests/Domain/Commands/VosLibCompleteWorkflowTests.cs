@@ -99,7 +99,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
 
     private async Task VosWorkflowUnitTestInternal(Builder[] builders)
     {
-        var taskBuilder = (Builder builder) => VosWorkflowUnitTestInternalInternal(builder);
+        Func<Builder, Task> taskBuilder = (Builder builder) => VosWorkflowUnitTestInternalInternal(builder);
 
         List<Task> allTasks = builders.Select(x => taskBuilder(x)).ToList();
 

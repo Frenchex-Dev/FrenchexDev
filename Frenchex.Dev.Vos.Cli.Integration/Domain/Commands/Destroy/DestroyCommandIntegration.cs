@@ -3,7 +3,6 @@ using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Destroy.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Destroy.Request;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Destroy;
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Destroy;
 

@@ -12,12 +12,12 @@ public static class ServicesConfiguration
     {
         serviceCollection
             .AddScoped<IDefineMachineTypeAddCommand, DefineMachineTypeAddCommand>()
-            
             .AddScoped<IDefineMachineTypeAddCommandRequestBuilder, DefineMachineTypeAddCommandRequestBuilder>()
-            .AddScoped<IDefineMachineTypeAddCommandRequestBuilderFactory, DefineMachineTypeAddCommandRequestBuilderFactory>()
-            
+            .AddScoped<IDefineMachineTypeAddCommandRequestBuilderFactory,
+                DefineMachineTypeAddCommandRequestBuilderFactory>()
             .AddScoped<IDefineMachineTypeAddCommandResponseBuilder, DefineMachineTypeAddCommandResponseBuilder>()
-            .AddScoped<IDefineMachineTypeAddCommandResponseBuilderFactory, DefineMachineTypeAddCommandResponseBuilderFactory>()
+            .AddScoped<IDefineMachineTypeAddCommandResponseBuilderFactory,
+                DefineMachineTypeAddCommandResponseBuilderFactory>()
             ;
 
         return serviceCollection;

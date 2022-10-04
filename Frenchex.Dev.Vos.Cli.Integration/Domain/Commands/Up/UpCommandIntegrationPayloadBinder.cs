@@ -14,7 +14,7 @@ public class UpCommandIntegrationPayloadBinder : IGenericBinder<UpCommandIntegra
     private readonly Option<string> _provider;
     private readonly Option<bool> _provision;
     private readonly Option<string[]> _provisionWith;
-    private readonly Option<String> _timeout;
+    private readonly Option<string> _timeout;
     private readonly Option<string> _vagrantBinPath;
     private readonly Option<string> _workingDir;
 
@@ -28,7 +28,7 @@ public class UpCommandIntegrationPayloadBinder : IGenericBinder<UpCommandIntegra
         Option<int> parallelWait,
         Option<string> provider,
         Option<bool> installProvider,
-        Option<String> timeout,
+        Option<string> timeout,
         Option<string> workingDir,
         Option<string> vagrantBinPath
     )

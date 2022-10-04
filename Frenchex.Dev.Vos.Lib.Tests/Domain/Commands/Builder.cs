@@ -55,45 +55,6 @@ public class Builder
         return list;
     };
 
-    private static IDefineMachineTypeAddCommandRequest
-        BuildDefineMachineTypeAddCommandRequestWithSpecifiedBoxNameAndVersion(
-            string workingDirectory,
-            string typeName,
-            string boxName,
-            string boxVersion,
-            IServiceProvider serviceProvider
-        )
-    {
-        return serviceProvider.GetRequiredService<IDefineMachineTypeAddCommandRequestBuilderFactory>()
-            .Factory()
-            .BaseBuilder.UsingWorkingDirectory(workingDirectory)
-            .UsingTimeout("2m")
-            .Parent<IDefineMachineTypeAddCommandRequestBuilder>()
-            .UsingDefinition(serviceProvider.GetRequiredService<IMachineTypeDefinitionBuilderFactory>()
-                .Factory()
-                .BaseBuilder
-                .With3DEnabled(true)
-                .WithBiosLogoImage("")
-                .WithBox(boxName)
-                .WithBoxVersion(boxVersion)
-                .WithFiles(new Dictionary<string, FileCopyDefinition>())
-                .WithGui(false)
-                .WithOsType(OsTypeEnum.Debian_64)
-                .WithOsVersion("10.5.0")
-                .WithPageFusion(false)
-                .WithRamInMb(256)
-                .WithVideoRamInMb(16)
-                .WithVirtualCpus(4)
-                .WithFiles(new Dictionary<string, FileCopyDefinition>())
-                .WithProvisioning(new Dictionary<string, ProvisioningDefinition>())
-                .WithSharedFolders(new Dictionary<string, SharedFolderDefinition>())
-                .Enabled(true)
-                .Parent<IMachineTypeDefinitionBuilder>()
-                .WithName(typeName)
-                .Build())
-            .Build();
-    }
-
     public Func<string, IServiceProvider, List<IDefineMachineAddCommandRequest>>
         BuildDefineMachineAddCommandRequestsListBuilder => (
         string workingDirectory,
@@ -153,70 +114,6 @@ public class Builder
 
         return list;
     };
-
-    private static IDefineMachineAddCommandRequest BuildDefineMachineAddCommandRequest(
-        string? workingDirectory,
-        string timeoutStr,
-        bool enable3d,
-        string biosLogoImage,
-        Dictionary<string, FileCopyDefinition> withFiles,
-        bool withGui,
-        OsTypeEnum withOsTypeEnum,
-        string withOsVersion,
-        bool withPageFusion,
-        ProviderEnum withProvider,
-        Dictionary<string, ProvisioningDefinition> provisioningDefinitions,
-        Dictionary<string, SharedFolderDefinition> sharedFolderDefinitions,
-        int videoRamInMb,
-        int ramInMb,
-        int vCpus,
-        string machineTypeDefinitionName,
-        string name,
-        int instances,
-        int ipv4Start,
-        string ipv4Pattern,
-        bool isPrimary,
-        bool enabled,
-        List<(NetworkInterface n, List<IPAddress?>?)> defaultSystemNetworkBridge,
-        IDefineMachineAddCommandRequestBuilderFactory defineMachineAddCommandRequestBuilderFactory,
-        MachineDefinitionBuilderFactory machineDefinitionBuilderFactory
-    )
-    {
-        return defineMachineAddCommandRequestBuilderFactory
-            .Factory()
-            .BaseBuilder
-            .UsingWorkingDirectory(workingDirectory)
-            .UsingTimeout(timeoutStr)
-            .Parent<IDefineMachineAddCommandRequestBuilder>()
-            .UsingDefinition(machineDefinitionBuilderFactory
-                .Factory()
-                .BaseBuilder
-                .With3DEnabled(enable3d)
-                .WithBiosLogoImage(biosLogoImage)
-                .WithFiles(withFiles)
-                .WithGui(withGui)
-                .WithOsType(withOsTypeEnum)
-                .WithOsVersion(withOsVersion)
-                .WithPageFusion(withPageFusion)
-                .WithProvider(withProvider)
-                .WithProvisioning(provisioningDefinitions)
-                .WithSharedFolders(sharedFolderDefinitions)
-                .WithVideoRamInMb(videoRamInMb)
-                .WithRamInMb(ramInMb)
-                .WithVirtualCpus(vCpus)
-                .Parent<MachineDefinitionBuilder>()
-                .WithMachineType(machineTypeDefinitionName)
-                .WithName(name)
-                .WithInstances(instances)
-                .WithIPv4Start(ipv4Start)
-                .WithIPv4Pattern(ipv4Pattern)
-                .IsPrimary(isPrimary)
-                .Enabled(enabled)
-                .WithNetworkBridge(defaultSystemNetworkBridge.First().Item1.Description)
-                .Build()
-            )
-            .Build();
-    }
 
     public Func<string, IServiceProvider, List<NameCommandRequestPayload>> BuildNameCommandRequestsListBuilder =>
         (workingDirectory, serviceProvider) =>
@@ -426,6 +323,109 @@ public class Builder
                     .Build()
             };
         };
+
+    private static IDefineMachineTypeAddCommandRequest
+        BuildDefineMachineTypeAddCommandRequestWithSpecifiedBoxNameAndVersion(
+            string workingDirectory,
+            string typeName,
+            string boxName,
+            string boxVersion,
+            IServiceProvider serviceProvider
+        )
+    {
+        return serviceProvider.GetRequiredService<IDefineMachineTypeAddCommandRequestBuilderFactory>()
+            .Factory()
+            .BaseBuilder.UsingWorkingDirectory(workingDirectory)
+            .UsingTimeout("2m")
+            .Parent<IDefineMachineTypeAddCommandRequestBuilder>()
+            .UsingDefinition(serviceProvider.GetRequiredService<IMachineTypeDefinitionBuilderFactory>()
+                .Factory()
+                .BaseBuilder
+                .With3DEnabled(true)
+                .WithBiosLogoImage("")
+                .WithBox(boxName)
+                .WithBoxVersion(boxVersion)
+                .WithFiles(new Dictionary<string, FileCopyDefinition>())
+                .WithGui(false)
+                .WithOsType(OsTypeEnum.Debian_64)
+                .WithOsVersion("10.5.0")
+                .WithPageFusion(false)
+                .WithRamInMb(256)
+                .WithVideoRamInMb(16)
+                .WithVirtualCpus(4)
+                .WithFiles(new Dictionary<string, FileCopyDefinition>())
+                .WithProvisioning(new Dictionary<string, ProvisioningDefinition>())
+                .WithSharedFolders(new Dictionary<string, SharedFolderDefinition>())
+                .Enabled(true)
+                .Parent<IMachineTypeDefinitionBuilder>()
+                .WithName(typeName)
+                .Build())
+            .Build();
+    }
+
+    private static IDefineMachineAddCommandRequest BuildDefineMachineAddCommandRequest(
+        string? workingDirectory,
+        string timeoutStr,
+        bool enable3d,
+        string biosLogoImage,
+        Dictionary<string, FileCopyDefinition> withFiles,
+        bool withGui,
+        OsTypeEnum withOsTypeEnum,
+        string withOsVersion,
+        bool withPageFusion,
+        ProviderEnum withProvider,
+        Dictionary<string, ProvisioningDefinition> provisioningDefinitions,
+        Dictionary<string, SharedFolderDefinition> sharedFolderDefinitions,
+        int videoRamInMb,
+        int ramInMb,
+        int vCpus,
+        string machineTypeDefinitionName,
+        string name,
+        int instances,
+        int ipv4Start,
+        string ipv4Pattern,
+        bool isPrimary,
+        bool enabled,
+        List<(NetworkInterface n, List<IPAddress?>?)> defaultSystemNetworkBridge,
+        IDefineMachineAddCommandRequestBuilderFactory defineMachineAddCommandRequestBuilderFactory,
+        MachineDefinitionBuilderFactory machineDefinitionBuilderFactory
+    )
+    {
+        return defineMachineAddCommandRequestBuilderFactory
+            .Factory()
+            .BaseBuilder
+            .UsingWorkingDirectory(workingDirectory)
+            .UsingTimeout(timeoutStr)
+            .Parent<IDefineMachineAddCommandRequestBuilder>()
+            .UsingDefinition(machineDefinitionBuilderFactory
+                .Factory()
+                .BaseBuilder
+                .With3DEnabled(enable3d)
+                .WithBiosLogoImage(biosLogoImage)
+                .WithFiles(withFiles)
+                .WithGui(withGui)
+                .WithOsType(withOsTypeEnum)
+                .WithOsVersion(withOsVersion)
+                .WithPageFusion(withPageFusion)
+                .WithProvider(withProvider)
+                .WithProvisioning(provisioningDefinitions)
+                .WithSharedFolders(sharedFolderDefinitions)
+                .WithVideoRamInMb(videoRamInMb)
+                .WithRamInMb(ramInMb)
+                .WithVirtualCpus(vCpus)
+                .Parent<MachineDefinitionBuilder>()
+                .WithMachineType(machineTypeDefinitionName)
+                .WithName(name)
+                .WithInstances(instances)
+                .WithIPv4Start(ipv4Start)
+                .WithIPv4Pattern(ipv4Pattern)
+                .IsPrimary(isPrimary)
+                .Enabled(enabled)
+                .WithNetworkBridge(defaultSystemNetworkBridge.First().Item1.Description)
+                .Build()
+            )
+            .Build();
+    }
 
 
     private class DefineMachineAddCommandRequestPayload

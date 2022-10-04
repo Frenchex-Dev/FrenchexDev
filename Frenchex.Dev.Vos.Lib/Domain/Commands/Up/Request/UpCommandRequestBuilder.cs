@@ -1,5 +1,6 @@
-﻿using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root;
+﻿using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root.Base.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Request;
+using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Request;
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Up.Request;
 
@@ -23,7 +24,7 @@ public class UpCommandRequestBuilder : RootCommandRequestBuilder, IUpCommandRequ
 
     public IUpCommandRequest Build()
     {
-        return new UpCommandRequest(
+        return new UpCommandCommandRequest(
             _namesOrIds ?? Array.Empty<string>(),
             _provision ?? false,
             _provisionWith ?? Array.Empty<string>(),

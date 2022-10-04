@@ -4,7 +4,6 @@ using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Define.MachineType.Add;
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Define.MachineType.Add;
 

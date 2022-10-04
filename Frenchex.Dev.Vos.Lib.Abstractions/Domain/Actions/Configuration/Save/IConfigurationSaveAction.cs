@@ -2,5 +2,5 @@
 
 public interface IConfigurationSaveAction
 {
-    Task Save(Abstractions.Domain.Configuration.Configuration configuration, string path);
+    Task Save(Domain.Configuration.Configuration configuration, string path);
 }

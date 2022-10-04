@@ -4,7 +4,7 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Naming;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Response;
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root;
+using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Command;
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Machine.Add.Command;
 
@@ -29,7 +29,7 @@ public class DefineMachineAddCommand : RootCommand, IDefineMachineAddCommand
         if (null == request.DefinitionDeclaration.Name)
             throw new InvalidOperationException("request or definitionDeclaration or name is null");
 
-        var configFilePath = Path.Join(request.Base.WorkingDirectory, "config.json");
+        var configFilePath = Path.Join(request.BaseCommand.WorkingDirectory, "config.json");
         var config = await ConfigurationLoadAction.Load(configFilePath);
 
         config.Machines.Add(request.DefinitionDeclaration.Name, request.DefinitionDeclaration);

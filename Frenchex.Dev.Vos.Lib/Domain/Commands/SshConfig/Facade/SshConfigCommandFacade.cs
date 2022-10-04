@@ -6,7 +6,10 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.SshConfig.Facade;
 
 public class SshConfigCommandFacade : ISshConfigCommandFacade
 {
-    public SshConfigCommandFacade(ISshConfigCommand command, ISshConfigCommandRequestBuilderFactory requestBuilderFactory)
+    public SshConfigCommandFacade(
+        ISshConfigCommand command,
+        ISshConfigCommandRequestBuilderFactory requestBuilderFactory
+    )
     {
         Command = command;
         RequestBuilderFactory = requestBuilderFactory;

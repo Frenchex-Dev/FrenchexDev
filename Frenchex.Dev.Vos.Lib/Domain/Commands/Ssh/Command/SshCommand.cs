@@ -1,10 +1,11 @@
 ﻿using System.Text;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Configuration.Load;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Naming;
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Command;
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Response;
+using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Command;
+using ISshCommandRequest = Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Request.ISshCommandRequest;
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Ssh.Command;
 
@@ -13,7 +14,7 @@ public class SshCommand : RootCommand, ISshCommand
     private readonly ISshCommandResponseBuilderFactory _responseBuilderFactory;
     private readonly Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Command.ISshCommand _vagrantSshCommand;
 
-    private readonly Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Request.ISshCommandRequestBuilderFactory
+    private readonly ISshCommandRequestBuilderFactory
         _vagrantSshCommandRequestBuilderFactory;
 
     public SshCommand(
@@ -21,7 +22,7 @@ public class SshCommand : RootCommand, ISshCommand
         IConfigurationLoadAction configurationLoadAction,
         IVexNameToVagrantNameConverter nameConverter,
         Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Command.ISshCommand vagrantSshCommand,
-        Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Request.ISshCommandRequestBuilderFactory
+        ISshCommandRequestBuilderFactory
             sshCommandRequestBuilderFactory
     ) : base(configurationLoadAction, nameConverter)
     {
@@ -36,17 +37,17 @@ public class SshCommand : RootCommand, ISshCommand
         {
             var vagrantMachines = MapNamesToVagrantNames(
                 request.NamesOrIds,
-                request.Base.WorkingDirectory,
-                await ConfigurationLoad(request.Base.WorkingDirectory)
+                request.BaseCommand.WorkingDirectory,
+                await ConfigurationLoad(request.BaseCommand.WorkingDirectory)
             );
 
             foreach (var vagrantMachine in vagrantMachines)
             {
                 var response = _vagrantSshCommand.StartProcess(_vagrantSshCommandRequestBuilderFactory.Factory()
                     .BaseBuilder
-                    .UsingTimeout(request.Base.Timeout)
-                    .UsingWorkingDirectory(request.Base.WorkingDirectory)
-                    .Parent<Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Request.ISshCommandRequestBuilder>()
+                    .UsingTimeout(request.BaseCommand.Timeout)
+                    .UsingWorkingDirectory(request.BaseCommand.WorkingDirectory)
+                    .Parent<ISshCommandRequestBuilder>()
                     .UsingCommand(command)
                     .UsingNameOrId(vagrantMachine)
                     .Build()

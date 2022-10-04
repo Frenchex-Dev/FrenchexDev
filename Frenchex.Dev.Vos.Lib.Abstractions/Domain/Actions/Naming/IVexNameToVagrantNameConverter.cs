@@ -2,5 +2,5 @@
 
 public interface IVexNameToVagrantNameConverter
 {
-    string[] ConvertAll(string[] names, string? workingDirectory, Abstractions.Domain.Configuration.Configuration configuration);
+    string[] ConvertAll(string[] names, string? workingDirectory, Domain.Configuration.Configuration configuration);
 }

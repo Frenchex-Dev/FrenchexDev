@@ -2,5 +2,5 @@
 
 public interface IConfigurationLoadAction
 {
-    Task<Abstractions.Domain.Configuration.Configuration> Load(string path);
+    Task<Domain.Configuration.Configuration> Load(string path);
 }

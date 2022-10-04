@@ -3,7 +3,6 @@ using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Request;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Status;
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Status;
 
@@ -31,7 +30,7 @@ public class StatusCommandIntegration : ABaseCommandIntegration, IStatusCommandI
     {
         Argument<string[]> nameArg = _namesArgumentBuilder.Build();
         Option<string> workingDirOpt = WorkingDirectoryOptionBuilder.Build();
-        Option<String> timeoutOpt = TimeoutStrOptionBuilder.Build();
+        Option<string> timeoutOpt = TimeoutStrOptionBuilder.Build();
         Option<string> vagrantBinPath = VagrantBinPathOptionBuilder.Build();
 
         var command = new Command("status", "Runs Vagrant status") {

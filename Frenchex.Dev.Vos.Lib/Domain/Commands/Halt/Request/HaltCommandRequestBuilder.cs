@@ -1,5 +1,6 @@
 ﻿using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Halt.Request;
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root.Base.Request;
+using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Request;
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Halt.Request;
 
@@ -18,7 +19,7 @@ public class HaltCommandRequestBuilder : RootCommandRequestBuilder, IHaltCommand
 
     public IHaltCommandRequest Build()
     {
-        return new HaltCommandRequest(
+        return new HaltCommandCommandRequest(
             _usingNamesOrIds ?? Array.Empty<string>(),
             _withForce ?? false,
             _withParallel ?? false,

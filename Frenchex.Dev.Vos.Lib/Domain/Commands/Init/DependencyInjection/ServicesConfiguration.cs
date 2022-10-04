@@ -14,7 +14,6 @@ public static class ServicesConfiguration
 {
     public static IServiceCollection ConfigureServices(IServiceCollection serviceCollection)
     {
-
         serviceCollection
             .AddScoped<IInitCommand, InitCommand>()
             .AddScoped<IInitCommandFacade, InitCommandFacade>()
@@ -22,9 +21,8 @@ public static class ServicesConfiguration
             .AddScoped<IInitCommandRequestBuilderFactory, InitCommandRequestBuilderFactory>()
             .AddScoped<IInitCommandResponseBuilder, InitCommandResponseBuilder>()
             .AddScoped<IInitCommandResponseBuilderFactory, InitCommandResponseBuilderFactory>()
-
             ;
-        
+
         return serviceCollection;
     }
 }

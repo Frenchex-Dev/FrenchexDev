@@ -14,16 +14,6 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.SshConfig.Response;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Response;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Response;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Machine.Add;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Define.MachineType.Add;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Destroy;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Halt;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Init;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Name;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Ssh;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.SshConfig;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Status;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Up;
 
 namespace Frenchex.Dev.Vos.Lib.Tests.Domain.Commands;
 

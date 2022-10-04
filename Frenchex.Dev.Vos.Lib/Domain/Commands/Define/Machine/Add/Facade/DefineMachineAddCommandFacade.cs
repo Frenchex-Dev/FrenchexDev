@@ -6,7 +6,10 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Machine.Add.Facade;
 
 public class DefineMachineAddCommandFacade : IDefineMachineAddCommandFacade
 {
-    public DefineMachineAddCommandFacade(IDefineMachineAddCommand command, IDefineMachineAddCommandRequestBuilderFactory requestBuilderFactory)
+    public DefineMachineAddCommandFacade(
+        IDefineMachineAddCommand command,
+        IDefineMachineAddCommandRequestBuilderFactory requestBuilderFactory
+    )
     {
         Command = command;
         RequestBuilderFactory = requestBuilderFactory;

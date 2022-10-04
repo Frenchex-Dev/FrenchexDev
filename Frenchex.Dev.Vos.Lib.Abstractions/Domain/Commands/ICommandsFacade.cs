@@ -14,7 +14,7 @@ namespace Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands;
 
 public interface ICommandsFacade
 {
-    IDefineMachineTypeAddCommandFacade  DefineMachineTypeAddCommandFacade { get; }
+    IDefineMachineTypeAddCommandFacade DefineMachineTypeAddCommandFacade { get; }
     IDefineMachineAddCommandFacade DefineMachineAddCommandFacade { get; }
     IDefineProvisioningMapCommandFacade DefineProvisioningMapCommandFacade { get; }
     IDestroyCommandFacade DestroyCommandFacade { get; }

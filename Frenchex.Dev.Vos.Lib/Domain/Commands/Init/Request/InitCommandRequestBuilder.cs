@@ -1,5 +1,6 @@
 ﻿using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Init.Request;
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root.Base.Request;
+using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Request;
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Init.Request;
 
@@ -16,7 +17,7 @@ public class InitCommandRequestBuilder : RootCommandRequestBuilder, IInitCommand
 
     public IInitCommandRequest Build()
     {
-        return new InitCommandRequest(
+        return new InitCommandCommandRequest(
             BaseBuilder.Build(),
             _namingPattern ?? "",
             _leadingZeroes ?? 1

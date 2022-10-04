@@ -20,6 +20,7 @@ public static class ServicesConfiguration
             .AddScoped<IDefaultGatewayGetterAction, DefaultGatewayGetterAction>()
             .AddScoped<IVexNameToVagrantNameConverter, VexNameToVagrantNameConverter>()
             ;
+
         return serviceCollection;
     }
 }

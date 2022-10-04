@@ -1,5 +1,6 @@
 ﻿using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Name.Request;
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root.Base.Request;
+using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Request;
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Name.Request;
 
@@ -16,7 +17,7 @@ public class NameCommandRequestBuilder : RootCommandRequestBuilder, INameCommand
     {
         if (null == _names) throw new InvalidOperationException("Names is null");
 
-        return new NameCommandRequest(
+        return new NameCommandCommandRequest(
             BaseBuilder.Build(),
             _names
         );

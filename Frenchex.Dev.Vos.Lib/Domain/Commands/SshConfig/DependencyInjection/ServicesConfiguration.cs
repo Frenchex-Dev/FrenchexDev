@@ -14,7 +14,6 @@ public static class ServicesConfiguration
 {
     public static IServiceCollection ConfigureServices(IServiceCollection serviceCollection)
     {
-
         serviceCollection
             .AddScoped<ISshConfigCommand, SshConfigCommand>()
             .AddScoped<ISshConfigCommandFacade, SshConfigCommandFacade>()
@@ -22,9 +21,8 @@ public static class ServicesConfiguration
             .AddScoped<ISshConfigCommandRequestBuilderFactory, SshConfigCommandRequestBuilderFactory>()
             .AddScoped<ISshConfigCommandResponseBuilder, SshConfigCommandResponseBuilder>()
             .AddScoped<ISshConfigCommandResponseBuilderFactory, SshConfigCommandResponseBuilderFactory>()
-
             ;
-        
+
         return serviceCollection;
     }
 }

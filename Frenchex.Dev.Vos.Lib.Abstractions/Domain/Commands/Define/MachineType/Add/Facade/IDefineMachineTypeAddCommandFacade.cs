@@ -4,7 +4,7 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.R
 namespace Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Facade;
 
 public interface IDefineMachineTypeAddCommandFacade : IFacableCommand,
-    Domain.IFacade<IDefineMachineTypeAddCommand, IDefineMachineTypeAddCommandRequestBuilderFactory,
+    IFacade<IDefineMachineTypeAddCommand, IDefineMachineTypeAddCommandRequestBuilderFactory,
         IDefineMachineTypeAddCommandRequestBuilder>
 {
 }
