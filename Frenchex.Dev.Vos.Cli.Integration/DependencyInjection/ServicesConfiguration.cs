@@ -43,32 +43,32 @@ public class ServicesConfiguration : IServicesConfiguration
             () =>
             {
                 services
-                    .AddScoped<IIntegration, Domain.Integration>();
+                    .AddTransient<IIntegration, Domain.Integration>();
 
                 services
-                    .AddScoped<IVosCommandIntegration, DefineCommandIntegration>()
-                    .AddScoped<IDefineCommandIntegration, DefineCommandIntegration>()
-                    .AddScoped<IDefineMachineCommandIntegration, DefineMachineCommandIntegration>()
-                    .AddScoped<IDefineSubCommandIntegration, DefineMachineCommandIntegration>()
-                    .AddScoped<IDefineMachineSubCommandIntegration, DefineMachineAddCommandIntegration>()
-                    .AddScoped<IDefineSubCommandIntegration, DefineMachineTypeCommandIntegration>()
-                    .AddScoped<IDefineMachineTypeSubCommandIntegration, DefineMachineTypeAddCommandIntegration>()
-                    .AddScoped<IVosCommandIntegration, DestroyCommandIntegration>()
-                    .AddScoped<IDestroyCommandIntegration, DestroyCommandIntegration>()
-                    .AddScoped<IVosCommandIntegration, HaltCommandIntegration>()
-                    .AddScoped<IHaltCommandIntegration, HaltCommandIntegration>()
-                    .AddScoped<IVosCommandIntegration, InitCommandIntegration>()
-                    .AddScoped<IInitCommandIntegration, InitCommandIntegration>()
-                    .AddScoped<IVosCommandIntegration, SshCommandIntegration>()
-                    .AddScoped<ISshCommandIntegration, SshCommandIntegration>()
-                    .AddScoped<IVosCommandIntegration, SshConfigCommandIntegration>()
-                    .AddScoped<ISshConfigCommandIntegration, SshConfigCommandIntegration>()
-                    .AddScoped<IVosCommandIntegration, UpCommandIntegration>()
-                    .AddScoped<IUpCommandIntegration, UpCommandIntegration>()
-                    .AddScoped<IVosCommandIntegration, StatusCommandIntegration>()
-                    .AddScoped<IStatusCommandIntegration, StatusCommandIntegration>()
-                    .AddScoped<IVosCommandIntegration, NameCommandIntegration>()
-                    .AddScoped<INameCommandIntegration, NameCommandIntegration>()
+                    .AddTransient<IVosCommandIntegration, DefineCommandIntegration>()
+                    .AddTransient<IDefineCommandIntegration, DefineCommandIntegration>()
+                    .AddTransient<IDefineMachineCommandIntegration, DefineMachineCommandIntegration>()
+                    .AddTransient<IDefineSubCommandIntegration, DefineMachineCommandIntegration>()
+                    .AddTransient<IDefineMachineSubCommandIntegration, DefineMachineAddCommandIntegration>()
+                    .AddTransient<IDefineSubCommandIntegration, DefineMachineTypeCommandIntegration>()
+                    .AddTransient<IDefineMachineTypeSubCommandIntegration, DefineMachineTypeAddCommandIntegration>()
+                    .AddTransient<IVosCommandIntegration, DestroyCommandIntegration>()
+                    .AddTransient<IDestroyCommandIntegration, DestroyCommandIntegration>()
+                    .AddTransient<IVosCommandIntegration, HaltCommandIntegration>()
+                    .AddTransient<IHaltCommandIntegration, HaltCommandIntegration>()
+                    .AddTransient<IVosCommandIntegration, InitCommandIntegration>()
+                    .AddTransient<IInitCommandIntegration, InitCommandIntegration>()
+                    .AddTransient<IVosCommandIntegration, SshCommandIntegration>()
+                    .AddTransient<ISshCommandIntegration, SshCommandIntegration>()
+                    .AddTransient<IVosCommandIntegration, SshConfigCommandIntegration>()
+                    .AddTransient<ISshConfigCommandIntegration, SshConfigCommandIntegration>()
+                    .AddTransient<IVosCommandIntegration, UpCommandIntegration>()
+                    .AddTransient<IUpCommandIntegration, UpCommandIntegration>()
+                    .AddTransient<IVosCommandIntegration, StatusCommandIntegration>()
+                    .AddTransient<IStatusCommandIntegration, StatusCommandIntegration>()
+                    .AddTransient<IVosCommandIntegration, NameCommandIntegration>()
+                    .AddTransient<INameCommandIntegration, NameCommandIntegration>()
                     ;
 
                 services
