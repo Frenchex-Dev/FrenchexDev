@@ -1,4 +1,5 @@
 ﻿using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root.Base.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,8 +12,7 @@ public static class ServicesConfiguration
         serviceCollection
 
             // Root
-            .AddTransient<IBaseRequestBuilderFactory, BaseRequestBuilderFactory>()
-            .AddTransient<IBaseRequestBuilder, BaseRequestBuilder>()
+          
 
             // Bases
             .AddTransient<MachineBaseDefinitionBuilder, MachineBaseDefinitionBuilder>()

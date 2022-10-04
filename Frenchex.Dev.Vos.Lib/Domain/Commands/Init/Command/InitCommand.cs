@@ -15,13 +15,13 @@ public class InitCommand : RootCommand, IInitCommand
 {
     private readonly IConfigurationSaveAction _configurationActionSave;
     private readonly IFilesystem _filesystem;
-    private readonly IInitCommandResponseBuilderFactory _responseBuilderFactory;
+    private readonly IInitCommandCommandResponseBuilderFactory _commandResponseBuilderFactory;
     private readonly IVagrantfileResource _vagrantfileResource;
 
     public InitCommand(
         IFilesystem fileSystemOperator,
         IVagrantfileResource vagrantfileResource,
-        IInitCommandResponseBuilderFactory responseBuilderFactory,
+        IInitCommandCommandResponseBuilderFactory commandResponseBuilderFactory,
         IConfigurationSaveAction configurationActionSave,
         IConfigurationLoadAction configurationLoadAction,
         IVexNameToVagrantNameConverter nameConverter
@@ -29,7 +29,7 @@ public class InitCommand : RootCommand, IInitCommand
     {
         _filesystem = fileSystemOperator;
         _vagrantfileResource = vagrantfileResource;
-        _responseBuilderFactory = responseBuilderFactory;
+        _commandResponseBuilderFactory = commandResponseBuilderFactory;
         _configurationActionSave = configurationActionSave;
     }
 
@@ -54,7 +54,7 @@ public class InitCommand : RootCommand, IInitCommand
 
         _filesystem.DirectoryCopy(provisioningPathLink, provisioningPath);
 
-        return _responseBuilderFactory
+        return _commandResponseBuilderFactory
             .Factory()
             .Build();
     }

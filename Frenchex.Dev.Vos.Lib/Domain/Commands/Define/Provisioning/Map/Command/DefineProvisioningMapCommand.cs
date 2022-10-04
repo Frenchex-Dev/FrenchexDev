@@ -6,17 +6,17 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Provisioning.Map;
 
 public class DefineProvisioningMapCommand : IDefineProvisioningMapCommand
 {
-    private readonly IDefineProvisioningMapCommandResponseBuilderFactory _responseBuilderFactory;
+    private readonly IDefineProvisioningMapCommandCommandResponseBuilderFactory _commandResponseBuilderFactory;
 
     public DefineProvisioningMapCommand(
-        IDefineProvisioningMapCommandResponseBuilderFactory responseBuilderFactory
+        IDefineProvisioningMapCommandCommandResponseBuilderFactory commandResponseBuilderFactory
     )
     {
-        _responseBuilderFactory = responseBuilderFactory;
+        _commandResponseBuilderFactory = commandResponseBuilderFactory;
     }
 
     public async Task<IDefineProvisioningMapCommandResponse> ExecuteAsync(IDefineProvisioningMapCommandRequest request)
     {
-        return await Task.FromResult(_responseBuilderFactory.Factory().Build());
+        return await Task.FromResult(_commandResponseBuilderFactory.Factory().Build());
     }
 }

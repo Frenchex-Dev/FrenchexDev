@@ -9,14 +9,14 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Destroy.Command;
 
 public class DestroyCommand : RootCommand, IDestroyCommand
 {
-    private readonly IDestroyCommandResponseBuilderFactory _responseBuilderFactory;
+    private readonly IDestroyCommandCommandResponseBuilderFactory _commandResponseBuilderFactory;
     private readonly Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Command.IDestroyCommand _vagrantDestroyCommand;
 
     private readonly Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Request.IDestroyCommandRequestBuilderFactory
         _vagrantDestroyCommandRequestBuilderFactory;
 
     public DestroyCommand(
-        IDestroyCommandResponseBuilderFactory responseBuilderFactory,
+        IDestroyCommandCommandResponseBuilderFactory commandResponseBuilderFactory,
         IConfigurationLoadAction configurationLoadAction,
         IVexNameToVagrantNameConverter nameConverter,
         Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Command.IDestroyCommand destroyCommand,
@@ -24,7 +24,7 @@ public class DestroyCommand : RootCommand, IDestroyCommand
             destroyCommandRequestBuilderFactory
     ) : base(configurationLoadAction, nameConverter)
     {
-        _responseBuilderFactory = responseBuilderFactory;
+        _commandResponseBuilderFactory = commandResponseBuilderFactory;
         _vagrantDestroyCommand = destroyCommand;
         _vagrantDestroyCommandRequestBuilderFactory = destroyCommandRequestBuilderFactory;
     }
@@ -54,7 +54,7 @@ public class DestroyCommand : RootCommand, IDestroyCommand
 
         await process.ProcessExecutionResult.WaitForCompleteExit;
 
-        var responseBuilder = _responseBuilderFactory.Build();
+        var responseBuilder = _commandResponseBuilderFactory.Build();
 
         return responseBuilder.Build();
     }

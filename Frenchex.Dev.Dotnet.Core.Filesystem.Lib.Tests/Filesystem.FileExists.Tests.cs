@@ -52,7 +52,7 @@ public class FilesystemFileExistsTests : AbstractUnitTest
                     File.Delete(fileToDelete!);
                 });
             },
-            UnitTest.ServiceProvider!
+            GetUnitTest().GetScopedServiceProvider()
         );
     }
 

@@ -12,7 +12,7 @@ public class FileSystemCreateDirectoryTests : AbstractUnitTest
     public void CreateUnitTest()
     {
         UnitTest = FilesystemUnitTestBase.CreateNewUnitTest<ExecutionContext>();
-        UnitTest.BuildIfNecessary();
+        GetUnitTest().BuildIfNecessary();
     }
 
     public static IEnumerable<object[]> DataSource()
@@ -24,35 +24,36 @@ public class FileSystemCreateDirectoryTests : AbstractUnitTest
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     public async Task CanCreateDirectory(string originalFile)
     {
-        await UnitTest!.ExecuteAndAssertAndCleanupAsync<ExecutionContext>(async (provider, _, context, _) =>
-            {
-                var fs = provider.GetRequiredService<IFilesystem>();
+        await GetUnitTest()
+            .ExecuteAndAssertAndCleanupAsync<ExecutionContext>(async (provider, _, context, _) =>
+                {
+                    var fs = provider.GetRequiredService<IFilesystem>();
 
-                var originalFileName = Path.GetFileName(originalFile);
-                context.FullDestinationDirectory = Path.Join(Path.GetTempPath(), originalFileName);
+                    var originalFileName = Path.GetFileName(originalFile);
+                    context.FullDestinationDirectory = Path.Join(Path.GetTempPath(), originalFileName);
 
-                await Task.Run(() =>
+                    await Task.Run(() =>
+                    {
+                        fs.DirectoryCreate(context.FullDestinationDirectory);
+                    });
+                },
+                async (_, _, context) =>
                 {
-                    fs.DirectoryCreate(context.FullDestinationDirectory);
-                });
-            },
-            async (_, _, context) =>
-            {
-                await Task.Run(() =>
+                    await Task.Run(() =>
+                    {
+                        Assert.IsTrue(Directory.Exists(context.FullDestinationDirectory));
+                    });
+                },
+                async (_, _, context) =>
                 {
-                    Assert.IsTrue(Directory.Exists(context.FullDestinationDirectory));
-                });
-            },
-            async (_, _, context) =>
-            {
-                await Task.Run(() =>
-                {
-                    var fileToDelete = context.FullDestinationDirectory;
-                    Directory.Delete(fileToDelete!, true);
-                });
-            },
-            UnitTest.ServiceProvider!
-        );
+                    await Task.Run(() =>
+                    {
+                        var fileToDelete = context.FullDestinationDirectory;
+                        Directory.Delete(fileToDelete!, true);
+                    });
+                },
+                GetUnitTest().GetScopedServiceProvider()
+            );
     }
 
     private class ExecutionContext : WithWorkingDirectoryExecutionContext

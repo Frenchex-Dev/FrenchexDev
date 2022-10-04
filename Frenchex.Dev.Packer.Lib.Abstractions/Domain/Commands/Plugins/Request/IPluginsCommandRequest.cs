@@ -1,4 +1,5 @@
-﻿using Frenchex.Dev.Dotnet.Wrapping.Lib.Domain.Commands.Root;
+﻿
+using Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Root.Request;
 
 namespace Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Plugins.Request;
 

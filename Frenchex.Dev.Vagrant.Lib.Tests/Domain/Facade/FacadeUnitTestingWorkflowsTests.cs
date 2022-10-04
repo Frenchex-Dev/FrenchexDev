@@ -32,7 +32,7 @@ public class FacadeUnitTestingWorkflowsTests : AbstractUnitTest
                     Assert.IsInstanceOfType(context.Facade, typeof(ICommandsFacade));
                 });
             },
-            UnitTest.ServiceProvider!,
+            GetUnitTest().GetScopedServiceProvider(),
             new UnitTest.VsCodeDebugging {Open = false, TellMe = true}
         );
     }

@@ -42,7 +42,7 @@ public class FilesystemDeleteFileTests : AbstractUnitTest
                     Assert.IsFalse(File.Exists(context.FileToDelete));
                 });
             },
-            UnitTest.ServiceProvider!
+            GetUnitTest().GetScopedServiceProvider()
         );
     }
 

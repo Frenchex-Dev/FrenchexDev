@@ -172,6 +172,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Ke
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions", "Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions\Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions.csproj", "{F0F1AA62-988C-4BD0-BC81-77DFA5B89C9A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Wrapping.Lib.Abstractions", "Frenchex.Dev.Dotnet.Core.Wrapping.Lib.Abstractions\Frenchex.Dev.Dotnet.Core.Wrapping.Lib.Abstractions.csproj", "{98E23803-9A22-4029-B12D-C8EB4E0A9620}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -255,6 +257,7 @@ Global
 		{C472D325-0270-430F-B59B-62537404D09C} = {DC8B761C-2A63-41F6-AD9E-A36C7D6DBDB1}
 		{CA217ED2-37AD-42A4-B373-BB1FD665514F} = {DC8B761C-2A63-41F6-AD9E-A36C7D6DBDB1}
 		{F0F1AA62-988C-4BD0-BC81-77DFA5B89C9A} = {23F16B93-8B78-4CC1-A369-D65966D00D20}
+		{98E23803-9A22-4029-B12D-C8EB4E0A9620} = {6CA7E443-F730-4894-8FC5-0763802E95AE}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{5BA9259E-5B3E-4253-B44A-E30E341322F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -485,5 +488,9 @@ Global
 		{F0F1AA62-988C-4BD0-BC81-77DFA5B89C9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F0F1AA62-988C-4BD0-BC81-77DFA5B89C9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F0F1AA62-988C-4BD0-BC81-77DFA5B89C9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98E23803-9A22-4029-B12D-C8EB4E0A9620}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98E23803-9A22-4029-B12D-C8EB4E0A9620}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98E23803-9A22-4029-B12D-C8EB4E0A9620}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98E23803-9A22-4029-B12D-C8EB4E0A9620}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

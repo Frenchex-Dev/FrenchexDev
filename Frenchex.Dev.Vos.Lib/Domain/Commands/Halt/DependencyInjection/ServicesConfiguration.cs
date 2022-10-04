@@ -19,8 +19,8 @@ public static class ServicesConfiguration
             .AddScoped<IHaltCommandFacade, HaltCommandFacade>()
             .AddScoped<IHaltCommandRequestBuilder, HaltCommandRequestBuilder>()
             .AddScoped<IHaltCommandRequestBuilderFactory, HaltCommandRequestBuilderFactory>()
-            .AddScoped<IHaltCommandResponseBuilder, HaltCommandResponseBuilder>()
-            .AddScoped<IHaltCommandResponseBuilderFactory, HaltCommandResponseBuilderFactory>()
+            .AddScoped<IHaltCommandCommandResponseBuilder, HaltCommandCommandResponseBuilder>()
+            .AddScoped<IHaltCommandCommandResponseBuilderFactory, HaltCommandCommandResponseBuilderFactory>()
 
             ;
 

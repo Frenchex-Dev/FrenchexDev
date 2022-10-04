@@ -9,22 +9,22 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Name.Command;
 
 public class NameCommand : RootCommand, INameCommand
 {
-    private readonly INameCommandResponseBuilderFactory _responseBuilderFactory;
+    private readonly INameCommandCommandResponseBuilderFactory _commandResponseBuilderFactory;
 
     public NameCommand(
-        INameCommandResponseBuilderFactory responseBuilderFactory,
+        INameCommandCommandResponseBuilderFactory commandResponseBuilderFactory,
         IConfigurationLoadAction configurationLoadAction,
         IVexNameToVagrantNameConverter vexNameToVagrantNameConverter
     ) : base(configurationLoadAction, vexNameToVagrantNameConverter)
     {
-        _responseBuilderFactory = responseBuilderFactory;
+        _commandResponseBuilderFactory = commandResponseBuilderFactory;
     }
 
     public async Task<INameCommandResponse> ExecuteAsync(INameCommandRequest request)
     {
         var config = await ConfigurationLoad(request.Base.WorkingDirectory);
 
-        return _responseBuilderFactory
+        return _commandResponseBuilderFactory
             .Factory()
             .SetNames(NameToVagrantNameConverter.ConvertAll(request.Names, request.Base.WorkingDirectory, config))
             .Build();

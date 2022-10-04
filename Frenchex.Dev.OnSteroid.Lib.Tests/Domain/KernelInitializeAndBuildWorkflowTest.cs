@@ -63,7 +63,7 @@ public class KernelInitializeAndBuildWorkflowTest : AbstractUnitTest
 
                 await context.Kernel.DisposeAsync();
             },
-            UnitTest.ServiceProvider!
+            GetUnitTest().GetScopedServiceProvider()
         );
     }
 }

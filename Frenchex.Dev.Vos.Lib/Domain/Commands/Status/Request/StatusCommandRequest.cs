@@ -1,4 +1,5 @@
 ﻿using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root.Base.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Request;
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Status.Request;

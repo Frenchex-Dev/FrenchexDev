@@ -1,5 +1,5 @@
 ﻿namespace Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Root.Request;
 
-public interface IRootCommandRequestBuilderFactory
+public interface IRootCommandRequestBuilderFactory : IRootCommandRequestBuilderFactory
 {
 }

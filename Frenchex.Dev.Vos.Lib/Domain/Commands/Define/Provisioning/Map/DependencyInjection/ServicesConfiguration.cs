@@ -19,8 +19,8 @@ public static class ServicesConfiguration
             .AddScoped<IDefineProvisioningMapCommandRequestBuilder, DefineProvisioningMapCommandRequestBuilder>()
             .AddScoped<IDefineProvisioningMapCommandRequestBuilderFactory, DefineProvisioningMapCommandRequestBuilderFactory>()
             
-            .AddScoped<IDefineProvisioningMapCommandResponseBuilder, DefineProvisioningMapCommandResponseBuilder>()
-            .AddScoped<IDefineProvisioningMapCommandResponseBuilderFactory, DefineProvisioningMapCommandResponseBuilderFactory>()
+            .AddScoped<IDefineProvisioningMapCommandCommandResponseBuilder, DefineProvisioningMapCommandCommandResponseBuilder>()
+            .AddScoped<IDefineProvisioningMapCommandCommandResponseBuilderFactory, DefineProvisioningMapCommandCommandResponseBuilderFactory>()
             ;
 
         return serviceCollection;

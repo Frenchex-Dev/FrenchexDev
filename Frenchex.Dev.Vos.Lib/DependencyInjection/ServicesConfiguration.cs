@@ -23,7 +23,9 @@ public class ServicesConfiguration : IServicesConfiguration
                         .AddScoped<IVagrantfileResource, VagrantfileResource>()
                         ;
 
-                    Vos.Lib.Abstractions.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
+                    Abstractions.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
+
+                    Domain.Commands.Root.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
 
                     Domain.Actions.DependencyInjection.ServicesConfiguration.ConfigureServices(
                         serviceCollection);

@@ -39,7 +39,7 @@ public class FilesystemDirectoryExistsTests : AbstractUnitTest
             {
                 await Task.Run(() => { Assert.IsTrue(context.DirectoryExists); });
             },
-            UnitTest.ServiceProvider!
+            GetUnitTest().GetScopedServiceProvider()
         );
     }
 

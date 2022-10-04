@@ -9,14 +9,14 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Halt.Command;
 
 public class HaltCommand : RootCommand, IHaltCommand
 {
-    private readonly IHaltCommandResponseBuilderFactory _responseBuilderFactory;
+    private readonly IHaltCommandCommandResponseBuilderFactory _commandResponseBuilderFactory;
     private readonly Vagrant.Lib.Abstractions.Domain.Commands.Halt.Command.IHaltCommand _vagrantHaltCommand;
 
     private readonly Vagrant.Lib.Abstractions.Domain.Commands.Halt.Request.IHaltCommandRequestBuilderFactory
         _vagrantHaltCommandRequestBuilderFactory;
 
     public HaltCommand(
-        IHaltCommandResponseBuilderFactory responseBuilderFactory,
+        IHaltCommandCommandResponseBuilderFactory commandResponseBuilderFactory,
         IConfigurationLoadAction configurationLoadAction,
         IVexNameToVagrantNameConverter vexNameToVagrantNameConverter,
         Vagrant.Lib.Abstractions.Domain.Commands.Halt.Command.IHaltCommand vagrantHaltCommand,
@@ -24,7 +24,7 @@ public class HaltCommand : RootCommand, IHaltCommand
             vagrantHaltCommandRequestBuilderFactory
     ) : base(configurationLoadAction, vexNameToVagrantNameConverter)
     {
-        _responseBuilderFactory = responseBuilderFactory;
+        _commandResponseBuilderFactory = commandResponseBuilderFactory;
         _vagrantHaltCommand = vagrantHaltCommand;
         _vagrantHaltCommandRequestBuilderFactory = vagrantHaltCommandRequestBuilderFactory;
     }
@@ -48,7 +48,7 @@ public class HaltCommand : RootCommand, IHaltCommand
 
         var process = _vagrantHaltCommand.StartProcess(libRequest);
 
-        return _responseBuilderFactory.Factory()
+        return _commandResponseBuilderFactory.Factory()
             .WithHaltResponse(process)
             .Build();
     }

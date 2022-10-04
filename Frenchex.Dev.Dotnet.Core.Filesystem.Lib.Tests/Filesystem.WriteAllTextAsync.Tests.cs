@@ -45,7 +45,7 @@ public class FilesystemWriteAllTextAsyncTests : AbstractUnitTest
                     );
                 });
             },
-            UnitTest.ServiceProvider!
+            GetUnitTest().GetScopedServiceProvider()
         );
     }
 

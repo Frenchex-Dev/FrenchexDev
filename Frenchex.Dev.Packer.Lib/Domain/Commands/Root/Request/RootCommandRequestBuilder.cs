@@ -1,9 +1,9 @@
-﻿
-using Frenchex.Dev.Dotnet.Wrapping.Lib.Domain.Commands.Root;
+﻿using Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Root.Base.Request;
+using Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Root.Request;
 
 namespace Frenchex.Dev.Packer.Lib.Domain.Commands.Root.Request;
 
-public abstract class RootCommandRequestBuilder : IRootCommandRequestBuilderFactory
+public abstract class RootCommandRequestBuilder : IRootCommandRequestBuilder
 {
     protected RootCommandRequestBuilder(
         IBaseCommandRequestBuilderFactory? baseRequestBuilderFactory

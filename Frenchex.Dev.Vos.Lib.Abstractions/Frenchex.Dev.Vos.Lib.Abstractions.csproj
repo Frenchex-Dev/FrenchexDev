@@ -13,6 +13,7 @@
 
     <ItemGroup>
       <Folder Include="Domain\Commands\Define\Provisioning\New\Facade" />
+      <Folder Include="Domain\Commands\Root\Base\" />
     </ItemGroup>
 
 </Project>

@@ -7,14 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Domain\Commands\Version\Command" />
-        <Folder Include="Domain\Commands\Version\DependencyInjection" />
-        <Folder Include="Domain\Commands\Version\Facade" />
-        <Folder Include="Domain\Commands\Version\Request" />
-        <Folder Include="Domain\Commands\Version\Response" />
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Wrapping.Lib\Frenchex.Dev.Dotnet.Core.Wrapping.Lib.csproj" />
     </ItemGroup>
 

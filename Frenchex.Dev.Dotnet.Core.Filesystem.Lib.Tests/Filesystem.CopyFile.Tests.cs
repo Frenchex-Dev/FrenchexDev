@@ -59,7 +59,7 @@ public abstract class FilesystemCopyFileTests : AbstractUnitTest
                     File.Delete(fileToDelete!);
                 });
             },
-            UnitTest.ServiceProvider!
+            GetUnitTest().GetScopedServiceProvider()
         );
     }
 

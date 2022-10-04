@@ -7,6 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Domain\Commands\Define\Provisioning\New\**" />
+      <EmbeddedResource Remove="Domain\Commands\Define\Provisioning\New\**" />
+      <None Remove="Domain\Commands\Define\Provisioning\New\**" />
+    </ItemGroup>
+
+    <ItemGroup>
         <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib.csproj" />
         <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.NewtonSoft.Json\Frenchex.Dev.Dotnet.Core.Dependencies.NewtonSoft.Json.csproj" />
         <ProjectReference Include="..\Frenchex.Dev.OnSteroid.Lib\Frenchex.Dev.OnSteroid.Lib.csproj" />
@@ -21,10 +27,6 @@
         <None Update="Resources\Vagrant\Vagrantfile">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Domain\Commands\Define\Provisioning\New" />
     </ItemGroup>
 
 </Project>

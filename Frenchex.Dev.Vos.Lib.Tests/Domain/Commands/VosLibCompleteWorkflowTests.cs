@@ -38,8 +38,6 @@ namespace Frenchex.Dev.Vos.Lib.Tests.Domain.Commands;
 [TestClass]
 public class VosLibCompleteWorkflowTests : AbstractUnitTest
 {
-    private UnitTest? _unitTest;
-
     public static IEnumerable<object[]> DataSource(int maxX, int maxY)
     {
         for (var i = 0; i < maxX; i++)
@@ -75,7 +73,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
     [TestCleanup]
     public async Task CleanUp()
     {
-        await Task.Run(() => _unitTest?.DisposeAsync());
+        await Task.Run(() => UnitTest?.DisposeAsync());
     }
 
     [TestMethod]
@@ -118,7 +116,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         var vsDebuggingContext = new UnitTest.VsCodeDebugging {TellMe = true, Keep = true, DevDebugging = true};
         var workingDirectory = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
 
-        var unitTest = _unitTest = VosUnitTestBase.CreateUnitTest<ExecutionContext>();
+        var unitTest = UnitTest = VosUnitTestBase.CreateUnitTest<ExecutionContext>();
         unitTest.BuildIfNecessary();
 
         await RunInitCommandAsyncUnitTest(
@@ -203,47 +201,52 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         string timeBox
     )
     {
-        await unitTest.ExecuteTimeBoxedAndAssertAndCleanupAsync<ExecutionContext>(
-            timeBox,
-            async (provider, _, context, _) =>
-            {
-                IList<IDestroyCommandRequest> list = destroyRequestsListBuilder(context.WorkingDirectory!, provider);
-                var command = provider.GetRequiredService<IDestroyCommand>();
-                context.DestroyCommandsResponses = new List<(IDestroyCommandRequest, IDestroyCommandResponse)>();
-
-                foreach (var item in list)
+        await unitTest
+            .ExecuteTimeBoxedAndAssertAndCleanupAsync<ExecutionContext>(
+                timeBox,
+                async (provider, _, context, _) =>
                 {
-                    var response = await command.ExecuteAsync(item);
-                    context.DestroyCommandsResponses.Add((item, response));
-                }
-            },
-            async (provider, _, context) =>
-            {
-                var statusCommand = provider.GetRequiredService<IStatusCommand>();
-                var statusCommandRequest = provider.GetRequiredService<IStatusCommandRequestBuilderFactory>().Factory()
-                    .BaseBuilder
-                    .UsingWorkingDirectory(context.WorkingDirectory)
-                    .UsingTimeout("10s")
-                    .Parent<IStatusCommandRequestBuilder>()
-                    .WithNames(context.WillBeUp!.ToArray())
-                    .Build();
+                    IList<IDestroyCommandRequest>
+                        list = destroyRequestsListBuilder(context.WorkingDirectory!, provider);
 
-                var statusCommandResponse = await statusCommand.ExecuteAsync(statusCommandRequest);
+                    var command = provider.GetRequiredService<IDestroyCommand>();
+                    context.DestroyCommandsResponses = new List<(IDestroyCommandRequest, IDestroyCommandResponse)>();
 
-                foreach (KeyValuePair<string, (string, VagrantMachineStatusEnum)> name in
-                         statusCommandResponse.Statuses)
+                    foreach (var item in list)
+                    {
+                        var response = await command.ExecuteAsync(item);
+                        context.DestroyCommandsResponses.Add((item, response));
+                    }
+                },
+                async (provider, _, context) =>
                 {
-                    Assert.AreEqual(VagrantMachineStatusEnum.NotCreated.ToString(), name.Value.ToString());
-                }
-            },
-            async (_, _, context) =>
-            {
-                Directory.Delete(context.WorkingDirectory!, true);
-                await Task.Delay((int) TimeSpan.FromSeconds(2).TotalMilliseconds);
-                Assert.IsFalse(Directory.Exists(context.WorkingDirectory));
-            },
-            unitTest.ServiceProvider ?? throw new ArgumentNullException(nameof(unitTest.ServiceProvider)),
-            vsDebuggingContext);
+                    var statusCommand = provider.GetRequiredService<IStatusCommand>();
+                    var statusCommandRequest = provider.GetRequiredService<IStatusCommandRequestBuilderFactory>()
+                        .Factory()
+                        .BaseBuilder
+                        .UsingWorkingDirectory(context.WorkingDirectory)
+                        .UsingTimeout("10s")
+                        .Parent<IStatusCommandRequestBuilder>()
+                        .WithNames(context.WillBeUp!.ToArray())
+                        .Build();
+
+                    var statusCommandResponse = await statusCommand.ExecuteAsync(statusCommandRequest);
+
+                    foreach (KeyValuePair<string, (string, VagrantMachineStatusEnum)> name in
+                             statusCommandResponse.Statuses)
+                    {
+                        Assert.AreEqual(VagrantMachineStatusEnum.NotCreated.ToString(), name.Value.ToString());
+                    }
+                },
+                async (_, _, context) =>
+                {
+                    Directory.Delete(context.WorkingDirectory!, true);
+                    await Task.Delay((int) TimeSpan.FromSeconds(2).TotalMilliseconds);
+                    Assert.IsFalse(Directory.Exists(context.WorkingDirectory));
+                },
+                unitTest.GetScopedServiceProvider(),
+                vsDebuggingContext
+            );
     }
 
     private async static Task RunHaltCommandsAsyncUnitTest(
@@ -253,28 +256,29 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         string timeBox
     )
     {
-        await unitTest.ExecuteTimeBoxedAndAssertAsync<ExecutionContext>(
-            timeBox,
-            async (provider, _, context, _) =>
-            {
-                IList<IHaltCommandRequest> list = haltRequestsListBuilder(context.WorkingDirectory!, provider);
-                var command = provider.GetRequiredService<IHaltCommand>();
-
-                context.HaltCommandsResponses = new List<(IHaltCommandRequest, IHaltCommandResponse)>();
-
-                foreach (var item in list)
+        await unitTest
+            .ExecuteTimeBoxedAndAssertAsync<ExecutionContext>(
+                timeBox,
+                async (provider, _, context, _) =>
                 {
-                    var response = await command.ExecuteAsync(item);
-                    context.HaltCommandsResponses.Add((item, response));
-                }
-            },
-            (_, _, context) =>
-            {
-                Assert.IsTrue(context.HaltCommandsResponses!.Any());
-                return Task.CompletedTask;
-            },
-            unitTest.ServiceProvider ?? throw new ArgumentNullException(nameof(unitTest.ServiceProvider)),
-            vsDebuggingContext);
+                    IList<IHaltCommandRequest> list = haltRequestsListBuilder(context.WorkingDirectory!, provider);
+                    var command = provider.GetRequiredService<IHaltCommand>();
+
+                    context.HaltCommandsResponses = new List<(IHaltCommandRequest, IHaltCommandResponse)>();
+
+                    foreach (var item in list)
+                    {
+                        var response = await command.ExecuteAsync(item);
+                        context.HaltCommandsResponses.Add((item, response));
+                    }
+                },
+                (_, _, context) =>
+                {
+                    Assert.IsTrue(context.HaltCommandsResponses!.Any());
+                    return Task.CompletedTask;
+                },
+                unitTest.GetScopedServiceProvider(),
+                vsDebuggingContext);
     }
 
     private async static Task RunSshCommandsAsyncUnitTest(
@@ -303,7 +307,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
                 Assert.IsTrue(context.SshCommandsResponses!.Any());
                 return Task.CompletedTask;
             },
-            unitTest.ServiceProvider ?? throw new ArgumentNullException(nameof(unitTest.ServiceProvider)),
+            unitTest.GetScopedServiceProvider(),
             vsDebuggingContext);
     }
 
@@ -345,7 +349,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
 
                 return Task.CompletedTask;
             },
-            unitTest.ServiceProvider ?? throw new ArgumentNullException(nameof(unitTest.ServiceProvider)),
+            unitTest.GetScopedServiceProvider(),
             vsDebuggingContext);
     }
 
@@ -418,7 +422,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
                     }
                 }
             },
-            unitTest.ServiceProvider ?? throw new ArgumentNullException(nameof(unitTest.ServiceProvider)),
+            unitTest.GetScopedServiceProvider(),
             vsDebuggingContext);
     }
 
@@ -460,7 +464,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
 
                 return Task.CompletedTask;
             },
-            unitTest.ServiceProvider ?? throw new ArgumentNullException(nameof(unitTest.ServiceProvider)),
+            unitTest.GetScopedServiceProvider(),
             vsDebuggingContext);
     }
 
@@ -501,7 +505,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
 
                 return Task.CompletedTask;
             },
-            unitTest.ServiceProvider ?? throw new ArgumentNullException(nameof(unitTest.ServiceProvider)),
+            unitTest.GetScopedServiceProvider(),
             vsDebuggingContext);
     }
 
@@ -533,7 +537,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
                 Assert.IsTrue(context.DefineMachineAddCommandsResponses!.Any());
                 return Task.CompletedTask;
             },
-            unitTest.ServiceProvider ?? throw new ArgumentNullException(nameof(unitTest.ServiceProvider)),
+            unitTest.GetScopedServiceProvider(),
             vsDebuggingContext
         );
     }
@@ -567,7 +571,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
 
                 return Task.CompletedTask;
             },
-            unitTest.ServiceProvider ?? throw new ArgumentNullException(nameof(unitTest.ServiceProvider)),
+            unitTest.GetScopedServiceProvider(),
             vsDebuggingContext);
     }
 
@@ -597,7 +601,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
 
                 return Task.CompletedTask;
             },
-            unitTest.ServiceProvider ?? throw new ArgumentNullException(nameof(unitTest.ServiceProvider)),
+            unitTest.GetScopedServiceProvider(),
             vsDebuggingContext);
     }
 }

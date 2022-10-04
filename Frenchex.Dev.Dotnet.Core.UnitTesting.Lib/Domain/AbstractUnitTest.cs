@@ -7,6 +7,16 @@ public abstract class AbstractUnitTest
 {
     protected UnitTest? UnitTest;
 
+    protected UnitTest GetUnitTest()
+    {
+        if (UnitTest is null)
+        {
+            throw new IllegalCallException();
+        }
+
+        return UnitTest;
+    }
+    
     [TestCleanup]
     public async Task InstanceCleanup()
     {
@@ -15,4 +25,9 @@ public abstract class AbstractUnitTest
             await UnitTest.DisposeAsync();
         }
     }
+}
+
+public class IllegalCallException : Exception
+{
+    
 }

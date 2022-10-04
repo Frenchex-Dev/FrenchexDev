@@ -20,8 +20,8 @@ public static class ServicesConfiguration
             .AddScoped<IUpCommandFacade, UpCommandFacade>()
             .AddScoped<IUpCommandRequestBuilder, UpCommandRequestBuilder>()
             .AddScoped<IUpCommandRequestBuilderFactory, UpCommandRequestBuilderFactory>()
-            .AddScoped<IUpCommandResponseBuilder, UpCommandResponseBuilder>()
-            .AddScoped<IUpCommandResponseBuilderFactory, UpCommandResponseBuilderFactory>()
+            .AddScoped<IUpCommandCommandResponseBuilder, UpCommandCommandResponseBuilder>()
+            .AddScoped<IUpCommandCommandResponseBuilderFactory, UpCommandCommandResponseBuilderFactory>()
 
             ;
         

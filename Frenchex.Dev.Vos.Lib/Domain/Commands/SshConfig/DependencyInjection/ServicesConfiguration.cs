@@ -20,8 +20,8 @@ public static class ServicesConfiguration
             .AddScoped<ISshConfigCommandFacade, SshConfigCommandFacade>()
             .AddScoped<ISshConfigCommandRequestBuilder, SshConfigCommandRequestBuilder>()
             .AddScoped<ISshConfigCommandRequestBuilderFactory, SshConfigCommandRequestBuilderFactory>()
-            .AddScoped<ISshConfigCommandResponseBuilder, SshConfigCommandResponseBuilder>()
-            .AddScoped<ISshConfigCommandResponseBuilderFactory, SshConfigCommandResponseBuilderFactory>()
+            .AddScoped<ISshConfigCommandCommandResponseBuilder, SshConfigCommandCommandResponseBuilder>()
+            .AddScoped<ISshConfigCommandCommandResponseBuilderFactory, SshConfigCommandCommandResponseBuilderFactory>()
 
             ;
         

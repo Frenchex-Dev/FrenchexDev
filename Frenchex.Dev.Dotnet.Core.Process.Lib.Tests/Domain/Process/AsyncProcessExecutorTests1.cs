@@ -74,7 +74,8 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
 
                 return Task.CompletedTask;
             },
-            UnitTest.ServiceProvider!);
+            GetUnitTest().GetScopedServiceProvider()
+            );
     }
 
     private class ExecutionContext : WithWorkingDirectoryExecutionContext

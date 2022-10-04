@@ -4,13 +4,13 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <RootNamespace>Frenchex.Dev.Dotnet.Wrapping.Lib</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib.csproj"/>
-        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Filesystem.Lib\Frenchex.Dev.Dotnet.Core.Filesystem.Lib.csproj"/>
-        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Process.Lib\Frenchex.Dev.Dotnet.Core.Process.Lib.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Filesystem.Lib\Frenchex.Dev.Dotnet.Core.Filesystem.Lib.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Process.Lib\Frenchex.Dev.Dotnet.Core.Process.Lib.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Wrapping.Lib.Abstractions\Frenchex.Dev.Dotnet.Core.Wrapping.Lib.Abstractions.csproj" />
     </ItemGroup>
 
 </Project>

@@ -11,7 +11,7 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Status.Command;
 
 public class StatusCommand : RootCommand, IStatusCommand
 {
-    private readonly IStatusCommandResponseBuilderFactory _statusCommandResponseBuilderFactory;
+    private readonly IStatusCommandCommandResponseBuilderFactory _statusCommandCommandResponseBuilderFactory;
     private readonly Vagrant.Lib.Abstractions.Domain.Commands.Status.Command.IStatusCommand _vagrantStatusCommand;
 
     private readonly Vagrant.Lib.Abstractions.Domain.Commands.Status.Request.IStatusCommandRequestBuilderFactory
@@ -19,14 +19,14 @@ public class StatusCommand : RootCommand, IStatusCommand
 
     public StatusCommand(
         IConfigurationLoadAction configurationLoadAction,
-        IStatusCommandResponseBuilderFactory statusCommandResponseBuilderFactory,
+        IStatusCommandCommandResponseBuilderFactory statusCommandCommandResponseBuilderFactory,
         IVexNameToVagrantNameConverter nameConverter,
         Vagrant.Lib.Abstractions.Domain.Commands.Status.Command.IStatusCommand statusCommand,
         Vagrant.Lib.Abstractions.Domain.Commands.Status.Request.IStatusCommandRequestBuilderFactory
             statusCommandRequestBuilderFactory
     ) : base(configurationLoadAction, nameConverter)
     {
-        _statusCommandResponseBuilderFactory = statusCommandResponseBuilderFactory;
+        _statusCommandCommandResponseBuilderFactory = statusCommandCommandResponseBuilderFactory;
         _vagrantStatusCommand = statusCommand;
         _vagrantStatusCommandRequestBuilderFactory = statusCommandRequestBuilderFactory;
     }
@@ -111,7 +111,7 @@ public class StatusCommand : RootCommand, IStatusCommand
             statuses.Add(machine, (providerString, status));
         }
 
-        return _statusCommandResponseBuilderFactory.Factory()
+        return _statusCommandCommandResponseBuilderFactory.Factory()
             .WithStatuses(statuses.ToImmutableDictionary())
             .Build();
     }

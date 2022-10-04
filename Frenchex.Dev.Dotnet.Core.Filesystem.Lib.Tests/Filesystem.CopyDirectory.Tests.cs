@@ -12,7 +12,7 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
     public void CreateUnitTest()
     {
         UnitTest = FilesystemUnitTestBase.CreateNewUnitTest<ExecutionContext>();
-        UnitTest.BuildIfNecessary();
+        GetUnitTest().BuildIfNecessary();
     }
 
     public static IEnumerable<object[]> DataSource()
@@ -25,7 +25,7 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
     [DynamicData(nameof(DataSource), DynamicDataSourceType.Method)]
     public async Task CanCopyDirectory(string directoryToCopy)
     {
-        await UnitTest!.ExecuteAndAssertAsync<ExecutionContext>(async (provider, _, context, _) =>
+        await GetUnitTest().ExecuteAndAssertAsync<ExecutionContext>(async (provider, _, context, _) =>
             {
                 var fs = provider.GetRequiredService<IFilesystem>();
 
@@ -59,7 +59,7 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
                     }
                 });
             },
-            UnitTest.ServiceProvider!
+            GetUnitTest().GetScopedServiceProvider()
         );
     }
 

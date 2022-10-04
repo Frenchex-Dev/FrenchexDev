@@ -10,14 +10,14 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Ssh.Command;
 
 public class SshCommand : RootCommand, ISshCommand
 {
-    private readonly ISshCommandResponseBuilderFactory _responseBuilderFactory;
+    private readonly ISshCommandCommandResponseBuilderFactory _commandResponseBuilderFactory;
     private readonly Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Command.ISshCommand _vagrantSshCommand;
 
     private readonly Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Request.ISshCommandRequestBuilderFactory
         _vagrantSshCommandRequestBuilderFactory;
 
     public SshCommand(
-        ISshCommandResponseBuilderFactory responseBuilderFactory,
+        ISshCommandCommandResponseBuilderFactory commandResponseBuilderFactory,
         IConfigurationLoadAction configurationLoadAction,
         IVexNameToVagrantNameConverter nameConverter,
         Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Command.ISshCommand vagrantSshCommand,
@@ -25,7 +25,7 @@ public class SshCommand : RootCommand, ISshCommand
             sshCommandRequestBuilderFactory
     ) : base(configurationLoadAction, nameConverter)
     {
-        _responseBuilderFactory = responseBuilderFactory;
+        _commandResponseBuilderFactory = commandResponseBuilderFactory;
         _vagrantSshCommand = vagrantSshCommand;
         _vagrantSshCommandRequestBuilderFactory = sshCommandRequestBuilderFactory;
     }
@@ -63,7 +63,7 @@ public class SshCommand : RootCommand, ISshCommand
             }
         }
 
-        var responseBuilder = _responseBuilderFactory.Build();
+        var responseBuilder = _commandResponseBuilderFactory.Build();
 
         return responseBuilder.Build();
     }

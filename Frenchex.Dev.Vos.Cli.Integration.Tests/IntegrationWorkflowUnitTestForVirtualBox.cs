@@ -53,7 +53,7 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
                 return Task.CompletedTask;
             },
             (_, _, _) => Task.CompletedTask,
-            unitTest.ServiceProvider!,
+            unitTest.GetScopedServiceProvider(),
             vsCodeDebugging);
     }
 
@@ -125,23 +125,25 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
         UnitTest.VsCodeDebugging vsCodeDebugging
     )
     {
-        await UnitTest!.ExecuteAndAssertAsync<ExecutionContext>(
-            async (provider, _, _, _) =>
-            {
-                var sut = provider.GetRequiredService<SubjectUnderTest>().RootCommand;
-
-                foreach (var workingDir in workingDirectories)
+        await GetUnitTest()
+            .ExecuteAndAssertAsync<ExecutionContext>(
+                async (provider, _, _, _) =>
                 {
-                    foreach (var command in commands)
+                    var sut = provider.GetRequiredService<SubjectUnderTest>().RootCommand;
+
+                    foreach (var workingDir in workingDirectories)
                     {
-                        var vosCommand = $"vos {command.Command.Replace(WorkingDirectoryMarker, workingDir)}";
-                        await execCommand(vosCommand, sut);
+                        foreach (var command in commands)
+                        {
+                            var vosCommand = $"vos {command.Command.Replace(WorkingDirectoryMarker, workingDir)}";
+                            await execCommand(vosCommand, sut);
+                        }
                     }
-                }
-            },
-            (_, _, _) => Task.CompletedTask,
-            UnitTest.ServiceProvider!,
-            vsCodeDebugging);
+                },
+                (_, _, _) => Task.CompletedTask,
+                GetUnitTest().GetScopedServiceProvider(),
+                vsCodeDebugging
+            );
     }
 
     public class Payload
