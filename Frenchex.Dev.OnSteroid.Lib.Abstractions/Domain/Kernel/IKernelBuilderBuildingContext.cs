@@ -1,4 +1,4 @@
-﻿namespace Frenchex.Dev.OnSteroid.Lib.Domain.Kernel;
+﻿namespace Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.Kernel;
 
 public interface IKernelBuilderBuildingContext
 {

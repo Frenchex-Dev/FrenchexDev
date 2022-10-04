@@ -22,7 +22,7 @@ public class HostConfigurationConfiguration : IHostConfigurationConfiguration
         hostConfiguration
             .SetBasePath(context.BasePath)
             .AddJsonFile(context.HostSettings, true)
-            .AddEnvironmentVariables(context.Prefix)
+            .AddEnvironmentVariables(context.EnvVarPrefix)
             .AddCommandLine(_entrypointInfo.CommandLineArgs)
             ;
     }

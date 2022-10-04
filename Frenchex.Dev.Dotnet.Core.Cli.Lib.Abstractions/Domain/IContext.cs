@@ -4,6 +4,7 @@ public interface IContext
 {
     string HostSettings { get; }
     string AppSettings { get; }
-    string Prefix { get; }
+    string EnvVarPrefix { get; }
     string BasePath { get; }
+    string CurrentDomainBaseDirectory { get; set; }
 }

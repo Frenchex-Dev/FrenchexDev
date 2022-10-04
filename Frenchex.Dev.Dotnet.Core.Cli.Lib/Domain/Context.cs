@@ -7,18 +7,21 @@ public class Context : IContext
     public Context(
         string hostSettings,
         string appSettings,
-        string prefix,
-        string basePath
+        string envVarPrefix,
+        string basePath,
+        string currentDomainBaseDirectory
     )
     {
         HostSettings = hostSettings;
         AppSettings = appSettings;
-        Prefix = prefix;
+        EnvVarPrefix = envVarPrefix;
         BasePath = basePath;
+        CurrentDomainBaseDirectory = currentDomainBaseDirectory;
     }
 
     public string HostSettings { get; }
     public string AppSettings { get; }
-    public string Prefix { get; }
+    public string EnvVarPrefix { get; }
     public string BasePath { get; }
+    public string CurrentDomainBaseDirectory { get; set; }
 }

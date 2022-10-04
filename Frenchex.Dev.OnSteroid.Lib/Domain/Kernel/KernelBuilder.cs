@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.Kernel;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.OnSteroid.Lib.Domain.Kernel;
 

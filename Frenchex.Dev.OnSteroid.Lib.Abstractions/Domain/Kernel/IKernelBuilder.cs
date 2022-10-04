@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Frenchex.Dev.OnSteroid.Lib.Domain.Kernel;
+namespace Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.Kernel;
 
-public interface IKernelBuilderBuildingContextFactory
+public interface IKernelBuilder
 {
-    KernelBuilderBuildingContext Build(
+    public Task<IKernel> Build(
         IServiceCollection servicesCollection,
         IKernerlConfiguration kernelConfiguration
     );

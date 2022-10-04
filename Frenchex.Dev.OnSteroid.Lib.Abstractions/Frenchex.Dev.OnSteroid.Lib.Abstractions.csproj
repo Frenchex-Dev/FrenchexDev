@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib.csproj" />
     </ItemGroup>
 
 </Project>

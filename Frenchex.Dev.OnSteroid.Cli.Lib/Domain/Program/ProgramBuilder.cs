@@ -1,14 +1,14 @@
 ﻿using Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions.Domain;
-using Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
 using Frenchex.Dev.OnSteroid.Cli.Lib.DependencyInjection;
+using Frenchex.Dev.OnSteroid.Cli.Lib.Domain.Kernel;
 using Frenchex.Dev.OnSteroid.Lib.Domain.Kernel;
 using Frenchex.Dev.OnSteroid.Lib.Domain.Workflows.Kernel;
 using Frenchex.Dev.OnSteroid.Lib.Kernel;
-using Frenchex.Dev.Vos.Lib.Kernel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using IServicesConfiguration = Frenchex.Dev.OnSteroid.Lib.Domain.DependencyInjection.IServicesConfiguration;
+using IServicesConfiguration =
+    Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.DependencyInjection.IServicesConfiguration;
 
 namespace Frenchex.Dev.OnSteroid.Cli.Lib.Domain.Program;
 
@@ -17,20 +17,16 @@ public class ProgramBuilder : IProgramBuilder
     public async Task<IProgram> BuildAsync<T>(
         IServiceCollection serviceCollection,
         Action<IServiceCollection> registerServices,
-        string hostSettingsJsonFilename,
-        string appSettingsJsonFilename,
-        string currentDomainBaseDirectory,
-        string envVarPrefix,
-        string basePath
+        IContext context
     ) where T : class, IHostedService
     {
         var vosKernelBuilderFlow =
-            new KernelBuilderFlow(
+            new WorkflowBasedKernelBuilder(
                 new KernelInitializeAndBuildWorkflow(
                     new KernelBuilderBuildingContextFactory()));
 
-        await using var vosKernel = await vosKernelBuilderFlow.FlowAsync(serviceCollection);
-        await using var vosAsyncScope = await vosKernel.CreateScopeAsync();
+        await using var vosKernel = await vosKernelBuilderFlow.Build(serviceCollection);
+        await using var vosAsyncScope = vosKernel.GetOrCreateAsyncScope();
 
         var onSteroidCliServicesConfiguration = new ServicesConfiguration();
         var kernelInitializeAndBuildFlow =
@@ -39,17 +35,13 @@ public class ProgramBuilder : IProgramBuilder
         await using var kernel =
             await kernelInitializeAndBuildFlow.FlowAsync(serviceCollection, onSteroidCliServicesConfiguration);
 
-        await using var scope = await kernel.CreateScopeAsync();
+        await using var scope = kernel.GetOrCreateAsyncScope();
         var programBuilder = scope.ServiceProvider.GetRequiredService<IHostBasedProgramBuilder>();
 
         var program = await BuildProgram(
             programBuilder,
             onSteroidCliServicesConfiguration,
-            hostSettingsJsonFilename,
-            appSettingsJsonFilename,
-            currentDomainBaseDirectory,
-            envVarPrefix,
-            basePath,
+            context,
             services =>
             {
                 onSteroidCliServicesConfiguration.ConfigureServices(services);
@@ -73,11 +65,7 @@ public class ProgramBuilder : IProgramBuilder
     private async static Task<IProgram> BuildProgram(
         IHostBasedProgramBuilder hostBasedProgramBuilder,
         IServicesConfiguration servicesConfiguration,
-        string hostSettingsJsonFilename,
-        string appSettingsJsonFilename,
-        string appDomainDirectory,
-        string envVarPrefix,
-        string basePath,
+        IContext context,
         Action<IServiceCollection> registerServices,
         Action<IServiceCollection> registerHostedServices,
         Action<IServiceCollection> registerDependencyServices,
@@ -87,12 +75,7 @@ public class ProgramBuilder : IProgramBuilder
         return await Task.Run(() =>
         {
             var program = hostBasedProgramBuilder.Build(
-                new Context(
-                    Path.GetFullPath(hostSettingsJsonFilename, appDomainDirectory),
-                    Path.GetFullPath(appSettingsJsonFilename, appDomainDirectory),
-                    envVarPrefix,
-                    basePath
-                ),
+                context,
                 services =>
                 {
                     servicesConfiguration.ConfigureServices(services);

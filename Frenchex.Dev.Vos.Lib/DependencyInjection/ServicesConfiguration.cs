@@ -1,6 +1,6 @@
-﻿using Frenchex.Dev.OnSteroid.Lib.Domain.DependencyInjection;
+﻿using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.DependencyInjection;
+using Frenchex.Dev.OnSteroid.Lib.Domain.DependencyInjection;
 using Frenchex.Dev.Vos.Lib.Domain.Resources;
-using Frenchex.Dev.Vos.Lib.Kernel;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.Vos.Lib.DependencyInjection;
@@ -18,11 +18,6 @@ public class ServicesConfiguration : IServicesConfiguration
             .ConfigureServices(serviceCollection,
                 () =>
                 {
-                    // kernel builder flow
-                    serviceCollection
-                        .AddScoped<IKernelBuilderFlow, KernelBuilderFlow>()
-                        ;
-
                     // resources
                     serviceCollection
                         .AddScoped<IVagrantfileResource, VagrantfileResource>()

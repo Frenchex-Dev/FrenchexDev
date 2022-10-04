@@ -1,37 +1,37 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.Kernel;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.OnSteroid.Lib.Domain.Kernel;
 
-public class Kernel : IKernel, IAsyncDisposable, IDisposable
+public class Kernel : IKernel
 {
-    public Kernel(
-        Func<Task<ServiceProvider>> serviceProviderBuilder,
-        IKernerlConfiguration configuration
-    )
+    public Kernel(IServiceProvider serviceProvider)
     {
-        ServiceProviderBuilder = serviceProviderBuilder;
-        Configuration = configuration;
+        ServiceProvider = serviceProvider;
     }
 
-    private Func<Task<ServiceProvider>> ServiceProviderBuilder { get; }
+    public IServiceProvider ServiceProvider { get; init; }
 
-    public void Dispose()
+    public Dictionary<string, AsyncServiceScope> AsyncScopes { get; init; } = new();
+    public Dictionary<string, IServiceScope> Scopes { get; init; } = new();
+
+    public AsyncServiceScope GetOrCreateAsyncScope(string name)
     {
-        foreach (KeyValuePair<string, AsyncServiceScope> scope in Scopes)
-        {
-            scope.Value.DisposeAsync();
-        }
+        if (AsyncScopes.ContainsKey(name))
+            return AsyncScopes[name];
+
+        var newScope = ServiceProvider.CreateAsyncScope();
+        AsyncScopes.Add(name, newScope);
+
+        return newScope;
     }
 
-    public IKernerlConfiguration Configuration { get; init; }
-
-
-    public Dictionary<string, AsyncServiceScope> Scopes { get; } = new();
-
-    public async Task<AsyncServiceScope> CreateScopeAsync(string name)
+    public IServiceScope GetOrCreateScope(string name)
     {
-        var serviceProvider = await ServiceProviderBuilder.Invoke();
-        var newScope = serviceProvider.CreateAsyncScope();
+        if (Scopes.ContainsKey(name))
+            return Scopes[name];
+
+        var newScope = ServiceProvider.CreateScope();
         Scopes.Add(name, newScope);
 
         return newScope;
@@ -39,12 +39,26 @@ public class Kernel : IKernel, IAsyncDisposable, IDisposable
 
     public async ValueTask DisposeAsync()
     {
-        await Task.Run(() =>
+        await DisposeAsyncScopes();
+
+        DisposeScopes();
+        
+        GC.SuppressFinalize(this);
+    }
+
+    private void DisposeScopes()
+    {
+        foreach (KeyValuePair<string, IServiceScope> scope in Scopes)
         {
-            foreach (KeyValuePair<string, AsyncServiceScope> scope in Scopes)
-            {
-                scope.Value.DisposeAsync();
-            }
-        });
+            scope.Value.Dispose();
+        }
+    }
+
+    private async ValueTask DisposeAsyncScopes()
+    {
+        foreach (KeyValuePair<string, AsyncServiceScope> scope in AsyncScopes)
+        {
+            await scope.Value.DisposeAsync();
+        }
     }
 }

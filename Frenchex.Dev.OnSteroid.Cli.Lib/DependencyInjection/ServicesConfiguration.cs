@@ -1,4 +1,5 @@
 ﻿using Frenchex.Dev.OnSteroid.Cli.Lib.Domain.Program;
+using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.DependencyInjection;
 using Frenchex.Dev.OnSteroid.Lib.Domain.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 

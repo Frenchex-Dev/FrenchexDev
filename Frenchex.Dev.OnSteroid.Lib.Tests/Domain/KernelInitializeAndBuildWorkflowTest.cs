@@ -1,4 +1,5 @@
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
+using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.Kernel;
 using Frenchex.Dev.OnSteroid.Lib.DependencyInjection;
 using Frenchex.Dev.OnSteroid.Lib.Domain.Kernel;
 using Frenchex.Dev.OnSteroid.Lib.Domain.Workflows.Kernel;
@@ -38,7 +39,7 @@ public class KernelInitializeAndBuildWorkflowTest : AbstractUnitTest
                 var kernelConfiguration = new KernelConfiguration(servicesConfiguration);
 
                 context.Kernel = await kernelBuilderFlow.FlowAsync(serviceCollection, kernelConfiguration);
-                context.DefaultScope = await context.Kernel.CreateScopeAsync();
+                context.DefaultScope = context.Kernel.GetOrCreateAsyncScope();
             },
             async (provider, root, context) =>
             {
@@ -49,7 +50,7 @@ public class KernelInitializeAndBuildWorkflowTest : AbstractUnitTest
                         throw new InvalidProgramException();
                     }
 
-                    var servedScoped = context.Kernel.Scopes[defaultScopeName];
+                    var servedScoped = context.Kernel.AsyncScopes[defaultScopeName];
                     Assert.AreEqual(context.DefaultScope, servedScoped, "Same scope");
                 });
             },

@@ -9,10 +9,6 @@ public interface IProgramBuilder
     public Task<IProgram> BuildAsync<T>(
         IServiceCollection serviceCollection,
         Action<IServiceCollection> registerServices,
-        string hostSettingsJsonFilename,
-        string appSettingsJsonFilename,
-        string currentDomainBaseDirectory,
-        string envVarPrefix,
-        string basePath
+        IContext context
     ) where T : class, IHostedService;
 }

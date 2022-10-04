@@ -1,4 +1,5 @@
 ﻿using Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib.Domain;
+using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.DependencyInjection;
 using Frenchex.Dev.OnSteroid.Lib.Domain.DependencyInjection;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands;

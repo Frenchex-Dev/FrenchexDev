@@ -28,7 +28,7 @@ public class AppConfigurationConfiguration : IAppConfigurationConfiguration
             true
         );
 
-        appConfiguration.AddEnvironmentVariables(context.Prefix);
+        appConfiguration.AddEnvironmentVariables(context.EnvVarPrefix);
         appConfiguration.AddCommandLine(_entrypointInfo.CommandLineArgs);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.DependencyInjection;
+using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.Kernel;
 using Frenchex.Dev.OnSteroid.Lib.Domain.DependencyInjection;
 using Frenchex.Dev.OnSteroid.Lib.Domain.Kernel;
 using Frenchex.Dev.OnSteroid.Lib.Domain.Workflows.Kernel;

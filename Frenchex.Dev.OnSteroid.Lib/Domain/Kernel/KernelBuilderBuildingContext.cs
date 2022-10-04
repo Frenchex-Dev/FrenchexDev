@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.Kernel;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.OnSteroid.Lib.Domain.Kernel;
 
@@ -20,11 +21,6 @@ public class KernelBuilderBuildingContext : IKernelBuilderBuildingContext
     {
         KernelConfiguration.ServicesConfiguration.ConfigureServices(ServicesCollection);
 
-        async Task<ServiceProvider> BuildServiceProvider()
-        {
-            return await Task.Run(() => ServicesCollection.BuildServiceProvider());
-        }
-
-        return new Kernel(BuildServiceProvider, KernelConfiguration);
+        return new Kernel(ServicesCollection.BuildServiceProvider());
     }
 }

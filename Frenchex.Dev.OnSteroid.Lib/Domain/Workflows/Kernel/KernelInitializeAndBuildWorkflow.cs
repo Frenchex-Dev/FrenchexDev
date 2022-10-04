@@ -1,4 +1,5 @@
-﻿using Frenchex.Dev.OnSteroid.Lib.Domain.Kernel;
+﻿using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.Kernel;
+using Frenchex.Dev.OnSteroid.Lib.Domain.Kernel;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.OnSteroid.Lib.Domain.Workflows.Kernel;
@@ -20,13 +21,10 @@ public class KernelInitializeAndBuildWorkflow : IKernelInitializeAndBuildWorkflo
         IKernerlConfiguration kernelConfiguration
     )
     {
-        return await Task.Run(async () =>
-        {
-            _cachedKernelBuilderBuildingContext ??= await Initialize(serviceCollection, kernelConfiguration);
-            var kernel = _cachedKernelBuilderBuildingContext.Build();
+        _cachedKernelBuilderBuildingContext ??= await Initialize(serviceCollection, kernelConfiguration);
+        var kernel = _cachedKernelBuilderBuildingContext.Build();
 
-            return kernel;
-        });
+        return kernel;
     }
 
     public async Task<IKernelBuilderBuildingContext> Initialize(
@@ -34,8 +32,8 @@ public class KernelInitializeAndBuildWorkflow : IKernelInitializeAndBuildWorkflo
         IKernerlConfiguration kernelConfiguration
     )
     {
-        return await Task.Run(() =>
-            _kernelBuilderBuildingContextFactory.Build(serviceCollection, kernelConfiguration));
+        var built = _kernelBuilderBuildingContextFactory.Build(serviceCollection, kernelConfiguration);
+        return built;
     }
 
     public async Task<IKernel> Build(
