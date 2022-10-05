@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Domain\Base" />
+      <Folder Include="Domain\Project\Generator" />
+      <Folder Include="Domain\Project\Structure" />
+      <Folder Include="Domain\Solution" />
+      <Folder Include="Domain\SolutionFolder" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Filesystem.Lib\Frenchex.Dev.Dotnet.Core.Filesystem.Lib.csproj" />
+      <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Solution.Lib.Abstractions\Frenchex.Dev.Dotnet.Core.Solution.Lib.Abstractions.csproj" />
+    </ItemGroup>
+
+</Project>
