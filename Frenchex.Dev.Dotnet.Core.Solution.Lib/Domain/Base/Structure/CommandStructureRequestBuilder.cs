@@ -2,14 +2,14 @@
 
 public class CommandStructureBuilder
 {
-    private DirectoryStructureGenerator _directoryStructureGenerator;
-    private FilesGenerator _filesGenerator;
+    private DirectoryStructureGenerator? _directoryStructureGenerator;
+    private FilesGenerator? _filesGenerator;
 
     public CommandStructureRequest Build()
     {
         return new CommandStructureRequest(
-            _directoryStructureGenerator,
-            _filesGenerator
+            _directoryStructureGenerator ?? throw new ArgumentNullException(nameof(_directoryStructureGenerator)),
+            _filesGenerator ?? throw new ArgumentNullException(nameof(_filesGenerator))
         );
     }
     public CommandStructureBuilder WithDirectoryStructureGenerator(DirectoryStructureGenerator directoryStructureGenerator)

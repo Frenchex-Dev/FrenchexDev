@@ -10,8 +10,8 @@ await HostBasedProgramBuildAndRunAsyncWorkflow.BuildAndRunAsync<Host>(
     new ProgramBuilder(),
     new ServicesConfiguration(),
     new Context(
-        "Configurations\\hostsettings.json",
-        "Configurations\\appsettings.json",
+        "Configurations\\vos.hostsettings.json",
+        "Configurations\\vos.appsettings.json",
         "FRENCHEXDEV_VOS",
         Directory.GetCurrentDirectory(),
         AppDomain.CurrentDomain.BaseDirectory

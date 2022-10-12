@@ -6,7 +6,7 @@ namespace Frenchex.Dev.OnSteroid.Lib.Domain.Workflows.Kernel;
 
 public interface IKernelInitializeAndBuildWorkflow : IKernelBuildingWorkflow
 {
-    Task<IKernelBuilderBuildingContext> Initialize(
+    Task<IKernelBuilderBuildingContext> FactoryContext(
         IServiceCollection serviceCollection,
         IKernerlConfiguration kernelConfiguration
     );

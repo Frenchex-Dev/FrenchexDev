@@ -4,7 +4,7 @@ namespace Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.Kernel;
 
 public interface IKernelBuilderBuildingContextFactory
 {
-    IKernelBuilderBuildingContext Build(
+    IKernelBuilderBuildingContext Factory(
         IServiceCollection servicesCollection,
         IKernerlConfiguration kernelConfiguration
     );

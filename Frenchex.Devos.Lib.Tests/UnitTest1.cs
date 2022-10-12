@@ -1,4 +1,4 @@
-namespace Frenchex.Dev.OnSteroid.Cli.Lib.Integration.Tests;
+namespace Frenchex.Devos.Lib.Tests;
 
 [TestClass]
 public class UnitTest1

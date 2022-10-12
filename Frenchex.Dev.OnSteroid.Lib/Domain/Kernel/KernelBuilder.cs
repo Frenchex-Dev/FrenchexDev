@@ -21,7 +21,7 @@ public class KernelBuilder : IKernelBuilder
     {
         return await Task.Run(() =>
         {
-            var buildingContext = _kernelBuilderBuildingContextFactory.Build(servicesCollection, kernelConfiguration);
+            var buildingContext = _kernelBuilderBuildingContextFactory.Factory(servicesCollection, kernelConfiguration);
             var builtKernel = buildingContext.Build();
 
             return builtKernel;

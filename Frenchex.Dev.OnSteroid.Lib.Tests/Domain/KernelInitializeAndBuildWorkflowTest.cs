@@ -66,10 +66,11 @@ public class KernelInitializeAndBuildWorkflowTest : AbstractUnitTest
             GetUnitTest().GetScopedServiceProvider()
         );
     }
+
+    private class ExecutionContext : WithWorkingDirectoryExecutionContext
+    {
+        public IKernel? Kernel { get; set; }
+        public AsyncServiceScope DefaultScope { get; set; }
+    }
 }
 
-public class ExecutionContext : WithWorkingDirectoryExecutionContext
-{
-    public IKernel? Kernel { get; set; }
-    public AsyncServiceScope DefaultScope { get; set; }
-}

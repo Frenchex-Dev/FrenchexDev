@@ -21,18 +21,18 @@ public class KernelInitializeAndBuildWorkflow : IKernelInitializeAndBuildWorkflo
         IKernerlConfiguration kernelConfiguration
     )
     {
-        _cachedKernelBuilderBuildingContext ??= await Initialize(serviceCollection, kernelConfiguration);
+        _cachedKernelBuilderBuildingContext ??= await FactoryContext(serviceCollection, kernelConfiguration);
         var kernel = _cachedKernelBuilderBuildingContext.Build();
 
         return kernel;
     }
 
-    public async Task<IKernelBuilderBuildingContext> Initialize(
+    public async Task<IKernelBuilderBuildingContext> FactoryContext(
         IServiceCollection serviceCollection,
         IKernerlConfiguration kernelConfiguration
     )
     {
-        var built = _kernelBuilderBuildingContextFactory.Build(serviceCollection, kernelConfiguration);
+        var built = _kernelBuilderBuildingContextFactory.Factory(serviceCollection, kernelConfiguration);
         return built;
     }
 
