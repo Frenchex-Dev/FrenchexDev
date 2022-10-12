@@ -1,6 +1,6 @@
 ﻿using System.CommandLine;
-using Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib.Domain;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands;
+using Frenchex.Dev.Vos.Cli.IntegrationLib.Domain;
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain;
 

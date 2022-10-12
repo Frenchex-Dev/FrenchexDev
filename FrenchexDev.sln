@@ -1,88 +1,91 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dotnet", "Dotnet", "{2B6D4FC9-851B-45E4-8C60-49F13E7B7583}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{4EF79347-F272-4C39-B838-268B68ADC6AA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{07075CDD-1FD9-4221-8129-0D408EA4F39B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib", "Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib.csproj", "{5BA9259E-5B3E-4253-B44A-E30E341322F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib", "Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Lib.csproj", "{5BA9259E-5B3E-4253-B44A-E30E341322F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Abstractions.Lib", "Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Abstractions.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Abstractions.Lib.csproj", "{FE69ACA0-4437-4C13-BF82-0C632414A6EB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Abstractions.Lib", "Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Abstractions.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Configuration.Abstractions.Lib.csproj", "{FE69ACA0-4437-4C13-BF82-0C632414A6EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Lib", "Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Lib.csproj", "{F1AAD2CF-360F-4D8E-AD58-424395157EB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Lib", "Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Lib.csproj", "{F1AAD2CF-360F-4D8E-AD58-424395157EB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib", "Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib.csproj", "{6D52A687-0445-48A6-9C8C-906BF9011601}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib", "Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib.csproj", "{6D52A687-0445-48A6-9C8C-906BF9011601}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Lib", "Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Lib.csproj", "{0681CFF7-5391-4FA4-A346-2BEF8FC86B55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Lib", "Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Lib.csproj", "{0681CFF7-5391-4FA4-A346-2BEF8FC86B55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Abstractions.Lib", "Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Abstractions.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Abstractions.Lib.csproj", "{3D9B7B6C-ACF1-4895-9914-C9CF1DEFC3D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Abstractions.Lib", "Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Abstractions.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Abstractions.Lib.csproj", "{3D9B7B6C-ACF1-4895-9914-C9CF1DEFC3D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.WindowsServices.Lib", "Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.WindowsServices.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.WindowsServices.Lib.csproj", "{ACEAB60B-14DE-474A-AAE1-001DF79BD380}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.WindowsServices.Lib", "Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.WindowsServices.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.WindowsServices.Lib.csproj", "{ACEAB60B-14DE-474A-AAE1-001DF79BD380}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Systemd.Lib", "Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Systemd.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Systemd.Lib.csproj", "{3B24E88A-C70C-427B-AE5B-8D0B8C452956}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Systemd.Lib", "Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Systemd.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Hosting.Systemd.Lib.csproj", "{3B24E88A-C70C-427B-AE5B-8D0B8C452956}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTesting", "UnitTesting", "{D4A8A64B-65D5-4FEF-99F7-D426610AAFC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.UnitTesting.Lib", "Frenchex.Dev.Dotnet.Core.UnitTesting.Lib\Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.csproj", "{0D70E3F9-2E70-4929-B631-C2510B65550A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.UnitTesting.Lib", "Frenchex.Dev.Dotnet.Core.UnitTesting.Lib\Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.csproj", "{0D70E3F9-2E70-4929-B631-C2510B65550A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Filesystem", "Filesystem", "{945D8934-3EE6-4365-942D-8F10E5D48268}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Filesystem.Lib", "Frenchex.Dev.Dotnet.Core.Filesystem.Lib\Frenchex.Dev.Dotnet.Core.Filesystem.Lib.csproj", "{D55C2755-6BD7-446F-9056-F5ADC337C253}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Filesystem.Lib", "Frenchex.Dev.Dotnet.Core.Filesystem.Lib\Frenchex.Dev.Dotnet.Core.Filesystem.Lib.csproj", "{D55C2755-6BD7-446F-9056-F5ADC337C253}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Tests", "Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Tests\Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Tests.csproj", "{895BBAB2-5BB7-4BC4-BF31-003C47AF050F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Tests", "Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Tests\Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Tests.csproj", "{895BBAB2-5BB7-4BC4-BF31-003C47AF050F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Tests", "Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Tests\Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Tests.csproj", "{00A225A3-D38D-4A60-878F-4E9520AE8A26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Tests", "Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Tests\Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Tests.csproj", "{00A225A3-D38D-4A60-878F-4E9520AE8A26}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Process", "Process", "{1B9D12DF-200B-48F2-9145-08D66759513B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Process.Lib", "Frenchex.Dev.Dotnet.Core.Process.Lib\Frenchex.Dev.Dotnet.Core.Process.Lib.csproj", "{8921ED3C-540A-4266-9B6F-2AB2942F3044}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Process.Lib", "Frenchex.Dev.Dotnet.Core.Process.Lib\Frenchex.Dev.Dotnet.Core.Process.Lib.csproj", "{8921ED3C-540A-4266-9B6F-2AB2942F3044}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Dependencies.Logging.Lib", "Frenchex.Dev.Dotnet.Core.Dependencies.Logging.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Logging.Lib.csproj", "{8BC4293B-BEC0-473A-A099-BC710C209065}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Dependencies.Logging.Lib", "Frenchex.Dev.Dotnet.Core.Dependencies.Logging.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Logging.Lib.csproj", "{8BC4293B-BEC0-473A-A099-BC710C209065}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Dependencies.Logging.Abstractions.Lib", "Frenchex.Dev.Dotnet.Core.Dependencies.Logging.Abstractions.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Logging.Abstractions.Lib.csproj", "{00519867-BC2D-4C48-A781-ABB67ED88401}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Dependencies.Logging.Abstractions.Lib", "Frenchex.Dev.Dotnet.Core.Dependencies.Logging.Abstractions.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.Logging.Abstractions.Lib.csproj", "{00519867-BC2D-4C48-A781-ABB67ED88401}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Process.Lib.Tests", "Frenchex.Dev.Dotnet.Core.Process.Lib.Tests\Frenchex.Dev.Dotnet.Core.Process.Lib.Tests.csproj", "{BBDC9B39-4738-4FDB-B0B7-4A342B3F316E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Process.Lib.Tests", "Frenchex.Dev.Dotnet.Core.Process.Lib.Tests\Frenchex.Dev.Dotnet.Core.Process.Lib.Tests.csproj", "{BBDC9B39-4738-4FDB-B0B7-4A342B3F316E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vagrant", "Vagrant", "{4D73E072-6D3A-4705-9D9D-682325986CB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Vagrant.Lib", "Frenchex.Dev.Vagrant.Lib\Frenchex.Dev.Vagrant.Lib.csproj", "{12591547-EB40-4628-9127-A676A88CA6D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Vagrant.Lib", "Frenchex.Dev.Vagrant.Lib\Frenchex.Dev.Vagrant.Lib.csproj", "{12591547-EB40-4628-9127-A676A88CA6D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Vagrant.Lib.Tests", "Frenchex.Dev.Vagrant.Lib.Tests\Frenchex.Dev.Vagrant.Lib.Tests.csproj", "{0967AF42-F1BD-4B88-ABEA-28DCFB6A2576}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Vagrant.Lib.Tests", "Frenchex.Dev.Vagrant.Lib.Tests\Frenchex.Dev.Vagrant.Lib.Tests.csproj", "{0967AF42-F1BD-4B88-ABEA-28DCFB6A2576}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Vos", "Vos", "{873694C0-6AD2-43A7-9FCE-7A9F5D01A96C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Vos.Lib", "Frenchex.Dev.Vos.Lib\Frenchex.Dev.Vos.Lib.csproj", "{C1DE73C7-96C1-4D33-BC5F-9AEF85D2174C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Vos.Lib", "Frenchex.Dev.Vos.Lib\Frenchex.Dev.Vos.Lib.csproj", "{C1DE73C7-96C1-4D33-BC5F-9AEF85D2174C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Dependencies.NewtonSoft.Json", "Frenchex.Dev.Dotnet.Core.Dependencies.NewtonSoft.Json\Frenchex.Dev.Dotnet.Core.Dependencies.NewtonSoft.Json.csproj", "{866454D9-25A3-4400-80D8-07A4FF24E3D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Dependencies.NewtonSoft.Json", "Frenchex.Dev.Dotnet.Core.Dependencies.NewtonSoft.Json\Frenchex.Dev.Dotnet.Core.Dependencies.NewtonSoft.Json.csproj", "{866454D9-25A3-4400-80D8-07A4FF24E3D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Vos.Lib.Tests", "Frenchex.Dev.Vos.Lib.Tests\Frenchex.Dev.Vos.Lib.Tests.csproj", "{D1F81450-44D9-488B-A7BB-450D5F1B98CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Vos.Lib.Tests", "Frenchex.Dev.Vos.Lib.Tests\Frenchex.Dev.Vos.Lib.Tests.csproj", "{D1F81450-44D9-488B-A7BB-450D5F1B98CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Dependencies.System.CommandLine", "Frenchex.Dev.Dotnet.Core.Dependencies.System.CommandLine\Frenchex.Dev.Dotnet.Core.Dependencies.System.CommandLine.csproj", "{9AB55D71-5ED5-4B96-BB79-0D242DF7B2DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Dependencies.System.CommandLine", "Frenchex.Dev.Dotnet.Core.Dependencies.System.CommandLine\Frenchex.Dev.Dotnet.Core.Dependencies.System.CommandLine.csproj", "{9AB55D71-5ED5-4B96-BB79-0D242DF7B2DB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cli", "Cli", "{23F16B93-8B78-4CC1-A369-D65966D00D20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Cli.Lib", "Frenchex.Dev.Dotnet.Core.Cli.Lib\Frenchex.Dev.Dotnet.Core.Cli.Lib.csproj", "{743E3807-95C7-442E-AA8F-0901275F9EC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Cli.Lib", "Frenchex.Dev.Dotnet.Core.Cli.Lib\Frenchex.Dev.Dotnet.Core.Cli.Lib.csproj", "{743E3807-95C7-442E-AA8F-0901275F9EC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Cli.Lib.Tests", "Frenchex.Dev.Dotnet.Core.Cli.Lib.Tests\Frenchex.Dev.Dotnet.Core.Cli.Lib.Tests.csproj", "{C9D74258-8FFD-448C-AC69-53D3B4C79FF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Cli.Lib.Tests", "Frenchex.Dev.Dotnet.Core.Cli.Lib.Tests\Frenchex.Dev.Dotnet.Core.Cli.Lib.Tests.csproj", "{C9D74258-8FFD-448C-AC69-53D3B4C79FF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib", "Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib\Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib.csproj", "{5BFEF71A-86A4-4E7D-A0E4-488F0751E94C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib", "Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib\Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib.csproj", "{5BFEF71A-86A4-4E7D-A0E4-488F0751E94C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Dependencies.System.CommandLine.Hosting", "Frenchex.Dev.Dotnet.Core.Dependencies.System.CommandLine.Hosting\Frenchex.Dev.Dotnet.Core.Dependencies.System.CommandLine.Hosting.csproj", "{EDA028A7-E361-497A-BB26-D80E4462521A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Dependencies.System.CommandLine.Hosting", "Frenchex.Dev.Dotnet.Core.Dependencies.System.CommandLine.Hosting\Frenchex.Dev.Dotnet.Core.Dependencies.System.CommandLine.Hosting.csproj", "{EDA028A7-E361-497A-BB26-D80E4462521A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Vos.Cli", "Frenchex.Dev.Vos.Cli\Frenchex.Dev.Vos.Cli.csproj", "{0ACF5B5D-5F28-495F-BABA-72024CA21E02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Vos.Cli", "Frenchex.Dev.Vos.Cli\Frenchex.Dev.Vos.Cli.csproj", "{0ACF5B5D-5F28-495F-BABA-72024CA21E02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Vos.Cli.Integration", "Frenchex.Dev.Vos.Cli.Integration\Frenchex.Dev.Vos.Cli.Integration.csproj", "{FF483775-2224-4AF8-A74A-06B9E892E01C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Vos.Cli.Integration", "Frenchex.Dev.Vos.Cli.Integration\Frenchex.Dev.Vos.Cli.Integration.csproj", "{FF483775-2224-4AF8-A74A-06B9E892E01C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Vos.Cli.Integration.Tests", "Frenchex.Dev.Vos.Cli.Integration.Tests\Frenchex.Dev.Vos.Cli.Integration.Tests.csproj", "{125E6CB5-CFA3-493B-9E2E-DFC57B527245}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Vos.Cli.Integration.Tests", "Frenchex.Dev.Vos.Cli.Integration.Tests\Frenchex.Dev.Vos.Cli.Integration.Tests.csproj", "{125E6CB5-CFA3-493B-9E2E-DFC57B527245}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Dependencies.Moq", "Frenchex.Dev.Dotnet.Core.Dependencies.Moq\Frenchex.Dev.Dotnet.Core.Dependencies.Moq.csproj", "{61C19E3C-63A0-4E23-8318-C329AEEFBDB5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Dependencies.Moq", "Frenchex.Dev.Dotnet.Core.Dependencies.Moq\Frenchex.Dev.Dotnet.Core.Dependencies.Moq.csproj", "{61C19E3C-63A0-4E23-8318-C329AEEFBDB5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cli", "Cli", "{413CF7AC-9B72-469B-955F-14F28F701C5B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{BA7CCB8E-35AB-4713-91F7-B41DB48BE88E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Vos.Lib.Abstractions", "Frenchex.Dev.Vos.Lib.Abstractions\Frenchex.Dev.Vos.Lib.Abstractions.csproj", "{AB07FF89-C25B-4EA6-9EE8-6FEBE066E1BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Vos.Lib.Abstractions", "Frenchex.Dev.Vos.Lib.Abstractions\Frenchex.Dev.Vos.Lib.Abstractions.csproj", "{AB07FF89-C25B-4EA6-9EE8-6FEBE066E1BF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dos", "Dos", "{859FD03B-7E19-4C9E-A6CF-9554F403D7C2}"
 EndProject
@@ -96,11 +99,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cli", "Cli", "{00DF52F4-C87
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{836410A3-FCF5-4A46-BF28-DE7337790CB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.OnSteroid.Lib", "Frenchex.Dev.OnSteroid.Lib\Frenchex.Dev.OnSteroid.Lib.csproj", "{6C94E453-1A41-44DC-A485-2ABA60FBB715}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.OnSteroid.Lib", "Frenchex.Dev.OnSteroid.Lib\Frenchex.Dev.OnSteroid.Lib.csproj", "{6C94E453-1A41-44DC-A485-2ABA60FBB715}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Pos.Lib", "Frenchex.Dev.Pos.Lib\Frenchex.Dev.Pos.Lib.csproj", "{DD424D76-75BE-4AB2-821A-8E5BDB17CA15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Pos.Lib", "Frenchex.Dev.Pos.Lib\Frenchex.Dev.Pos.Lib.csproj", "{DD424D76-75BE-4AB2-821A-8E5BDB17CA15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dos.Lib", "Frenchex.Dev.Dos.Lib\Frenchex.Dev.Dos.Lib.csproj", "{0A1D8228-AFDD-4FAB-9B21-CD9D5E677E05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dos.Lib", "Frenchex.Dev.Dos.Lib\Frenchex.Dev.Dos.Lib.csproj", "{0A1D8228-AFDD-4FAB-9B21-CD9D5E677E05}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cli", "Cli", "{12B48014-D020-4CB1-99BB-17ADBBD17E64}"
 EndProject
@@ -110,49 +113,49 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cli", "Cli", "{55B76472-B70
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{A121D5BD-792F-42BC-AB8F-0CD85BF45AF1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Pos.LiCli.Integration", "Frenchex.Dev.Pos.LiCli.Integration\Frenchex.Dev.Pos.LiCli.Integration.csproj", "{0A6CF9A1-CD7C-4696-8D1F-972B7A96DAB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Pos.LiCli.Integration", "Frenchex.Dev.Pos.LiCli.Integration\Frenchex.Dev.Pos.LiCli.Integration.csproj", "{0A6CF9A1-CD7C-4696-8D1F-972B7A96DAB4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Pos.Cli.Integration.Tests", "Frenchex.Dev.Pos.Cli.Integration.Tests\Frenchex.Dev.Pos.Cli.Integration.Tests.csproj", "{F900AE74-93DB-414D-9C7B-53665C28F166}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Pos.Cli.Integration.Tests", "Frenchex.Dev.Pos.Cli.Integration.Tests\Frenchex.Dev.Pos.Cli.Integration.Tests.csproj", "{F900AE74-93DB-414D-9C7B-53665C28F166}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Pos.Lib.Abstractions", "Frenchex.Dev.Pos.Lib.Abstractions\Frenchex.Dev.Pos.Lib.Abstractions.csproj", "{001C6695-F1A7-4772-A92D-4F2E3BB73938}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Pos.Lib.Abstractions", "Frenchex.Dev.Pos.Lib.Abstractions\Frenchex.Dev.Pos.Lib.Abstractions.csproj", "{001C6695-F1A7-4772-A92D-4F2E3BB73938}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Pos.Lib.Tests", "Frenchex.Dev.Pos.Lib.Tests\Frenchex.Dev.Pos.Lib.Tests.csproj", "{14B298D7-92F4-4249-BEE7-0C1011C55C9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Pos.Lib.Tests", "Frenchex.Dev.Pos.Lib.Tests\Frenchex.Dev.Pos.Lib.Tests.csproj", "{14B298D7-92F4-4249-BEE7-0C1011C55C9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.OnSteroid.Cli.Lib", "Frenchex.Dev.OnSteroid.Cli.Lib\Frenchex.Dev.OnSteroid.Cli.Lib.csproj", "{E885A580-EF72-4060-9E31-5B22197C1B9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.OnSteroid.Cli.Lib", "Frenchex.Dev.OnSteroid.Cli.Lib\Frenchex.Dev.OnSteroid.Cli.Lib.csproj", "{E885A580-EF72-4060-9E31-5B22197C1B9A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.OnSteroid.Lib.Abstractions", "Frenchex.Dev.OnSteroid.Lib.Abstractions\Frenchex.Dev.OnSteroid.Lib.Abstractions.csproj", "{4B6BCA82-2084-4751-9609-3AB370EEB338}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.OnSteroid.Lib.Abstractions", "Frenchex.Dev.OnSteroid.Lib.Abstractions\Frenchex.Dev.OnSteroid.Lib.Abstractions.csproj", "{4B6BCA82-2084-4751-9609-3AB370EEB338}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.OnSteroid.Lib.Tests", "Frenchex.Dev.OnSteroid.Lib.Tests\Frenchex.Dev.OnSteroid.Lib.Tests.csproj", "{14A2B6FC-EE22-48E6-8AD2-04D9DE678789}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.OnSteroid.Lib.Tests", "Frenchex.Dev.OnSteroid.Lib.Tests\Frenchex.Dev.OnSteroid.Lib.Tests.csproj", "{14A2B6FC-EE22-48E6-8AD2-04D9DE678789}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.OnSteroid.Cli.Lib.Integration", "Frenchex.Dev.OnSteroid.Cli.Lib.Integration\Frenchex.Dev.OnSteroid.Cli.Lib.Integration.csproj", "{B316C6A5-D4B7-447C-8EA2-491A55C0778C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.OnSteroid.Cli.Lib.Integration", "Frenchex.Dev.OnSteroid.Cli.Lib.Integration\Frenchex.Dev.OnSteroid.Cli.Lib.Integration.csproj", "{B316C6A5-D4B7-447C-8EA2-491A55C0778C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.OnSteroid.Cli.Lib.Integration.Tests", "Frenchex.Dev.OnSteroid.Cli.Lib.Integration.Tests\Frenchex.Dev.OnSteroid.Cli.Lib.Integration.Tests.csproj", "{72C81A52-6F12-4E18-A6E4-829E7318EF7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.OnSteroid.Cli.Lib.Integration.Tests", "Frenchex.Dev.OnSteroid.Cli.Lib.Integration.Tests\Frenchex.Dev.OnSteroid.Cli.Lib.Integration.Tests.csproj", "{72C81A52-6F12-4E18-A6E4-829E7318EF7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.OnSteroid.Cli.Lib.Tests", "Frenchex.Dev.OnSteroid.Cli.Lib.Tests\Frenchex.Dev.OnSteroid.Cli.Lib.Tests.csproj", "{A47EBABD-E644-4D21-B241-B00F10A299C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.OnSteroid.Cli.Lib.Tests", "Frenchex.Dev.OnSteroid.Cli.Lib.Tests\Frenchex.Dev.OnSteroid.Cli.Lib.Tests.csproj", "{A47EBABD-E644-4D21-B241-B00F10A299C2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packer", "Packer", "{B85EB790-B090-49E6-8F8E-7BF4E0FC206D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{08203FA4-3E16-4A18-B41A-28CC35DB1F00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Packer.Lib", "Frenchex.Dev.Packer.Lib\Frenchex.Dev.Packer.Lib.csproj", "{561614A6-3A38-4E53-BC27-DDC9769B4325}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Packer.Lib", "Frenchex.Dev.Packer.Lib\Frenchex.Dev.Packer.Lib.csproj", "{561614A6-3A38-4E53-BC27-DDC9769B4325}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Packer.Lib.Tests", "Frenchex.Dev.Packer.Lib.Tests\Frenchex.Dev.Packer.Lib.Tests.csproj", "{9BD2C582-D8B8-47FB-A6E6-1E91DA549CC5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Packer.Lib.Tests", "Frenchex.Dev.Packer.Lib.Tests\Frenchex.Dev.Packer.Lib.Tests.csproj", "{9BD2C582-D8B8-47FB-A6E6-1E91DA549CC5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Wrapping", "Wrapping", "{2C4A3449-E17E-48FA-8820-80BEF1644B58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Wrapping.Lib", "Frenchex.Dev.Dotnet.Core.Wrapping.Lib\Frenchex.Dev.Dotnet.Core.Wrapping.Lib.csproj", "{88FC4E1D-220A-40FD-BC1F-8A21A91D10C3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Wrapping.Lib", "Frenchex.Dev.Dotnet.Core.Wrapping.Lib\Frenchex.Dev.Dotnet.Core.Wrapping.Lib.csproj", "{88FC4E1D-220A-40FD-BC1F-8A21A91D10C3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{6CA7E443-F730-4894-8FC5-0763802E95AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Wrapping.Lib.Tests", "Frenchex.Dev.Dotnet.Core.Wrapping.Lib.Tests\Frenchex.Dev.Dotnet.Core.Wrapping.Lib.Tests.csproj", "{5FD4E02D-1B48-4EDE-A21A-29AB4164D8A0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Wrapping.Lib.Tests", "Frenchex.Dev.Dotnet.Core.Wrapping.Lib.Tests\Frenchex.Dev.Dotnet.Core.Wrapping.Lib.Tests.csproj", "{5FD4E02D-1B48-4EDE-A21A-29AB4164D8A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Vagrant.Lib.Tests.Abstractions", "Frenchex.Dev.Vagrant.Lib.Tests.Abstractions\Frenchex.Dev.Vagrant.Lib.Tests.Abstractions.csproj", "{3C665AEA-04B0-4D16-AC32-EE20BBBAF25E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Vagrant.Lib.Tests.Abstractions", "Frenchex.Dev.Vagrant.Lib.Tests.Abstractions\Frenchex.Dev.Vagrant.Lib.Tests.Abstractions.csproj", "{3C665AEA-04B0-4D16-AC32-EE20BBBAF25E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Vagrant.Lib.Abstractions", "Frenchex.Dev.Vagrant.Lib.Abstractions\Frenchex.Dev.Vagrant.Lib.Abstractions.csproj", "{893F556E-6C9F-440C-BE8C-196B9A65CEF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Vagrant.Lib.Abstractions", "Frenchex.Dev.Vagrant.Lib.Abstractions\Frenchex.Dev.Vagrant.Lib.Abstractions.csproj", "{893F556E-6C9F-440C-BE8C-196B9A65CEF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Pos.Cli", "Frenchex.Dev.Pos.Cli\Frenchex.Dev.Pos.Cli.csproj", "{C6BA6EA2-D4EC-4A86-B853-0673007F487F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Pos.Cli", "Frenchex.Dev.Pos.Cli\Frenchex.Dev.Pos.Cli.csproj", "{C6BA6EA2-D4EC-4A86-B853-0673007F487F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Packer.Lib.Abstractions", "Frenchex.Dev.Packer.Lib.Abstractions\Frenchex.Dev.Packer.Lib.Abstractions.csproj", "{BC2463B6-2CEA-4DF1-B8F0-D2ED8527CB05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Packer.Lib.Abstractions", "Frenchex.Dev.Packer.Lib.Abstractions\Frenchex.Dev.Packer.Lib.Abstractions.csproj", "{BC2463B6-2CEA-4DF1-B8F0-D2ED8527CB05}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{4A138B57-E867-45DF-98ED-FF0493067EF9}"
 EndProject
@@ -160,149 +163,56 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tooling", "Tooling", "{6887
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TimeSpan", "TimeSpan", "{FDB88DE5-D99D-4CF0-8152-5784E7CA64D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib", "Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib\Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib.csproj", "{3925393E-141F-4FB7-9896-03AB5FEFA5CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib", "Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib\Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib.csproj", "{3925393E-141F-4FB7-9896-03AB5FEFA5CA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kernel", "Kernel", "{DC8B761C-2A63-41F6-AD9E-A36C7D6DBDB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Kernel.Lib", "Frenchex.Dev.Dotnet.Core.Kernel.Lib\Frenchex.Dev.Dotnet.Core.Kernel.Lib.csproj", "{C472D325-0270-430F-B59B-62537404D09C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Kernel.Lib", "Frenchex.Dev.Dotnet.Core.Kernel.Lib\Frenchex.Dev.Dotnet.Core.Kernel.Lib.csproj", "{C472D325-0270-430F-B59B-62537404D09C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Kernel.Lib.Abstractions", "Frenchex.Dev.Dotnet.Core.Kernel.Lib.Abstractions\Frenchex.Dev.Dotnet.Core.Kernel.Lib.Abstractions.csproj", "{CA217ED2-37AD-42A4-B373-BB1FD665514F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Kernel.Lib.Abstractions", "Frenchex.Dev.Dotnet.Core.Kernel.Lib.Abstractions\Frenchex.Dev.Dotnet.Core.Kernel.Lib.Abstractions.csproj", "{CA217ED2-37AD-42A4-B373-BB1FD665514F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions", "Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions\Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions.csproj", "{F0F1AA62-988C-4BD0-BC81-77DFA5B89C9A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions", "Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions\Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions.csproj", "{F0F1AA62-988C-4BD0-BC81-77DFA5B89C9A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Devos", "Devos", "{DA0D4632-0102-42E3-A676-A603EBCEDA7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Devos.Lib", "Frenchex.Dev.Devos.Lib\Frenchex.Dev.Devos.Lib.csproj", "{8882551E-4BDE-41C3-B3CB-D6E17EAD848D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Devos.Lib", "Frenchex.Dev.Devos.Lib\Frenchex.Dev.Devos.Lib.csproj", "{8882551E-4BDE-41C3-B3CB-D6E17EAD848D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{E02C417E-12A3-475D-A99F-C3DC33205969}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Solution.Lib", "Frenchex.Dev.Dotnet.Core.Solution.Lib\Frenchex.Dev.Dotnet.Core.Solution.Lib.csproj", "{EEF6887D-263C-48FF-B2C3-6501271C16E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Solution.Lib", "Frenchex.Dev.Dotnet.Core.Solution.Lib\Frenchex.Dev.Dotnet.Core.Solution.Lib.csproj", "{EEF6887D-263C-48FF-B2C3-6501271C16E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Devos.Lib.Abstractions", "Frenchex.Dev.Devos.Lib.Abstractions\Frenchex.Dev.Devos.Lib.Abstractions.csproj", "{16E74B27-EB0B-4D34-A662-A5DC0B6C04BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Devos.Lib.Abstractions", "Frenchex.Dev.Devos.Lib.Abstractions\Frenchex.Dev.Devos.Lib.Abstractions.csproj", "{16E74B27-EB0B-4D34-A662-A5DC0B6C04BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Solution.Lib.Abstractions", "Frenchex.Dev.Dotnet.Core.Solution.Lib.Abstractions\Frenchex.Dev.Dotnet.Core.Solution.Lib.Abstractions.csproj", "{07BA94DF-E8F4-4643-85A0-E144AEAF3645}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Solution.Lib.Abstractions", "Frenchex.Dev.Dotnet.Core.Solution.Lib.Abstractions\Frenchex.Dev.Dotnet.Core.Solution.Lib.Abstractions.csproj", "{07BA94DF-E8F4-4643-85A0-E144AEAF3645}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Solution.Lib.Tests", "Frenchex.Dev.Dotnet.Core.Solution.Lib.Tests\Frenchex.Dev.Dotnet.Core.Solution.Lib.Tests.csproj", "{4239284B-54C6-4B41-906A-888E750FDEB4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Solution.Lib.Tests", "Frenchex.Dev.Dotnet.Core.Solution.Lib.Tests\Frenchex.Dev.Dotnet.Core.Solution.Lib.Tests.csproj", "{4239284B-54C6-4B41-906A-888E750FDEB4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Git", "Git", "{FC2AC58A-0D8F-4D21-BF59-578AF5641089}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Git.Lib", "Frenchex.Dev.Dotnet.Core.Git.Lib\Frenchex.Dev.Dotnet.Core.Git.Lib.csproj", "{D961E76C-5504-4411-A328-B36FD8005C88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Git.Lib", "Frenchex.Dev.Dotnet.Core.Git.Lib\Frenchex.Dev.Dotnet.Core.Git.Lib.csproj", "{D961E76C-5504-4411-A328-B36FD8005C88}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Git.Lib.Abstractions", "Frenchex.Dev.Dotnet.Core.Git.Lib.Abstractions\Frenchex.Dev.Dotnet.Core.Git.Lib.Abstractions.csproj", "{5D70F93D-E40C-4BF8-96E3-61F7E7ABB863}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Git.Lib.Abstractions", "Frenchex.Dev.Dotnet.Core.Git.Lib.Abstractions\Frenchex.Dev.Dotnet.Core.Git.Lib.Abstractions.csproj", "{5D70F93D-E40C-4BF8-96E3-61F7E7ABB863}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Dotnet.Core.Git.Lib.Tests", "Frenchex.Dev.Dotnet.Core.Git.Lib.Tests\Frenchex.Dev.Dotnet.Core.Git.Lib.Tests.csproj", "{B5372B0E-4D7B-43CF-9D1F-1AE174CF062C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.Dotnet.Core.Git.Lib.Tests", "Frenchex.Dev.Dotnet.Core.Git.Lib.Tests\Frenchex.Dev.Dotnet.Core.Git.Lib.Tests.csproj", "{B5372B0E-4D7B-43CF-9D1F-1AE174CF062C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{515A1B35-A5A4-4F32-83BC-651023557DF2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cli", "Cli", "{D08C650E-E7C5-4D0C-B5DC-A17630A94506}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Devos.Cli", "Frenchex.Devos.Cli\Frenchex.Devos.Cli.csproj", "{10E030C1-3540-436C-8198-231A50A50E4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Devos.Cli", "Frenchex.Devos.Cli\Frenchex.Devos.Cli.csproj", "{10E030C1-3540-436C-8198-231A50A50E4F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Devos.Cli.Integration", "Frenchex.Devos.Cli.Integration\Frenchex.Devos.Cli.Integration.csproj", "{09F15855-E29D-4476-8893-75B5665367F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Devos.Cli.Integration", "Frenchex.Devos.Cli.Integration\Frenchex.Devos.Cli.Integration.csproj", "{09F15855-E29D-4476-8893-75B5665367F6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Devos.Cli.Integration.Tests", "Frenchex.Devos.Cli.Integration.Tests\Frenchex.Devos.Cli.Integration.Tests.csproj", "{F5E369B3-F6E9-4163-9711-13ACF3F1A324}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Devos.Cli.Integration.Tests", "Frenchex.Devos.Cli.Integration.Tests\Frenchex.Devos.Cli.Integration.Tests.csproj", "{F5E369B3-F6E9-4163-9711-13ACF3F1A324}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Devos.Lib.Tests", "Frenchex.Devos.Lib.Tests\Frenchex.Devos.Lib.Tests.csproj", "{FEB79775-8FA6-43A6-AE5A-CC417EAB4065}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Devos.Lib.Tests", "Frenchex.Devos.Lib.Tests\Frenchex.Devos.Lib.Tests.csproj", "{FEB79775-8FA6-43A6-AE5A-CC417EAB4065}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.Vos.Cli.IntegrationLib", "Frenchex.Dev.Vos.Cli.IntegrationLib\Frenchex.Dev.Vos.Cli.IntegrationLib.csproj", "{2D509E8E-FC4C-491A-A693-91C9D8184721}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{4EF79347-F272-4C39-B838-268B68ADC6AA} = {2B6D4FC9-851B-45E4-8C60-49F13E7B7583}
-		{07075CDD-1FD9-4221-8129-0D408EA4F39B} = {4EF79347-F272-4C39-B838-268B68ADC6AA}
-		{5BA9259E-5B3E-4253-B44A-E30E341322F1} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
-		{FE69ACA0-4437-4C13-BF82-0C632414A6EB} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
-		{F1AAD2CF-360F-4D8E-AD58-424395157EB9} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
-		{6D52A687-0445-48A6-9C8C-906BF9011601} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
-		{0681CFF7-5391-4FA4-A346-2BEF8FC86B55} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
-		{3D9B7B6C-ACF1-4895-9914-C9CF1DEFC3D1} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
-		{ACEAB60B-14DE-474A-AAE1-001DF79BD380} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
-		{3B24E88A-C70C-427B-AE5B-8D0B8C452956} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
-		{D4A8A64B-65D5-4FEF-99F7-D426610AAFC7} = {4EF79347-F272-4C39-B838-268B68ADC6AA}
-		{0D70E3F9-2E70-4929-B631-C2510B65550A} = {D4A8A64B-65D5-4FEF-99F7-D426610AAFC7}
-		{945D8934-3EE6-4365-942D-8F10E5D48268} = {4EF79347-F272-4C39-B838-268B68ADC6AA}
-		{D55C2755-6BD7-446F-9056-F5ADC337C253} = {945D8934-3EE6-4365-942D-8F10E5D48268}
-		{895BBAB2-5BB7-4BC4-BF31-003C47AF050F} = {945D8934-3EE6-4365-942D-8F10E5D48268}
-		{00A225A3-D38D-4A60-878F-4E9520AE8A26} = {D4A8A64B-65D5-4FEF-99F7-D426610AAFC7}
-		{1B9D12DF-200B-48F2-9145-08D66759513B} = {4EF79347-F272-4C39-B838-268B68ADC6AA}
-		{8921ED3C-540A-4266-9B6F-2AB2942F3044} = {1B9D12DF-200B-48F2-9145-08D66759513B}
-		{8BC4293B-BEC0-473A-A099-BC710C209065} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
-		{00519867-BC2D-4C48-A781-ABB67ED88401} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
-		{BBDC9B39-4738-4FDB-B0B7-4A342B3F316E} = {1B9D12DF-200B-48F2-9145-08D66759513B}
-		{866454D9-25A3-4400-80D8-07A4FF24E3D5} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
-		{9AB55D71-5ED5-4B96-BB79-0D242DF7B2DB} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
-		{23F16B93-8B78-4CC1-A369-D65966D00D20} = {4EF79347-F272-4C39-B838-268B68ADC6AA}
-		{743E3807-95C7-442E-AA8F-0901275F9EC8} = {23F16B93-8B78-4CC1-A369-D65966D00D20}
-		{C9D74258-8FFD-448C-AC69-53D3B4C79FF1} = {23F16B93-8B78-4CC1-A369-D65966D00D20}
-		{5BFEF71A-86A4-4E7D-A0E4-488F0751E94C} = {23F16B93-8B78-4CC1-A369-D65966D00D20}
-		{EDA028A7-E361-497A-BB26-D80E4462521A} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
-		{61C19E3C-63A0-4E23-8318-C329AEEFBDB5} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
-		{413CF7AC-9B72-469B-955F-14F28F701C5B} = {873694C0-6AD2-43A7-9FCE-7A9F5D01A96C}
-		{0ACF5B5D-5F28-495F-BABA-72024CA21E02} = {413CF7AC-9B72-469B-955F-14F28F701C5B}
-		{FF483775-2224-4AF8-A74A-06B9E892E01C} = {413CF7AC-9B72-469B-955F-14F28F701C5B}
-		{125E6CB5-CFA3-493B-9E2E-DFC57B527245} = {413CF7AC-9B72-469B-955F-14F28F701C5B}
-		{BA7CCB8E-35AB-4713-91F7-B41DB48BE88E} = {873694C0-6AD2-43A7-9FCE-7A9F5D01A96C}
-		{C1DE73C7-96C1-4D33-BC5F-9AEF85D2174C} = {BA7CCB8E-35AB-4713-91F7-B41DB48BE88E}
-		{D1F81450-44D9-488B-A7BB-450D5F1B98CB} = {BA7CCB8E-35AB-4713-91F7-B41DB48BE88E}
-		{AB07FF89-C25B-4EA6-9EE8-6FEBE066E1BF} = {BA7CCB8E-35AB-4713-91F7-B41DB48BE88E}
-		{00DF52F4-C875-4774-A599-D4A184487E9C} = {A39E98C3-B71B-4212-A7E4-7408B1D1097C}
-		{836410A3-FCF5-4A46-BF28-DE7337790CB7} = {A39E98C3-B71B-4212-A7E4-7408B1D1097C}
-		{6C94E453-1A41-44DC-A485-2ABA60FBB715} = {836410A3-FCF5-4A46-BF28-DE7337790CB7}
-		{12B48014-D020-4CB1-99BB-17ADBBD17E64} = {859FD03B-7E19-4C9E-A6CF-9554F403D7C2}
-		{1E6EDF91-82FD-4BF5-BF8E-CF0FBC370068} = {859FD03B-7E19-4C9E-A6CF-9554F403D7C2}
-		{0A1D8228-AFDD-4FAB-9B21-CD9D5E677E05} = {1E6EDF91-82FD-4BF5-BF8E-CF0FBC370068}
-		{55B76472-B701-4350-B3B7-AC71A59E25A8} = {99AFF6DA-E14A-4137-B1D6-FB9E565E5C01}
-		{A121D5BD-792F-42BC-AB8F-0CD85BF45AF1} = {99AFF6DA-E14A-4137-B1D6-FB9E565E5C01}
-		{DD424D76-75BE-4AB2-821A-8E5BDB17CA15} = {A121D5BD-792F-42BC-AB8F-0CD85BF45AF1}
-		{0A6CF9A1-CD7C-4696-8D1F-972B7A96DAB4} = {55B76472-B701-4350-B3B7-AC71A59E25A8}
-		{F900AE74-93DB-414D-9C7B-53665C28F166} = {55B76472-B701-4350-B3B7-AC71A59E25A8}
-		{001C6695-F1A7-4772-A92D-4F2E3BB73938} = {A121D5BD-792F-42BC-AB8F-0CD85BF45AF1}
-		{14B298D7-92F4-4249-BEE7-0C1011C55C9F} = {A121D5BD-792F-42BC-AB8F-0CD85BF45AF1}
-		{E885A580-EF72-4060-9E31-5B22197C1B9A} = {00DF52F4-C875-4774-A599-D4A184487E9C}
-		{4B6BCA82-2084-4751-9609-3AB370EEB338} = {836410A3-FCF5-4A46-BF28-DE7337790CB7}
-		{14A2B6FC-EE22-48E6-8AD2-04D9DE678789} = {836410A3-FCF5-4A46-BF28-DE7337790CB7}
-		{B316C6A5-D4B7-447C-8EA2-491A55C0778C} = {00DF52F4-C875-4774-A599-D4A184487E9C}
-		{72C81A52-6F12-4E18-A6E4-829E7318EF7D} = {00DF52F4-C875-4774-A599-D4A184487E9C}
-		{A47EBABD-E644-4D21-B241-B00F10A299C2} = {00DF52F4-C875-4774-A599-D4A184487E9C}
-		{08203FA4-3E16-4A18-B41A-28CC35DB1F00} = {B85EB790-B090-49E6-8F8E-7BF4E0FC206D}
-		{561614A6-3A38-4E53-BC27-DDC9769B4325} = {08203FA4-3E16-4A18-B41A-28CC35DB1F00}
-		{9BD2C582-D8B8-47FB-A6E6-1E91DA549CC5} = {08203FA4-3E16-4A18-B41A-28CC35DB1F00}
-		{6CA7E443-F730-4894-8FC5-0763802E95AE} = {2C4A3449-E17E-48FA-8820-80BEF1644B58}
-		{88FC4E1D-220A-40FD-BC1F-8A21A91D10C3} = {6CA7E443-F730-4894-8FC5-0763802E95AE}
-		{5FD4E02D-1B48-4EDE-A21A-29AB4164D8A0} = {6CA7E443-F730-4894-8FC5-0763802E95AE}
-		{2C4A3449-E17E-48FA-8820-80BEF1644B58} = {4EF79347-F272-4C39-B838-268B68ADC6AA}
-		{C6BA6EA2-D4EC-4A86-B853-0673007F487F} = {55B76472-B701-4350-B3B7-AC71A59E25A8}
-		{BC2463B6-2CEA-4DF1-B8F0-D2ED8527CB05} = {08203FA4-3E16-4A18-B41A-28CC35DB1F00}
-		{4A138B57-E867-45DF-98ED-FF0493067EF9} = {4D73E072-6D3A-4705-9D9D-682325986CB5}
-		{12591547-EB40-4628-9127-A676A88CA6D5} = {4A138B57-E867-45DF-98ED-FF0493067EF9}
-		{893F556E-6C9F-440C-BE8C-196B9A65CEF7} = {4A138B57-E867-45DF-98ED-FF0493067EF9}
-		{0967AF42-F1BD-4B88-ABEA-28DCFB6A2576} = {4A138B57-E867-45DF-98ED-FF0493067EF9}
-		{3C665AEA-04B0-4D16-AC32-EE20BBBAF25E} = {4A138B57-E867-45DF-98ED-FF0493067EF9}
-		{688715B9-AD83-40FD-8706-27A4D9081F8C} = {4EF79347-F272-4C39-B838-268B68ADC6AA}
-		{FDB88DE5-D99D-4CF0-8152-5784E7CA64D2} = {688715B9-AD83-40FD-8706-27A4D9081F8C}
-		{3925393E-141F-4FB7-9896-03AB5FEFA5CA} = {FDB88DE5-D99D-4CF0-8152-5784E7CA64D2}
-		{DC8B761C-2A63-41F6-AD9E-A36C7D6DBDB1} = {4EF79347-F272-4C39-B838-268B68ADC6AA}
-		{C472D325-0270-430F-B59B-62537404D09C} = {DC8B761C-2A63-41F6-AD9E-A36C7D6DBDB1}
-		{CA217ED2-37AD-42A4-B373-BB1FD665514F} = {DC8B761C-2A63-41F6-AD9E-A36C7D6DBDB1}
-		{F0F1AA62-988C-4BD0-BC81-77DFA5B89C9A} = {23F16B93-8B78-4CC1-A369-D65966D00D20}
-		{E02C417E-12A3-475D-A99F-C3DC33205969} = {4EF79347-F272-4C39-B838-268B68ADC6AA}
-		{EEF6887D-263C-48FF-B2C3-6501271C16E0} = {E02C417E-12A3-475D-A99F-C3DC33205969}
-		{07BA94DF-E8F4-4643-85A0-E144AEAF3645} = {E02C417E-12A3-475D-A99F-C3DC33205969}
-		{4239284B-54C6-4B41-906A-888E750FDEB4} = {E02C417E-12A3-475D-A99F-C3DC33205969}
-		{FC2AC58A-0D8F-4D21-BF59-578AF5641089} = {4EF79347-F272-4C39-B838-268B68ADC6AA}
-		{D961E76C-5504-4411-A328-B36FD8005C88} = {FC2AC58A-0D8F-4D21-BF59-578AF5641089}
-		{5D70F93D-E40C-4BF8-96E3-61F7E7ABB863} = {FC2AC58A-0D8F-4D21-BF59-578AF5641089}
-		{B5372B0E-4D7B-43CF-9D1F-1AE174CF062C} = {FC2AC58A-0D8F-4D21-BF59-578AF5641089}
-		{515A1B35-A5A4-4F32-83BC-651023557DF2} = {DA0D4632-0102-42E3-A676-A603EBCEDA7B}
-		{8882551E-4BDE-41C3-B3CB-D6E17EAD848D} = {515A1B35-A5A4-4F32-83BC-651023557DF2}
-		{16E74B27-EB0B-4D34-A662-A5DC0B6C04BF} = {515A1B35-A5A4-4F32-83BC-651023557DF2}
-		{D08C650E-E7C5-4D0C-B5DC-A17630A94506} = {DA0D4632-0102-42E3-A676-A603EBCEDA7B}
-		{10E030C1-3540-436C-8198-231A50A50E4F} = {D08C650E-E7C5-4D0C-B5DC-A17630A94506}
-		{09F15855-E29D-4476-8893-75B5665367F6} = {D08C650E-E7C5-4D0C-B5DC-A17630A94506}
-		{F5E369B3-F6E9-4163-9711-13ACF3F1A324} = {D08C650E-E7C5-4D0C-B5DC-A17630A94506}
-		{FEB79775-8FA6-43A6-AE5A-CC417EAB4065} = {515A1B35-A5A4-4F32-83BC-651023557DF2}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{5BA9259E-5B3E-4253-B44A-E30E341322F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -577,5 +487,111 @@ Global
 		{FEB79775-8FA6-43A6-AE5A-CC417EAB4065}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEB79775-8FA6-43A6-AE5A-CC417EAB4065}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEB79775-8FA6-43A6-AE5A-CC417EAB4065}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D509E8E-FC4C-491A-A693-91C9D8184721}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D509E8E-FC4C-491A-A693-91C9D8184721}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D509E8E-FC4C-491A-A693-91C9D8184721}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D509E8E-FC4C-491A-A693-91C9D8184721}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4EF79347-F272-4C39-B838-268B68ADC6AA} = {2B6D4FC9-851B-45E4-8C60-49F13E7B7583}
+		{07075CDD-1FD9-4221-8129-0D408EA4F39B} = {4EF79347-F272-4C39-B838-268B68ADC6AA}
+		{5BA9259E-5B3E-4253-B44A-E30E341322F1} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
+		{FE69ACA0-4437-4C13-BF82-0C632414A6EB} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
+		{F1AAD2CF-360F-4D8E-AD58-424395157EB9} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
+		{6D52A687-0445-48A6-9C8C-906BF9011601} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
+		{0681CFF7-5391-4FA4-A346-2BEF8FC86B55} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
+		{3D9B7B6C-ACF1-4895-9914-C9CF1DEFC3D1} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
+		{ACEAB60B-14DE-474A-AAE1-001DF79BD380} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
+		{3B24E88A-C70C-427B-AE5B-8D0B8C452956} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
+		{D4A8A64B-65D5-4FEF-99F7-D426610AAFC7} = {4EF79347-F272-4C39-B838-268B68ADC6AA}
+		{0D70E3F9-2E70-4929-B631-C2510B65550A} = {D4A8A64B-65D5-4FEF-99F7-D426610AAFC7}
+		{945D8934-3EE6-4365-942D-8F10E5D48268} = {4EF79347-F272-4C39-B838-268B68ADC6AA}
+		{D55C2755-6BD7-446F-9056-F5ADC337C253} = {945D8934-3EE6-4365-942D-8F10E5D48268}
+		{895BBAB2-5BB7-4BC4-BF31-003C47AF050F} = {945D8934-3EE6-4365-942D-8F10E5D48268}
+		{00A225A3-D38D-4A60-878F-4E9520AE8A26} = {D4A8A64B-65D5-4FEF-99F7-D426610AAFC7}
+		{1B9D12DF-200B-48F2-9145-08D66759513B} = {4EF79347-F272-4C39-B838-268B68ADC6AA}
+		{8921ED3C-540A-4266-9B6F-2AB2942F3044} = {1B9D12DF-200B-48F2-9145-08D66759513B}
+		{8BC4293B-BEC0-473A-A099-BC710C209065} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
+		{00519867-BC2D-4C48-A781-ABB67ED88401} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
+		{BBDC9B39-4738-4FDB-B0B7-4A342B3F316E} = {1B9D12DF-200B-48F2-9145-08D66759513B}
+		{12591547-EB40-4628-9127-A676A88CA6D5} = {4A138B57-E867-45DF-98ED-FF0493067EF9}
+		{0967AF42-F1BD-4B88-ABEA-28DCFB6A2576} = {4A138B57-E867-45DF-98ED-FF0493067EF9}
+		{C1DE73C7-96C1-4D33-BC5F-9AEF85D2174C} = {BA7CCB8E-35AB-4713-91F7-B41DB48BE88E}
+		{866454D9-25A3-4400-80D8-07A4FF24E3D5} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
+		{D1F81450-44D9-488B-A7BB-450D5F1B98CB} = {BA7CCB8E-35AB-4713-91F7-B41DB48BE88E}
+		{9AB55D71-5ED5-4B96-BB79-0D242DF7B2DB} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
+		{23F16B93-8B78-4CC1-A369-D65966D00D20} = {4EF79347-F272-4C39-B838-268B68ADC6AA}
+		{743E3807-95C7-442E-AA8F-0901275F9EC8} = {23F16B93-8B78-4CC1-A369-D65966D00D20}
+		{C9D74258-8FFD-448C-AC69-53D3B4C79FF1} = {23F16B93-8B78-4CC1-A369-D65966D00D20}
+		{5BFEF71A-86A4-4E7D-A0E4-488F0751E94C} = {23F16B93-8B78-4CC1-A369-D65966D00D20}
+		{EDA028A7-E361-497A-BB26-D80E4462521A} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
+		{0ACF5B5D-5F28-495F-BABA-72024CA21E02} = {413CF7AC-9B72-469B-955F-14F28F701C5B}
+		{FF483775-2224-4AF8-A74A-06B9E892E01C} = {413CF7AC-9B72-469B-955F-14F28F701C5B}
+		{125E6CB5-CFA3-493B-9E2E-DFC57B527245} = {413CF7AC-9B72-469B-955F-14F28F701C5B}
+		{61C19E3C-63A0-4E23-8318-C329AEEFBDB5} = {07075CDD-1FD9-4221-8129-0D408EA4F39B}
+		{413CF7AC-9B72-469B-955F-14F28F701C5B} = {873694C0-6AD2-43A7-9FCE-7A9F5D01A96C}
+		{BA7CCB8E-35AB-4713-91F7-B41DB48BE88E} = {873694C0-6AD2-43A7-9FCE-7A9F5D01A96C}
+		{AB07FF89-C25B-4EA6-9EE8-6FEBE066E1BF} = {BA7CCB8E-35AB-4713-91F7-B41DB48BE88E}
+		{00DF52F4-C875-4774-A599-D4A184487E9C} = {A39E98C3-B71B-4212-A7E4-7408B1D1097C}
+		{836410A3-FCF5-4A46-BF28-DE7337790CB7} = {A39E98C3-B71B-4212-A7E4-7408B1D1097C}
+		{6C94E453-1A41-44DC-A485-2ABA60FBB715} = {836410A3-FCF5-4A46-BF28-DE7337790CB7}
+		{DD424D76-75BE-4AB2-821A-8E5BDB17CA15} = {A121D5BD-792F-42BC-AB8F-0CD85BF45AF1}
+		{0A1D8228-AFDD-4FAB-9B21-CD9D5E677E05} = {1E6EDF91-82FD-4BF5-BF8E-CF0FBC370068}
+		{12B48014-D020-4CB1-99BB-17ADBBD17E64} = {859FD03B-7E19-4C9E-A6CF-9554F403D7C2}
+		{1E6EDF91-82FD-4BF5-BF8E-CF0FBC370068} = {859FD03B-7E19-4C9E-A6CF-9554F403D7C2}
+		{55B76472-B701-4350-B3B7-AC71A59E25A8} = {99AFF6DA-E14A-4137-B1D6-FB9E565E5C01}
+		{A121D5BD-792F-42BC-AB8F-0CD85BF45AF1} = {99AFF6DA-E14A-4137-B1D6-FB9E565E5C01}
+		{0A6CF9A1-CD7C-4696-8D1F-972B7A96DAB4} = {55B76472-B701-4350-B3B7-AC71A59E25A8}
+		{F900AE74-93DB-414D-9C7B-53665C28F166} = {55B76472-B701-4350-B3B7-AC71A59E25A8}
+		{001C6695-F1A7-4772-A92D-4F2E3BB73938} = {A121D5BD-792F-42BC-AB8F-0CD85BF45AF1}
+		{14B298D7-92F4-4249-BEE7-0C1011C55C9F} = {A121D5BD-792F-42BC-AB8F-0CD85BF45AF1}
+		{E885A580-EF72-4060-9E31-5B22197C1B9A} = {00DF52F4-C875-4774-A599-D4A184487E9C}
+		{4B6BCA82-2084-4751-9609-3AB370EEB338} = {836410A3-FCF5-4A46-BF28-DE7337790CB7}
+		{14A2B6FC-EE22-48E6-8AD2-04D9DE678789} = {836410A3-FCF5-4A46-BF28-DE7337790CB7}
+		{B316C6A5-D4B7-447C-8EA2-491A55C0778C} = {00DF52F4-C875-4774-A599-D4A184487E9C}
+		{72C81A52-6F12-4E18-A6E4-829E7318EF7D} = {00DF52F4-C875-4774-A599-D4A184487E9C}
+		{A47EBABD-E644-4D21-B241-B00F10A299C2} = {00DF52F4-C875-4774-A599-D4A184487E9C}
+		{08203FA4-3E16-4A18-B41A-28CC35DB1F00} = {B85EB790-B090-49E6-8F8E-7BF4E0FC206D}
+		{561614A6-3A38-4E53-BC27-DDC9769B4325} = {08203FA4-3E16-4A18-B41A-28CC35DB1F00}
+		{9BD2C582-D8B8-47FB-A6E6-1E91DA549CC5} = {08203FA4-3E16-4A18-B41A-28CC35DB1F00}
+		{2C4A3449-E17E-48FA-8820-80BEF1644B58} = {4EF79347-F272-4C39-B838-268B68ADC6AA}
+		{88FC4E1D-220A-40FD-BC1F-8A21A91D10C3} = {6CA7E443-F730-4894-8FC5-0763802E95AE}
+		{6CA7E443-F730-4894-8FC5-0763802E95AE} = {2C4A3449-E17E-48FA-8820-80BEF1644B58}
+		{5FD4E02D-1B48-4EDE-A21A-29AB4164D8A0} = {6CA7E443-F730-4894-8FC5-0763802E95AE}
+		{3C665AEA-04B0-4D16-AC32-EE20BBBAF25E} = {4A138B57-E867-45DF-98ED-FF0493067EF9}
+		{893F556E-6C9F-440C-BE8C-196B9A65CEF7} = {4A138B57-E867-45DF-98ED-FF0493067EF9}
+		{C6BA6EA2-D4EC-4A86-B853-0673007F487F} = {55B76472-B701-4350-B3B7-AC71A59E25A8}
+		{BC2463B6-2CEA-4DF1-B8F0-D2ED8527CB05} = {08203FA4-3E16-4A18-B41A-28CC35DB1F00}
+		{4A138B57-E867-45DF-98ED-FF0493067EF9} = {4D73E072-6D3A-4705-9D9D-682325986CB5}
+		{688715B9-AD83-40FD-8706-27A4D9081F8C} = {4EF79347-F272-4C39-B838-268B68ADC6AA}
+		{FDB88DE5-D99D-4CF0-8152-5784E7CA64D2} = {688715B9-AD83-40FD-8706-27A4D9081F8C}
+		{3925393E-141F-4FB7-9896-03AB5FEFA5CA} = {FDB88DE5-D99D-4CF0-8152-5784E7CA64D2}
+		{DC8B761C-2A63-41F6-AD9E-A36C7D6DBDB1} = {4EF79347-F272-4C39-B838-268B68ADC6AA}
+		{C472D325-0270-430F-B59B-62537404D09C} = {DC8B761C-2A63-41F6-AD9E-A36C7D6DBDB1}
+		{CA217ED2-37AD-42A4-B373-BB1FD665514F} = {DC8B761C-2A63-41F6-AD9E-A36C7D6DBDB1}
+		{F0F1AA62-988C-4BD0-BC81-77DFA5B89C9A} = {23F16B93-8B78-4CC1-A369-D65966D00D20}
+		{8882551E-4BDE-41C3-B3CB-D6E17EAD848D} = {515A1B35-A5A4-4F32-83BC-651023557DF2}
+		{E02C417E-12A3-475D-A99F-C3DC33205969} = {4EF79347-F272-4C39-B838-268B68ADC6AA}
+		{EEF6887D-263C-48FF-B2C3-6501271C16E0} = {E02C417E-12A3-475D-A99F-C3DC33205969}
+		{16E74B27-EB0B-4D34-A662-A5DC0B6C04BF} = {515A1B35-A5A4-4F32-83BC-651023557DF2}
+		{07BA94DF-E8F4-4643-85A0-E144AEAF3645} = {E02C417E-12A3-475D-A99F-C3DC33205969}
+		{4239284B-54C6-4B41-906A-888E750FDEB4} = {E02C417E-12A3-475D-A99F-C3DC33205969}
+		{FC2AC58A-0D8F-4D21-BF59-578AF5641089} = {4EF79347-F272-4C39-B838-268B68ADC6AA}
+		{D961E76C-5504-4411-A328-B36FD8005C88} = {FC2AC58A-0D8F-4D21-BF59-578AF5641089}
+		{5D70F93D-E40C-4BF8-96E3-61F7E7ABB863} = {FC2AC58A-0D8F-4D21-BF59-578AF5641089}
+		{B5372B0E-4D7B-43CF-9D1F-1AE174CF062C} = {FC2AC58A-0D8F-4D21-BF59-578AF5641089}
+		{515A1B35-A5A4-4F32-83BC-651023557DF2} = {DA0D4632-0102-42E3-A676-A603EBCEDA7B}
+		{D08C650E-E7C5-4D0C-B5DC-A17630A94506} = {DA0D4632-0102-42E3-A676-A603EBCEDA7B}
+		{10E030C1-3540-436C-8198-231A50A50E4F} = {D08C650E-E7C5-4D0C-B5DC-A17630A94506}
+		{09F15855-E29D-4476-8893-75B5665367F6} = {D08C650E-E7C5-4D0C-B5DC-A17630A94506}
+		{F5E369B3-F6E9-4163-9711-13ACF3F1A324} = {D08C650E-E7C5-4D0C-B5DC-A17630A94506}
+		{FEB79775-8FA6-43A6-AE5A-CC417EAB4065} = {515A1B35-A5A4-4F32-83BC-651023557DF2}
+		{2D509E8E-FC4C-491A-A693-91C9D8184721} = {413CF7AC-9B72-469B-955F-14F28F701C5B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4EE2EBC4-95A8-43B5-87FD-3DEA4A894560}
 	EndGlobalSection
 EndGlobal

@@ -19,6 +19,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Frenchex.Dev.OnSteroid.Cli.Lib\Frenchex.Dev.OnSteroid.Cli.Lib.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Vos.Cli.IntegrationLib\Frenchex.Dev.Vos.Cli.IntegrationLib.csproj" />
         <ProjectReference Include="..\Frenchex.Dev.Vos.Cli.Integration\Frenchex.Dev.Vos.Cli.Integration.csproj" />
     </ItemGroup>
 

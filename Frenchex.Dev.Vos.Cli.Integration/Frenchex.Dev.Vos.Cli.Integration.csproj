@@ -7,9 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib\Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib.csproj"/>
-        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib.csproj"/>
-        <ProjectReference Include="..\Frenchex.Dev.Vos.Lib\Frenchex.Dev.Vos.Lib.csproj"/>
+        <ProjectReference Include="..\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib\Frenchex.Dev.Dotnet.Core.Dependencies.DependencyInjection.Abstractions.Lib.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Vos.Cli.IntegrationLib\Frenchex.Dev.Vos.Cli.IntegrationLib.csproj" />
+        <ProjectReference Include="..\Frenchex.Dev.Vos.Lib\Frenchex.Dev.Vos.Lib.csproj" />
     </ItemGroup>
 
 </Project>

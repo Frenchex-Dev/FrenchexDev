@@ -1,5 +1,4 @@
-﻿using Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib.Domain;
-using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.DependencyInjection;
+﻿using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.DependencyInjection;
 using Frenchex.Dev.OnSteroid.Lib.Domain.DependencyInjection;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands;
@@ -17,6 +16,7 @@ using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.SshConfig;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Status;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Up;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
+using Frenchex.Dev.Vos.Cli.IntegrationLib.Domain;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.Vos.Cli.Integration.DependencyInjection;
