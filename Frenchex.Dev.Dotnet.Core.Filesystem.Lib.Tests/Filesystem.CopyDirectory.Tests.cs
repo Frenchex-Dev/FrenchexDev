@@ -1,6 +1,21 @@
-﻿using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Tests;
 
@@ -18,7 +33,7 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
     public static IEnumerable<object[]> DataSource()
     {
         yield return new object[]
-            {Path.Join(Directory.GetCurrentDirectory(), "Resources")};
+            { Path.Join(Directory.GetCurrentDirectory(), "Resources") };
     }
 
     [TestMethod]
@@ -46,16 +61,13 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
 
                     var dirInfo = new DirectoryInfo(context.DirectoryToCopy!);
 
-                    IEnumerable<DirectoryInfo> dirs = dirInfo.EnumerateDirectories();
+                    IEnumerable<DirectoryInfo>? dirs = dirInfo.EnumerateDirectories();
 
                     foreach (var dir in dirs)
                     {
                         Assert.IsTrue(Directory.Exists(dir.FullName));
 
-                        foreach (var file in dir.GetFiles())
-                        {
-                            Assert.IsTrue(File.Exists(file.FullName));
-                        }
+                        foreach (var file in dir.GetFiles()) Assert.IsTrue(File.Exists(file.FullName));
                     }
                 });
             },

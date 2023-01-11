@@ -1,9 +1,24 @@
-﻿using System.CommandLine;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.CommandLine;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Up;
 
@@ -38,21 +53,22 @@ public class UpCommandIntegration : ABaseCommandIntegration, IUpCommandIntegrati
 
     public void IntegrateInto(Command parentCommand)
     {
-        Argument<string[]> namesArg = _namesArgumentBuilder.Build();
-        Option<bool> provisionOpt = new(new[] {"--provision"}, "Provision");
-        Option<string[]> provisionWithOpt = new(new[] {"--provision-with"}, "Provision with");
-        Option<bool> destroyOnErrorOpt = new(new[] {"--destroy-on-error"}, "Destroy on error");
-        Option<bool> parallelOpt = _parallelOptionBuilder.Build();
-        Option<int> parallelWorkers = _parallelWorkersOptionBuilder.Build();
-        Option<int> parallelWait = _parallelWaitOptionBuilder.Build();
-        Option<string> providerOpt = new(new[] {"--provider"}, () => ProviderEnum.Virtualbox.ToString(), "Provider");
+        Argument<string[]>? namesArg = _namesArgumentBuilder.Build();
+        Option<bool> provisionOpt = new(new[] { "--provision" }, "Provision");
+        Option<string[]> provisionWithOpt = new(new[] { "--provision-with" }, "Provision with");
+        Option<bool> destroyOnErrorOpt = new(new[] { "--destroy-on-error" }, "Destroy on error");
+        Option<bool>? parallelOpt = _parallelOptionBuilder.Build();
+        Option<int>? parallelWorkers = _parallelWorkersOptionBuilder.Build();
+        Option<int>? parallelWait = _parallelWaitOptionBuilder.Build();
+        Option<string> providerOpt = new(new[] { "--provider" }, () => ProviderEnum.Virtualbox.ToString(), "Provider");
 
-        Option<bool> installProviderOpt = new(new[] {"--install-provider", "-i"}, "Install provider");
-        Option<string> timeout = TimeoutStrOptionBuilder.Build();
-        Option<string> workingDirOpt = WorkingDirectoryOptionBuilder.Build();
-        Option<string> vagrantBinPath = VagrantBinPathOptionBuilder.Build();
+        Option<bool> installProviderOpt = new(new[] { "--install-provider", "-i" }, "Install provider");
+        Option<string>? timeout = TimeoutStrOptionBuilder.Build();
+        Option<string>? workingDirOpt = WorkingDirectoryOptionBuilder.Build();
+        Option<string>? vagrantBinPath = VagrantBinPathOptionBuilder.Build();
 
-        var command = new Command("up", "Runs Vagrant up") {
+        var command = new Command("up", "Runs Vagrant up")
+        {
             namesArg,
             provisionOpt,
             provisionWithOpt,
@@ -107,10 +123,7 @@ public class UpCommandIntegration : ABaseCommandIntegration, IUpCommandIntegrati
 
             response.Response.Process.WrappedProcess.OutputDataReceived += (_, args) =>
             {
-                if (args.Data != null)
-                {
-                    context.Console.Out.Write(args.Data + "\r\n");
-                }
+                if (args.Data != null) context.Console.Out.Write(args.Data + "\r\n");
             };
 
             Console.CancelKeyPress += delegate

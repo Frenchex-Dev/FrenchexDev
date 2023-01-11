@@ -1,7 +1,22 @@
-﻿using System.CommandLine;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.CommandLine;
 using Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib.Domain;
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Tests;
 
@@ -20,20 +35,20 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
 
         for (var i = 0; i < nbTestCases; i++)
         {
-            var payload = new Payload {
+            var payload = new Payload
+            {
                 TestCaseName = $"Test case {i}",
                 ListOfListOfCommands = new List<List<InputCommand>>(nbVosInstances)
             };
 
-            List<object> obj = new() {
+            List<object> obj = new()
+            {
                 payload.TestCaseName,
                 payload
             };
 
             for (var x = 0; x < nbVosInstances; x++)
-            {
                 payload.ListOfListOfCommands.Add(ProduceTestData(timeout).ToList());
-            }
 
             listOfList.Add(obj.ToArray());
         }
@@ -63,7 +78,8 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
         UnitTest.VsCodeDebugging vsCodeDebugging
     )
     {
-        await RunInternal(new[] {
+        await RunInternal(new[]
+            {
                 workingDirectory
             },
             commands,
@@ -97,7 +113,8 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
             return BuildCommandLineString(command, timeOutOpt);
         }
 
-        return new InputCommand[] {
+        return new InputCommand[]
+        {
             new("init", BuildInternalCommandLineString("init")),
             new("d.m.t 1",
                 BuildInternalCommandLineString(
@@ -131,12 +148,10 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
                 var sut = provider.GetRequiredService<SubjectUnderTest>().RootCommand;
 
                 foreach (var workingDir in workingDirectories)
+                foreach (var command in commands)
                 {
-                    foreach (var command in commands)
-                    {
-                        var vosCommand = $"vos {command.Command.Replace(WorkingDirectoryMarker, workingDir)}";
-                        await execCommand(vosCommand, sut);
-                    }
+                    var vosCommand = $"vos {command.Command.Replace(WorkingDirectoryMarker, workingDir)}";
+                    await execCommand(vosCommand, sut);
                 }
             },
             (_, _, _) => Task.CompletedTask,

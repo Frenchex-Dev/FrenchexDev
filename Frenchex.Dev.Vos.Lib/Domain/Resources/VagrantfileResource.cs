@@ -1,10 +1,29 @@
-﻿using System.Reflection;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.Reflection;
 using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Resources;
 
 public interface IVagrantfileResource
 {
+    /// <summary>
+    /// Keep in sync with Provisioning path in resource Vagrantfile
+    /// </summary>
+    const string Provisioning = "provisioning";
     void Copy(string? destination);
 }
 

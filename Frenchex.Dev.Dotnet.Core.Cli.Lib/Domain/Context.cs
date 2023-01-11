@@ -1,4 +1,19 @@
-﻿using Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions.Domain;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions.Domain;
+
+#endregion
 
 namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
 

@@ -1,4 +1,17 @@
-﻿using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Response;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Response;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Destroy.Request;
@@ -15,7 +28,9 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Response;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Response;
 
-namespace Frenchex.Dev.Vos.Lib.Tests.Domain.Commands;
+#endregion
+
+namespace Frenchex.Dev.Vos.Lib.Tests.Domain.UseCases.FullWorkflow2;
 
 public class ExecutionContext : WithWorkingDirectoryExecutionContext
 {

@@ -1,8 +1,23 @@
-﻿using System.CommandLine;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.CommandLine;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Request;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Status;
 
@@ -28,12 +43,13 @@ public class StatusCommandIntegration : ABaseCommandIntegration, IStatusCommandI
 
     public void IntegrateInto(Command parentCommand)
     {
-        Argument<string[]> nameArg = _namesArgumentBuilder.Build();
-        Option<string> workingDirOpt = WorkingDirectoryOptionBuilder.Build();
-        Option<string> timeoutOpt = TimeoutStrOptionBuilder.Build();
-        Option<string> vagrantBinPath = VagrantBinPathOptionBuilder.Build();
+        Argument<string[]>? nameArg = _namesArgumentBuilder.Build();
+        Option<string>? workingDirOpt = WorkingDirectoryOptionBuilder.Build();
+        Option<string>? timeoutOpt = TimeoutStrOptionBuilder.Build();
+        Option<string>? vagrantBinPath = VagrantBinPathOptionBuilder.Build();
 
-        var command = new Command("status", "Runs Vagrant status") {
+        var command = new Command("status", "Runs Vagrant status")
+        {
             nameArg,
             workingDirOpt,
             timeoutOpt,

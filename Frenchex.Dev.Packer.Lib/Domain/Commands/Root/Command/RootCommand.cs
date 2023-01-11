@@ -1,9 +1,24 @@
-﻿using System.Text;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.Text;
 using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
 using Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.Process;
 using Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.ProcessBuilder;
 using Frenchex.Dev.Dotnet.Wrapping.Lib.Domain.Commands.Root;
 using Microsoft.Extensions.Configuration;
+
+#endregion
 
 namespace Frenchex.Dev.Packer.Lib.Domain.Commands.Root.Command;
 

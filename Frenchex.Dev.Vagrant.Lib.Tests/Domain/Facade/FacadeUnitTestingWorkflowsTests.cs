@@ -1,6 +1,21 @@
-﻿using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace Frenchex.Dev.Vagrant.Lib.Tests.Domain.Facade;
 
@@ -18,22 +33,17 @@ public class FacadeUnitTestingWorkflowsTests : AbstractUnitTest
     [TestMethod]
     public async Task CanLoadFacadeFromProvider()
     {
-        await GetUnitTest().ExecuteAndAssertAsync<ExecutionContext>(async (provider, _, context, _) =>
+        await GetUnitTest().ExecuteAndAssertAsync<ExecutionContext>(
+            async (provider, _, context, _) =>
             {
-                await Task.Run(() =>
-                {
-                    context.Facade = provider.GetRequiredService<ICommandsFacade>();
-                });
+                await Task.Run(() => { context.Facade = provider.GetRequiredService<ICommandsFacade>(); });
             },
             async (_, _, context) =>
             {
-                await Task.Run(() =>
-                {
-                    Assert.IsInstanceOfType(context.Facade, typeof(ICommandsFacade));
-                });
+                await Task.Run(() => { Assert.IsInstanceOfType(context.Facade, typeof(ICommandsFacade)); });
             },
             GetUnitTest().GetScopedServiceProvider(),
-            new UnitTest.VsCodeDebugging {Open = false, TellMe = true}
+            new UnitTest.VsCodeDebugging { Open = false, TellMe = true }
         );
     }
 }

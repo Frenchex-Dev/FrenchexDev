@@ -1,4 +1,17 @@
-﻿using Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions.Domain;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions.Domain;
 using Frenchex.Dev.OnSteroid.Cli.Lib.DependencyInjection;
 using Frenchex.Dev.OnSteroid.Cli.Lib.Domain.Kernel;
 using Frenchex.Dev.OnSteroid.Lib.Domain.Kernel;
@@ -9,6 +22,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using IServicesConfiguration =
     Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.DependencyInjection.IServicesConfiguration;
+
+#endregion
 
 namespace Frenchex.Dev.OnSteroid.Cli.Lib.Domain.Program;
 
@@ -47,10 +62,7 @@ public class ProgramBuilder : IProgramBuilder
                 onSteroidCliServicesConfiguration.ConfigureServices(services);
                 registerServices.Invoke(services);
             },
-            services =>
-            {
-                services.AddHostedService<T>();
-            },
+            services => { services.AddHostedService<T>(); },
             services =>
             {
                 Dotnet.Core.Cli.Lib.DependencyInjection.ServicesConfiguration
@@ -62,7 +74,7 @@ public class ProgramBuilder : IProgramBuilder
         return program;
     }
 
-    private async static Task<IProgram> BuildProgram(
+    private static async Task<IProgram> BuildProgram(
         IHostBasedProgramBuilder hostBasedProgramBuilder,
         IServicesConfiguration servicesConfiguration,
         IContext context,
@@ -82,10 +94,7 @@ public class ProgramBuilder : IProgramBuilder
                     registerServices.Invoke(services);
                     registerDependencyServices.Invoke(services);
                 },
-                services =>
-                {
-                    registerHostedServices.Invoke(services);
-                },
+                services => { registerHostedServices.Invoke(services); },
                 configureProgramLoggingAction
             );
 

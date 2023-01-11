@@ -1,4 +1,15 @@
-﻿namespace Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+namespace Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
 
 public class MachineDefinitionBuilder
 {
@@ -35,7 +46,8 @@ public class MachineDefinitionBuilder
 
     public MachineDefinitionDeclaration Build()
     {
-        return new MachineDefinitionDeclaration {
+        return new MachineDefinitionDeclaration
+        {
             Base = BaseBuilder.Build(),
             MachineTypeName = _machineTypeName,
             Name = _name,

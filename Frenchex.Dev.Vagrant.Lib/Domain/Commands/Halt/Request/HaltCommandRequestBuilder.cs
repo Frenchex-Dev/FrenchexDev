@@ -1,12 +1,27 @@
-﻿using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Halt.Request;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Halt.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Root.Base.Request;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Root.Request;
+
+#endregion
 
 namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Halt.Request;
 
 public class HaltCommandRequestBuilder : RootCommandRequestBuilder, IHaltCommandRequestBuilder
 {
-    private String? _usingHaltTimeout;
+    private string? _usingHaltTimeout;
     private string[]? _usingNamesOrIds;
     private bool? _withForce;
 

@@ -1,4 +1,17 @@
-﻿using System.Text;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.Text;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Configuration.Load;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Naming;
@@ -6,6 +19,8 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Response;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Command;
 using ISshCommandRequest = Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Request.ISshCommandRequest;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Ssh.Command;
 

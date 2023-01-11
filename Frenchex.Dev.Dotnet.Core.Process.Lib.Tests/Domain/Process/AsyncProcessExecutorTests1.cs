@@ -1,7 +1,22 @@
+#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
 using Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.Process;
 using Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.ProcessBuilder;
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace Frenchex.Dev.Dotnet.Core.Process.Lib.Tests.Domain.Process;
 
@@ -19,7 +34,7 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
     public static IEnumerable<object[]> DataSource()
     {
         yield return new object[]
-            {"dotnet", "--help", "1s"};
+            { "dotnet", "--help", "1s" };
     }
 
     [TestMethod]
@@ -53,10 +68,7 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
 
                 context.ProcessExecution.Process.OutputDataReceived += async (_, e) =>
                 {
-                    if (e.Data != null)
-                    {
-                        await context.OutputStreamWriter.WriteLineAsync(e.Data);
-                    }
+                    if (e.Data != null) await context.OutputStreamWriter.WriteLineAsync(e.Data);
                 };
 
                 await context!.ProcessExecution!.WaitForCompleteExit!;

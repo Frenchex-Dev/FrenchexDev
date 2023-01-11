@@ -1,7 +1,22 @@
-﻿using System.Diagnostics;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.Diagnostics;
 using Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.Process;
 using Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib;
 using Microsoft.Extensions.Logging;
+
+#endregion
 
 namespace Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.ProcessBuilder;
 
@@ -11,8 +26,8 @@ namespace Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.ProcessBuilder;
 /// </summary>
 public class AsyncProcessBuilder : IProcessBuilder
 {
-    private readonly ITimeSpanTooling _timeSpanTooling;
     private readonly ILogger<IProcess> _processLogger;
+    private readonly ITimeSpanTooling _timeSpanTooling;
 
     public AsyncProcessBuilder(
         ITimeSpanTooling timeSpanTooling,
@@ -25,8 +40,10 @@ public class AsyncProcessBuilder : IProcessBuilder
 
     public IProcess Build(IProcessBuildingParameters parameters)
     {
-        var wrappedProcess = new System.Diagnostics.Process {
-            StartInfo = new ProcessStartInfo {
+        var wrappedProcess = new System.Diagnostics.Process
+        {
+            StartInfo = new ProcessStartInfo
+            {
                 FileName = parameters.Command,
                 Arguments = parameters.Arguments,
                 WorkingDirectory = parameters.WorkingDirectory,

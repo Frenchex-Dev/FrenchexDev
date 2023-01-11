@@ -1,5 +1,19 @@
-﻿using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
-using Frenchex.Dev.Dotnet.Core.Solution.Lib.Domain.Base.Structure;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
+
+#endregion
 
 namespace Frenchex.Dev.Dotnet.Core.Solution.Lib.Domain.Command.Generator;
 
@@ -17,14 +31,13 @@ public class CommandGeneratorCommand
     public async Task ExecuteAsync(CommandGeneratorRequest commandGeneratorRequest)
     {
         await CreateDirectoryIfDoesNotExists(commandGeneratorRequest.BasePath);
-       // await GenerateDirectoryStructure(commandGeneratorRequest.BasePath);
+        // await GenerateDirectoryStructure(commandGeneratorRequest.BasePath);
     }
 
-    private async Task CreateDirectoryIfDoesNotExists(string basePath)
+    private Task CreateDirectoryIfDoesNotExists(string basePath)
     {
-        if (_filesystem.DirectoryExists(basePath))
-        {
-            _filesystem.DirectoryDelete(basePath, true);
-        }
+        if (_filesystem.DirectoryExists(basePath)) _filesystem.DirectoryDelete(basePath, true);
+
+        return Task.CompletedTask;
     }
 }

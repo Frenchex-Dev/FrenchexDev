@@ -1,5 +1,20 @@
-﻿using Frenchex.Dev.Dotnet.Core.Kernel.Lib.Abstractions.Domain;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Dotnet.Core.Kernel.Lib.Abstractions.Domain;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace Frenchex.Dev.Dotnet.Core.Kernel.Lib.Domain;
 
@@ -42,23 +57,17 @@ public class Kernel : IKernel
         await DisposeAsyncScopes();
 
         DisposeScopes();
-        
+
         GC.SuppressFinalize(this);
     }
 
     private void DisposeScopes()
     {
-        foreach (KeyValuePair<string, IServiceScope> scope in Scopes)
-        {
-            scope.Value.Dispose();
-        }
+        foreach (KeyValuePair<string, IServiceScope> scope in Scopes) scope.Value.Dispose();
     }
 
     private async ValueTask DisposeAsyncScopes()
     {
-        foreach (KeyValuePair<string, AsyncServiceScope> scope in AsyncScopes)
-        {
-            await scope.Value.DisposeAsync();
-        }
+        foreach (KeyValuePair<string, AsyncServiceScope> scope in AsyncScopes) await scope.Value.DisposeAsync();
     }
 }

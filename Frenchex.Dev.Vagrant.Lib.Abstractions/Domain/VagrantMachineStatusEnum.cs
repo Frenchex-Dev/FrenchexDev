@@ -1,4 +1,15 @@
-﻿namespace Frenchex.Dev.Vagrant.Lib.Abstractions.Domain;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+namespace Frenchex.Dev.Vagrant.Lib.Abstractions.Domain;
 
 public enum VagrantMachineStatusEnum
 {
@@ -11,11 +22,11 @@ public enum VagrantMachineStatusEnum
 
 public class Statuses
 {
-    public readonly static string NotCreated = "not created";
-    public readonly static string Running = "running";
-    public readonly static string Aborted = "aborted";
-    public readonly static string Suspended = "suspended";
-    public readonly static string Stopped = "stopped";
+    public static readonly string NotCreated = "not created";
+    public static readonly string Running = "running";
+    public static readonly string Aborted = "aborted";
+    public static readonly string Suspended = "suspended";
+    public static readonly string Stopped = "stopped";
 
     public string ToString(VagrantMachineStatusEnum status)
     {

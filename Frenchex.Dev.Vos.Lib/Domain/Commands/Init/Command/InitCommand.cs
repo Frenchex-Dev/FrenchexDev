@@ -1,4 +1,17 @@
-﻿using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Configuration.Load;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Configuration.Save;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Naming;
@@ -9,6 +22,8 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Configuration;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Command;
 using Frenchex.Dev.Vos.Lib.Domain.Resources;
 
+#endregion
+
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Init.Command;
 
 public class InitCommand : RootCommand, IInitCommand
@@ -17,10 +32,12 @@ public class InitCommand : RootCommand, IInitCommand
     private readonly IFilesystem _filesystem;
     private readonly IInitCommandResponseBuilderFactory _responseBuilderFactory;
     private readonly IVagrantfileResource _vagrantfileResource;
+    private readonly IScriptsResource _scriptsResource;
 
     public InitCommand(
         IFilesystem fileSystemOperator,
         IVagrantfileResource vagrantfileResource,
+        IScriptsResource scriptsResource,
         IInitCommandResponseBuilderFactory responseBuilderFactory,
         IConfigurationSaveAction configurationActionSave,
         IConfigurationLoadAction configurationLoadAction,
@@ -29,6 +46,7 @@ public class InitCommand : RootCommand, IInitCommand
     {
         _filesystem = fileSystemOperator;
         _vagrantfileResource = vagrantfileResource;
+        _scriptsResource = scriptsResource;
         _responseBuilderFactory = responseBuilderFactory;
         _configurationActionSave = configurationActionSave;
     }
@@ -43,12 +61,14 @@ public class InitCommand : RootCommand, IInitCommand
 
         _vagrantfileResource.Copy(request.BaseCommand.WorkingDirectory);
 
+        _scriptsResource.Copy(request.BaseCommand.WorkingDirectory);
+
         await _configurationActionSave.Save(
             new Configuration(), // @todo make it buildable via opts
             Path.Join(request.BaseCommand.WorkingDirectory, "config.json")
         );
 
-        var provisioningPath = Path.GetFullPath("provisioning", request.BaseCommand.WorkingDirectory);
+        var provisioningPath = Path.GetFullPath(IVagrantfileResource.Provisioning, request.BaseCommand.WorkingDirectory);
         var provisioningPathLink =
             Path.GetFullPath(Path.Join("Resources", "Provisioning"), AppDomain.CurrentDomain.BaseDirectory);
 

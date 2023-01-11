@@ -1,4 +1,17 @@
-﻿using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.SshConfig.Request;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.SshConfig.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Configuration.Load;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Naming;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.SshConfig.Command;
@@ -6,6 +19,8 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.SshConfig.Response;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Command;
 using ISshConfigCommandRequest =
     Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.SshConfig.Request.ISshConfigCommandRequest;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.SshConfig.Command;
 
@@ -50,12 +65,19 @@ public class SshConfigCommand : RootCommand, ISshConfigCommand
             .Build()
         );
 
-        if (null == process.ProcessExecutionResult.WaitForCompleteExit)
+        if (null == process.ProcessExecutionResult.WaitForCompleteExit
+            || null == process.ProcessExecutionResult.OutputStream
+           )
             throw new InvalidOperationException("wait for complete exit is null");
 
         await process.ProcessExecutionResult.WaitForCompleteExit;
 
+        process.ProcessExecutionResult.OutputStream.Position = 0;
+        var reader = new StreamReader(process.ProcessExecutionResult.OutputStream);
+        var output = await reader.ReadToEndAsync();
         var responseBuilder = _responseBuilderFactory.Build();
+
+        responseBuilder.WithContent(output);
 
         return responseBuilder.Build();
     }

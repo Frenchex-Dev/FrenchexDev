@@ -1,13 +1,24 @@
-﻿namespace Frenchex.Dev.Dotnet.Wrapping.Lib.Domain.Commands.Root;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+namespace Frenchex.Dev.Dotnet.Wrapping.Lib.Domain.Commands.Root;
 
 public class BaseCommandRequestBuilder : IBaseCommandRequestBuilder
 {
     private readonly object _parent;
     private string? _binPath;
+    private string? _timeout;
 
     private bool? _tty;
     private string? _workingDirectory;
-    private string? _timeout;
 
 
     public BaseCommandRequestBuilder(object parent)
@@ -48,7 +59,7 @@ public class BaseCommandRequestBuilder : IBaseCommandRequestBuilder
 
     public T Parent<T>() where T : IRootCommandRequestBuilder
     {
-        return (T) _parent;
+        return (T)_parent;
     }
 
     public IBaseCommandRequestBuilder WithTty(bool with)

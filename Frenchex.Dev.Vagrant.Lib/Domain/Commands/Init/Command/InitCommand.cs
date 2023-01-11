@@ -1,4 +1,17 @@
-﻿using System.Text;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.Text;
 using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
 using Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.ProcessBuilder;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Init.Command;
@@ -6,6 +19,8 @@ using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Init.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Init.Response;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Root.Command;
 using Microsoft.Extensions.Configuration;
+
+#endregion
 
 namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Init.Command;
 

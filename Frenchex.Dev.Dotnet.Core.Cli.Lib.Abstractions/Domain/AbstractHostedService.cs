@@ -1,7 +1,22 @@
-﻿using System.CommandLine;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.CommandLine;
 using Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib.Domain;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+
+#endregion
 
 namespace Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions.Domain;
 
@@ -17,7 +32,7 @@ public abstract class AbstractHostedService : IHostedService
     private readonly IHostApplicationLifetime _hostApplicationLifetime;
     private readonly IEnumerable<IIntegration> _integrations;
     private readonly ILogger<AbstractHostedService> _logger;
-    private int _exitCode = (int) ExitCode.ExitNormal;
+    private int _exitCode = (int)ExitCode.ExitNormal;
 
     protected RootCommand? RootCommand;
 
@@ -71,7 +86,7 @@ public abstract class AbstractHostedService : IHostedService
         catch (Exception e)
         {
             _logger.LogError("General exception not caught", e.Message);
-            _exitCode |= (int) ExitCode.ExitGeneralException;
+            _exitCode |= (int)ExitCode.ExitGeneralException;
         }
         finally
         {
@@ -91,10 +106,7 @@ public abstract class AbstractHostedService : IHostedService
         if (null == RootCommand)
             throw new ArgumentNullException(nameof(RootCommand));
 
-        foreach (var integration in _integrations)
-        {
-            integration.Integrate(RootCommand);
-        }
+        foreach (var integration in _integrations) integration.Integrate(RootCommand);
     }
 
     private RootCommand BuildRootCommand()

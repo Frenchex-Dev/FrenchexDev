@@ -1,6 +1,21 @@
-﻿using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Tests;
 
@@ -17,7 +32,7 @@ public class FileSystemCreateDirectoryTests : AbstractUnitTest
 
     public static IEnumerable<object[]> DataSource()
     {
-        yield return new object[] {Path.Join("Resources")};
+        yield return new object[] { Path.Join("Resources") };
     }
 
     [TestMethod]
@@ -33,17 +48,11 @@ public class FileSystemCreateDirectoryTests : AbstractUnitTest
                     var originalFileName = Path.GetFileName(originalFile);
                     context.FullDestinationDirectory = Path.Join(Path.GetTempPath(), originalFileName);
 
-                    await Task.Run(() =>
-                    {
-                        fs.DirectoryCreate(context.FullDestinationDirectory);
-                    });
+                    await Task.Run(() => { fs.DirectoryCreate(context.FullDestinationDirectory); });
                 },
                 async (_, _, context) =>
                 {
-                    await Task.Run(() =>
-                    {
-                        Assert.IsTrue(Directory.Exists(context.FullDestinationDirectory));
-                    });
+                    await Task.Run(() => { Assert.IsTrue(Directory.Exists(context.FullDestinationDirectory)); });
                 },
                 async (_, _, context) =>
                 {
@@ -53,7 +62,7 @@ public class FileSystemCreateDirectoryTests : AbstractUnitTest
                         Directory.Delete(fileToDelete!, true);
                     });
                 },
-               GetUnitTest().GetScopedServiceProvider()
+                GetUnitTest().GetScopedServiceProvider()
             );
     }
 

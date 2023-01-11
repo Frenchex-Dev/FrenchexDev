@@ -1,5 +1,20 @@
-﻿using Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Root.Base.Request;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Root.Base.Request;
 using Frenchex.Dev.Packer.Lib.Abstractions.Domain.Commands.Root.Request;
+
+#endregion
 
 namespace Frenchex.Dev.Packer.Lib.Domain.Commands.Root.Base.Request;
 
@@ -8,16 +23,16 @@ public class BaseCommandRequestBuilder : IBaseCommandRequestBuilder
     private readonly object _parent;
     private bool? _color;
     private bool? _debug;
+    private bool? _debugTimestamp;
     private bool? _help;
     private bool? _machineReadable;
     private string? _packerBinpath;
 
     private string? _timeout;
+    private bool? _timeStamp;
+    private bool? _tty;
     private bool? _version;
     private string? _workingDirectory;
-    private bool? _timeStamp;
-    private bool? _debugTimestamp;
-    private bool? _tty;
 
     public BaseCommandRequestBuilder(object parent)
     {
@@ -45,13 +60,7 @@ public class BaseCommandRequestBuilder : IBaseCommandRequestBuilder
 
     T IBaseCommandRequestBuilder.Parent<T>()
     {
-        return (T) _parent;
-    }
-
-    public IBaseCommandRequestBuilder UsingTimeoutTs(string timeout)
-    {
-        _timeout = timeout;
-        return this;
+        return (T)_parent;
     }
 
     public IBaseCommandRequestBuilder UsingWorkingDirectory(string? workingDirectory)
@@ -63,17 +72,6 @@ public class BaseCommandRequestBuilder : IBaseCommandRequestBuilder
     public IBaseCommandRequestBuilder UsingTimeout(string timeout)
     {
         _timeout = timeout;
-        return this;
-    }
-
-    public T Parent<T>() where T : IRootCommandRequestBuilder
-    {
-        return (T) _parent;
-    }
-
-    public IBaseCommandRequestBuilder UsingBinPath(string packerBinPath)
-    {
-        _packerBinpath = packerBinPath;
         return this;
     }
 
@@ -122,6 +120,23 @@ public class BaseCommandRequestBuilder : IBaseCommandRequestBuilder
     public IBaseCommandRequestBuilder WithVersion(bool with)
     {
         _version = with;
+        return this;
+    }
+
+    public IBaseCommandRequestBuilder UsingTimeoutTs(string timeout)
+    {
+        _timeout = timeout;
+        return this;
+    }
+
+    public T Parent<T>() where T : IRootCommandRequestBuilder
+    {
+        return (T)_parent;
+    }
+
+    public IBaseCommandRequestBuilder UsingBinPath(string packerBinPath)
+    {
+        _packerBinpath = packerBinPath;
         return this;
     }
 }

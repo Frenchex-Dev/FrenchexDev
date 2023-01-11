@@ -1,8 +1,23 @@
-﻿using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.DependencyInjection;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.DependencyInjection;
 using Frenchex.Dev.OnSteroid.Lib.Domain.DependencyInjection;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.DependencyInjection;
 using Frenchex.Dev.Vos.Lib.Domain.Resources;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Lib.DependencyInjection;
 
@@ -22,6 +37,7 @@ public class ServicesConfiguration : IServicesConfiguration
                     // resources
                     serviceCollection
                         .AddScoped<IVagrantfileResource, VagrantfileResource>()
+                        .AddScoped<IScriptsResource, ScriptsResource>()
                         ;
 
                     Abstractions.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);

@@ -1,5 +1,20 @@
-﻿using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.DependencyInjection;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Cli.DependencyInjection;
 
@@ -26,10 +41,7 @@ public class ServicesConfiguration : IServicesConfiguration, IDiscoverableServic
     {
         return servicesConfigurationServices
             .ConfigureServices(services,
-                () =>
-                {
-                    services.AddHostedService<Host>();
-                },
+                () => { services.AddHostedService<Host>(); },
                 () =>
                 {
                     Integration.DependencyInjection.ServicesConfiguration.StaticConfigureServices(services);

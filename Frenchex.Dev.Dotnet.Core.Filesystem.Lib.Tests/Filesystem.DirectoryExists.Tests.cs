@@ -1,6 +1,21 @@
-﻿using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Tests;
 
@@ -17,7 +32,7 @@ public class FilesystemDirectoryExistsTests : AbstractUnitTest
 
     public static IEnumerable<object[]> DataSource()
     {
-        yield return new object[] {Environment.CurrentDirectory};
+        yield return new object[] { Environment.CurrentDirectory };
     }
 
     [TestMethod]
@@ -35,10 +50,7 @@ public class FilesystemDirectoryExistsTests : AbstractUnitTest
                     context.DirectoryExists = fs.DirectoryExists(context.DirectoryToTestExistence);
                 });
             },
-            async (provider, root, context) =>
-            {
-                await Task.Run(() => { Assert.IsTrue(context.DirectoryExists); });
-            },
+            async (provider, root, context) => { await Task.Run(() => { Assert.IsTrue(context.DirectoryExists); }); },
             GetUnitTest().GetScopedServiceProvider()
         );
     }

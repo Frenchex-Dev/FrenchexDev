@@ -1,6 +1,21 @@
-﻿using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Tests;
 
@@ -17,8 +32,8 @@ public class FilesystemFileExistsTests : AbstractUnitTest
 
     public static IEnumerable<object[]> DataSource()
     {
-        yield return new object[] {Path.Join("Resources", "file-to-copy.txt"), true};
-        yield return new object[] {Path.Join("Resources", "file-to-copy.txt"), false};
+        yield return new object[] { Path.Join("Resources", "file-to-copy.txt"), true };
+        yield return new object[] { Path.Join("Resources", "file-to-copy.txt"), false };
     }
 
     [TestMethod]
@@ -32,10 +47,7 @@ public class FilesystemFileExistsTests : AbstractUnitTest
                 context.FullDestinationFile = originalFile;
                 context.FileShouldExists = shouldExist;
 
-                await Task.Run(() =>
-                {
-                    context.FileExists = fs.FileExists(originalFile);
-                });
+                await Task.Run(() => { context.FileExists = fs.FileExists(originalFile); });
             },
             async (provider, root, context) =>
             {

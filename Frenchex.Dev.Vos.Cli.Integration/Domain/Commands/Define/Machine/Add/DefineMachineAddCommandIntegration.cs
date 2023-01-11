@@ -1,9 +1,24 @@
-﻿using System.CommandLine;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.CommandLine;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Define.Machine.Add;
 
@@ -59,23 +74,24 @@ public class DefineMachineAddCommandIntegration : ABaseCommandIntegration, IDefi
 
     public void Integrate(Command rootCommand)
     {
-        Argument<string> nameArg = _nameArgumentBuilder.Build();
-        Argument<string> typeArg = _machineTypeNameArgumentBuilder.Build();
-        Argument<int> instancesArg = _instancesArgumentBuilder.Build();
-        Option<string> namingPatternOpt = _namingPatternOptionBuilder.Build();
+        Argument<string>? nameArg = _nameArgumentBuilder.Build();
+        Argument<string>? typeArg = _machineTypeNameArgumentBuilder.Build();
+        Argument<int>? instancesArg = _instancesArgumentBuilder.Build();
+        Option<string>? namingPatternOpt = _namingPatternOptionBuilder.Build();
 
-        Option<bool> isPrimaryOpt = _primaryOptionBuilder.Build();
-        Option<bool> isEnabledOpt = _enabledOptionBuilder.Build();
-        Option<int> vCpusOpt = _virtualCpusOptionBuilder.Build();
-        Option<int> ramMbOpt = _ramMbOptionBuilder.Build();
-        Option<string> ipv4PatternOpt = _ipv4PatternOptionBuilder.Build();
-        Option<int> ipv4StartOpt = _ipv4StartOptionBuilder.Build();
-        Option<string> networkBridgeOpt = _networkBridgeOptionBuilder.Build();
+        Option<bool>? isPrimaryOpt = _primaryOptionBuilder.Build();
+        Option<bool>? isEnabledOpt = _enabledOptionBuilder.Build();
+        Option<int>? vCpusOpt = _virtualCpusOptionBuilder.Build();
+        Option<int>? ramMbOpt = _ramMbOptionBuilder.Build();
+        Option<string>? ipv4PatternOpt = _ipv4PatternOptionBuilder.Build();
+        Option<int>? ipv4StartOpt = _ipv4StartOptionBuilder.Build();
+        Option<string>? networkBridgeOpt = _networkBridgeOptionBuilder.Build();
         Option<string>? timeoutStrOpt = TimeoutStrOptionBuilder?.Build();
         Option<string>? workingDirOpt = WorkingDirectoryOptionBuilder?.Build();
         Option<string>? vagrantBinPath = VagrantBinPathOptionBuilder?.Build();
 
-        var command = new Command("add", "Add a new Machine") {
+        var command = new Command("add", "Add a new Machine")
+        {
             nameArg,
             typeArg,
             instancesArg,
@@ -118,7 +134,8 @@ public class DefineMachineAddCommandIntegration : ABaseCommandIntegration, IDefi
             BuildBase(requestBuilder, payload);
 
             var request = requestBuilder
-                .UsingDefinition(new MachineDefinitionDeclaration {
+                .UsingDefinition(new MachineDefinitionDeclaration
+                {
                     Name = payload.Name,
                     VirtualCpus = payload.VCpus,
                     RamInMb = payload.RamInMb,

@@ -1,7 +1,21 @@
-﻿using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Configuration.Load;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Configuration.Load;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Naming;
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Configuration;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Command;
 

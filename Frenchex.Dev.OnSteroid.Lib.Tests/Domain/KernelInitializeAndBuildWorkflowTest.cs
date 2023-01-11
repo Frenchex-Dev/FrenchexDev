@@ -1,9 +1,24 @@
+#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.Kernel;
 using Frenchex.Dev.OnSteroid.Lib.DependencyInjection;
 using Frenchex.Dev.OnSteroid.Lib.Domain.Kernel;
 using Frenchex.Dev.OnSteroid.Lib.Domain.Workflows.Kernel;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace Frenchex.Dev.OnSteroid.Lib.Tests.Domain;
 
@@ -45,10 +60,7 @@ public class KernelInitializeAndBuildWorkflowTest : AbstractUnitTest
             {
                 await Task.Run(() =>
                 {
-                    if (context.Kernel is null)
-                    {
-                        throw new InvalidProgramException();
-                    }
+                    if (context.Kernel is null) throw new InvalidProgramException();
 
                     var servedScoped = context.Kernel.AsyncScopes[defaultScopeName];
                     Assert.AreEqual(context.DefaultScope, servedScoped, "Same scope");
@@ -56,10 +68,7 @@ public class KernelInitializeAndBuildWorkflowTest : AbstractUnitTest
             },
             async (provider, root, context) =>
             {
-                if (context.Kernel is null)
-                {
-                    throw new InvalidProgramException();
-                }
+                if (context.Kernel is null) throw new InvalidProgramException();
 
                 await context.Kernel.DisposeAsync();
             },
@@ -73,4 +82,3 @@ public class KernelInitializeAndBuildWorkflowTest : AbstractUnitTest
         public AsyncServiceScope DefaultScope { get; set; }
     }
 }
-

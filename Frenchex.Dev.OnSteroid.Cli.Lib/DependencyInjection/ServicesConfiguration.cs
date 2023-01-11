@@ -1,7 +1,22 @@
-﻿using Frenchex.Dev.OnSteroid.Cli.Lib.Domain.Program;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.OnSteroid.Cli.Lib.Domain.Program;
 using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.DependencyInjection;
 using Frenchex.Dev.OnSteroid.Lib.Domain.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace Frenchex.Dev.OnSteroid.Cli.Lib.DependencyInjection;
 

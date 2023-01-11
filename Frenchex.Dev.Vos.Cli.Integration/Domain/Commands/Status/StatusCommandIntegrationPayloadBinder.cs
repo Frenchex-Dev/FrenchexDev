@@ -1,5 +1,20 @@
-﻿using System.CommandLine;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.CommandLine;
 using System.CommandLine.Invocation;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Status;
 
@@ -22,7 +37,8 @@ public class StatusCommandIntegrationPayloadBinder : IGenericBinder<StatusComman
 
     public StatusCommandIntegrationPayload GetBoundValue(InvocationContext bindingContext)
     {
-        return new StatusCommandIntegrationPayload {
+        return new StatusCommandIntegrationPayload
+        {
             WorkingDirectory = bindingContext.ParseResult.GetValueForOption(_workingDirOpt),
             TimeoutString = bindingContext.ParseResult.GetValueForOption(_timeoutOpt),
             Names = bindingContext.ParseResult.GetValueForArgument(_nameArg)

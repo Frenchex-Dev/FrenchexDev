@@ -1,10 +1,25 @@
-﻿using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
 using Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.ProcessBuilder;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Status.Command;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Status.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Status.Response;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Root.Command;
 using Microsoft.Extensions.Configuration;
+
+#endregion
 
 namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Status.Command;
 
@@ -42,13 +57,13 @@ public class StatusCommand : RootCommand, IStatusCommand
             .Build();
     }
 
-    private string BuildArguments(IStatusCommandRequest request)
-    {
-        return $"{GetCliCommandName()} {string.Join(" ", request.NamesOrIds)}";
-    }
-
     public string GetCliCommandName()
     {
         return "status";
+    }
+
+    private string BuildArguments(IStatusCommandRequest request)
+    {
+        return $"{GetCliCommandName()} {string.Join(" ", request.NamesOrIds)}";
     }
 }

@@ -1,9 +1,24 @@
-﻿using System.Diagnostics;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.Diagnostics;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 
@@ -28,28 +43,39 @@ public class UnitTest : IAsyncDisposable
 
     private IServiceProvider? OriginalServiceProvider { get; set; }
 
-    public IServiceProvider GetOriginalServiceProvider() => OriginalServiceProvider ??
-                                                            throw new ArgumentNullException(
-                                                                nameof(OriginalServiceProvider));
-
     private IServiceProvider? ScopedServiceProvider { get; set; }
-
-    public IServiceProvider GetScopedServiceProvider() =>
-        ScopedServiceProvider ?? throw new ArgumentNullException(nameof(ScopedServiceProvider));
 
     private AsyncServiceScope? DefaultAsyncScope { get; set; }
 
-    public AsyncServiceScope GetDefaultAsyncScope() =>
-        DefaultAsyncScope ?? throw new ArgumentNullException(nameof(DefaultAsyncScope));
-
     private IConfigurationRoot? Configuration { get; set; }
-    public IConfiguration GetConfiguration() => Configuration ?? throw new ArgumentNullException(nameof(Configuration));
 
     public ValueTask DisposeAsync()
     {
         DefaultAsyncScope?.DisposeAsync();
         _vsCodeDebugging?.DisposeAsync();
         return ValueTask.CompletedTask;
+    }
+
+    public IServiceProvider GetOriginalServiceProvider()
+    {
+        return OriginalServiceProvider ??
+               throw new ArgumentNullException(
+                   nameof(OriginalServiceProvider));
+    }
+
+    public IServiceProvider GetScopedServiceProvider()
+    {
+        return ScopedServiceProvider ?? throw new ArgumentNullException(nameof(ScopedServiceProvider));
+    }
+
+    public AsyncServiceScope GetDefaultAsyncScope()
+    {
+        return DefaultAsyncScope ?? throw new ArgumentNullException(nameof(DefaultAsyncScope));
+    }
+
+    public IConfiguration GetConfiguration()
+    {
+        return Configuration ?? throw new ArgumentNullException(nameof(Configuration));
     }
 
     public async Task ExecuteTimeBoxedAndAssertAsync<T>(
@@ -61,10 +87,7 @@ public class UnitTest : IAsyncDisposable
     ) where T : WithWorkingDirectoryExecutionContext
     {
         var timeoutMs = serviceProvider.GetRequiredService<ITimeSpanTooling>().GetTotalMsConvertedToInt(timeBox, -1);
-        if (timeoutMs == -1)
-        {
-            throw new CannotParseString("timeout cannot be -1");
-        }
+        if (timeoutMs == -1) throw new CannotParseString("timeout cannot be -1");
 
         var timeout = Task.Delay(timeoutMs);
 
@@ -76,29 +99,18 @@ public class UnitTest : IAsyncDisposable
             vsCodeDebugging
         );
 
-        var tasks = new List<Task> {run};
+        var tasks = new List<Task> { run };
 
-        if (vsCodeDebugging?.DevDebugging == false || _vsCodeDebugging?.DevDebugging == false)
-        {
-            tasks.Add(timeout);
-        }
+        if (vsCodeDebugging?.DevDebugging == false || _vsCodeDebugging?.DevDebugging == false) tasks.Add(timeout);
 
         var firstFinishedTask = await Task.WhenAny(tasks);
 
-        if (firstFinishedTask == run && firstFinishedTask.IsCompletedSuccessfully)
-        {
-            return;
-        }
+        if (firstFinishedTask == run && firstFinishedTask.IsCompletedSuccessfully) return;
 
-        if (firstFinishedTask == timeout)
-        {
-            throw new TimeoutException($"timeout {timeBox}");
-        }
+        if (firstFinishedTask == timeout) throw new TimeoutException($"timeout {timeBox}");
 
         if (firstFinishedTask.IsFaulted)
-        {
             throw new ApplicationException($"Task faulted: {firstFinishedTask.Exception?.Message}");
-        }
     }
 
     public async Task ExecuteTimeBoxedAndAssertAndCleanupAsync<T>(
@@ -111,10 +123,7 @@ public class UnitTest : IAsyncDisposable
     ) where T : WithWorkingDirectoryExecutionContext
     {
         var timeoutMs = serviceProvider.GetRequiredService<ITimeSpanTooling>().GetTotalMsConvertedToInt(timeBox, -1);
-        if (timeoutMs == -1)
-        {
-            throw new CannotParseString("timeout cannot be -1");
-        }
+        if (timeoutMs == -1) throw new CannotParseString("timeout cannot be -1");
 
         var timeout = Task.Delay(timeoutMs);
 
@@ -126,19 +135,13 @@ public class UnitTest : IAsyncDisposable
             vsCodeDebugging
         );
 
-        List<Task> tasks = new List<Task> {run};
+        var tasks = new List<Task> { run };
 
-        if (vsCodeDebugging?.DevDebugging == false || _vsCodeDebugging?.DevDebugging == false)
-        {
-            tasks.Add(timeout);
-        }
+        if (vsCodeDebugging?.DevDebugging == false || _vsCodeDebugging?.DevDebugging == false) tasks.Add(timeout);
 
         var firstFinishedTask = await Task.WhenAny(tasks);
 
-        if (firstFinishedTask == timeout)
-        {
-            throw new TimeoutException($"timeout {timeBox}");
-        }
+        if (firstFinishedTask == timeout) throw new TimeoutException($"timeout {timeBox}");
     }
 
     public async Task RunAsync<T>(
@@ -199,17 +202,11 @@ public class UnitTest : IAsyncDisposable
     {
         BuildIfNecessary();
 
-        if (executeFunc is null)
-        {
-            throw new ArgumentNullException(nameof(executeFunc));
-        }
+        if (executeFunc is null) throw new ArgumentNullException(nameof(executeFunc));
 
-        if (_vsCodeDebugging is null && vsCodeDebugging is not null)
-        {
-            _vsCodeDebugging = vsCodeDebugging;
-        }
+        if (_vsCodeDebugging is null && vsCodeDebugging is not null) _vsCodeDebugging = vsCodeDebugging;
 
-        Action<string> openVsCodeDebugging = (workingDirectory) =>
+        Action<string> openVsCodeDebugging = workingDirectory =>
         {
             if (_vsCodeDebugging is null)
                 return;
@@ -219,17 +216,19 @@ public class UnitTest : IAsyncDisposable
 
             var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
-            _vsCodeDebugging!.VsProcess = Process.Start(
-                _vsCodeDebugging?.Bin ?? (isWindows ? "C:\\Program Files\\Microsoft VS Code\\Code.exe" : "code"),
-                "-n " + workingDirectory);
+            _vsCodeDebugging!.VsProcess = Process.Start(new ProcessStartInfo()
+            {
+                Arguments = "-n " + workingDirectory,
+                WorkingDirectory = workingDirectory,
+                FileName = "code",
+                UseShellExecute = true,
+                CreateNoWindow = true
+            });
         };
 
         var executionContextObject = serviceProvider.GetRequiredService<T>();
 
-        if (_vsCodeDebugging?.Open == true)
-        {
-            openVsCodeDebugging.Invoke(executionContextObject.WorkingDirectory!);
-        }
+        if (_vsCodeDebugging?.Open == true) openVsCodeDebugging.Invoke(executionContextObject.WorkingDirectory!);
 
         Exception? thrownException = null;
 
@@ -243,11 +242,9 @@ public class UnitTest : IAsyncDisposable
             );
 
             if (assertFunc is not null)
-            {
                 await assertFunc.Invoke(serviceProvider,
                     Configuration!,
                     ScopedServiceProvider!.GetRequiredService<T>());
-            }
         }
         catch (Exception e)
         {
@@ -294,8 +291,8 @@ public class UnitTest : IAsyncDisposable
         _configureServicesFunc?.Invoke(services, configuration);
         _configureMocksFunc?.Invoke(services, configuration);
 
-        OriginalServiceProvider = services.BuildServiceProvider(new ServiceProviderOptions()
-            {ValidateScopes = true, ValidateOnBuild = true});
+        OriginalServiceProvider = services.BuildServiceProvider(new ServiceProviderOptions
+        { ValidateScopes = true, ValidateOnBuild = true });
 
         DefaultAsyncScope = OriginalServiceProvider.CreateAsyncScope();
         ScopedServiceProvider = GetDefaultAsyncScope().ServiceProvider;

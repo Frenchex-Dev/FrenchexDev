@@ -1,4 +1,15 @@
-﻿namespace Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+namespace Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
 
 public class MachineTypeDefinitionBuilder : IMachineTypeDefinitionBuilder
 {
@@ -24,6 +35,6 @@ public class MachineTypeDefinitionBuilder : IMachineTypeDefinitionBuilder
     {
         if (null == _name) throw new InvalidOperationException("name is null");
 
-        return new MachineTypeDefinitionDeclaration {Base = BaseBuilder.Build(), Name = _name};
+        return new MachineTypeDefinitionDeclaration { Base = BaseBuilder.Build(), Name = _name };
     }
 }

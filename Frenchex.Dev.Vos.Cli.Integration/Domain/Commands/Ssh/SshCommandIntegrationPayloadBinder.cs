@@ -1,5 +1,20 @@
-﻿using System.CommandLine;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.CommandLine;
 using System.CommandLine.Invocation;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Ssh;
 
@@ -34,7 +49,8 @@ public class SshCommandIntegrationPayloadBinder : IGenericBinder<SshCommandInteg
 
     public SshCommandIntegrationPayload GetBoundValue(InvocationContext invocationContext)
     {
-        return new SshCommandIntegrationPayload {
+        return new SshCommandIntegrationPayload
+        {
             Commands = invocationContext.ParseResult.GetValueForOption(_commandsOpt),
             NamesOrIds = invocationContext.ParseResult.GetValueForOption(_namesOpts),
             TimeoutString = invocationContext.ParseResult.GetValueForOption(_timeOutStrOpt),

@@ -1,4 +1,17 @@
-﻿using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Destroy.Request;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Destroy.Request;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Halt.Request;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Init.Request;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Provision.Request;
@@ -7,6 +20,8 @@ using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Ssh.Request;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.SshConfig.Request;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Status.Request;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Up.Request;
+
+#endregion
 
 namespace Frenchex.Dev.Vagrant.Lib.Tests.Domain.Workflows.WorkflowData;
 
@@ -37,8 +52,10 @@ public class VagrantLibWorkflowDataBuilderData1 : IVagrantLibWorkflowDataBuilder
             "vagrant"
         );
 
-        return new PayloadBuilderPayload() {
-            InitCommandRequestBuilderPayload = new InitCommandRequestBuilderPayload() {
+        return new PayloadBuilderPayload
+        {
+            InitCommandRequestBuilderPayload = new InitCommandRequestBuilderPayload
+            {
                 Request = new InitCommandRequest(
                     "4.1.10",
                     false,
@@ -53,7 +70,8 @@ public class VagrantLibWorkflowDataBuilderData1 : IVagrantLibWorkflowDataBuilder
                 WorkingDirectory = workingDirectory,
                 ServiceProvider = serviceProvider
             },
-            UpCommandRequestBuilderPayload = new UpCommandRequestBuilderPayload() {
+            UpCommandRequestBuilderPayload = new UpCommandRequestBuilderPayload
+            {
                 Request = new UpCommandRequest(
                     Array.Empty<string>(),
                     false,
@@ -69,25 +87,29 @@ public class VagrantLibWorkflowDataBuilderData1 : IVagrantLibWorkflowDataBuilder
                 WorkingDirectory = workingDirectory,
                 ServiceProvider = serviceProvider
             },
-            ProvisionCommandRequestBuilderPayload = new ProvisionCommandRequestBuilderPayload() {
-                Request = new ProvisionCommandRequest(baseRequest, null, new[] {"docker.install"}),
+            ProvisionCommandRequestBuilderPayload = new ProvisionCommandRequestBuilderPayload
+            {
+                Request = new ProvisionCommandRequest(baseRequest, null, new[] { "docker.install" }),
                 Timeout = "10m",
                 WorkingDirectory = workingDirectory,
                 ServiceProvider = serviceProvider
             },
-            StatusCommandRequestBuilderPayload = new StatusCommandRequestBuilderPayload() {
+            StatusCommandRequestBuilderPayload = new StatusCommandRequestBuilderPayload
+            {
                 Request = new StatusCommandRequest(baseRequest, Array.Empty<string>()),
                 Timeout = "1m",
                 WorkingDirectory = workingDirectory,
                 ServiceProvider = serviceProvider
             },
-            SshConfigCommandRequestBuilderPayload = new SshConfigCommandRequestBuilderPayload() {
+            SshConfigCommandRequestBuilderPayload = new SshConfigCommandRequestBuilderPayload
+            {
                 Request = new SshConfigCommandRequest(string.Empty, string.Empty, baseRequest),
                 Timeout = "1m",
                 WorkingDirectory = workingDirectory,
                 ServiceProvider = serviceProvider
             },
-            SshCommandRequestBuilderPayload = new SshCommandRequestBuilderPayload() {
+            SshCommandRequestBuilderPayload = new SshCommandRequestBuilderPayload
+            {
                 Request = new SshCommandRequest(
                     string.Empty,
                     "echo hello",
@@ -100,13 +122,15 @@ public class VagrantLibWorkflowDataBuilderData1 : IVagrantLibWorkflowDataBuilder
                 WorkingDirectory = workingDirectory,
                 ServiceProvider = serviceProvider
             },
-            HaltCommandRequestBuilderPayload = new HaltCommandRequestBuilderPayload() {
+            HaltCommandRequestBuilderPayload = new HaltCommandRequestBuilderPayload
+            {
                 Request = new HaltCommandRequest(Array.Empty<string>(), false, baseRequest, "2m"),
                 Timeout = "3m",
                 WorkingDirectory = workingDirectory,
                 ServiceProvider = serviceProvider
             },
-            DestroyCommandRequestBuilderPayload = new DestroyCommandRequestBuilderPayload() {
+            DestroyCommandRequestBuilderPayload = new DestroyCommandRequestBuilderPayload
+            {
                 Request = new DestroyCommandRequest(
                     string.Empty,
                     true,

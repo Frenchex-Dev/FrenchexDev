@@ -1,5 +1,20 @@
-﻿using Newtonsoft.Json;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
 
@@ -35,10 +50,10 @@ public class MachineBaseDefinitionDeclaration
     [JsonProperty("box_version")] public string? BoxVersion { get; set; }
 
     [JsonProperty("provisioning")]
-    public Dictionary<string, ProvisioningDefinition>? Provisioning { get; set; } = new();
+    public Dictionary<string, ProvisioningDefinition>? Provisioning { get; set; }
 
-    [JsonProperty("files")] public Dictionary<string, FileCopyDefinition>? Files { get; set; } = new();
+    [JsonProperty("files")] public Dictionary<string, FileCopyDefinition>? Files { get; set; }
 
     [JsonProperty("shared_folders")]
-    public Dictionary<string, SharedFolderDefinition>? SharedFolders { get; set; } = new();
+    public Dictionary<string, SharedFolderDefinition>? SharedFolders { get; set; }
 }

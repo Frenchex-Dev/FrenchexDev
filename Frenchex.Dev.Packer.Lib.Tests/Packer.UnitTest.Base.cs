@@ -1,7 +1,22 @@
-﻿using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Frenchex.Dev.Packer.Lib.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace Frenchex.Dev.Packer.Lib.Tests;
 
@@ -14,10 +29,7 @@ public static class PackerUnitTestBase
             {
                 // no need for configuration
             },
-            (services, configurationRoot) =>
-            {
-                ServicesConfiguration.ConfigureServices(services);
-            },
+            (services, configurationRoot) => { ServicesConfiguration.ConfigureServices(services); },
             (services, _) =>
             {
                 var configurationBuilder = new ConfigurationBuilder();

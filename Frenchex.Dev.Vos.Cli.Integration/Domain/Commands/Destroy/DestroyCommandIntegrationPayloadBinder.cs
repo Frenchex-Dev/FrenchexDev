@@ -1,5 +1,20 @@
-﻿using System.CommandLine;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.CommandLine;
 using System.CommandLine.Invocation;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Destroy;
 
@@ -31,7 +46,8 @@ public class DestroyCommandIntegrationPayloadBinder : IGenericBinder<DestroyComm
 
     public DestroyCommandIntegrationPayload GetBoundValue(InvocationContext invocationContext)
     {
-        return new DestroyCommandIntegrationPayload {
+        return new DestroyCommandIntegrationPayload
+        {
             Force = invocationContext.ParseResult.GetValueForOption(_forceOpt),
             Graceful = invocationContext.ParseResult.GetValueForOption(_gracefulOpt),
             NameOrId = invocationContext.ParseResult.GetValueForArgument(_nameOpt),

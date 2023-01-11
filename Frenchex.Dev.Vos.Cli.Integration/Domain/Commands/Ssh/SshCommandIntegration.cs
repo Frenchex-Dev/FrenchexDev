@@ -1,8 +1,23 @@
-﻿using System.CommandLine;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.CommandLine;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Request;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Ssh.Request;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Ssh;
 
@@ -37,15 +52,16 @@ public class SshCommandIntegration : ABaseCommandIntegration, ISshCommandIntegra
 
     public void IntegrateInto(Command parentCommand)
     {
-        Option<string[]> namesOpts = _namesOptionBuilder.Build();
-        Option<string[]> commandsOpt = _commandsOptionBuilder.Build();
-        Option<bool> plainTextOpt = _plainTextOptionBuilder.Build();
-        Option<string> extraSshArgsOpt = _extraSshArgsOptionBuilder.Build();
-        Option<string> timeOutStrOpt = TimeoutStrOptionBuilder.Build();
-        Option<string> vagrantBinPath = VagrantBinPathOptionBuilder.Build();
-        Option<string> workingDir = WorkingDirectoryOptionBuilder.Build();
+        Option<string[]>? namesOpts = _namesOptionBuilder.Build();
+        Option<string[]>? commandsOpt = _commandsOptionBuilder.Build();
+        Option<bool>? plainTextOpt = _plainTextOptionBuilder.Build();
+        Option<string>? extraSshArgsOpt = _extraSshArgsOptionBuilder.Build();
+        Option<string>? timeOutStrOpt = TimeoutStrOptionBuilder.Build();
+        Option<string>? vagrantBinPath = VagrantBinPathOptionBuilder.Build();
+        Option<string>? workingDir = WorkingDirectoryOptionBuilder.Build();
 
-        var command = new Command("ssh", "Runs ssh command") {
+        var command = new Command("ssh", "Runs ssh command")
+        {
             namesOpts,
             commandsOpt,
             timeOutStrOpt,

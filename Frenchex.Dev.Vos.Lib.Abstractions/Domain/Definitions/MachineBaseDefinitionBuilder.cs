@@ -1,4 +1,15 @@
-﻿namespace Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+namespace Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
 
 public class MachineBaseDefinitionBuilder
 {
@@ -43,14 +54,15 @@ public class MachineBaseDefinitionBuilder
     {
         if (null == _parent) throw new InvalidOperationException("parent is null");
 
-        return (T) _parent;
+        return (T)_parent;
     }
 
     public MachineBaseDefinitionDeclaration Build()
     {
         if (_ramInMb == 0) throw new Exception("RAM cannot be 0");
 
-        return new MachineBaseDefinitionDeclaration {
+        return new MachineBaseDefinitionDeclaration
+        {
             BiosLogoImagePath = _biosLogoImage,
             Box = _box,
             BoxVersion = _boxVersion,
@@ -137,9 +149,9 @@ public class MachineBaseDefinitionBuilder
         return this;
     }
 
-    public MachineBaseDefinitionBuilder WithProvisioning(Dictionary<string, ProvisioningDefinition> provisioning)
+    public MachineBaseDefinitionBuilder WithProvisioning(Dictionary<string, ProvisioningDefinition>? provisioning)
     {
-        _provisioning = provisioning ?? throw new ArgumentNullException(nameof(provisioning));
+        _provisioning = provisioning;
         return this;
     }
 
@@ -149,9 +161,9 @@ public class MachineBaseDefinitionBuilder
         return this;
     }
 
-    public MachineBaseDefinitionBuilder WithSharedFolders(Dictionary<string, SharedFolderDefinition> sharedFolders)
+    public MachineBaseDefinitionBuilder WithSharedFolders(Dictionary<string, SharedFolderDefinition>? sharedFolders)
     {
-        _sharedFolders = sharedFolders ?? throw new ArgumentNullException(nameof(sharedFolders));
+        _sharedFolders = sharedFolders;
         return this;
     }
 

@@ -1,6 +1,21 @@
-﻿using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Tests;
 
@@ -16,7 +31,7 @@ public abstract class FilesystemCopyFileTests : AbstractUnitTest
 
     public static IEnumerable<object[]> DataSource()
     {
-        yield return new object[] {Path.Join("Resources", "file-to-copy.txt")};
+        yield return new object[] { Path.Join("Resources", "file-to-copy.txt") };
     }
 
     [TestMethod]
@@ -29,27 +44,15 @@ public abstract class FilesystemCopyFileTests : AbstractUnitTest
 
                 context.FullDestinationFile = Path.GetTempFileName();
 
-                if (fs.FileExists(context.FullDestinationFile))
-                {
-                    fs.FileDelete(context.FullDestinationFile);
-                }
+                if (fs.FileExists(context.FullDestinationFile)) fs.FileDelete(context.FullDestinationFile);
 
-                if (!fs.FileExists(originalFile))
-                {
-                    fs.FileCopy(Path.GetTempFileName(), originalFile);
-                }
+                if (!fs.FileExists(originalFile)) fs.FileCopy(Path.GetTempFileName(), originalFile);
 
-                await Task.Run(() =>
-                {
-                    fs.FileCopy(originalFile, context.FullDestinationFile);
-                });
+                await Task.Run(() => { fs.FileCopy(originalFile, context.FullDestinationFile); });
             },
             async (provider, root, context) =>
             {
-                await Task.Run(() =>
-                {
-                    Assert.IsTrue(File.Exists(context.FullDestinationFile));
-                });
+                await Task.Run(() => { Assert.IsTrue(File.Exists(context.FullDestinationFile)); });
             },
             async (provider, root, context) =>
             {

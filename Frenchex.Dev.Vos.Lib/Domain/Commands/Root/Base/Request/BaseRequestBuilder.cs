@@ -1,4 +1,19 @@
-﻿using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root.Base.Request;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root.Base.Request;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Base.Request;
 
@@ -101,7 +116,7 @@ public class BaseRequestBuilder : IBaseRequestBuilder
     {
         if (null == _parent) throw new InvalidOperationException("parent is null");
 
-        return (T) _parent;
+        return (T)_parent;
     }
 
     public IBaseRequestBuilder SetParent(object parent)

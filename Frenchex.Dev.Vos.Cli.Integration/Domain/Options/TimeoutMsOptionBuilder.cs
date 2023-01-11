@@ -1,4 +1,19 @@
-﻿using System.CommandLine;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.CommandLine;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 
@@ -14,7 +29,7 @@ public class TimeoutMsOptionBuilder : ITimeoutMsOptionBuilder
     public Option<string> Build()
     {
         return Build(
-            new[] {"--timeout", "-t"},
+            new[] { "--timeout", "-t" },
             () => "1s",
             "TimeOut in ms"
         );
@@ -23,7 +38,7 @@ public class TimeoutMsOptionBuilder : ITimeoutMsOptionBuilder
     public Option<string> Build(string defaultTimespanStr)
     {
         return Build(
-            new[] {"--timeout", "-t"},
+            new[] { "--timeout", "-t" },
             () => defaultTimespanStr,
             "TimeOut in ms"
         );

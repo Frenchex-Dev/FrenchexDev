@@ -1,5 +1,20 @@
-﻿using System.CommandLine;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.CommandLine;
 using System.CommandLine.Invocation;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Define.Machine.Add;
 
@@ -55,7 +70,8 @@ public class DefineMachineAddCommandIntegrationPayloadBinder : IGenericBinder<De
 
     public DefineMachineAddCommandIntegrationPayload GetBoundValue(InvocationContext invocationContext)
     {
-        return new DefineMachineAddCommandIntegrationPayload {
+        return new DefineMachineAddCommandIntegrationPayload
+        {
             Type = invocationContext.ParseResult.GetValueForArgument(_type),
             RamInMb = invocationContext.ParseResult.GetValueForOption(_ramMb),
             Enabled = invocationContext.ParseResult.GetValueForOption(_isEnabled),

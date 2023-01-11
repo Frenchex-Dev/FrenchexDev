@@ -1,4 +1,17 @@
-﻿using System.Collections.Immutable;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.Collections.Immutable;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Status.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Configuration.Load;
@@ -7,6 +20,8 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Response;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Command;
 using IStatusCommandRequest = Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Request.IStatusCommandRequest;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Status.Command;
 
@@ -59,7 +74,7 @@ public class StatusCommand : RootCommand, IStatusCommand
         process.ProcessExecutionResult.OutputStream.Position = 0;
         var reader = new StreamReader(process.ProcessExecutionResult.OutputStream);
 
-        List<string> statusesOutput = (await reader.ReadToEndAsync())
+        List<string>? statusesOutput = (await reader.ReadToEndAsync())
             .Split("\r\n")
             .Skip(2) // vagrant header
             .Reverse()
@@ -72,7 +87,7 @@ public class StatusCommand : RootCommand, IStatusCommand
 
         foreach (var item in statusesOutput)
         {
-            List<string> statusLineSplit = item
+            List<string>? statusLineSplit = item
                 .Split(" ")
                 .ToList();
 

@@ -1,4 +1,17 @@
-﻿using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Facade;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Facade;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Facade;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.Map.Facade;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Destroy.Facade;
@@ -9,6 +22,8 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Facade;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.SshConfig.Facade;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Facade;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Facade;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands;
 

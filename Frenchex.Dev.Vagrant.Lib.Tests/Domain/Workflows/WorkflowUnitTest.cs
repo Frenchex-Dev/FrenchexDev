@@ -1,4 +1,17 @@
-﻿using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Command;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Halt.Command;
@@ -13,6 +26,8 @@ using Frenchex.Dev.Vagrant.Lib.Tests.Abstractions.Domain;
 using Frenchex.Dev.Vagrant.Lib.Tests.Domain.Workflows.WorkflowData;
 using Microsoft.Extensions.DependencyInjection;
 
+#endregion
+
 namespace Frenchex.Dev.Vagrant.Lib.Tests.Domain.Workflows;
 
 [TestClass]
@@ -20,7 +35,8 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
 {
     public static IEnumerable<object[]> DataSource()
     {
-        yield return new object[] {
+        yield return new object[]
+        {
             new VagrantLibWorkflowDataBuilderData1()
         };
     }
@@ -40,7 +56,7 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
     )
     {
         var workingDirectory = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
-        var sp =  GetUnitTest().GetScopedServiceProvider();
+        var sp = GetUnitTest().GetScopedServiceProvider();
 
         var payloadBuilder = new PayloadBuilder();
         var payload = payloadBuilderPayload.Build(workingDirectory, sp);
@@ -71,7 +87,7 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
                 await TestInner(
                     "init",
                     provider.GetRequiredService<IInitCommand>().StartProcess(initRequest),
-                    new List<int> {0, 1},
+                    new List<int> { 0, 1 },
                     true);
 
                 // vsCode.Invoke(initRequest.Base.WorkingDirectory!);
@@ -79,48 +95,48 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
                 await TestInner(
                     "status",
                     provider.GetRequiredService<IStatusCommand>().StartProcess(statusRequest),
-                    new List<int> {0},
+                    new List<int> { 0 },
                     true
                 );
 
                 await TestInner(
                     "up",
                     provider.GetRequiredService<IUpCommand>().StartProcess(upRequest),
-                    new List<int> {0},
+                    new List<int> { 0 },
                     true
                 );
 
                 await TestInner(
                     "provision",
                     provider.GetRequiredService<IProvisionCommand>().StartProcess(provisionRequest),
-                    new List<int> {0, 1},
+                    new List<int> { 0, 1 },
                     true
                 );
 
                 await TestInner("ssh-config",
                     provider.GetRequiredService<ISshConfigCommand>().StartProcess(sshConfigCommandRequest),
-                    new List<int> {0},
+                    new List<int> { 0 },
                     true
                 );
 
                 await TestInner(
                     "ssh",
                     provider.GetRequiredService<ISshCommand>().StartProcess(sshCommandRequest),
-                    new List<int> {0},
+                    new List<int> { 0 },
                     true
                 );
 
                 await TestInner(
                     "halt",
                     provider.GetRequiredService<IHaltCommand>().StartProcess(haltRequest),
-                    new List<int> {0},
+                    new List<int> { 0 },
                     true
                 );
 
                 await TestInner(
                     "destroy",
                     provider.GetRequiredService<IDestroyCommand>().StartProcess(destroyRequest),
-                    new List<int> {0},
+                    new List<int> { 0 },
                     true
                 );
             },
@@ -140,11 +156,11 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
                 return Task.CompletedTask;
             },
             GetUnitTest().GetScopedServiceProvider(),
-            new UnitTest.VsCodeDebugging {Open = false, TellMe = true}
+            new UnitTest.VsCodeDebugging { Open = false, TellMe = true }
         );
     }
 
-    private async static Task TestInner(
+    private static async Task TestInner(
         string debug,
         IRootCommandResponse response,
         List<int> acceptedExitCodes,
@@ -164,11 +180,8 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
 
         if (response.ProcessExecutionResult.ExitCode is not null)
         {
-            var exitCode = (int) response.ProcessExecutionResult.ExitCode;
-            if (!acceptedExitCodes.Contains(exitCode))
-            {
-                throw new ArgumentOutOfRangeException(nameof(exitCode));
-            }
+            var exitCode = (int)response.ProcessExecutionResult.ExitCode;
+            if (!acceptedExitCodes.Contains(exitCode)) throw new ArgumentOutOfRangeException(nameof(exitCode));
         }
 
         if (outputCanBeEmptyButNotNull)

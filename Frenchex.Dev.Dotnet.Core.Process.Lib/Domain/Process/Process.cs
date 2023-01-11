@@ -1,7 +1,22 @@
-﻿using System.ComponentModel;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.ComponentModel;
 using Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.ProcessBuilder;
 using Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib;
 using Microsoft.Extensions.Logging;
+
+#endregion
 
 namespace Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.Process;
 
@@ -84,14 +99,11 @@ public class Process : IProcess
         {
             if (!string.IsNullOrEmpty(_processBuildingParameters.TimeOut))
             {
-                var timeout = _timeSpanTooling.ConvertToTimeSpan(_processBuildingParameters.TimeOut);
+                TimeSpan? timeout = _timeSpanTooling.ConvertToTimeSpan(_processBuildingParameters.TimeOut);
                 var understood = timeout is not null;
-                if (!understood)
-                {
-                    throw new ArgumentException(nameof(timeout));
-                }
+                if (!understood) throw new ArgumentException(nameof(timeout));
 
-                _wrappedProcess.WaitForExit((int) timeout!.Value.TotalMilliseconds);
+                _wrappedProcess.WaitForExit((int)timeout!.Value.TotalMilliseconds);
             }
             else
             {
@@ -99,14 +111,11 @@ public class Process : IProcess
             }
         });
 
-        if (null == Result.WaitForExitOrTimeOut)
-        {
-            throw new ArgumentNullException(nameof(Result.WaitForExitOrTimeOut));
-        }
+        if (null == Result.WaitForExitOrTimeOut) throw new ArgumentNullException(nameof(Result.WaitForExitOrTimeOut));
 
-        if (null == Result.OutputCloseEvent) { throw new ArgumentNullException(nameof(Result.OutputCloseEvent)); }
+        if (null == Result.OutputCloseEvent) throw new ArgumentNullException(nameof(Result.OutputCloseEvent));
 
-        if (null == Result.ErrorCloseEvent) { throw new ArgumentNullException(nameof(Result.ErrorCloseEvent)); }
+        if (null == Result.ErrorCloseEvent) throw new ArgumentNullException(nameof(Result.ErrorCloseEvent));
 
         // Create task to wait for process exit and closing all output streams
         Result.WaitForCompleteExit = Task
@@ -124,14 +133,11 @@ public class Process : IProcess
                 })
             ;
 
-        var timeoutDelayTs = _timeSpanTooling.ConvertToTimeSpan(_processBuildingParameters.TimeOut);
+        TimeSpan? timeoutDelayTs = _timeSpanTooling.ConvertToTimeSpan(_processBuildingParameters.TimeOut);
 
-        var listWaitForAny = new List<Task>() {Result.WaitForCompleteExit};
+        var listWaitForAny = new List<Task> { Result.WaitForCompleteExit };
 
-        if (timeoutDelayTs is not null)
-        {
-            listWaitForAny.Add(Task.Delay((int) timeoutDelayTs.Value.TotalMilliseconds));
-        }
+        if (timeoutDelayTs is not null) listWaitForAny.Add(Task.Delay((int)timeoutDelayTs.Value.TotalMilliseconds));
 
         Result.WaitForAny = Task.WhenAny(listWaitForAny);
 

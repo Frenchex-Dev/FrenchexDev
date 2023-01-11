@@ -1,13 +1,21 @@
-﻿namespace Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+namespace Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib;
 
 public class TimeSpanTooling : ITimeSpanTooling
 {
     public System.TimeSpan? ConvertToTimeSpan(string? timeSpan)
     {
-        if (string.IsNullOrEmpty(timeSpan))
-        {
-            return null;
-        }
+        if (string.IsNullOrEmpty(timeSpan)) return null;
 
         var l = timeSpan.Length - 1;
         var value = timeSpan.Substring(0, l);
@@ -27,17 +35,16 @@ public class TimeSpanTooling : ITimeSpanTooling
 
     public int GetTotalMsConvertedToInt(string timeSpan, int? defaultValue = null)
     {
-        var ts = ConvertToTimeSpan(timeSpan);
+        System.TimeSpan? ts = ConvertToTimeSpan(timeSpan);
 
         if (ts is null)
         {
             if (defaultValue is null)
                 throw new CannotParseString(timeSpan);
-            else
-                return defaultValue.Value;
+            return defaultValue.Value;
         }
 
-        return (int) ts.Value.TotalMilliseconds;
+        return (int)ts.Value.TotalMilliseconds;
     }
 }
 

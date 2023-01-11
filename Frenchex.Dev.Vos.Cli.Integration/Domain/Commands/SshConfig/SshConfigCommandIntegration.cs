@@ -1,9 +1,24 @@
-﻿using System.CommandLine;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.CommandLine;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.SshConfig.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.SshConfig.Request;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.SshConfig.Request;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.SshConfig;
 
@@ -35,15 +50,16 @@ public class SshConfigCommandIntegration : ABaseCommandIntegration, ISshConfigCo
 
     public void IntegrateInto(Command parentCommand)
     {
-        Argument<string[]> namesOrIdsOpt = _namesArgumentBuilder.Build();
-        Option<string> workingDirOpt = WorkingDirectoryOptionBuilder.Build();
-        Option<string> timeOutMsOpt = TimeoutStrOptionBuilder.Build();
-        Option<bool> color = new(new[] {"--color"}, "Color");
-        Option<string> vagrantBinPathOpt = VagrantBinPathOptionBuilder.Build();
-        Option<string> extraSshArgsOpt = _extraSshArgsOptionBuilder.Build();
-        Option<bool> plain = _plainTextOptionBuilder.Build();
+        Argument<string[]>? namesOrIdsOpt = _namesArgumentBuilder.Build();
+        Option<string>? workingDirOpt = WorkingDirectoryOptionBuilder.Build();
+        Option<string>? timeOutMsOpt = TimeoutStrOptionBuilder.Build();
+        Option<bool> color = new(new[] { "--color" }, "Color");
+        Option<string>? vagrantBinPathOpt = VagrantBinPathOptionBuilder.Build();
+        Option<string>? extraSshArgsOpt = _extraSshArgsOptionBuilder.Build();
+        Option<bool>? plain = _plainTextOptionBuilder.Build();
 
-        var command = new Command("ssh-config", "Runs Vagrant ssh-config") {
+        var command = new Command("ssh-config", "Runs Vagrant ssh-config")
+        {
             namesOrIdsOpt,
             workingDirOpt,
             timeOutMsOpt,

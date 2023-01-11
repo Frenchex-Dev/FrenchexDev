@@ -1,14 +1,29 @@
-﻿using System.Text.RegularExpressions;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.Text.RegularExpressions;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Naming;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Actions.Naming;
 
 public class VexNameToVagrantNameConverter : IVexNameToVagrantNameConverter
 {
-    private readonly static Regex PatternFromToWildcard =
+    private static readonly Regex PatternFromToWildcard =
         new("(?<machine>.*)\\-\\[(?<instance>.*)\\]", RegexOptions.Compiled);
 
-    private readonly static Regex PatternFromTo = new("(?<machine>.*)\\-(?<instance>.*)", RegexOptions.Compiled);
+    private static readonly Regex PatternFromTo = new("(?<machine>.*)\\-(?<instance>.*)", RegexOptions.Compiled);
 
     public string[] ConvertAll(
         string[] inputNamedPatterns,

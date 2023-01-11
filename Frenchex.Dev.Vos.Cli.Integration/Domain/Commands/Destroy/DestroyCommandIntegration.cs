@@ -1,8 +1,23 @@
-﻿using System.CommandLine;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.CommandLine;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Destroy.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Destroy.Request;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Destroy;
 
@@ -37,15 +52,16 @@ public class DestroyCommandIntegration : ABaseCommandIntegration, IDestroyComman
 
     public void IntegrateInto(Command parentCommand)
     {
-        Argument<string[]> namesArg = _namesArgumentBuilder.Build();
-        Option<bool> forceOpt = _forceOptionBuilder.Build();
-        Option<bool> parallelOpt = _parallelOptionBuilder.Build();
-        Option<bool> gracefulOpt = _gracefulOptionBuilder.Build();
-        Option<string> timeoutStrOpt = TimeoutStrOptionBuilder.Build();
-        Option<string> workingDirOpt = WorkingDirectoryOptionBuilder.Build();
-        Option<string> vagrantBinPath = VagrantBinPathOptionBuilder.Build();
+        Argument<string[]>? namesArg = _namesArgumentBuilder.Build();
+        Option<bool>? forceOpt = _forceOptionBuilder.Build();
+        Option<bool>? parallelOpt = _parallelOptionBuilder.Build();
+        Option<bool>? gracefulOpt = _gracefulOptionBuilder.Build();
+        Option<string>? timeoutStrOpt = TimeoutStrOptionBuilder.Build();
+        Option<string>? workingDirOpt = WorkingDirectoryOptionBuilder.Build();
+        Option<string>? vagrantBinPath = VagrantBinPathOptionBuilder.Build();
 
-        var command = new Command("destroy", "Runs Vex destroy") {
+        var command = new Command("destroy", "Runs Vex destroy")
+        {
             namesArg,
             forceOpt,
             parallelOpt,

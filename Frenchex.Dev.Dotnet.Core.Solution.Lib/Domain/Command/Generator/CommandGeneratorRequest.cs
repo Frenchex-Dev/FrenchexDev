@@ -1,4 +1,15 @@
-﻿namespace Frenchex.Dev.Dotnet.Core.Solution.Lib.Domain.Command.Generator;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+namespace Frenchex.Dev.Dotnet.Core.Solution.Lib.Domain.Command.Generator;
 
 public class CommandGeneratorRequest
 {

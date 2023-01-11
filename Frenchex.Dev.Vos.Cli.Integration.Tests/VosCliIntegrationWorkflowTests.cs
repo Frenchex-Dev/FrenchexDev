@@ -1,7 +1,22 @@
-﻿using System.CommandLine;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.CommandLine;
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Tests.Abstractions.Domain;
 using static System.Threading.Tasks.Task;
+
+#endregion
 
 [assembly: Parallelize(Workers = 4, Scope = ExecutionScope.MethodLevel)]
 
@@ -20,7 +35,7 @@ public class VosCliIntegrationWorkflowTests : IntegrationWorkflowUnitTestForVirt
     [DynamicData(nameof(Test_Data_MultipleRuns), DynamicDataSourceType.Method)]
     public async Task TestExecutions(string testCaseName, Payload payload)
     {
-        List<Task> tasks =
+        List<Task>? tasks =
             CreateRunInternal(testCaseName, payload, InternalRunExecution, new UnitTest.VsCodeDebugging());
 
         await WhenAll(tasks);
@@ -30,7 +45,7 @@ public class VosCliIntegrationWorkflowTests : IntegrationWorkflowUnitTestForVirt
     [DynamicData(nameof(Test_Data_MultipleRuns), DynamicDataSourceType.Method)]
     public async Task TestArgumentsParsing(string testCaseName, Payload payload)
     {
-        List<Task> tasks = CreateRunInternal(testCaseName, payload, InternalRunParsing, new UnitTest.VsCodeDebugging());
+        List<Task>? tasks = CreateRunInternal(testCaseName, payload, InternalRunParsing, new UnitTest.VsCodeDebugging());
 
         await WhenAll(tasks);
     }
@@ -46,16 +61,14 @@ public class VosCliIntegrationWorkflowTests : IntegrationWorkflowUnitTestForVirt
 
         List<string> workingDirectories = new(numberOfWorkingDirectories);
 
-        foreach (List<InputCommand> num in payload.ListOfListOfCommands)
-        {
+        foreach (List<InputCommand>? num in payload.ListOfListOfCommands)
             workingDirectories.Add(Path.Join(Path.GetTempPath(), Path.GetRandomFileName()));
-        }
 
         List<Task> tasks = new();
 
         var i = 0;
 
-        foreach (List<InputCommand> run in payload.ListOfListOfCommands)
+        foreach (List<InputCommand>? run in payload.ListOfListOfCommands)
         {
             var commandsRun = func.Invoke(run.ToArray(), workingDirectories[i++], vsCodeDebugging);
             tasks.Add(commandsRun);
@@ -70,14 +83,12 @@ public class VosCliIntegrationWorkflowTests : IntegrationWorkflowUnitTestForVirt
         UnitTest.VsCodeDebugging vsCodeDebugging
     )
     {
-        if (UnitTest is null)
-        {
-            throw new ArgumentNullException(nameof(UnitTest));
-        }
+        if (UnitTest is null) throw new ArgumentNullException(nameof(UnitTest));
 
         await SetupUnitTest(UnitTest, vsCodeDebugging);
 
-        await RunInternal(new[] {
+        await RunInternal(new[]
+            {
                 workingDirectory
             },
             commands,

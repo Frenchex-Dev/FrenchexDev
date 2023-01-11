@@ -1,4 +1,17 @@
-﻿using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Destroy.Request;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Destroy.Request;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Halt.Request;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Init.Request;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Provision.Request;
@@ -6,6 +19,8 @@ using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Ssh.Request;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.SshConfig.Request;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Status.Request;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Up.Request;
+
+#endregion
 
 namespace Frenchex.Dev.Vagrant.Lib.Tests.Domain.Workflows;
 

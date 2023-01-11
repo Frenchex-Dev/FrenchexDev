@@ -1,6 +1,21 @@
-﻿using System.CommandLine;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.CommandLine;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands;
 using Frenchex.Dev.Vos.Cli.IntegrationLib.Domain;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain;
 
@@ -28,9 +43,6 @@ public class Integration : IIntegration
 
     private void IntegrateInternal(Command parentCommand)
     {
-        foreach (var vexCommand in _vexCommands)
-        {
-            vexCommand.IntegrateInto(parentCommand);
-        }
+        foreach (var vexCommand in _vexCommands) vexCommand.IntegrateInto(parentCommand);
     }
 }

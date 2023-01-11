@@ -1,6 +1,20 @@
-﻿using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.Kernel;
-using Frenchex.Dev.OnSteroid.Lib.Domain.Kernel;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.Kernel;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace Frenchex.Dev.OnSteroid.Lib.Domain.Workflows.Kernel;
 
@@ -27,13 +41,13 @@ public class KernelInitializeAndBuildWorkflow : IKernelInitializeAndBuildWorkflo
         return kernel;
     }
 
-    public async Task<IKernelBuilderBuildingContext> FactoryContext(
+    public Task<IKernelBuilderBuildingContext> FactoryContext(
         IServiceCollection serviceCollection,
         IKernerlConfiguration kernelConfiguration
     )
     {
         var built = _kernelBuilderBuildingContextFactory.Factory(serviceCollection, kernelConfiguration);
-        return built;
+        return Task.FromResult(built);
     }
 
     public async Task<IKernel> Build(

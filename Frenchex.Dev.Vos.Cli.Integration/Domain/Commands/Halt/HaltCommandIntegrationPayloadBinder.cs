@@ -1,5 +1,20 @@
-﻿using System.CommandLine;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.CommandLine;
 using System.CommandLine.Invocation;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Halt;
 
@@ -31,7 +46,8 @@ public class HaltCommandIntegrationPayloadBinder : IGenericBinder<HaltCommandInt
 
     public HaltCommandIntegrationPayload GetBoundValue(InvocationContext invocationContext)
     {
-        return new HaltCommandIntegrationPayload {
+        return new HaltCommandIntegrationPayload
+        {
             Force = invocationContext.ParseResult.GetValueForOption(_force),
             HaltTimeout = invocationContext.ParseResult.GetValueForOption(_haltTimeoutStr),
             Names = invocationContext.ParseResult.GetValueForArgument(_names),

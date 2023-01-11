@@ -1,9 +1,24 @@
-﻿using System.CommandLine;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.CommandLine;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Define.MachineType.Add;
 
@@ -56,19 +71,20 @@ public class DefineMachineTypeAddCommandIntegration : ABaseCommandIntegration, I
 
     public void Integrate(Command rootCommand)
     {
-        Argument<string> nameArg = _nameArgumentBuilder.Build();
-        Argument<string> boxNameArg = _boxNameArgumentBuilder.Build();
-        Argument<int> vcpusArg = _virtualCpusArgumentBuilder.Build();
-        Argument<int> ramMbArg = _ramMbArgumentBuilder.Build();
-        Argument<string> osTypeArg = _osTypeArgumentBuilder.Build();
-        Argument<string> osVersionArg = _osVersionArgumentBuilder.Build();
-        Option<bool> isEnabledOpt = _enabledOptionBuilder.Build();
-        Option<bool> isEnabled3dOpt = _enabled3dOptionBuilder.Build();
-        Option<int> vramMbOpt = _virtualRamMbOptionBuilder.Build();
-        Option<string> timeoutStrOpt = TimeoutStrOptionBuilder.Build();
-        Option<string> workingDirOpt = WorkingDirectoryOptionBuilder.Build();
+        Argument<string>? nameArg = _nameArgumentBuilder.Build();
+        Argument<string>? boxNameArg = _boxNameArgumentBuilder.Build();
+        Argument<int>? vcpusArg = _virtualCpusArgumentBuilder.Build();
+        Argument<int>? ramMbArg = _ramMbArgumentBuilder.Build();
+        Argument<string>? osTypeArg = _osTypeArgumentBuilder.Build();
+        Argument<string>? osVersionArg = _osVersionArgumentBuilder.Build();
+        Option<bool>? isEnabledOpt = _enabledOptionBuilder.Build();
+        Option<bool>? isEnabled3dOpt = _enabled3dOptionBuilder.Build();
+        Option<int>? vramMbOpt = _virtualRamMbOptionBuilder.Build();
+        Option<string>? timeoutStrOpt = TimeoutStrOptionBuilder.Build();
+        Option<string>? workingDirOpt = WorkingDirectoryOptionBuilder.Build();
 
-        var command = new Command("add", "Define Machine-Types") {
+        var command = new Command("add", "Define Machine-Types")
+        {
             nameArg,
             boxNameArg,
             vcpusArg,

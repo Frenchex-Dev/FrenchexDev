@@ -1,7 +1,22 @@
-﻿using System.CommandLine;
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using System.CommandLine;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Init.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Init.Request;
+
+#endregion
 
 namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Init;
 
@@ -30,12 +45,13 @@ public class InitCommandIntegration : ABaseCommandIntegration, IInitCommandInteg
 
     public void IntegrateInto(Command parentCommand)
     {
-        Option<string> namingPatternOpt = _namingPatternOptionBuilder.Build();
-        Option<int> zeroesOpt = _zeroesOptionBuilder.Build();
-        Option<string> timeoutStrOpt = TimeoutStrOptionBuilder.Build();
-        Option<string> workingDirOpt = WorkingDirectoryOptionBuilder.Build();
+        Option<string>? namingPatternOpt = _namingPatternOptionBuilder.Build();
+        Option<int>? zeroesOpt = _zeroesOptionBuilder.Build();
+        Option<string>? timeoutStrOpt = TimeoutStrOptionBuilder.Build();
+        Option<string>? workingDirOpt = WorkingDirectoryOptionBuilder.Build();
 
-        var command = new Command("init", "Runs Vex init") {
+        var command = new Command("init", "Runs Vex init")
+        {
             namingPatternOpt,
             zeroesOpt,
             timeoutStrOpt,
