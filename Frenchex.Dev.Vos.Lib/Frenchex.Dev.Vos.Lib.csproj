@@ -15,9 +15,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <None Update="Resources\Provisioning\alpine38\v1\docker-ce\install.sh">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </None>
         <None Update="Resources\Provisioning\generic\alpine317\4.2.8\v1\docker-ce\install.sh">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
@@ -27,10 +24,6 @@
         <None Update="Resources\Vagrant\Vagrantfile">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Domain\Commands\Define\Provisioning\New" />
     </ItemGroup>
 
     <ItemGroup>

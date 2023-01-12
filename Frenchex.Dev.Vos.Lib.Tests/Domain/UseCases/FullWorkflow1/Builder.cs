@@ -86,7 +86,7 @@ public class Builder
                 timeoutStr: "20s",
                 withProvider: ProviderEnum.Virtualbox,
                 provisioningDefinitions: null,
-                ramInMb: 512,
+                ramInMb: 256,
                 vCpus: 4,
                 machineTypeDefinitionName: payload.MachineTypeName,
                 name: payload.Name,

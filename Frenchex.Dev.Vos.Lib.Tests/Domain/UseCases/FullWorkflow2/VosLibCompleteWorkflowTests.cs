@@ -112,7 +112,6 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         await VosWorkflowUnitTestInternal(builders);
     }
 
-
     private async Task VosWorkflowUnitTestInternal(Builder[] builders)
     {
         Func<Builder, Task> taskBuilder = VosWorkflowUnitTestInternalInternal;

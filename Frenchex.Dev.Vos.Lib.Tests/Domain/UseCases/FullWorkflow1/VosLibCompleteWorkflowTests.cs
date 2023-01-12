@@ -108,7 +108,6 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
     [TestCategory(TestCategories.TestingLevelMinimal)]
     public async Task VosWorkflowUnitTestMinimal(Builder[] builders)
     {
-        Environment.SetEnvironmentVariable("VOS_VAGRANTFILE_DEBUG", "true");
         await VosWorkflowUnitTestInternal(builders);
     }
 
