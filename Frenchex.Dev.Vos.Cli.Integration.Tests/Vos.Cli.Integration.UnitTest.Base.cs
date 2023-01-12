@@ -26,27 +26,29 @@ public static class VosCliIntegrationUnitTestBase
 {
     public static UnitTest CreateUnitTest<T>() where T : class
     {
-        var _unitTest = new UnitTest(
+        var unitTest = new UnitTest(
             builder =>
             {
                 // no need for configuration
             },
-            (services, configurationRoot) => { new ServicesConfiguration().ConfigureServices(services); },
+            (services, configurationRoot) =>
+            {
+                new ServicesConfiguration().ConfigureServices(services);
+            },
             (services, _) =>
             {
                 var configurationBuilder = new ConfigurationBuilder();
                 var configuration = configurationBuilder.Build();
 
-                // overload your services to mock them
                 Mock<IConsole> mockedConsole = new();
                 services.AddSingleton(_ => mockedConsole.Object);
 
-                services.AddSingleton<IConfiguration>(_ => configuration);
+                services.AddScoped<IConfiguration>(_ => configuration);
                 services.AddScoped<T>();
-                services.AddSingleton<SubjectUnderTest>();
+                services.AddScoped<SubjectUnderTest>();
             }
         );
 
-        return _unitTest;
+        return unitTest;
     }
 }

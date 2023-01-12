@@ -30,19 +30,21 @@ public class Integration : IIntegration
 
     public void Integrate(RootCommand rootCommand)
     {
-        IntegrateInternal(rootCommand);
+        var command = new Command("vos", "Vos commands");
+        rootCommand.Add(command);
+        IntegrateInternal(command);
     }
 
     public void Integrate(Command parentCommand)
     {
-        var command = new Command("vos", "Vos commands");
-        parentCommand.Add(command);
-
-        IntegrateInternal(command);
+        IntegrateInternal(parentCommand);
     }
 
     private void IntegrateInternal(Command parentCommand)
     {
-        foreach (var vexCommand in _vexCommands) vexCommand.IntegrateInto(parentCommand);
+        foreach (var vexCommand in _vexCommands)
+        {
+            vexCommand.IntegrateInto(parentCommand);
+        }
     }
 }

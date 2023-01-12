@@ -30,6 +30,9 @@ public abstract class AbstractUnitTest
     [TestCleanup]
     public async Task InstanceCleanup()
     {
-        if (UnitTest is not null) await UnitTest.DisposeAsync();
+        if (UnitTest is not null)
+        {
+            await UnitTest.DisposeAsync();
+        }
     }
 }

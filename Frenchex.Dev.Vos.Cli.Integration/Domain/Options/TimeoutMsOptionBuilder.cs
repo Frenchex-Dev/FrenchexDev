@@ -31,7 +31,7 @@ public class TimeoutMsOptionBuilder : ITimeoutMsOptionBuilder
         return Build(
             new[] { "--timeout", "-t" },
             () => "1s",
-            "TimeOut in ms"
+            "timeout"
         );
     }
 
@@ -40,7 +40,7 @@ public class TimeoutMsOptionBuilder : ITimeoutMsOptionBuilder
         return Build(
             new[] { "--timeout", "-t" },
             () => defaultTimespanStr,
-            "TimeOut in ms"
+            "timeout"
         );
     }
 

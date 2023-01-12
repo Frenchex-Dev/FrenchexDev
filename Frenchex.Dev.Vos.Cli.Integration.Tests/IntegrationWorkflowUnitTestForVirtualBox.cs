@@ -12,8 +12,9 @@
 #region
 
 using System.CommandLine;
-using Frenchex.Dev.Dotnet.Core.Cli.Integration.Lib.Domain;
+using Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib;
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
+using Frenchex.Dev.Vos.Cli.IntegrationLib.Domain;
 using Microsoft.Extensions.DependencyInjection;
 
 #endregion
@@ -25,7 +26,7 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
     private const string WorkingDirectoryMarker = "##{{WORKING_DIRECTORY}}##";
 
     protected static IEnumerable<object[]> ProduceDataSets(
-        TimeSpan timeout,
+        string timeout,
         string vagrantBinPath,
         int nbTestCases = 1,
         int nbVosInstances = 3
@@ -75,7 +76,8 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
     public async Task InternalRunParsing(
         InputCommand[] commands,
         string workingDirectory,
-        UnitTest.VsCodeDebugging vsCodeDebugging
+        UnitTest.VsCodeDebugging vsCodeDebugging,
+        UnitTest unitTest
     )
     {
         await RunInternal(new[]
@@ -93,7 +95,9 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
 
                 return Task.CompletedTask;
             },
-            vsCodeDebugging);
+            vsCodeDebugging, 
+            unitTest
+        );
     }
 
     private static string BuildCommandLineString(
@@ -104,9 +108,9 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
         return $"{command} {timeOutOpt} --working-directory {WorkingDirectoryMarker}";
     }
 
-    private static InputCommand[] ProduceTestData(TimeSpan timeout)
+    private static InputCommand[] ProduceTestData(string timeout)
     {
-        var timeOutOpt = "--timeout-ms " + timeout.TotalMilliseconds;
+        var timeOutOpt = "--timeout " + timeout;
 
         string BuildInternalCommandLineString(string command)
         {
@@ -139,10 +143,11 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
         string[] workingDirectories,
         InputCommand[] commands,
         Func<string, RootCommand, Task> execCommand,
-        UnitTest.VsCodeDebugging vsCodeDebugging
+        UnitTest.VsCodeDebugging vsCodeDebugging,
+        UnitTest unitTest
     )
     {
-        await GetUnitTest().ExecuteAndAssertAsync<ExecutionContext>(
+        await unitTest.ExecuteAndAssertAsync<ExecutionContext>(
             async (provider, _, _, _) =>
             {
                 var sut = provider.GetRequiredService<SubjectUnderTest>().RootCommand;
@@ -155,7 +160,7 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
                 }
             },
             (_, _, _) => Task.CompletedTask,
-            GetUnitTest().GetScopedServiceProvider(),
+            unitTest.GetScopedServiceProvider(),
             vsCodeDebugging);
     }
 

@@ -58,7 +58,7 @@ public class ServicesConfiguration : IServicesConfiguration
             () =>
             {
                 services
-                    .AddTransient<IIntegration, Domain.Integration>();
+                    .AddScoped<IIntegration, Domain.Integration>();
 
                 services
                     .AddTransient<IVosCommandIntegration, DefineCommandIntegration>()
@@ -130,6 +130,9 @@ public class ServicesConfiguration : IServicesConfiguration
                     .AddScoped<IVagrantBinPathOptionBuilder, VagrantBinPathOptionBuilder>()
                     ;
             },
-            () => { Lib.DependencyInjection.ServicesConfiguration.StaticConfigureServices(services); });
+            () =>
+            {
+                Lib.DependencyInjection.ServicesConfiguration.StaticConfigureServices(services);
+            });
     }
 }

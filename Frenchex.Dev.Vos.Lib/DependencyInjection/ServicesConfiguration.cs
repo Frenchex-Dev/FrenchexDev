@@ -82,7 +82,6 @@ public class ServicesConfiguration : IServicesConfiguration
                 },
                 () =>
                 {
-                    // dependencies
                     Dotnet.Core.Filesystem.Lib.DependencyInjection.ServicesConfiguration
                         .ConfigureServices(serviceCollection)
                         ;
