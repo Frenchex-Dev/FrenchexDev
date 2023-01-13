@@ -30,14 +30,15 @@ public class Integration : IIntegration
 
     public void Integrate(RootCommand rootCommand)
     {
-        var command = new Command("vos", "Vos commands");
-        rootCommand.Add(command);
-        IntegrateInternal(command);
+        IntegrateInternal(rootCommand);
     }
 
     public void Integrate(Command parentCommand)
     {
-        IntegrateInternal(parentCommand);
+        var command = new Command("vos", "Vos commands");
+        parentCommand.Add(command);
+
+        IntegrateInternal(command);
     }
 
     private void IntegrateInternal(Command parentCommand)

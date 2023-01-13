@@ -155,7 +155,7 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
                 foreach (var workingDir in workingDirectories)
                 foreach (var command in commands)
                 {
-                    var vosCommand = $"vos {command.Command.Replace(WorkingDirectoryMarker, workingDir)}";
+                    var vosCommand = $"{command.Command.Replace(WorkingDirectoryMarker, workingDir)}";
                     await execCommand(vosCommand, sut);
                 }
             },
