@@ -38,7 +38,7 @@ public class Host : BasicHostedService<Host>
         IHostApplicationLifetime hostApplicationLifetime,
         IEntrypointInfo entryPointInfo,
         IEnumerable<IIntegration> integrations
-    ) : base("Frenchex.Dev.Cli", logger, hostApplicationLifetime, entryPointInfo, integrations)
+    ) : base("Frenchex.Dev.Vos.Cli", logger, hostApplicationLifetime, entryPointInfo, integrations)
     {
     }
 }

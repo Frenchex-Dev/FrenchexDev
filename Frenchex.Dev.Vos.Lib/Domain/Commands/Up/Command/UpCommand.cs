@@ -26,7 +26,7 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Up.Command;
 public class UpCommand : RootCommand, IUpCommand
 {
     private readonly IUpCommandResponseBuilderFactory _responseBuilderFactory;
-    private readonly Vagrant.Lib.Domain.Commands.Up.IUpCommand _vagrantUpCommand;
+    private readonly Vagrant.Lib.Abstractions.Domain.Commands.Up.Command.IUpCommand _vagrantUpCommand;
 
     private readonly IUpCommandRequestBuilderFactory
         _vagrantUpCommandRequestBuilderFactory;
@@ -34,11 +34,11 @@ public class UpCommand : RootCommand, IUpCommand
     public UpCommand(
         IUpCommandResponseBuilderFactory responseBuilderFactory,
         IConfigurationLoadAction configurationLoadAction,
-        IVexNameToVagrantNameConverter vexNameToVagrantNameConverter,
-        Vagrant.Lib.Domain.Commands.Up.IUpCommand vagrantUpCommand,
+        IVosNameToVagrantNameConverter vosNameToVagrantNameConverter,
+        Vagrant.Lib.Abstractions.Domain.Commands.Up.Command.IUpCommand vagrantUpCommand,
         IUpCommandRequestBuilderFactory
             vagrantUpCommandRequestBuilderFactory
-    ) : base(configurationLoadAction, vexNameToVagrantNameConverter)
+    ) : base(configurationLoadAction, vosNameToVagrantNameConverter)
     {
         _responseBuilderFactory = responseBuilderFactory;
         _vagrantUpCommand = vagrantUpCommand;

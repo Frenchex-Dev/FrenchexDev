@@ -14,6 +14,7 @@
 using System.Text;
 using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
 using Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.ProcessBuilder;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Command;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Response;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Root.Command;

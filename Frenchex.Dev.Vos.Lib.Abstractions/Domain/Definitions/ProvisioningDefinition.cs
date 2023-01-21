@@ -19,7 +19,7 @@ namespace Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
 
 public class ProvisioningDefinition
 {
-    [JsonProperty("env")] public Dictionary<string, string>? Env { get; set; }
+    [JsonProperty("env")] public IDictionary<string, string>? Env { get; set; }
 
     [JsonProperty("version")] public string? Version { get; set; }
 

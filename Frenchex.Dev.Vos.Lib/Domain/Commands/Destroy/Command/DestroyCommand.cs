@@ -34,7 +34,7 @@ public class DestroyCommand : RootCommand, IDestroyCommand
     public DestroyCommand(
         IDestroyCommandResponseBuilderFactory responseBuilderFactory,
         IConfigurationLoadAction configurationLoadAction,
-        IVexNameToVagrantNameConverter nameConverter,
+        IVosNameToVagrantNameConverter nameConverter,
         Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Command.IDestroyCommand destroyCommand,
         IDestroyCommandRequestBuilderFactory
             destroyCommandRequestBuilderFactory

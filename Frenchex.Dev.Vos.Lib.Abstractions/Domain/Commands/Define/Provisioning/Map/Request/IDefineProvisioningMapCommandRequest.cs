@@ -19,6 +19,12 @@ namespace Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.
 
 public interface IDefineProvisioningMapCommandRequest : IRootCommandRequest
 {
-    string Provisioning { get; }
-    IDictionary<string, string> Env { get; }
+    string[] Names { get; set; }
+    string ProvisioningName { get; }
+    IDictionary<string, string>? Env { get; }
+    bool Enable { get; set; }
+    bool Disable { get; set; }
+    string Version { get; set; }
+    bool Privileged { get; set; }
+    bool MachineType { get; set; }
 }

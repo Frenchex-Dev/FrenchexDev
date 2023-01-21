@@ -9,7 +9,7 @@
 
 #endregion
 
-namespace Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib;
+namespace Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib.Domain;
 
 public interface ITimeSpanTooling
 {

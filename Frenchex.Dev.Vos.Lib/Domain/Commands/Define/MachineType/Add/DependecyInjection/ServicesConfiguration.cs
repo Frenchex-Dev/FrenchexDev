@@ -14,7 +14,9 @@
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Response;
+using Frenchex.Dev.Vos.Lib.Domain.Commands.Define.MachineType.Add.Command;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Define.MachineType.Add.Request;
+using Frenchex.Dev.Vos.Lib.Domain.Commands.Define.MachineType.Add.Response;
 using Microsoft.Extensions.DependencyInjection;
 
 #endregion

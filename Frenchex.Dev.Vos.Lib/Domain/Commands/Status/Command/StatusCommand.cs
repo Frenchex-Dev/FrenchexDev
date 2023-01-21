@@ -36,7 +36,7 @@ public class StatusCommand : RootCommand, IStatusCommand
     public StatusCommand(
         IConfigurationLoadAction configurationLoadAction,
         IStatusCommandResponseBuilderFactory statusCommandResponseBuilderFactory,
-        IVexNameToVagrantNameConverter nameConverter,
+        IVosNameToVagrantNameConverter nameConverter,
         Vagrant.Lib.Abstractions.Domain.Commands.Status.Command.IStatusCommand statusCommand,
         IStatusCommandRequestBuilderFactory
             statusCommandRequestBuilderFactory

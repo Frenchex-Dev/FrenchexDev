@@ -29,8 +29,8 @@ public class NameCommand : RootCommand, INameCommand
     public NameCommand(
         INameCommandResponseBuilderFactory responseBuilderFactory,
         IConfigurationLoadAction configurationLoadAction,
-        IVexNameToVagrantNameConverter vexNameToVagrantNameConverter
-    ) : base(configurationLoadAction, vexNameToVagrantNameConverter)
+        IVosNameToVagrantNameConverter vosNameToVagrantNameConverter
+    ) : base(configurationLoadAction, vosNameToVagrantNameConverter)
     {
         _responseBuilderFactory = responseBuilderFactory;
     }

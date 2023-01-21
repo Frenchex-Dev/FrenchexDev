@@ -21,6 +21,7 @@ using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Root.Response;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Command;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.SshConfig.Command;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Status.Command;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Command;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Up;
 using Frenchex.Dev.Vagrant.Lib.Tests.Abstractions.Domain;
 using Frenchex.Dev.Vagrant.Lib.Tests.Domain.Workflows.WorkflowData;

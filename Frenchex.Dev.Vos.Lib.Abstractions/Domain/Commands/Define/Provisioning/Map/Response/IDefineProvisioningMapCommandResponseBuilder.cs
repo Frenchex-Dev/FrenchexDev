@@ -11,13 +11,12 @@
 
 #region
 
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root.Response;
 
 #endregion
 
 namespace Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.Map.Response;
 
-public interface IDefineProvisioningMapCommandResponseBuilder : IRootResponseBuilder
+public interface IDefineProvisioningMapCommandResponseBuilder
 {
     IDefineProvisioningMapCommandResponse Build();
 }

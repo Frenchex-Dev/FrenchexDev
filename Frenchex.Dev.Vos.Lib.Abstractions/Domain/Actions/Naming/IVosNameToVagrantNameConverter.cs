@@ -11,7 +11,10 @@
 
 namespace Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Naming;
 
-public interface IVexNameToVagrantNameConverter
+public interface IVosNameToVagrantNameConverter
 {
     string[] ConvertAll(string[] names, string? workingDirectory, Domain.Configuration.Configuration configuration);
+
+    string[] GetMachineNames(string[] names, string? workingDirectory,
+        Domain.Configuration.Configuration configuration);
 }

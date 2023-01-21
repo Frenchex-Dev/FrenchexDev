@@ -9,9 +9,11 @@
 
 #endregion
 
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root.Response;
+
 namespace Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Response;
 
-public interface IDefineMachineTypeAddCommandResponseBuilderFactory
+public interface IDefineMachineTypeAddCommandResponseBuilderFactory : IRootResponseBuilderFactory
 {
-    public IDefineMachineTypeAddCommandResponseBuilder Factory();
+    IDefineMachineTypeAddCommandResponseBuilder Factory();
 }

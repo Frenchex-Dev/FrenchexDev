@@ -12,6 +12,7 @@
 #region
 
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Configuration.Load;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 #endregion
@@ -20,23 +21,35 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Actions.Configuration.Load;
 
 public class ConfigurationLoadAction : IConfigurationLoadAction
 {
+    private readonly ILogger<ConfigurationLoadAction> _logger;
+
+    public ConfigurationLoadAction(ILogger<ConfigurationLoadAction> logger)
+    {
+        _logger = logger;
+    }
+
     public async Task<Abstractions.Domain.Configuration.Configuration> Load(string path)
     {
-        var loaded = await File.ReadAllTextAsync(path);
-
-        var deserialized = new Abstractions.Domain.Configuration.Configuration();
-
         try
         {
-            deserialized = JsonConvert.DeserializeObject<Abstractions.Domain.Configuration.Configuration>(loaded);
+            var loaded = await File.ReadAllTextAsync(Path.Join(path, "config.json"));
+
+            var deserialized = JsonConvert.DeserializeObject<Abstractions.Domain.Configuration.Configuration>(loaded, new JsonSerializerSettings()
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            });
+
+            if (null == deserialized)
+            {
+                throw new ArgumentNullException(nameof(deserialized));
+            }
+
+            return deserialized;
         }
         catch (Exception e)
         {
-            Console.WriteLine($"Error while deserializing: {e.Message}");
+            _logger.LogError($"Error while deserializing config.json", e);
+            throw;
         }
-
-        if (null == deserialized) throw new ApplicationException("Error while deserializing");
-
-        return deserialized;
     }
 }

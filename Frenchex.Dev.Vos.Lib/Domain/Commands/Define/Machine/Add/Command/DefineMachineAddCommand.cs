@@ -32,7 +32,7 @@ public class DefineMachineAddCommand : RootCommand, IDefineMachineAddCommand
         IConfigurationLoadAction configurationLoadAction,
         IConfigurationSaveAction configurationSaveAction,
         IDefineMachineAddCommandResponseBuilderFactory responseBuilderFactory,
-        IVexNameToVagrantNameConverter nameConverter
+        IVosNameToVagrantNameConverter nameConverter
     ) : base(configurationLoadAction, nameConverter)
     {
         _configurationSaveAction = configurationSaveAction;
@@ -44,12 +44,21 @@ public class DefineMachineAddCommand : RootCommand, IDefineMachineAddCommand
         if (null == request.DefinitionDeclaration.Name)
             throw new InvalidOperationException("request or definitionDeclaration or name is null");
 
-        var configFilePath = Path.Join(request.BaseCommand.WorkingDirectory, "config.json");
-        var config = await ConfigurationLoadAction.Load(configFilePath);
+        if (null == request.BaseCommand)
+        {
+            throw new ArgumentNullException(nameof(request.BaseCommand));
+        }
+
+        if (string.IsNullOrEmpty(request.BaseCommand.WorkingDirectory))
+        {
+            throw new ArgumentNullException(nameof(request.BaseCommand.WorkingDirectory));
+        }
+
+        var config = await ConfigurationLoadAction.Load(request.BaseCommand.WorkingDirectory);
 
         config.Machines.Add(request.DefinitionDeclaration.Name, request.DefinitionDeclaration);
 
-        await _configurationSaveAction.Save(config, configFilePath);
+        await _configurationSaveAction.Save(config, request.BaseCommand.WorkingDirectory);
 
         return _responseBuilderFactory
             .Factory()

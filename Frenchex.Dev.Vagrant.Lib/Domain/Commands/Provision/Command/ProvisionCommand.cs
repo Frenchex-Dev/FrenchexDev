@@ -58,7 +58,7 @@ public class ProvisionCommand : RootCommand, IProvisionCommand
 
     private string BuildArguments(IProvisionCommandRequest request)
     {
-        return GetCliCommandName() + " " + BuildVagrantArguments(request) + BuildVagrantOptions(request);
+        return GetCliCommandName() + " " + BuildVagrantArguments(request) + " " + BuildVagrantOptions(request);
     }
 
 
@@ -72,7 +72,7 @@ public class ProvisionCommand : RootCommand, IProvisionCommand
 
         if (request.ProvisionWith != null && request.ProvisionWith.Any())
             foreach (var provisionWith in request.ProvisionWith)
-                sb.Append("--provision-with " + provisionWith);
+                sb.Append(" --provision-with " + provisionWith);
 
         return sb
                 .Append(BuildRootVagrantOptions(request.Base))

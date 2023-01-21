@@ -14,12 +14,16 @@
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Response;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Response;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.Map.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.Map.Response;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Destroy.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Destroy.Response;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Halt.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Halt.Response;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Init.Response;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Name.Response;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Provision.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Provision.Response;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Response;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.SshConfig.Request;
@@ -45,4 +49,6 @@ public class ExecutionContext : WithWorkingDirectoryExecutionContext
     public List<(ISshCommandRequest, ISshCommandResponse)>? SshCommandsResponses { get; set; }
     public List<(IHaltCommandRequest, IHaltCommandResponse)>? HaltCommandsResponses { get; set; }
     public List<(IDestroyCommandRequest, IDestroyCommandResponse)>? DestroyCommandsResponses { get; set; }
+    public List<(IDefineProvisioningMapCommandRequest, IDefineProvisioningMapCommandResponse)>? DefineMapProvisioningResponses { get; set; }
+    public List<(IProvisionCommandRequest, IProvisionCommandResponse)>? ProvisionResponses { get; set; }
 }

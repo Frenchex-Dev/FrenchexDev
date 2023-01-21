@@ -14,6 +14,7 @@
 using System.ComponentModel;
 using Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.ProcessBuilder;
 using Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib;
+using Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib.Domain;
 using Microsoft.Extensions.Logging;
 
 #endregion

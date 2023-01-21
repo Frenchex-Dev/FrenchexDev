@@ -41,7 +41,7 @@ public class InitCommand : RootCommand, IInitCommand
         IInitCommandResponseBuilderFactory responseBuilderFactory,
         IConfigurationSaveAction configurationActionSave,
         IConfigurationLoadAction configurationLoadAction,
-        IVexNameToVagrantNameConverter nameConverter
+        IVosNameToVagrantNameConverter nameConverter
     ) : base(configurationLoadAction, nameConverter)
     {
         _filesystem = fileSystemOperator;
@@ -65,12 +65,12 @@ public class InitCommand : RootCommand, IInitCommand
 
         await _configurationActionSave.Save(
             new Configuration(), // @todo make it buildable via opts
-            Path.Join(request.BaseCommand.WorkingDirectory, "config.json")
+            request.BaseCommand.WorkingDirectory
         );
 
         var provisioningPath = Path.GetFullPath(IVagrantfileResource.Provisioning, request.BaseCommand.WorkingDirectory);
         var provisioningPathLink =
-            Path.GetFullPath(Path.Join("Resources", "Provisioning"), AppDomain.CurrentDomain.BaseDirectory);
+            Path.GetFullPath(Path.Join("Resources", IVagrantfileResource.Provisioning), AppDomain.CurrentDomain.BaseDirectory);
 
         _filesystem.DirectoryCopy(provisioningPathLink, provisioningPath);
 

@@ -15,7 +15,7 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.R
 
 #endregion
 
-namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Define.MachineType.Add;
+namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Define.MachineType.Add.Response;
 
 public class DefineMachineTypeAddCommandResponseBuilderFactory : IDefineMachineTypeAddCommandResponseBuilderFactory
 {

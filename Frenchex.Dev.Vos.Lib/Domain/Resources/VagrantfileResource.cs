@@ -21,7 +21,7 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Resources;
 public interface IVagrantfileResource
 {
     /// <summary>
-    /// Keep in sync with Provisioning path in resource Vagrantfile
+    /// Keep in sync with ProvisioningName path in resource Vagrantfile
     /// </summary>
     const string Provisioning = "provisioning";
     void Copy(string? destination);

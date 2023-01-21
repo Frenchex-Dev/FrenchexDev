@@ -20,6 +20,7 @@ using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Define.Machine;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Define.Machine.Add;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Define.MachineType;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Define.MachineType.Add;
+using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Define.Provisioning;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Destroy;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Halt;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Init;
@@ -57,78 +58,11 @@ public class ServicesConfiguration : IServicesConfiguration
         return new ServicesConfigurationServices().ConfigureServices(services,
             () =>
             {
-                services
-                    .AddScoped<IIntegration, Domain.Integration>();
+                services.AddScoped<IIntegration, Domain.Integration>();
 
-                services
-                    .AddTransient<IVosCommandIntegration, DefineCommandIntegration>()
-                    .AddTransient<IDefineCommandIntegration, DefineCommandIntegration>()
-                    .AddTransient<IDefineMachineCommandIntegration, DefineMachineCommandIntegration>()
-                    .AddTransient<IDefineSubCommandIntegration, DefineMachineCommandIntegration>()
-                    .AddTransient<IDefineMachineSubCommandIntegration, DefineMachineAddCommandIntegration>()
-                    .AddTransient<IDefineSubCommandIntegration, DefineMachineTypeCommandIntegration>()
-                    .AddTransient<IDefineMachineTypeSubCommandIntegration, DefineMachineTypeAddCommandIntegration>()
-                    .AddTransient<IVosCommandIntegration, DestroyCommandIntegration>()
-                    .AddTransient<IDestroyCommandIntegration, DestroyCommandIntegration>()
-                    .AddTransient<IVosCommandIntegration, HaltCommandIntegration>()
-                    .AddTransient<IHaltCommandIntegration, HaltCommandIntegration>()
-                    .AddTransient<IVosCommandIntegration, InitCommandIntegration>()
-                    .AddTransient<IInitCommandIntegration, InitCommandIntegration>()
-                    .AddTransient<IVosCommandIntegration, SshCommandIntegration>()
-                    .AddTransient<ISshCommandIntegration, SshCommandIntegration>()
-                    .AddTransient<IVosCommandIntegration, SshConfigCommandIntegration>()
-                    .AddTransient<ISshConfigCommandIntegration, SshConfigCommandIntegration>()
-                    .AddTransient<IVosCommandIntegration, UpCommandIntegration>()
-                    .AddTransient<IUpCommandIntegration, UpCommandIntegration>()
-                    .AddTransient<IVosCommandIntegration, StatusCommandIntegration>()
-                    .AddTransient<IStatusCommandIntegration, StatusCommandIntegration>()
-                    .AddTransient<IVosCommandIntegration, NameCommandIntegration>()
-                    .AddTransient<INameCommandIntegration, NameCommandIntegration>()
-                    ;
-
-                services
-                    .AddScoped<IBoxNameArgumentBuilder, BoxNameArgumentBuilder>()
-                    .AddScoped<IInstancesArgumentBuilder, InstancesArgumentBuilder>()
-                    .AddScoped<IMachineTypeNameArgumentBuilder, MachineTypeNameArgumentBuilder>()
-                    .AddScoped<INameArgumentBuilder, NameArgumentBuilder>()
-                    .AddScoped<INamesArgumentBuilder, NamesArgumentBuilder>()
-                    .AddScoped<IOsVersionArgumentBuilder, OsVersionArgumentBuilder>()
-                    .AddScoped<IOsTypeArgumentBuilder, OsTypeArgumentBuilder>()
-                    .AddScoped<IParallelOptionBuilder, ParallelOptionBuilder>()
-                    .AddScoped<IRamMbArgumentBuilder, RamMbArgumentBuilder>()
-                    .AddScoped<IVirtualCpusArgumentBuilder, VirtualCpusArgumentBuilder>()
-                    ;
-
-                services
-                    .AddScoped<IColorOptionBuilder, ColorOptionBuilder>()
-                    .AddScoped<IEnabled3dOptionBuilder, Enabled3dOptionBuilder>()
-                    .AddScoped<IEnabledOptionBuilder, EnabledOptionBuilder>()
-                    .AddScoped<IForceOptionBuilder, ForceOptionBuilder>()
-                    .AddScoped<IGracefulOptionBuilder, GracefulOptionBuilder>()
-                    .AddScoped<IHostOptionBuilder, HostOptionBuilder>()
-                    .AddScoped<ICommandsOptionBuilder, CommandsOptionBuilder>()
-                    .AddScoped<IExtraSshArgsOptionBuilder, ExtraSshArgsOptionBuilder>()
-                    .AddScoped<IParallelWaitOptionBuilder, ParallelWaitOptionBuilder>()
-                    .AddScoped<IParallelWorkersOptionBuilder, ParallelWorkersOptionBuilder>()
-                    .AddScoped<IIpv4PatternOptionBuilder, Ipv4PatternOptionBuilder>()
-                    .AddScoped<IIpv4StartOptionBuilder, Ipv4StartOptionBuilder>()
-                    .AddScoped<IVagrantBinPathOptionBuilder, VagrantBinPathOptionBuilder>()
-                    .AddScoped<INamesOptionBuilder, NamesOptionBuilder>()
-                    .AddScoped<INamingPatternOptionBuilder, NamingPatternOptionBuilder>()
-                    .AddScoped<INetworkBridgeOptionBuilder, NetworkBridgeOptionBuilder>()
-                    .AddScoped<IPlainTextOptionBuilder, PlainTextOptionBuilder>()
-                    .AddScoped<IPrimaryOptionBuilder, PrimaryOptionBuilder>()
-                    .AddScoped<IRamMbOptionBuilder, RamMbOptionBuilder>()
-                    .AddScoped<ITimeoutMsOptionBuilder, TimeoutMsOptionBuilder>()
-                    .AddScoped<IVirtualCpusOptionBuilder, VirtualCpusOptionBuilder>()
-                    .AddScoped<IVirtualRamMbOptionBuilder, VirtualRamMbOptionBuilder>()
-                    .AddScoped<IWorkingDirectoryOptionBuilder, WorkingDirectoryOptionBuilder>()
-                    .AddScoped<IZeroesOptionBuilder, ZeroesOptionBuilder>()
-                    .AddScoped<IParallelOptionBuilder, ParallelOptionBuilder>()
-                    .AddScoped<IParallelWaitOptionBuilder, ParallelWaitOptionBuilder>()
-                    .AddScoped<IParallelWorkersOptionBuilder, ParallelWorkersOptionBuilder>()
-                    .AddScoped<IVagrantBinPathOptionBuilder, VagrantBinPathOptionBuilder>()
-                    ;
+                Domain.Commands.DependencyInjectionConfigurator.ConfigureServices(services);
+                Domain.Arguments.DependencyInjectionConfigurator.ConfigureServices(services);
+                Domain.Options.DependencyInjectionConfigurator.ConfigureServices(services);
             },
             () =>
             {

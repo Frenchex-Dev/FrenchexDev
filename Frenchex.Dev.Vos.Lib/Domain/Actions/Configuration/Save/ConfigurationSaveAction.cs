@@ -39,6 +39,6 @@ public class ConfigurationSaveAction : IConfigurationSaveAction
                 NullValueHandling = NullValueHandling.Ignore
             });
 
-        await _fileSystemOperator.FileWriteAllTextAsync(path, serialized);
+        await _fileSystemOperator.FileWriteAllTextAsync(Path.Join(path, "config.json"), serialized);
     }
 }

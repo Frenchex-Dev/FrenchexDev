@@ -121,6 +121,13 @@ public abstract class AbstractHostedService : IHostedService
         if (null == RootCommand)
             throw new ArgumentNullException(nameof(RootCommand));
 
-        return await RootCommand.InvokeAsync(_entryPointInfo.CommandLineArgs);
+        var args = _entryPointInfo.CommandLineArgs;
+
+        if (args.Length > 0 && args[0].EndsWith(".dll"))
+        {
+            args = _entryPointInfo.CommandLineArgs.ToList().Skip(1).Take(_entryPointInfo.CommandLineArgs.Length - 1).ToArray();
+        }
+
+        return await RootCommand.InvokeAsync(args);
     }
 }

@@ -34,11 +34,11 @@ public class HaltCommand : RootCommand, IHaltCommand
     public HaltCommand(
         IHaltCommandResponseBuilderFactory responseBuilderFactory,
         IConfigurationLoadAction configurationLoadAction,
-        IVexNameToVagrantNameConverter vexNameToVagrantNameConverter,
+        IVosNameToVagrantNameConverter vosNameToVagrantNameConverter,
         Vagrant.Lib.Abstractions.Domain.Commands.Halt.Command.IHaltCommand vagrantHaltCommand,
         IHaltCommandRequestBuilderFactory
             vagrantHaltCommandRequestBuilderFactory
-    ) : base(configurationLoadAction, vexNameToVagrantNameConverter)
+    ) : base(configurationLoadAction, vosNameToVagrantNameConverter)
     {
         _responseBuilderFactory = responseBuilderFactory;
         _vagrantHaltCommand = vagrantHaltCommand;

@@ -19,7 +19,15 @@ namespace Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.
 
 public interface IDefineProvisioningMapCommandRequestBuilder : IRootCommandRequestBuilder
 {
+    IDefineProvisioningMapCommandRequestBuilder UsingNames(string[] names);
     IDefineProvisioningMapCommandRequestBuilder UsingProvisioning(string name);
-    IDefineProvisioningMapCommandRequestBuilder UsingEnv(Dictionary<string, string> env);
+    IDefineProvisioningMapCommandRequestBuilder UsingEnv(IDictionary<string, string>? env);
+    IDefineProvisioningMapCommandRequestBuilder Enable();
+    IDefineProvisioningMapCommandRequestBuilder Disable();
+    IDefineProvisioningMapCommandRequestBuilder Version(string version);
+    IDefineProvisioningMapCommandRequestBuilder Privileged();
+    IDefineProvisioningMapCommandRequestBuilder Unprivileged();
+    IDefineProvisioningMapCommandRequestBuilder Machine();
+    IDefineProvisioningMapCommandRequestBuilder MachineType();
     IDefineProvisioningMapCommandRequest Build();
 }

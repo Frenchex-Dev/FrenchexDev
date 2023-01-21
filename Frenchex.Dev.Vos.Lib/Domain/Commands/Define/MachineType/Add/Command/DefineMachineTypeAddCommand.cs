@@ -21,7 +21,7 @@ using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Command;
 
 #endregion
 
-namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Define.MachineType.Add;
+namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Define.MachineType.Add.Command;
 
 public class DefineMachineTypeAddCommand : RootCommand, IDefineMachineTypeAddCommand
 {
@@ -34,7 +34,7 @@ public class DefineMachineTypeAddCommand : RootCommand, IDefineMachineTypeAddCom
         IConfigurationLoadAction configurationLoadAction,
         IConfigurationSaveAction configurationSaveAction,
         IDefineMachineTypeAddCommandResponseBuilderFactory defineMachineTypeAddCommandResponseBuilderFactory,
-        IVexNameToVagrantNameConverter nameConverter
+        IVosNameToVagrantNameConverter nameConverter
     ) : base(configurationLoadAction, nameConverter)
     {
         _configurationSaveAction = configurationSaveAction;
@@ -43,13 +43,17 @@ public class DefineMachineTypeAddCommand : RootCommand, IDefineMachineTypeAddCom
 
     public async Task<IDefineMachineTypeAddCommandResponse> ExecuteAsync(IDefineMachineTypeAddCommandRequest request)
     {
-        var configFilePath = Path.Join(request.BaseCommand.WorkingDirectory, "config.json");
-        var config = await ConfigurationLoadAction.Load(configFilePath);
+        if (string.IsNullOrEmpty(request.BaseCommand.WorkingDirectory))
+        {
+            throw new ArgumentNullException(nameof(request.BaseCommand.WorkingDirectory));
+        }
+
+        var config = await ConfigurationLoadAction.Load(request.BaseCommand.WorkingDirectory);
 
         if (request.DefinitionDeclaration.Name != null)
             config.MachineTypes.Add(request.DefinitionDeclaration.Name, request.DefinitionDeclaration);
 
-        await _configurationSaveAction.Save(config, configFilePath);
+        await _configurationSaveAction.Save(config, request.BaseCommand.WorkingDirectory);
 
         return _defineMachineTypeAddCommandResponseBuilderFactory
             .Factory()

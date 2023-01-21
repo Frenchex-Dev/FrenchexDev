@@ -171,8 +171,8 @@ debug = ENV["VOS_VAGRANTFILE_DEBUG"] == "true";
           config.vm.provision :hostmanager
         end
         
-        if (server['files'])
-          server['files'].each do |key,value|
+        if (server['base']['files'])
+          server['base']['files'].each do |key,value|
             if (value['enabled'] && true != value['enabled'])
               next 
             end # if enabled
@@ -183,8 +183,8 @@ debug = ENV["VOS_VAGRANTFILE_DEBUG"] == "true";
   
         end # if files
   
-        if (server['shared_folders'])
-          server['shared_folders'].each do |key,value|
+        if (server['base']['shared_folders'])
+          server['base']['shared_folders'].each do |key,value|
             if (value['enabled'] && true != value['enabled'])
               next 
             end # if enabled
@@ -196,10 +196,10 @@ debug = ENV["VOS_VAGRANTFILE_DEBUG"] == "true";
           end # each shared folder
         end # if shared folders
   
-        if (server['provisioning'])
+        if (server['base']['provisioning'])
           box_name = server['box']
           box_version = server['box_version']
-          server['provisioning'].each do |key, value|
+          server['base']['provisioning'].each do |key, value|
             puts "provision #{key}" if debug
             extension = value['ext'] || 'sh'
             env = value['env'] || {}

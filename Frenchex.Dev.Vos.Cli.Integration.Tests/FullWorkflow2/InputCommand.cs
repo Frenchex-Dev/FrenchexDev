@@ -9,7 +9,8 @@
 
 #endregion
 
-namespace Frenchex.Dev.Vos.Cli.Integration.Tests;
+
+namespace Frenchex.Dev.Vos.Cli.Integration.Tests.FullWorkflow2;
 
 public class InputCommand
 {

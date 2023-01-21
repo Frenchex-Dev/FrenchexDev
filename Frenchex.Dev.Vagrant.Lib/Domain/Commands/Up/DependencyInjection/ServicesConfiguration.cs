@@ -11,6 +11,7 @@
 
 #region
 
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Command;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Facade;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Response;

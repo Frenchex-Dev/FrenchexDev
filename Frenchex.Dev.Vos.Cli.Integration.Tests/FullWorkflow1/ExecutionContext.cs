@@ -15,7 +15,7 @@ using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 
 #endregion
 
-namespace Frenchex.Dev.Vos.Cli.Integration.Tests;
+namespace Frenchex.Dev.Vos.Cli.Integration.Tests.FullWorkflow1;
 
 public class ExecutionContext : WithWorkingDirectoryExecutionContext
 {

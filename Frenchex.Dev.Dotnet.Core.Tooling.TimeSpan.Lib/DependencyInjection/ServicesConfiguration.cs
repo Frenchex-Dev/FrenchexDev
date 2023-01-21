@@ -11,6 +11,7 @@
 
 #region
 
+using Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib.Domain;
 using Microsoft.Extensions.DependencyInjection;
 
 #endregion

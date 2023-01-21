@@ -11,8 +11,8 @@
 
 #region
 
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Command;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Request;
-using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Up;
 
 #endregion
 

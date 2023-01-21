@@ -14,10 +14,12 @@
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Networking;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.Map.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Destroy.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Halt.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Init.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Name.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Provision.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.SshConfig.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Request;
@@ -76,9 +78,9 @@ public class Builder
 
             return payloads.Select(payload => BuildDefineMachineAddCommandRequest(
               workingDirectory: workingDirectory,
-              timeoutStr: "20s",
-              ramInMb: 4096,
-              vCpus: 12,
+              timeBox: "20s",
+              ramInMb: 256,
+              vCpus: 4,
               machineTypeDefinitionName: payload.MachineTypeName,
               name: payload.Name,
               instances: 1,
@@ -242,6 +244,42 @@ public class Builder
             };
         };
 
+    public Func<string, IServiceProvider, List<IDefineProvisioningMapCommandRequest>> BuildDefineProvisioningMapCommandRequestListBuilder =>
+        (workingDirectory, serviceProvider) =>
+        {
+            return new List<IDefineProvisioningMapCommandRequest>
+            {
+                serviceProvider.GetRequiredService<IDefineProvisioningMapCommandRequestBuilderFactory>().Factory()
+                    .BaseBuilder
+                    .UsingWorkingDirectory(workingDirectory)
+                    .UsingTimeout("1m")
+                    .Parent<IDefineProvisioningMapCommandRequestBuilder>()
+                    .UsingNames(new string[]{"foo-0"})
+                    .UsingProvisioning("docker-ce/install")
+                    .Privileged()
+                    .Version("v1")
+                    .Enable()
+                    .Build(),
+            };
+        };
+
+    public Func<string, IServiceProvider, List<IProvisionCommandRequest>> BuildProvisionCommandRequestsListBuilder =>
+        (workingDirectory, provider) =>
+        {
+            return new List<IProvisionCommandRequest>()
+            {
+                provider.GetRequiredService<IProvisionCommandRequestBuilderFactory>().Factory()
+                    .BaseBuilder
+                    .UsingWorkingDirectory(workingDirectory)
+                    .UsingTimeout("10m")
+                    .Parent<IProvisionCommandRequestBuilder>()
+                    .UsingNames(new string[]{"foo-0"})
+                    .UsingProvisionWith(new string[]{"docker-ce/install"})
+                    .Build(),
+            };
+        };
+
+
     private static IDefineMachineTypeAddCommandRequest
         BuildDefineMachineTypeAddCommandRequestWithSpecifiedBoxNameAndVersion(
             string workingDirectory,
@@ -263,18 +301,6 @@ public class Builder
                 .WithBoxVersion(boxVersion)
                 .WithOsVersion("v1")
                 .WithVirtualCpus(6)
-                .WithProvisioning(new Dictionary<string, ProvisioningDefinition>()
-                {
-                    { "docker-ce/install", new ProvisioningDefinition
-                        {
-                            Env = new Dictionary<string, string>
-                            {
-                                { "DOCKER_VERSION", "20.9" }
-                            },
-                            Version = "v1"
-                        }
-                    }
-                })
                 .Enabled(true)
                 .Parent<IMachineTypeDefinitionBuilder>()
                 .WithName(typeName)
@@ -284,7 +310,7 @@ public class Builder
 
     private static IDefineMachineAddCommandRequest BuildDefineMachineAddCommandRequest(
         string? workingDirectory,
-        string timeoutStr,
+        string timeBox,
         int ramInMb,
         int vCpus,
         string machineTypeDefinitionName,
@@ -303,7 +329,7 @@ public class Builder
             .Factory()
             .BaseBuilder
             .UsingWorkingDirectory(workingDirectory)
-            .UsingTimeout(timeoutStr)
+            .UsingTimeout(timeBox)
             .Parent<IDefineMachineAddCommandRequestBuilder>()
             .UsingDefinition(machineDefinitionBuilderFactory
                 .Factory()

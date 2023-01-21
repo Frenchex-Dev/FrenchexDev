@@ -15,6 +15,7 @@ using System.Diagnostics;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib;
+using Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib.Domain;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

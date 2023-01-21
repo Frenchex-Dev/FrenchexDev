@@ -15,7 +15,7 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.Map.
 
 #endregion
 
-namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Provisioning.Map;
+namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Provisioning.Map.Response;
 
 public class DefineProvisioningMapCommandResponseBuilder : IDefineProvisioningMapCommandResponseBuilder
 {

@@ -15,8 +15,10 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.Map.
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.Map.Facade;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.Map.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.Map.Response;
+using Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Provisioning.Map.Command;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Provisioning.Map.Facade;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Provisioning.Map.Request;
+using Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Provisioning.Map.Response;
 using Microsoft.Extensions.DependencyInjection;
 
 #endregion
@@ -31,11 +33,9 @@ public static class ServicesConfiguration
             .AddScoped<IDefineProvisioningMapCommand, DefineProvisioningMapCommand>()
             .AddScoped<IDefineProvisioningMapCommandFacade, DefineProvisioningMapCommandFacade>()
             .AddScoped<IDefineProvisioningMapCommandRequestBuilder, DefineProvisioningMapCommandRequestBuilder>()
-            .AddScoped<IDefineProvisioningMapCommandRequestBuilderFactory,
-                DefineProvisioningMapCommandRequestBuilderFactory>()
+            .AddScoped<IDefineProvisioningMapCommandRequestBuilderFactory, DefineProvisioningMapCommandRequestBuilderFactory>()
             .AddScoped<IDefineProvisioningMapCommandResponseBuilder, DefineProvisioningMapCommandResponseBuilder>()
-            .AddScoped<IDefineProvisioningMapCommandResponseBuilderFactory,
-                DefineProvisioningMapCommandResponseBuilderFactory>()
+            .AddScoped<IDefineProvisioningMapCommandResponseBuilderFactory, DefineProvisioningMapCommandResponseBuilderFactory>()
             ;
 
         return serviceCollection;

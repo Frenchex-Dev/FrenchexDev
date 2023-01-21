@@ -23,14 +23,32 @@ public class DefineProvisioningMapCommandCommandRequest : RootCommandRequest, ID
 {
     public DefineProvisioningMapCommandCommandRequest(
         IBaseCommandRequest baseCommandRequest,
+        string[] names,
         string provisioning,
-        IDictionary<string, string> env
+        IDictionary<string, string>? env,
+        bool enable,
+        bool disable,
+        string version,
+        bool privileged,
+        bool machineType
     ) : base(baseCommandRequest)
     {
-        Provisioning = provisioning;
+        Names = names;
+        ProvisioningName = provisioning;
         Env = env;
+        Enable = enable;
+        Disable = disable;
+        Version = version;
+        Privileged = privileged;
+        MachineType = machineType;
     }
 
-    public string Provisioning { get; }
-    public IDictionary<string, string> Env { get; }
+    public string[] Names { get; set; }
+    public string ProvisioningName { get; }
+    public IDictionary<string, string>? Env { get; }
+    public bool Enable { get; set; }
+    public bool Disable { get; set; }
+    public string Version { get; set; }
+    public bool Privileged { get; set; }
+    public bool MachineType { get; set; }
 }

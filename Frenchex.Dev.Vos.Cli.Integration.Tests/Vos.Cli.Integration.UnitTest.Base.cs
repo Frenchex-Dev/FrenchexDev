@@ -11,12 +11,12 @@
 
 #region
 
-using System.CommandLine;
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Frenchex.Dev.Vos.Cli.Integration.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using System.CommandLine;
 
 #endregion
 
@@ -24,7 +24,9 @@ namespace Frenchex.Dev.Vos.Cli.Integration.Tests;
 
 public static class VosCliIntegrationUnitTestBase
 {
-    public static UnitTest CreateUnitTest<T>() where T : class
+    public static UnitTest CreateUnitTest<T, V>()
+        where T : class
+        where V : class
     {
         var unitTest = new UnitTest(
             builder =>
@@ -45,7 +47,7 @@ public static class VosCliIntegrationUnitTestBase
 
                 services.AddScoped<IConfiguration>(_ => configuration);
                 services.AddScoped<T>();
-                services.AddScoped<SubjectUnderTest>();
+                services.AddScoped<V>();
             }
         );
 

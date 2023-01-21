@@ -1,0 +1,197 @@
+﻿#region Licensing
+
+// Copyright Stéphane Erard 2023
+// All rights reserved.
+// 
+// Licencing : stephane.erard@gmail.com
+// 
+// 
+
+#endregion
+
+#region
+
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Naming;
+using System.Text.RegularExpressions;
+
+#endregion
+
+namespace Frenchex.Dev.Vos.Lib.Domain.Actions.Naming;
+
+public class VosNameToVagrantNameConverter : IVosNameToVagrantNameConverter
+{
+    private static readonly Regex PatternFromToWildcard =
+        new("(?<machine>.*)\\-\\[(?<instance>.*)\\]", RegexOptions.Compiled);
+
+    private static readonly Regex PatternFromTo = new("(?<machine>.*)\\-(?<instance>.*)", RegexOptions.Compiled);
+
+
+    public string[] ConvertAll(
+        string[] inputNamedPatterns,
+        string? workingDirectory,
+        Abstractions.Domain.Configuration.Configuration configuration
+    )
+    {
+        return ConvertAllInternal(
+            inputNamedPatterns: inputNamedPatterns,
+            workingDirectory: workingDirectory,
+            configuration: configuration,
+            machineNames: false
+        );
+    }
+    public string[] GetMachineNames(
+        string[] inputNamedPatterns,
+        string? workingDirectory,
+        Abstractions.Domain.Configuration.Configuration configuration
+    )
+    {
+        return ConvertAllInternal(
+            inputNamedPatterns: inputNamedPatterns,
+            workingDirectory: workingDirectory,
+            configuration: configuration,
+            machineNames: true
+        );
+    }
+
+    public string[] ConvertAllInternal(
+        string[] inputNamedPatterns,
+        string? workingDirectory,
+        Abstractions.Domain.Configuration.Configuration configuration,
+        bool machineNames
+    )
+    {
+        if (null == configuration)
+        {
+            throw new ArgumentNullException(nameof(configuration));
+        }
+
+        List<string> list = new();
+        var dirBase = Path.GetFileName(workingDirectory);
+
+        if (null == dirBase)
+            throw new ArgumentNullException(nameof(dirBase));
+
+        var prefixWithDirBase = configuration.Vagrant.PrefixWithDirBase;
+        var namingPattern = configuration.Vagrant.NamingPattern;
+
+        foreach (var name in inputNamedPatterns)
+        {
+            var _name = name.Trim().ToLowerInvariant();
+            var matchesPatternFromToWildcard = PatternFromToWildcard.Matches(_name);
+            var from = 0;
+            var to = 0;
+            var machineName = "";
+            var instances = "";
+
+            switch (matchesPatternFromToWildcard.Count)
+            {
+                case 0:
+                    {
+                        var matchesPatternFromTo = PatternFromTo.Matches(_name);
+
+                        var firstMatches = matchesPatternFromTo.FirstOrDefault();
+
+                        if (firstMatches == null && machineNames)
+                        {
+                            list.Add(_name);
+                            continue;
+                        }
+
+                        if (firstMatches.Groups.ContainsKey("machine"))
+                        {
+                            machineName = firstMatches.Groups["machine"].Value.Trim().ToLowerInvariant();
+                        }
+
+                        if (machineNames)
+                        {
+                            list.Add(machineName);
+                            continue;
+                        }
+
+                        if (firstMatches.Groups.ContainsKey("instance"))
+                        {
+                            instances = firstMatches.Groups["instance"].Value.Trim().ToLowerInvariant();
+                        }
+
+                        if (instances == "*")
+                            to = (configuration?.Machines[machineName].Instances ?? 0) - 1;
+                        else
+                            from = to = int.Parse(instances);
+
+                        break;
+                    }
+                case > 0:
+                    {
+                        var firstMatches = matchesPatternFromToWildcard.First();
+
+                        if (firstMatches.Groups.ContainsKey("machine"))
+                            machineName = firstMatches.Groups["machine"].Value.Trim().ToLowerInvariant();
+
+                        if (firstMatches.Groups.ContainsKey("instance"))
+                            instances = firstMatches.Groups["instance"].Value.Trim().ToLowerInvariant();
+
+
+                        if (instances.Contains('-')) // [2-*], [2-3-4], 
+                        {
+                            var instancesSplit = instances.Split('-');
+
+                            from = int.Parse(instancesSplit[0]);
+
+                            if (instancesSplit.Length == 2)
+                            {
+                                var instanceSplitTo = instancesSplit[1];
+
+                                if (instanceSplitTo == "*")
+                                {
+                                    to = (configuration?.Machines[machineName]?.Instances - 1) ?? 0;
+                                }
+                                else
+                                {
+                                    to = int.Parse(instanceSplitTo);
+                                }
+                            }
+                        }
+
+                        break;
+                    }
+            }
+
+            if (from > to)
+                throw new InvalidDataException("from is gt to");
+
+            for (var i = from; i <= to; i++)
+            {
+                var instanceAsStr = string.Format(
+                    $"{{0,{configuration?.Vagrant?.Zeroes}:D{configuration?.Vagrant?.Zeroes}}}",
+                    i);
+
+                list.Add(
+                    Prefix(
+                        machineName,
+                        instanceAsStr,
+                        prefixWithDirBase,
+                        dirBase,
+                        namingPattern
+                    )
+                );
+            }
+        }
+
+        return list.ToArray();
+    }
+
+    private static string Prefix(
+        string s,
+        string instance,
+        bool prefixWithDirBase,
+        string dirBase,
+        string namingPattern
+    )
+    {
+        return (prefixWithDirBase ? dirBase + "-" : "")
+               + namingPattern
+                   .Replace("#MACHINE-NAME#", s)
+                   .Replace("#MACHINE-INSTANCE#", instance)
+            ;
+    }
+}

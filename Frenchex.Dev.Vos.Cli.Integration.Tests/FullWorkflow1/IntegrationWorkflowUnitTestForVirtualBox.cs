@@ -11,15 +11,14 @@
 
 #region
 
-using System.CommandLine;
-using Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib;
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Frenchex.Dev.Vos.Cli.IntegrationLib.Domain;
 using Microsoft.Extensions.DependencyInjection;
+using System.CommandLine;
 
 #endregion
 
-namespace Frenchex.Dev.Vos.Cli.Integration.Tests;
+namespace Frenchex.Dev.Vos.Cli.Integration.Tests.FullWorkflow1;
 
 public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
 {
@@ -95,7 +94,7 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
 
                 return Task.CompletedTask;
             },
-            vsCodeDebugging, 
+            vsCodeDebugging,
             unitTest
         );
     }
@@ -120,12 +119,8 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
         return new InputCommand[]
         {
             new("init", BuildInternalCommandLineString("init")),
-            new("d.m.t 1",
-                BuildInternalCommandLineString(
-                    "define machine-type add foo generic/alpine38 4 128 Debian_64 10.9.0 --vram-mb 16 --enabled")),
-            new("d.m.t 2",
-                BuildInternalCommandLineString(
-                    "define machine-type add bar generic/alpine38 4 128 Debian_64 10.9.0 --vram-mb 16 --enabled")),
+            new("d.m.t 1", BuildInternalCommandLineString("define machine-type add foo generic/alpine38 4 128 Debian_64 10.9.0 --vram-mb 16 --enabled")),
+            new("d.m.t 2", BuildInternalCommandLineString("define machine-type add bar generic/alpine38 4 128 Debian_64 10.9.0 --vram-mb 16 --enabled")),
             new("d.m 1", BuildInternalCommandLineString("define machine add foo foo 4 --enabled ")),
             new("d.m 2", BuildInternalCommandLineString("define machine add bar bar 4 --enabled")),
             new("name", BuildInternalCommandLineString("name bar-0 foo-[2-*]")),
@@ -153,11 +148,11 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
                 var sut = provider.GetRequiredService<SubjectUnderTest>().RootCommand;
 
                 foreach (var workingDir in workingDirectories)
-                foreach (var command in commands)
-                {
-                    var vosCommand = $"{command.Command.Replace(WorkingDirectoryMarker, workingDir)}";
-                    await execCommand(vosCommand, sut);
-                }
+                    foreach (var command in commands)
+                    {
+                        var vosCommand = $"{command.Command.Replace(WorkingDirectoryMarker, workingDir)}";
+                        await execCommand(vosCommand, sut);
+                    }
             },
             (_, _, _) => Task.CompletedTask,
             unitTest.GetScopedServiceProvider(),

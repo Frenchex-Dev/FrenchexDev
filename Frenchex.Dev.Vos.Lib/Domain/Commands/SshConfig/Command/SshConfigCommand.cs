@@ -37,7 +37,7 @@ public class SshConfigCommand : RootCommand, ISshConfigCommand
     public SshConfigCommand(
         ISshConfigCommandResponseBuilderFactory responseBuilderFactory,
         IConfigurationLoadAction configurationLoadAction,
-        IVexNameToVagrantNameConverter nameConverter,
+        IVosNameToVagrantNameConverter nameConverter,
         Vagrant.Lib.Abstractions.Domain.Commands.SshConfig.Command.ISshConfigCommand vagrantSshConfigCommand,
         ISshConfigCommandRequestBuilderFactory
             vagrantSshConfigCommandRequestBuilder

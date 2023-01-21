@@ -20,6 +20,9 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Respo
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Response;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.Map.Command;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.Map.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.Map.Response;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Destroy.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Destroy.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Destroy.Response;
@@ -32,6 +35,9 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Init.Response;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Name.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Name.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Name.Response;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Provision.Command;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Provision.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Provision.Response;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Response;
@@ -45,6 +51,7 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Response;
 using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.ExceptionServices;
 
 #endregion
 
@@ -108,21 +115,22 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
     [TestCategory(TestCategories.TestingLevelMinimal)]
     public async Task VosWorkflowUnitTestMinimal(Builder[] builders)
     {
-        //Environment.SetEnvironmentVariable("VOS_VAGRANTFILE_DEBUG", "true");
         await VosWorkflowUnitTestInternal(builders);
     }
 
     private async Task VosWorkflowUnitTestInternal(Builder[] builders)
     {
-        Func<Builder, Task> taskBuilder = VosWorkflowUnitTestInternalInternal;
-
-        List<Task> allTasks = builders.Select(x => taskBuilder(x)).ToList();
+        List<Task> allTasks = builders.Select(VosWorkflowUnitTestInternalInternal).ToList();
 
         var tasks = Task.WhenAll(allTasks);
 
         await tasks;
 
-        if (tasks.IsFaulted) throw new Exception(tasks.Exception?.Message);
+        if (tasks.IsFaulted)
+        {
+            var capture = ExceptionDispatchInfo.Capture(tasks.Exception!);
+            capture.Throw();
+        }
     }
 
     private async Task VosWorkflowUnitTestInternalInternal(Builder builder)
@@ -191,6 +199,20 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             "4m"
         );
 
+        await RunDefineProvisioningMapCommandAsync(
+            builder.BuildDefineProvisioningMapCommandRequestListBuilder,
+            unitTest,
+            vsDebuggingContext,
+            "4m"
+        );
+
+        await RunProvisioningCommandsAsync(
+            builder.BuildProvisionCommandRequestsListBuilder,
+            unitTest,
+            vsDebuggingContext,
+            "20m"
+        );
+
         await RunHaltCommandsAsyncUnitTest(
             builder.BuildHaltCommandRequestsListBuilder!,
             unitTest,
@@ -206,6 +228,71 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
         );
 
         vsDebuggingContext.Stop();
+    }
+
+    private async Task RunProvisioningCommandsAsync(
+        Func<string, IServiceProvider, List<IProvisionCommandRequest>> builderBuildProvisionCommandRequestsListBuilder,
+        UnitTest unitTest,
+        UnitTest.VsCodeDebugging vsDebuggingContext,
+        string timeBox)
+    {
+        await unitTest.ExecuteTimeBoxedAndAssertAndCleanupAsync<ExecutionContext>(
+            timeBox,
+            async (provider, _, context, _) =>
+            {
+                IList<IProvisionCommandRequest> list = builderBuildProvisionCommandRequestsListBuilder(context.WorkingDirectory!, provider);
+                var command = provider.GetRequiredService<IProvisionCommand>();
+                context.ProvisionResponses = new List<(IProvisionCommandRequest, IProvisionCommandResponse)>();
+
+                foreach (var item in list)
+                {
+                    var response = await command.ExecuteAsync(item);
+                    await response.Response.ProcessExecutionResult.WaitForAny!;
+                    context.ProvisionResponses.Add((item, response));
+                }
+            },
+            (provider, _, context) =>
+            {
+                return Task.CompletedTask;
+            },
+            (_, _, context) =>
+            {
+                return Task.CompletedTask;
+            },
+            unitTest.GetScopedServiceProvider(),
+            vsDebuggingContext);
+    }
+
+    private async Task RunDefineProvisioningMapCommandAsync(
+        Func<string, IServiceProvider, List<IDefineProvisioningMapCommandRequest>> builderBuildIDefineProvisioningMapCommandRequestListBuilder,
+        UnitTest unitTest,
+        UnitTest.VsCodeDebugging vsDebuggingContext,
+        string timeBox)
+    {
+        await unitTest.ExecuteTimeBoxedAndAssertAndCleanupAsync<ExecutionContext>(
+            timeBox,
+            async (provider, _, context, _) =>
+            {
+                IList<IDefineProvisioningMapCommandRequest> list = builderBuildIDefineProvisioningMapCommandRequestListBuilder(context.WorkingDirectory!, provider);
+                var command = provider.GetRequiredService<IDefineProvisioningMapCommand>();
+                context.DefineMapProvisioningResponses = new List<(IDefineProvisioningMapCommandRequest, IDefineProvisioningMapCommandResponse)>();
+
+                foreach (var item in list)
+                {
+                    var response = await command.ExecuteAsync(item);
+                    context.DefineMapProvisioningResponses.Add((item, response));
+                }
+            },
+             (provider, _, context) =>
+             {
+                 return Task.CompletedTask;
+             },
+            (_, _, context) =>
+            {
+                return Task.CompletedTask;
+            },
+            unitTest.GetScopedServiceProvider(),
+            vsDebuggingContext);
     }
 
     private static async Task RunDestroyCommandsAsyncUnitTest(

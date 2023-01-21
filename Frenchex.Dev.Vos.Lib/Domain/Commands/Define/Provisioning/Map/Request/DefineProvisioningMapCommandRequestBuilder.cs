@@ -20,34 +20,110 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Provisioning.Map.Request;
 
 public class DefineProvisioningMapCommandRequestBuilder : IDefineProvisioningMapCommandRequestBuilder
 {
-    private Dictionary<string, string>? _env;
+    private IDictionary<string, string>? _env;
+    private string[]? _names;
+    private string? _version;
+    private bool _enable;
+    private string? _provisioning;
+    private bool _privileged;
+    private bool _machineType;
 
-    private string? _name;
-
-    public DefineProvisioningMapCommandRequestBuilder(IBaseRequestBuilderFactory baseBuilderFactory)
+    public DefineProvisioningMapCommandRequestBuilder(
+        IBaseRequestBuilderFactory baseBuilderFactory
+    )
     {
         BaseBuilder = baseBuilderFactory.Factory(this);
     }
 
     public IBaseRequestBuilder BaseBuilder { get; }
 
-    public IDefineProvisioningMapCommandRequest Build()
+    public IDefineProvisioningMapCommandRequestBuilder Unprivileged()
     {
-        if (null == BaseBuilder || null == _name || null == _env)
-            throw new InvalidOperationException("basebuilder or name or env is null");
-
-        return new DefineProvisioningMapCommandCommandRequest(BaseBuilder.Build(), _name, _env);
+        _privileged = false;
+        return this;
     }
 
-    public IDefineProvisioningMapCommandRequestBuilder UsingEnv(Dictionary<string, string> env)
+    public IDefineProvisioningMapCommandRequestBuilder Machine()
+    {
+        _machineType = false;
+        return this;
+    }
+
+    public IDefineProvisioningMapCommandRequestBuilder MachineType()
+    {
+        _machineType = true;
+        return this;
+    }
+
+    public IDefineProvisioningMapCommandRequest Build()
+    {
+        if (null == _names)
+        {
+            throw new ArgumentNullException(nameof(_names));
+        }
+
+        if (string.IsNullOrEmpty(_provisioning))
+        {
+            throw new ArgumentNullException(nameof(_provisioning));
+        }
+
+        if (string.IsNullOrEmpty(_version))
+        {
+            throw new ArgumentNullException(nameof(_version));
+        }
+
+        return new DefineProvisioningMapCommandCommandRequest(
+            baseCommandRequest: BaseBuilder.Build(),
+            names: _names,
+            env: _env,
+            provisioning: _provisioning,
+            enable: _enable,
+            disable: !_enable,
+            version: _version,
+            privileged: _privileged,
+            machineType: _machineType
+        );
+    }
+
+    public IDefineProvisioningMapCommandRequestBuilder Version(string version)
+    {
+        _version = version;
+        return this;
+    }
+
+    public IDefineProvisioningMapCommandRequestBuilder Privileged()
+    {
+        _privileged = true;
+        return this;
+    }
+
+    public IDefineProvisioningMapCommandRequestBuilder UsingEnv(IDictionary<string, string>? env)
     {
         _env = env;
         return this;
     }
 
-    public IDefineProvisioningMapCommandRequestBuilder UsingProvisioning(string name)
+    public IDefineProvisioningMapCommandRequestBuilder Enable()
     {
-        _name = name;
+        _enable = true;
+        return this;
+    }
+
+    public IDefineProvisioningMapCommandRequestBuilder Disable()
+    {
+        _enable = false;
+        return this;
+    }
+
+    public IDefineProvisioningMapCommandRequestBuilder UsingNames(string[] names)
+    {
+        _names = names;
+        return this;
+    }
+
+    public IDefineProvisioningMapCommandRequestBuilder UsingProvisioning(string provisioning)
+    {
+        _provisioning = provisioning;
         return this;
     }
 }

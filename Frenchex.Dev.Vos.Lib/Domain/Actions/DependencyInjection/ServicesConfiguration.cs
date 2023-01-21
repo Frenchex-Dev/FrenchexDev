@@ -33,7 +33,7 @@ public static class ServicesConfiguration
             .AddScoped<IConfigurationLoadAction, ConfigurationLoadAction>()
             .AddScoped<IConfigurationSaveAction, ConfigurationSaveAction>()
             .AddScoped<IDefaultGatewayResolverAction, DefaultGatewayResolverAction>()
-            .AddScoped<IVexNameToVagrantNameConverter, VexNameToVagrantNameConverter>()
+            .AddScoped<IVosNameToVagrantNameConverter, VosNameToVagrantNameConverter>()
             ;
 
         return serviceCollection;

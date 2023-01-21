@@ -15,7 +15,7 @@ using System.CommandLine;
 
 #endregion
 
-namespace Frenchex.Dev.Vos.Cli.Integration.Tests;
+namespace Frenchex.Dev.Vos.Cli.Integration.Tests.FullWorkflow1;
 
 public class SubjectUnderTest
 {

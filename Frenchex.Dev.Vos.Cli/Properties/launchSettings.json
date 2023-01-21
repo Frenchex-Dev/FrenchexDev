@@ -3,6 +3,9 @@
     "Frenchex.Dev.Vos.Cli": {
       "commandName": "Project",
       "commandLineArgs": "--help"
+    },
+    "Docker": {
+      "commandName": "Docker"
     }
   }
 }

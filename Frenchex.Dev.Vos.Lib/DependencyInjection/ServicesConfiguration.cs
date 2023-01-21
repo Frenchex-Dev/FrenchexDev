@@ -44,8 +44,8 @@ public class ServicesConfiguration : IServicesConfiguration
 
                     ServicesConfguration.ConfigureServices(serviceCollection);
 
-                    Domain.Actions.DependencyInjection.ServicesConfiguration.ConfigureServices(
-                        serviceCollection);
+                    Domain.Actions.DependencyInjection.ServicesConfiguration
+                        .ConfigureServices(serviceCollection);
 
                     Domain.Commands.Define.Machine.Add.DependecyInjection.ServicesConfiguration
                         .ConfigureServices(serviceCollection);
@@ -56,29 +56,32 @@ public class ServicesConfiguration : IServicesConfiguration
                     Domain.Commands.Define.Provisioning.Map.DependencyInjection.ServicesConfiguration
                         .ConfigureServices(serviceCollection);
 
-                    Domain.Commands.Destroy.DependencyInjection.ServicesConfiguration.ConfigureServices(
-                        serviceCollection);
+                    Domain.Commands.Provision.DependencyInjection.ServicesConfiguration
+                        .ConfigureServices(serviceCollection);
 
-                    Domain.Commands.Halt.DependencyInjection.ServicesConfiguration.ConfigureServices(
-                        serviceCollection);
+                    Domain.Commands.Destroy.DependencyInjection.ServicesConfiguration
+                        .ConfigureServices(serviceCollection);
 
-                    Domain.Commands.Init.DependencyInjection.ServicesConfiguration.ConfigureServices(
-                        serviceCollection);
+                    Domain.Commands.Halt.DependencyInjection.ServicesConfiguration
+                        .ConfigureServices(serviceCollection);
 
-                    Domain.Commands.Name.DependencyInjection.ServicesConfiguration.ConfigureServices(
-                        serviceCollection);
+                    Domain.Commands.Init.DependencyInjection.ServicesConfiguration
+                        .ConfigureServices(serviceCollection);
 
-                    Domain.Commands.Ssh.DependencyInjection.ServicesConfiguration.ConfigureServices(
-                        serviceCollection);
+                    Domain.Commands.Name.DependencyInjection.ServicesConfiguration
+                        .ConfigureServices(serviceCollection);
 
-                    Domain.Commands.SshConfig.DependencyInjection.ServicesConfiguration.ConfigureServices(
-                        serviceCollection);
+                    Domain.Commands.Ssh.DependencyInjection.ServicesConfiguration
+                        .ConfigureServices(serviceCollection);
 
-                    Domain.Commands.Status.DependencyInjection.ServicesConfiguration.ConfigureServices(
-                        serviceCollection);
+                    Domain.Commands.SshConfig.DependencyInjection.ServicesConfiguration
+                        .ConfigureServices(serviceCollection);
 
-                    Domain.Commands.Up.DependencyInjection.ServicesConfiguration.ConfigureServices(
-                        serviceCollection);
+                    Domain.Commands.Status.DependencyInjection.ServicesConfiguration
+                        .ConfigureServices(serviceCollection);
+
+                    Domain.Commands.Up.DependencyInjection.ServicesConfiguration.
+                        ConfigureServices(serviceCollection);
                 },
                 () =>
                 {
