@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -40,7 +38,7 @@ public class UpCommand : RootCommand, IUpCommand
 
     public IUpCommandResponse StartProcess(IUpCommandRequest request)
     {
-        var responseBuilder = _responseBuilderFactory.Build();
+        IUpCommandResponseBuilder? responseBuilder = _responseBuilderFactory.Build();
 
         BuildAndStartProcess(
             request,

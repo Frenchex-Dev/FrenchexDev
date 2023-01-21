@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -13,7 +11,6 @@
 
 using System.ComponentModel;
 using Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.ProcessBuilder;
-using Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib;
 using Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib.Domain;
 using Microsoft.Extensions.Logging;
 
@@ -100,8 +97,8 @@ public class Process : IProcess
         {
             if (!string.IsNullOrEmpty(_processBuildingParameters.TimeOut))
             {
-                TimeSpan? timeout = _timeSpanTooling.ConvertToTimeSpan(_processBuildingParameters.TimeOut);
-                var understood = timeout is not null;
+                var timeout = _timeSpanTooling.ConvertToTimeSpan(_processBuildingParameters.TimeOut);
+                bool understood = timeout is not null;
                 if (!understood) throw new ArgumentException(nameof(timeout));
 
                 _wrappedProcess.WaitForExit((int)timeout!.Value.TotalMilliseconds);
@@ -134,7 +131,7 @@ public class Process : IProcess
                 })
             ;
 
-        TimeSpan? timeoutDelayTs = _timeSpanTooling.ConvertToTimeSpan(_processBuildingParameters.TimeOut);
+        var timeoutDelayTs = _timeSpanTooling.ConvertToTimeSpan(_processBuildingParameters.TimeOut);
 
         var listWaitForAny = new List<Task> { Result.WaitForCompleteExit };
 

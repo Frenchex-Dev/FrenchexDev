@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -50,13 +48,13 @@ public class SshConfigCommandIntegration : ABaseCommandIntegration, ISshConfigCo
 
     public void IntegrateInto(Command parentCommand)
     {
-        Argument<string[]>? namesOrIdsOpt = _namesArgumentBuilder.Build();
-        Option<string>? workingDirOpt = WorkingDirectoryOptionBuilder.Build();
-        Option<string>? timeOutMsOpt = TimeoutStrOptionBuilder.Build();
-        Option<bool> color = new(new[] { "--color" }, "Color");
-        Option<string>? vagrantBinPathOpt = VagrantBinPathOptionBuilder.Build();
-        Option<string>? extraSshArgsOpt = _extraSshArgsOptionBuilder.Build();
-        Option<bool>? plain = _plainTextOptionBuilder.Build();
+        var namesOrIdsOpt = _namesArgumentBuilder.Build();
+        var workingDirOpt = WorkingDirectoryOptionBuilder.Build();
+        var timeOutMsOpt = TimeoutStrOptionBuilder.Build();
+        var color = new Option<bool>(new[] { "--color" }, "Color");
+        var vagrantBinPathOpt = VagrantBinPathOptionBuilder.Build();
+        var extraSshArgsOpt = _extraSshArgsOptionBuilder.Build();
+        var plain = _plainTextOptionBuilder.Build();
 
         var command = new Command("ssh-config", "Runs Vagrant ssh-config")
         {
@@ -81,7 +79,7 @@ public class SshConfigCommandIntegration : ABaseCommandIntegration, ISshConfigCo
 
         command.SetHandler(async context =>
         {
-            var payload = binder.GetBoundValue(context);
+            SshConfigCommandIntegrationPayload? payload = binder.GetBoundValue(context);
 
             await _command
                     .ExecuteAsync(_requestBuilderFactory.Factory()

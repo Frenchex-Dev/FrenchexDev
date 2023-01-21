@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -24,7 +22,7 @@ public class SshConfigCommandResponseBuilder : RootResponseBuilder, ISshConfigCo
 
     public ISshConfigCommandResponse Build()
     {
-        return new SshConfigCommandResponse()
+        return new SshConfigCommandResponse
         {
             Content = _content
         };

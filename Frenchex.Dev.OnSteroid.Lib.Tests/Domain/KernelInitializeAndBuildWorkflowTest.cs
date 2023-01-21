@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -62,7 +60,7 @@ public class KernelInitializeAndBuildWorkflowTest : AbstractUnitTest
                 {
                     if (context.Kernel is null) throw new InvalidProgramException();
 
-                    var servedScoped = context.Kernel.AsyncScopes[defaultScopeName];
+                    AsyncServiceScope servedScoped = context.Kernel.AsyncScopes[defaultScopeName];
                     Assert.AreEqual(context.DefaultScope, servedScoped, "Same scope");
                 });
             },

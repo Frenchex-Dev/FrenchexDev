@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -22,9 +20,9 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Provision.Request;
 
 public class ProvisionCommandRequestBuilder : RootCommandRequestBuilder, IProvisionCommandRequestBuilder
 {
+    private bool? _enabled;
     private string[]? _names;
     private string[]? _provisionWith;
-    private bool? _enabled;
 
     public ProvisionCommandRequestBuilder(IBaseRequestBuilderFactory baseRequestBuilderFactory) : base(
         baseRequestBuilderFactory)
@@ -34,7 +32,7 @@ public class ProvisionCommandRequestBuilder : RootCommandRequestBuilder, IProvis
     public IProvisionCommandRequest Build()
     {
         return new ProvisionCommandRequest(
-            namesOrIds: _names ?? Array.Empty<string>(),
+            _names ?? Array.Empty<string>(),
             provisionWith: _provisionWith ?? Array.Empty<string>(),
             provision: _enabled ?? true,
             destroyOnError: false,

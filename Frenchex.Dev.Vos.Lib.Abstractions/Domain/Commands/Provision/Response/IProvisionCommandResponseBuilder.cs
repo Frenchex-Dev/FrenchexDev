@@ -4,15 +4,12 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
 #region
 
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root.Response;
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Response;
 
 #endregion
 

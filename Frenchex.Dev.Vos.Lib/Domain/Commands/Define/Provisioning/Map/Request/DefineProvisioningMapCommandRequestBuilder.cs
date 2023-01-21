@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -20,13 +18,13 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Provisioning.Map.Request;
 
 public class DefineProvisioningMapCommandRequestBuilder : IDefineProvisioningMapCommandRequestBuilder
 {
-    private IDictionary<string, string>? _env;
-    private string[]? _names;
-    private string? _version;
     private bool _enable;
-    private string? _provisioning;
-    private bool _privileged;
+    private IDictionary<string, string>? _env;
     private bool _machineType;
+    private string[]? _names;
+    private bool _privileged;
+    private string? _provisioning;
+    private string? _version;
 
     public DefineProvisioningMapCommandRequestBuilder(
         IBaseRequestBuilderFactory baseBuilderFactory
@@ -37,44 +35,30 @@ public class DefineProvisioningMapCommandRequestBuilder : IDefineProvisioningMap
 
     public IBaseRequestBuilder BaseBuilder { get; }
 
-    public IDefineProvisioningMapCommandRequestBuilder Unprivileged()
+
+    public IDefineProvisioningMapCommandRequestBuilder Machine(bool? machine)
     {
-        _privileged = false;
+        _machineType = !machine ?? false;
         return this;
     }
 
-    public IDefineProvisioningMapCommandRequestBuilder Machine()
+    public IDefineProvisioningMapCommandRequestBuilder MachineType(bool? machineType)
     {
-        _machineType = false;
-        return this;
-    }
-
-    public IDefineProvisioningMapCommandRequestBuilder MachineType()
-    {
-        _machineType = true;
+        _machineType = machineType ?? true;
         return this;
     }
 
     public IDefineProvisioningMapCommandRequest Build()
     {
-        if (null == _names)
-        {
-            throw new ArgumentNullException(nameof(_names));
-        }
+        if (null == _names) throw new ArgumentNullException(nameof(_names));
 
-        if (string.IsNullOrEmpty(_provisioning))
-        {
-            throw new ArgumentNullException(nameof(_provisioning));
-        }
+        if (string.IsNullOrEmpty(_provisioning)) throw new ArgumentNullException(nameof(_provisioning));
 
-        if (string.IsNullOrEmpty(_version))
-        {
-            throw new ArgumentNullException(nameof(_version));
-        }
+        if (string.IsNullOrEmpty(_version)) throw new ArgumentNullException(nameof(_version));
 
         return new DefineProvisioningMapCommandCommandRequest(
-            baseCommandRequest: BaseBuilder.Build(),
-            names: _names,
+            BaseBuilder.Build(),
+            _names,
             env: _env,
             provisioning: _provisioning,
             enable: _enable,
@@ -91,9 +75,9 @@ public class DefineProvisioningMapCommandRequestBuilder : IDefineProvisioningMap
         return this;
     }
 
-    public IDefineProvisioningMapCommandRequestBuilder Privileged()
+    public IDefineProvisioningMapCommandRequestBuilder Privileged(bool? privileged = true)
     {
-        _privileged = true;
+        _privileged = privileged ?? true;
         return this;
     }
 
@@ -103,15 +87,9 @@ public class DefineProvisioningMapCommandRequestBuilder : IDefineProvisioningMap
         return this;
     }
 
-    public IDefineProvisioningMapCommandRequestBuilder Enable()
+    public IDefineProvisioningMapCommandRequestBuilder Enabled(bool? enabled = true)
     {
-        _enable = true;
-        return this;
-    }
-
-    public IDefineProvisioningMapCommandRequestBuilder Disable()
-    {
-        _enable = false;
+        _enable = enabled ?? true;
         return this;
     }
 

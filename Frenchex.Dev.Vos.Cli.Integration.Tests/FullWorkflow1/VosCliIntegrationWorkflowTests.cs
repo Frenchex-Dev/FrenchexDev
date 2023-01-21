@@ -4,16 +4,14 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
 #region
 
+using System.CommandLine;
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Tests.Abstractions.Domain;
-using System.CommandLine;
 using static System.Threading.Tasks.Task;
 
 #endregion
@@ -33,8 +31,9 @@ public class VosCliIntegrationWorkflowTests : IntegrationWorkflowUnitTestForVirt
     [DynamicData(nameof(Test_Data_MultipleRuns), DynamicDataSourceType.Method)]
     public async Task TestExecutions_MultipleRuns(string testCaseName, Payload payload)
     {
-        List<Task>? tasks =
-            await CreateRunInternal(testCaseName, payload, InternalRunExecution, new UnitTest.VsCodeDebugging(), VosCliIntegrationUnitTestBase.CreateUnitTest<ExecutionContext, SubjectUnderTest>());
+        var tasks =
+            await CreateRunInternal(testCaseName, payload, InternalRunExecution, new UnitTest.VsCodeDebugging(),
+                VosCliIntegrationUnitTestBase.CreateUnitTest<ExecutionContext, SubjectUnderTest>());
 
         await WhenAll(tasks);
     }
@@ -43,7 +42,8 @@ public class VosCliIntegrationWorkflowTests : IntegrationWorkflowUnitTestForVirt
     [DynamicData(nameof(Test_Data_MultipleRuns), DynamicDataSourceType.Method)]
     public async Task TestArgumentsParsing_MultipleRuns(string testCaseName, Payload payload)
     {
-        List<Task>? tasks = await CreateRunInternal(testCaseName, payload, InternalRunParsing, new UnitTest.VsCodeDebugging(), VosCliIntegrationUnitTestBase.CreateUnitTest<ExecutionContext, SubjectUnderTest>());
+        var tasks = await CreateRunInternal(testCaseName, payload, InternalRunParsing, new UnitTest.VsCodeDebugging(),
+            VosCliIntegrationUnitTestBase.CreateUnitTest<ExecutionContext, SubjectUnderTest>());
 
         await WhenAll(tasks);
     }
@@ -57,8 +57,9 @@ public class VosCliIntegrationWorkflowTests : IntegrationWorkflowUnitTestForVirt
     [DynamicData(nameof(Test_Data_SingleRun), DynamicDataSourceType.Method)]
     public async Task TestExecutions_SingleRun(string testCaseName, Payload payload)
     {
-        List<Task>? tasks =
-            await CreateRunInternal(testCaseName, payload, InternalRunExecution, new UnitTest.VsCodeDebugging(), VosCliIntegrationUnitTestBase.CreateUnitTest<ExecutionContext, SubjectUnderTest>());
+        var tasks =
+            await CreateRunInternal(testCaseName, payload, InternalRunExecution, new UnitTest.VsCodeDebugging(),
+                VosCliIntegrationUnitTestBase.CreateUnitTest<ExecutionContext, SubjectUnderTest>());
 
         await WhenAll(tasks);
     }
@@ -67,7 +68,8 @@ public class VosCliIntegrationWorkflowTests : IntegrationWorkflowUnitTestForVirt
     [DynamicData(nameof(Test_Data_SingleRun), DynamicDataSourceType.Method)]
     public async Task TestArgumentsParsing_SingleRun(string testCaseName, Payload payload)
     {
-        List<Task>? tasks = await CreateRunInternal(testCaseName, payload, InternalRunParsing, new UnitTest.VsCodeDebugging(), VosCliIntegrationUnitTestBase.CreateUnitTest<ExecutionContext, SubjectUnderTest>());
+        var tasks = await CreateRunInternal(testCaseName, payload, InternalRunParsing, new UnitTest.VsCodeDebugging(),
+            VosCliIntegrationUnitTestBase.CreateUnitTest<ExecutionContext, SubjectUnderTest>());
 
         await WhenAll(tasks);
     }
@@ -83,20 +85,20 @@ public class VosCliIntegrationWorkflowTests : IntegrationWorkflowUnitTestForVirt
         unitTest.BuildIfNecessary();
         await SetupUnitTest(unitTest, vsCodeDebugging);
 
-        var numberOfWorkingDirectories = payload.ListOfListOfCommands!.Count;
+        int numberOfWorkingDirectories = payload.ListOfListOfCommands!.Count;
 
-        List<string> workingDirectories = new(numberOfWorkingDirectories);
+        var workingDirectories = new List<string>(numberOfWorkingDirectories);
 
-        foreach (List<InputCommand>? num in payload.ListOfListOfCommands)
+        foreach (var num in payload.ListOfListOfCommands)
             workingDirectories.Add(Path.Join(Path.GetTempPath(), Path.GetRandomFileName()));
 
-        List<Task> tasks = new();
+        var tasks = new List<Task>();
 
         var i = 0;
 
-        foreach (List<InputCommand>? run in payload.ListOfListOfCommands)
+        foreach (var run in payload.ListOfListOfCommands)
         {
-            var commandsRun = func.Invoke(run.ToArray(), workingDirectories[i++], vsCodeDebugging, unitTest);
+            Task? commandsRun = func.Invoke(run.ToArray(), workingDirectories[i++], vsCodeDebugging, unitTest);
             tasks.Add(commandsRun);
         }
 
@@ -117,7 +119,7 @@ public class VosCliIntegrationWorkflowTests : IntegrationWorkflowUnitTestForVirt
             commands,
             async (command, rootCommand) =>
             {
-                var parsed = await rootCommand.InvokeAsync(command);
+                int parsed = await rootCommand.InvokeAsync(command);
 
                 Assert.AreEqual(0, parsed);
             },

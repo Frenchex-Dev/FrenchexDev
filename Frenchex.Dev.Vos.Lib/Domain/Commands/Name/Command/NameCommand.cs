@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -16,6 +14,7 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Naming;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Name.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Name.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Name.Response;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Configuration;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Command;
 
 #endregion
@@ -37,7 +36,7 @@ public class NameCommand : RootCommand, INameCommand
 
     public async Task<INameCommandResponse> ExecuteAsync(INameCommandRequest request)
     {
-        var config = await ConfigurationLoad(request.BaseCommand.WorkingDirectory);
+        Configuration? config = await ConfigurationLoad(request.BaseCommand.WorkingDirectory);
 
         return _responseBuilderFactory
             .Factory()

@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -47,30 +45,31 @@ public class DestroyCommand : RootCommand, IDestroyCommand
 
     public async Task<IDestroyCommandResponse> ExecuteAsync(IDestroyCommandRequest request)
     {
-        var process = _vagrantDestroyCommand.StartProcess(_vagrantDestroyCommandRequestBuilderFactory.Factory()
-            .BaseBuilder
-            .UsingWorkingDirectory(request.BaseCommand.WorkingDirectory)
-            .UsingTimeout(request.DestroyTimeout)
-            .Parent<IDestroyCommandRequestBuilder>()
-            .UsingName(
-                !string.IsNullOrEmpty(request.Name)
-                    ? MapNamesToVagrantNames(
-                        new[] { request.Name },
-                        request.BaseCommand.WorkingDirectory,
-                        await ConfigurationLoad(request.BaseCommand.WorkingDirectory)
-                    )[0]
-                    : ""
-            )
-            .WithForce(true)
-            .Build()
-        );
+        Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Response.IDestroyCommandResponse? process =
+            _vagrantDestroyCommand.StartProcess(_vagrantDestroyCommandRequestBuilderFactory.Factory()
+                .BaseBuilder
+                .UsingWorkingDirectory(request.BaseCommand.WorkingDirectory)
+                .UsingTimeout(request.DestroyTimeout)
+                .Parent<IDestroyCommandRequestBuilder>()
+                .UsingName(
+                    !string.IsNullOrEmpty(request.Name)
+                        ? MapNamesToVagrantNames(
+                            new[] { request.Name },
+                            request.BaseCommand.WorkingDirectory,
+                            await ConfigurationLoad(request.BaseCommand.WorkingDirectory)
+                        )[0]
+                        : ""
+                )
+                .WithForce(true)
+                .Build()
+            );
 
         if (null == process.ProcessExecutionResult.WaitForCompleteExit)
             throw new InvalidOperationException("waitforcompleteexit is null");
 
         await process.ProcessExecutionResult.WaitForCompleteExit;
 
-        var responseBuilder = _responseBuilderFactory.Build();
+        IDestroyCommandResponseBuilder? responseBuilder = _responseBuilderFactory.Build();
 
         return responseBuilder.Build();
     }

@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -74,21 +72,21 @@ public class DefineMachineAddCommandIntegration : ABaseCommandIntegration, IDefi
 
     public void Integrate(Command rootCommand)
     {
-        Argument<string>? nameArg = _nameArgumentBuilder.Build();
-        Argument<string>? typeArg = _machineTypeNameArgumentBuilder.Build();
-        Argument<int>? instancesArg = _instancesArgumentBuilder.Build();
-        Option<string>? namingPatternOpt = _namingPatternOptionBuilder.Build();
+        var nameArg = _nameArgumentBuilder.Build();
+        var typeArg = _machineTypeNameArgumentBuilder.Build();
+        var instancesArg = _instancesArgumentBuilder.Build();
+        var namingPatternOpt = _namingPatternOptionBuilder.Build();
 
-        Option<bool>? isPrimaryOpt = _primaryOptionBuilder.Build();
-        Option<bool>? isEnabledOpt = _enabledOptionBuilder.Build();
-        Option<int>? vCpusOpt = _virtualCpusOptionBuilder.Build();
-        Option<int>? ramMbOpt = _ramMbOptionBuilder.Build();
-        Option<string>? ipv4PatternOpt = _ipv4PatternOptionBuilder.Build();
-        Option<int>? ipv4StartOpt = _ipv4StartOptionBuilder.Build();
-        Option<string>? networkBridgeOpt = _networkBridgeOptionBuilder.Build();
-        Option<string>? timeoutStrOpt = TimeoutStrOptionBuilder?.Build();
-        Option<string>? workingDirOpt = WorkingDirectoryOptionBuilder?.Build();
-        Option<string>? vagrantBinPath = VagrantBinPathOptionBuilder?.Build();
+        var isPrimaryOpt = _primaryOptionBuilder.Build();
+        var isEnabledOpt = _enabledOptionBuilder.Build();
+        var vCpusOpt = _virtualCpusOptionBuilder.Build();
+        var ramMbOpt = _ramMbOptionBuilder.Build();
+        var ipv4PatternOpt = _ipv4PatternOptionBuilder.Build();
+        var ipv4StartOpt = _ipv4StartOptionBuilder.Build();
+        var networkBridgeOpt = _networkBridgeOptionBuilder.Build();
+        var timeoutStrOpt = TimeoutStrOptionBuilder?.Build();
+        var workingDirOpt = WorkingDirectoryOptionBuilder?.Build();
+        var vagrantBinPath = VagrantBinPathOptionBuilder?.Build();
 
         var command = new Command("add", "Add a new Machine")
         {
@@ -127,13 +125,13 @@ public class DefineMachineAddCommandIntegration : ABaseCommandIntegration, IDefi
 
         command.SetHandler(async context =>
         {
-            var requestBuilder = _requestBuilderFactory.Factory();
+            IDefineMachineAddCommandRequestBuilder? requestBuilder = _requestBuilderFactory.Factory();
 
-            var payload = binder.GetBoundValue(context);
+            DefineMachineAddCommandIntegrationPayload? payload = binder.GetBoundValue(context);
 
             BuildBase(requestBuilder, payload);
 
-            var request = requestBuilder
+            IDefineMachineAddCommandRequest? request = requestBuilder
                 .UsingDefinition(new MachineDefinitionDeclaration
                 {
                     Name = payload.Name,

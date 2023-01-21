@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -17,6 +15,7 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Naming;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Response;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Configuration;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Command;
 
 #endregion
@@ -44,17 +43,12 @@ public class DefineMachineAddCommand : RootCommand, IDefineMachineAddCommand
         if (null == request.DefinitionDeclaration.Name)
             throw new InvalidOperationException("request or definitionDeclaration or name is null");
 
-        if (null == request.BaseCommand)
-        {
-            throw new ArgumentNullException(nameof(request.BaseCommand));
-        }
+        if (null == request.BaseCommand) throw new ArgumentNullException(nameof(request.BaseCommand));
 
         if (string.IsNullOrEmpty(request.BaseCommand.WorkingDirectory))
-        {
             throw new ArgumentNullException(nameof(request.BaseCommand.WorkingDirectory));
-        }
 
-        var config = await ConfigurationLoadAction.Load(request.BaseCommand.WorkingDirectory);
+        Configuration? config = await ConfigurationLoadAction.Load(request.BaseCommand.WorkingDirectory);
 
         config.Machines.Add(request.DefinitionDeclaration.Name, request.DefinitionDeclaration);
 

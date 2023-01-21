@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -40,7 +38,7 @@ public class InitCommand : RootCommand, IInitCommand
 
     public IInitCommandResponse StartProcess(IInitCommandRequest request)
     {
-        var responseBuilder = _responseBuilderFactory.Build();
+        IInitCommandResponseBuilder? responseBuilder = _responseBuilderFactory.Build();
 
         if (!Filesystem.DirectoryExists(request.Base.WorkingDirectory!))
             Filesystem.DirectoryCreate(request.Base.WorkingDirectory!);

@@ -4,18 +4,17 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
 #region
 
+using System.CommandLine;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.Map.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.Map.Request;
-using System.CommandLine;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.Map.Response;
 
 #endregion
 
@@ -24,11 +23,12 @@ namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Define.Provisioning.M
 public class DefineProvisioningMapCommandIntegration : ABaseCommandIntegration, IDefineProvisioningMapCommandIntegration
 {
     private readonly IDefineProvisioningMapCommand _command;
-    private readonly IDefineProvisioningMapCommandRequestBuilderFactory _requestBuilderFactory;
-    private readonly INameArgumentBuilder _nameArgumentBuilder;
-    private readonly IProvisionNameArgumentBuilder _provisionNameArgumentBuilder;
     private readonly IEnabledOptionBuilder _enabledOptionBuilder;
     private readonly IMachineTypeOptionBuilder _machineTypeOptionBuilder;
+    private readonly INameArgumentBuilder _nameArgumentBuilder;
+    private readonly IPrivilegedOptionBuilder _privilegedOptionBuilder;
+    private readonly IProvisionNameArgumentBuilder _provisionNameArgumentBuilder;
+    private readonly IDefineProvisioningMapCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly IVersionArgumentBuilder _versionArgumentBuilder;
 
     public DefineProvisioningMapCommandIntegration(
@@ -36,6 +36,7 @@ public class DefineProvisioningMapCommandIntegration : ABaseCommandIntegration, 
         IDefineProvisioningMapCommandRequestBuilderFactory requestBuilderFactory,
         INameArgumentBuilder nameArgumentBuilder,
         IProvisionNameArgumentBuilder provisionNameArgumentBuilder,
+        IPrivilegedOptionBuilder privilegedOptionBuilder,
         IEnabledOptionBuilder enabledOptionBuilder,
         IMachineTypeOptionBuilder machineTypeOptionBuilder,
         IVersionArgumentBuilder versionArgumentBuilder,
@@ -48,6 +49,7 @@ public class DefineProvisioningMapCommandIntegration : ABaseCommandIntegration, 
         _requestBuilderFactory = requestBuilderFactory;
         _nameArgumentBuilder = nameArgumentBuilder;
         _provisionNameArgumentBuilder = provisionNameArgumentBuilder;
+        _privilegedOptionBuilder = privilegedOptionBuilder;
         _enabledOptionBuilder = enabledOptionBuilder;
         _machineTypeOptionBuilder = machineTypeOptionBuilder;
         _versionArgumentBuilder = versionArgumentBuilder;
@@ -55,19 +57,21 @@ public class DefineProvisioningMapCommandIntegration : ABaseCommandIntegration, 
 
     public void Integrate(Command rootCommand)
     {
-        Argument<string> nameArg = _nameArgumentBuilder.Build();
-        Argument<string> provisionNameArg = _provisionNameArgumentBuilder.Build();
-        Argument<string> versionArg = _versionArgumentBuilder.Build();
-        Option<bool> isEnabledOpt = _enabledOptionBuilder.Build();
-        Option<bool> machineType = _machineTypeOptionBuilder.Build();
-        Option<string>? timeoutStrOpt = TimeoutStrOptionBuilder.Build();
-        Option<string>? workingDirOpt = WorkingDirectoryOptionBuilder.Build();
+        var nameArg = _nameArgumentBuilder.Build();
+        var provisionNameArg = _provisionNameArgumentBuilder.Build();
+        var versionArg = _versionArgumentBuilder.Build();
+        var privilegedOpt = _privilegedOptionBuilder.Build();
+        var isEnabledOpt = _enabledOptionBuilder.Build();
+        var machineType = _machineTypeOptionBuilder.Build();
+        var timeoutStrOpt = TimeoutStrOptionBuilder.Build();
+        var workingDirOpt = WorkingDirectoryOptionBuilder.Build();
 
         var command = new Command("map", "Map Provisioning")
         {
             nameArg,
             provisionNameArg,
             versionArg,
+            privilegedOpt,
             isEnabledOpt,
             machineType,
             timeoutStrOpt,
@@ -78,6 +82,7 @@ public class DefineProvisioningMapCommandIntegration : ABaseCommandIntegration, 
             nameArg,
             provisionNameArg,
             versionArg,
+            privilegedOpt,
             isEnabledOpt,
             machineType,
             timeoutStrOpt,
@@ -86,9 +91,9 @@ public class DefineProvisioningMapCommandIntegration : ABaseCommandIntegration, 
 
         command.SetHandler(async context =>
         {
-            var payload = binder.GetBoundValue(context);
+            DefineProvisioningMapCommandIntegrationPayload? payload = binder.GetBoundValue(context);
 
-            var requestBuilder = _requestBuilderFactory.Factory();
+            IDefineProvisioningMapCommandRequestBuilder? requestBuilder = _requestBuilderFactory.Factory();
 
             BuildBase(requestBuilder, payload);
 
@@ -96,29 +101,15 @@ public class DefineProvisioningMapCommandIntegration : ABaseCommandIntegration, 
                 .UsingProvisioning(payload.Provision)
                 .Version(payload.Version)
                 .UsingNames(new[] { payload.MachineName })
+                .Privileged(payload.Privileged)
                 ;
 
-            if (payload.MachineType.HasValue && payload.MachineType.Value)
-            {
-                requestBuilder.MachineType();
-            }
-            else
-            {
-                requestBuilder.Machine();
-            }
+            requestBuilder.MachineType(payload.MachineType.HasValue && payload.MachineType.Value);
 
-            if (payload.Enable)
-            {
-                requestBuilder.Enable();
-            }
-            else
-            {
-                requestBuilder.Disable();
-            }
+            requestBuilder.Enabled(payload.Enable);
+            IDefineProvisioningMapCommandRequest? request = requestBuilder.Build();
 
-            var request = requestBuilder.Build();
-
-            var response = await _command.ExecuteAsync(request);
+            IDefineProvisioningMapCommandResponse? response = await _command.ExecuteAsync(request);
         });
 
         rootCommand.AddCommand(command);

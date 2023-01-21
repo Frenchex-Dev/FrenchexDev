@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -16,9 +14,7 @@ using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Provision.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Provision.Request;
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Command;
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Request;
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Provision.Response;
 
 #endregion
 
@@ -27,8 +23,8 @@ namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Provision;
 public class ProvisionCommandIntegration : ABaseCommandIntegration, IProvisionCommandIntegration
 {
     private readonly IProvisionCommand _command;
-    private readonly IProvisionCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly INamesArgumentBuilder _namesArgumentBuilder;
+    private readonly IProvisionCommandRequestBuilderFactory _requestBuilderFactory;
 
     public ProvisionCommandIntegration(
         IProvisionCommand command,
@@ -46,12 +42,12 @@ public class ProvisionCommandIntegration : ABaseCommandIntegration, IProvisionCo
 
     public void IntegrateInto(Command parentCommand)
     {
-        Argument<string[]>? namesArg = _namesArgumentBuilder.Build();
-        Option<string[]> provisionWithOpt = new(new[] { "--provision-with" }, "Provision with");
+        var namesArg = _namesArgumentBuilder.Build();
+        var provisionWithOpt = new Option<string[]>(new[] { "--provision-with" }, "Provision with");
 
-        Option<string>? timeout = TimeoutStrOptionBuilder.Build();
-        Option<string>? workingDirOpt = WorkingDirectoryOptionBuilder.Build();
-        Option<string>? vagrantBinPath = VagrantBinPathOptionBuilder.Build();
+        var timeout = TimeoutStrOptionBuilder.Build();
+        var workingDirOpt = WorkingDirectoryOptionBuilder.Build();
+        var vagrantBinPath = VagrantBinPathOptionBuilder.Build();
 
         var command = new Command("provision", "Runs Vagrant provision")
         {
@@ -72,12 +68,12 @@ public class ProvisionCommandIntegration : ABaseCommandIntegration, IProvisionCo
 
         command.SetHandler(async context =>
         {
-            var payload = binder.GetBoundValue(context);
-            var requestBuilder = _requestBuilderFactory.Factory();
+            ProvisionCommandIntegrationPayload payload = binder.GetBoundValue(context);
+            IProvisionCommandRequestBuilder requestBuilder = _requestBuilderFactory.Factory();
 
             BuildBase(requestBuilder, payload);
 
-            var response = await _command
+            IProvisionCommandResponse response = await _command
                     .ExecuteAsync(requestBuilder
                         .UsingNames(payload.Names!.ToArray())
                         .UsingProvisionWith(payload.ProvisionWith!)

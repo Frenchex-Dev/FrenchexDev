@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -43,9 +41,6 @@ public class Integration : IIntegration
 
     private void IntegrateInternal(Command parentCommand)
     {
-        foreach (var vexCommand in _vexCommands)
-        {
-            vexCommand.IntegrateInto(parentCommand);
-        }
+        foreach (IVosCommandIntegration? vexCommand in _vexCommands) vexCommand.IntegrateInto(parentCommand);
     }
 }

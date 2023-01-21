@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -40,7 +38,7 @@ public class DestroyCommand : RootCommand, IDestroyCommand
 
     public IDestroyCommandResponse StartProcess(IDestroyCommandRequest request)
     {
-        var responseBuilder = _responseBuilderFactory.Build();
+        IDestroyCommandResponseBuilder? responseBuilder = _responseBuilderFactory.Build();
 
         BuildAndStartProcess(
             request,

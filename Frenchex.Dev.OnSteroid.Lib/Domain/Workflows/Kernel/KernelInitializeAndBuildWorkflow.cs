@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -36,7 +34,7 @@ public class KernelInitializeAndBuildWorkflow : IKernelInitializeAndBuildWorkflo
     )
     {
         _cachedKernelBuilderBuildingContext ??= await FactoryContext(serviceCollection, kernelConfiguration);
-        var kernel = _cachedKernelBuilderBuildingContext.Build();
+        IKernel? kernel = _cachedKernelBuilderBuildingContext.Build();
 
         return kernel;
     }
@@ -46,7 +44,8 @@ public class KernelInitializeAndBuildWorkflow : IKernelInitializeAndBuildWorkflo
         IKernerlConfiguration kernelConfiguration
     )
     {
-        var built = _kernelBuilderBuildingContextFactory.Factory(serviceCollection, kernelConfiguration);
+        IKernelBuilderBuildingContext? built =
+            _kernelBuilderBuildingContextFactory.Factory(serviceCollection, kernelConfiguration);
         return Task.FromResult(built);
     }
 

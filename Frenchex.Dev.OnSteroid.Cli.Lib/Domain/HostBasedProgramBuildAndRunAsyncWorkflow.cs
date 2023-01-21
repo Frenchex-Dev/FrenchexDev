@@ -4,18 +4,18 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
 #region
 
+using Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions.Domain;
 using Frenchex.Dev.Dotnet.Core.Cli.Lib.Domain;
 using Frenchex.Dev.OnSteroid.Cli.Lib.Domain.Program;
-using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using IServicesConfiguration =
+    Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.DependencyInjection.IServicesConfiguration;
 
 #endregion
 
@@ -30,7 +30,7 @@ public static class HostBasedProgramBuildAndRunAsyncWorkflow
         Context context
     ) where T : class, IHostedService
     {
-        await using var program = await programBuilder
+        await using IProgram? program = await programBuilder
             .BuildAsync<T>(
                 serviceCollection,
                 serviceCollection => { servicesConfiguration.ConfigureServices(serviceCollection); },

@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -49,20 +47,19 @@ public class StatusCommand : RootCommand, IStatusCommand
 
     public async Task<IStatusCommandResponse> ExecuteAsync(IStatusCommandRequest request)
     {
-        var process = _vagrantStatusCommand.StartProcess(
-            _vagrantStatusCommandRequestBuilderFactory.Factory()
-                .BaseBuilder
-                .UsingWorkingDirectory(request.BaseCommand.WorkingDirectory)
-                .Parent<IStatusCommandRequestBuilder>()
-                .WithNamesOrIds(MapNamesToVagrantNames(
-                        request.Names,
-                        request.BaseCommand.WorkingDirectory,
-                        await ConfigurationLoad(request.BaseCommand.WorkingDirectory)
+        Vagrant.Lib.Abstractions.Domain.Commands.Status.Response.IStatusCommandResponse? process =
+            _vagrantStatusCommand.StartProcess(
+                _vagrantStatusCommandRequestBuilderFactory.Factory()
+                    .BaseBuilder
+                    .UsingWorkingDirectory(request.BaseCommand.WorkingDirectory)
+                    .Parent<IStatusCommandRequestBuilder>()
+                    .WithNamesOrIds(MapNamesToVagrantNames(
+                            request.Names,
+                            request.BaseCommand.WorkingDirectory,
+                            await ConfigurationLoad(request.BaseCommand.WorkingDirectory)
+                        )
                     )
-                )
-                .Build()
-        );
-
+                    .Build());
 
         if (null == process.ProcessExecutionResult.WaitForCompleteExit
             || null == process.ProcessExecutionResult.OutputStream
@@ -74,7 +71,7 @@ public class StatusCommand : RootCommand, IStatusCommand
         process.ProcessExecutionResult.OutputStream.Position = 0;
         var reader = new StreamReader(process.ProcessExecutionResult.OutputStream);
 
-        List<string>? statusesOutput = (await reader.ReadToEndAsync())
+        var statusesOutput = (await reader.ReadToEndAsync())
             .Split("\r\n")
             .Skip(2) // vagrant header
             .Reverse()
@@ -83,22 +80,23 @@ public class StatusCommand : RootCommand, IStatusCommand
             .Where(x => !string.IsNullOrEmpty(x)) // only not empty lines
             .ToList();
 
-        Dictionary<string, (string, VagrantMachineStatusEnum)> statuses = new();
+        var statuses =
+            new Dictionary<string, (string, VagrantMachineStatusEnum)>();
 
-        foreach (var item in statusesOutput)
+        foreach (string? item in statusesOutput)
         {
-            List<string>? statusLineSplit = item
+            var statusLineSplit = item
                 .Split(" ")
                 .ToList();
 
-            var machine = statusLineSplit
+            string? machine = statusLineSplit
                 .First()
                 .Trim();
 
-            var statusString = (statusLineSplit[^3] + " " + statusLineSplit[^2].Trim())
+            string? statusString = (statusLineSplit[^3] + " " + statusLineSplit[^2].Trim())
                 .Trim();
 
-            var providerString = statusLineSplit[^1]
+            string? providerString = statusLineSplit[^1]
                 .Replace("(", "")
                 .Replace(")", "")
                 .Trim();

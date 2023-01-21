@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -35,10 +33,7 @@ public abstract class RootCommand
 
     protected async Task<Configuration> ConfigurationLoad(string? path)
     {
-        if (string.IsNullOrEmpty(path))
-        {
-            throw new ArgumentNullException(nameof(path));
-        }
+        if (string.IsNullOrEmpty(path)) throw new ArgumentNullException(nameof(path));
 
         return await ConfigurationLoadAction.Load(path);
     }

@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -14,6 +12,7 @@
 using Frenchex.Dev.Dotnet.Core.Cli.Lib.Abstractions.Domain;
 using Frenchex.Dev.OnSteroid.Cli.Lib.DependencyInjection;
 using Frenchex.Dev.OnSteroid.Cli.Lib.Domain.Kernel;
+using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.Kernel;
 using Frenchex.Dev.OnSteroid.Lib.Domain.Kernel;
 using Frenchex.Dev.OnSteroid.Lib.Domain.Workflows.Kernel;
 using Frenchex.Dev.OnSteroid.Lib.Kernel;
@@ -40,20 +39,20 @@ public class ProgramBuilder : IProgramBuilder
                 new KernelInitializeAndBuildWorkflow(
                     new KernelBuilderBuildingContextFactory()));
 
-        await using var vosKernel = await vosKernelBuilderFlow.Build(serviceCollection);
-        await using var vosAsyncScope = vosKernel.GetOrCreateAsyncScope();
+        await using IKernel? vosKernel = await vosKernelBuilderFlow.Build(serviceCollection);
+        await using AsyncServiceScope vosAsyncScope = vosKernel.GetOrCreateAsyncScope();
 
         var onSteroidCliServicesConfiguration = new ServicesConfiguration();
         var kernelInitializeAndBuildFlow =
             vosAsyncScope.ServiceProvider.GetRequiredService<IKernelInitializeAndBuildFlow>();
 
-        await using var kernel =
+        await using IKernel? kernel =
             await kernelInitializeAndBuildFlow.FlowAsync(serviceCollection, onSteroidCliServicesConfiguration);
 
-        await using var scope = kernel.GetOrCreateAsyncScope();
+        await using AsyncServiceScope scope = kernel.GetOrCreateAsyncScope();
         var programBuilder = scope.ServiceProvider.GetRequiredService<IHostBasedProgramBuilder>();
 
-        var program = await BuildProgram(
+        IProgram? program = await BuildProgram(
             programBuilder,
             onSteroidCliServicesConfiguration,
             context,
@@ -86,7 +85,7 @@ public class ProgramBuilder : IProgramBuilder
     {
         return await Task.Run(() =>
         {
-            var program = hostBasedProgramBuilder.Build(
+            IProgram? program = hostBasedProgramBuilder.Build(
                 context,
                 services =>
                 {

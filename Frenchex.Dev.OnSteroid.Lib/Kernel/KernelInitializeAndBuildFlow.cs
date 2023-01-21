@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -37,7 +35,7 @@ public class KernelInitializeAndBuildFlow : IKernelInitializeAndBuildFlow
     )
     {
         var flow = new KernelInitializeAndBuildWorkflow(new KernelBuilderBuildingContextFactory());
-        var kernel = await flow.FlowAsync(services, new KernelConfiguration(servicesConfiguration));
+        IKernel? kernel = await flow.FlowAsync(services, new KernelConfiguration(servicesConfiguration));
         return kernel;
     }
 }

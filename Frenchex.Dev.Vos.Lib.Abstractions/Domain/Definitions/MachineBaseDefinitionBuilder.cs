@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -82,19 +80,19 @@ public class MachineBaseDefinitionBuilder
         };
     }
 
-    public MachineBaseDefinitionBuilder Enabled(bool enabled)
+    public MachineBaseDefinitionBuilder Enabled(bool? enabled)
     {
         _enabled = enabled;
         return this;
     }
 
-    public MachineBaseDefinitionBuilder With3DEnabled(bool enabled)
+    public MachineBaseDefinitionBuilder With3DEnabled(bool? enabled)
     {
         _enable3D = enabled;
         return this;
     }
 
-    public MachineBaseDefinitionBuilder WithBiosLogoImage(string path)
+    public MachineBaseDefinitionBuilder WithBiosLogoImage(string? path)
     {
         _biosLogoImage = path;
         return this;
@@ -106,43 +104,43 @@ public class MachineBaseDefinitionBuilder
         return this;
     }
 
-    public MachineBaseDefinitionBuilder WithFiles(Dictionary<string, FileCopyDefinition> files)
+    public MachineBaseDefinitionBuilder WithFiles(Dictionary<string, FileCopyDefinition>? files)
     {
         _files = files ?? throw new ArgumentNullException(nameof(files));
         return this;
     }
 
-    public MachineBaseDefinitionBuilder WithGui(bool enabled)
+    public MachineBaseDefinitionBuilder WithGui(bool? enabled)
     {
         _gui = enabled;
         return this;
     }
 
-    public MachineBaseDefinitionBuilder WithOsType(OsTypeEnum type)
+    public MachineBaseDefinitionBuilder WithOsType(OsTypeEnum? type)
     {
         _osType = type;
         return this;
     }
 
-    public MachineBaseDefinitionBuilder WithOsVersion(string version)
+    public MachineBaseDefinitionBuilder WithOsVersion(string? version)
     {
         _osVersion = version;
         return this;
     }
 
-    public MachineBaseDefinitionBuilder WithPageFusion(bool enabled)
+    public MachineBaseDefinitionBuilder WithPageFusion(bool? enabled)
     {
         _pageFusion = enabled;
         return this;
     }
 
-    public MachineBaseDefinitionBuilder WithProvider(ProviderEnum provider)
+    public MachineBaseDefinitionBuilder WithProvider(ProviderEnum? provider)
     {
         _provider = provider;
         return this;
     }
 
-    public MachineBaseDefinitionBuilder WithProvider(string provider)
+    public MachineBaseDefinitionBuilder WithProvider(string? provider)
     {
         Enum.TryParse(provider, true, out ProviderEnum parsed);
         _provider = parsed;
@@ -155,7 +153,7 @@ public class MachineBaseDefinitionBuilder
         return this;
     }
 
-    public MachineBaseDefinitionBuilder WithRamInMb(int ramInMb)
+    public MachineBaseDefinitionBuilder WithRamInMb(int? ramInMb)
     {
         _ramInMb = ramInMb;
         return this;
@@ -167,19 +165,19 @@ public class MachineBaseDefinitionBuilder
         return this;
     }
 
-    public MachineBaseDefinitionBuilder WithVideoRamInMb(int videoRamInMb)
+    public MachineBaseDefinitionBuilder WithVideoRamInMb(int? videoRamInMb)
     {
         _videoRamInMb = videoRamInMb;
         return this;
     }
 
-    public MachineBaseDefinitionBuilder WithVirtualCpus(int vcpus)
+    public MachineBaseDefinitionBuilder WithVirtualCpus(int? vcpus)
     {
         _vcpus = vcpus;
         return this;
     }
 
-    public MachineBaseDefinitionBuilder WithBoxVersion(string version)
+    public MachineBaseDefinitionBuilder WithBoxVersion(string? version)
     {
         _boxVersion = version;
         return this;

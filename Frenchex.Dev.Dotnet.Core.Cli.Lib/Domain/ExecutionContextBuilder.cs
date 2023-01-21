@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -25,7 +23,7 @@ public class ExecutionContextBuilder : IExecutionContextBuilder
     {
         IServiceCollection coreServices = new ServiceCollection();
         ServicesConfiguration.StaticConfigureServices(coreServices);
-        var coreServicesProvider = coreServices.BuildServiceProvider();
+        ServiceProvider? coreServicesProvider = coreServices.BuildServiceProvider();
 
         return new ExecutionContext { AsyncScope = coreServicesProvider.CreateAsyncScope() };
     }

@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -47,22 +45,24 @@ public class HaltCommand : RootCommand, IHaltCommand
 
     public async Task<IHaltCommandResponse> ExecuteAsync(IHaltCommandRequest request)
     {
-        var libRequest = _vagrantHaltCommandRequestBuilderFactory.Factory()
-            .BaseBuilder
-            .UsingWorkingDirectory(request.BaseCommand.WorkingDirectory)
-            .UsingTimeout(request.BaseCommand.Timeout)
-            .Parent<IHaltCommandRequestBuilder>()
-            .UsingNamesOrIds(
-                MapNamesToVagrantNames(
-                    request.Names,
-                    request.BaseCommand.WorkingDirectory,
-                    await ConfigurationLoad(request.BaseCommand.WorkingDirectory)
+        Vagrant.Lib.Abstractions.Domain.Commands.Halt.Request.IHaltCommandRequest? libRequest =
+            _vagrantHaltCommandRequestBuilderFactory.Factory()
+                .BaseBuilder
+                .UsingWorkingDirectory(request.BaseCommand.WorkingDirectory)
+                .UsingTimeout(request.BaseCommand.Timeout)
+                .Parent<IHaltCommandRequestBuilder>()
+                .UsingNamesOrIds(
+                    MapNamesToVagrantNames(
+                        request.Names,
+                        request.BaseCommand.WorkingDirectory,
+                        await ConfigurationLoad(request.BaseCommand.WorkingDirectory)
+                    )
                 )
-            )
-            .UsingHaltTimeout(request.HaltTimeout)
-            .Build();
+                .UsingHaltTimeout(request.HaltTimeout)
+                .Build();
 
-        var process = _vagrantHaltCommand.StartProcess(libRequest);
+        Vagrant.Lib.Abstractions.Domain.Commands.Halt.Response.IHaltCommandResponse? process =
+            _vagrantHaltCommand.StartProcess(libRequest);
 
         return _responseBuilderFactory.Factory()
             .WithHaltResponse(process)

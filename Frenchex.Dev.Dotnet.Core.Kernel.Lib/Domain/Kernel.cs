@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -28,6 +26,7 @@ public class Kernel : IKernel
     public IServiceProvider ServiceProvider { get; init; }
 
     public Dictionary<string, AsyncServiceScope> AsyncScopes { get; init; } = new();
+
     public Dictionary<string, IServiceScope> Scopes { get; init; } = new();
 
     public AsyncServiceScope GetOrCreateAsyncScope(string name)
@@ -35,7 +34,7 @@ public class Kernel : IKernel
         if (AsyncScopes.ContainsKey(name))
             return AsyncScopes[name];
 
-        var newScope = ServiceProvider.CreateAsyncScope();
+        AsyncServiceScope newScope = ServiceProvider.CreateAsyncScope();
         AsyncScopes.Add(name, newScope);
 
         return newScope;
@@ -46,7 +45,7 @@ public class Kernel : IKernel
         if (Scopes.ContainsKey(name))
             return Scopes[name];
 
-        var newScope = ServiceProvider.CreateScope();
+        IServiceScope? newScope = ServiceProvider.CreateScope();
         Scopes.Add(name, newScope);
 
         return newScope;
@@ -63,11 +62,11 @@ public class Kernel : IKernel
 
     private void DisposeScopes()
     {
-        foreach (KeyValuePair<string, IServiceScope> scope in Scopes) scope.Value.Dispose();
+        foreach (var scope in Scopes) scope.Value.Dispose();
     }
 
     private async ValueTask DisposeAsyncScopes()
     {
-        foreach (KeyValuePair<string, AsyncServiceScope> scope in AsyncScopes) await scope.Value.DisposeAsync();
+        foreach (var scope in AsyncScopes) await scope.Value.DisposeAsync();
     }
 }

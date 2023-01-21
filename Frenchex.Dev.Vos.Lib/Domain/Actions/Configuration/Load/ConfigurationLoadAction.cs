@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -32,23 +30,21 @@ public class ConfigurationLoadAction : IConfigurationLoadAction
     {
         try
         {
-            var loaded = await File.ReadAllTextAsync(Path.Join(path, "config.json"));
+            string? loaded = await File.ReadAllTextAsync(Path.Join(path, "config.json"));
 
-            var deserialized = JsonConvert.DeserializeObject<Abstractions.Domain.Configuration.Configuration>(loaded, new JsonSerializerSettings()
-            {
-                NullValueHandling = NullValueHandling.Ignore
-            });
+            var deserialized = JsonConvert.DeserializeObject<Abstractions.Domain.Configuration.Configuration>(loaded,
+                new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
 
-            if (null == deserialized)
-            {
-                throw new ArgumentNullException(nameof(deserialized));
-            }
+            if (null == deserialized) throw new ArgumentNullException(nameof(deserialized));
 
             return deserialized;
         }
         catch (Exception e)
         {
-            _logger.LogError($"Error while deserializing config.json", e);
+            _logger.LogError("Error while deserializing config.json", e);
             throw;
         }
     }

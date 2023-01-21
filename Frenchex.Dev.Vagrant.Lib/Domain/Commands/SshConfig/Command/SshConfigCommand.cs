@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -40,7 +38,7 @@ public class SshConfigCommand : RootCommand, ISshConfigCommand
 
     public ISshConfigCommandResponse StartProcess(ISshConfigCommandRequest request)
     {
-        var responseBuilder = _responseBuilderFactory.Build();
+        ISshConfigCommandResponseBuilder? responseBuilder = _responseBuilderFactory.Build();
 
         BuildAndStartProcess(
             request,

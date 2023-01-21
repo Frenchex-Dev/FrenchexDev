@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -40,7 +38,7 @@ public class HaltCommand : RootCommand, IHaltCommand
 
     public IHaltCommandResponse StartProcess(IHaltCommandRequest request)
     {
-        var responseBuilder = _responseBuilderFactory.Build();
+        IHaltCommandResponseBuilder? responseBuilder = _responseBuilderFactory.Build();
 
         BuildAndStartProcess(
             request,

@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -45,7 +43,7 @@ public class ProvisionCommand : RootCommand, IProvisionCommand
 
     public IProvisionCommandResponse StartProcess(IProvisionCommandRequest request)
     {
-        var responseBuilder = _provisionCommandResponseBuilderFactory.Build();
+        IProvisionCommandResponseBuilder? responseBuilder = _provisionCommandResponseBuilderFactory.Build();
 
         BuildAndStartProcess(
             request,
@@ -71,7 +69,7 @@ public class ProvisionCommand : RootCommand, IProvisionCommand
         if (!string.IsNullOrEmpty(request.VmName)) sb.Append(request.VmName);
 
         if (request.ProvisionWith != null && request.ProvisionWith.Any())
-            foreach (var provisionWith in request.ProvisionWith)
+            foreach (string? provisionWith in request.ProvisionWith)
                 sb.Append(" --provision-with " + provisionWith);
 
         return sb

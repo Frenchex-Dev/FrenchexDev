@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -61,13 +59,13 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
 
                     var dirInfo = new DirectoryInfo(context.DirectoryToCopy!);
 
-                    IEnumerable<DirectoryInfo>? dirs = dirInfo.EnumerateDirectories();
+                    var dirs = dirInfo.EnumerateDirectories();
 
-                    foreach (var dir in dirs)
+                    foreach (DirectoryInfo? dir in dirs)
                     {
                         Assert.IsTrue(Directory.Exists(dir.FullName));
 
-                        foreach (var file in dir.GetFiles()) Assert.IsTrue(File.Exists(file.FullName));
+                        foreach (FileInfo? file in dir.GetFiles()) Assert.IsTrue(File.Exists(file.FullName));
                     }
                 });
             },

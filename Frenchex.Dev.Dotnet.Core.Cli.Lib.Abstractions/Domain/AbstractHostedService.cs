@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -106,7 +104,7 @@ public abstract class AbstractHostedService : IHostedService
         if (null == RootCommand)
             throw new ArgumentNullException(nameof(RootCommand));
 
-        foreach (var integration in _integrations) integration.Integrate(RootCommand);
+        foreach (IIntegration? integration in _integrations) integration.Integrate(RootCommand);
     }
 
     private RootCommand BuildRootCommand()
@@ -121,12 +119,11 @@ public abstract class AbstractHostedService : IHostedService
         if (null == RootCommand)
             throw new ArgumentNullException(nameof(RootCommand));
 
-        var args = _entryPointInfo.CommandLineArgs;
+        string[]? args = _entryPointInfo.CommandLineArgs;
 
         if (args.Length > 0 && args[0].EndsWith(".dll"))
-        {
-            args = _entryPointInfo.CommandLineArgs.ToList().Skip(1).Take(_entryPointInfo.CommandLineArgs.Length - 1).ToArray();
-        }
+            args = _entryPointInfo.CommandLineArgs.ToList().Skip(1).Take(_entryPointInfo.CommandLineArgs.Length - 1)
+                .ToArray();
 
         return await RootCommand.InvokeAsync(args);
     }

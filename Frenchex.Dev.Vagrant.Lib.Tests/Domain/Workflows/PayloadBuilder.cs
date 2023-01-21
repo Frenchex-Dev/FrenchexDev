@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -58,7 +56,7 @@ public class PayloadBuilder
             var factory =
                 payload.GetServiceProvider().GetRequiredService<IProvisionCommandRequestBuilderFactory>();
 
-            var builder = factory.Factory();
+            IProvisionCommandRequestBuilder? builder = factory.Factory();
 
             builder
                 .BaseBuilder

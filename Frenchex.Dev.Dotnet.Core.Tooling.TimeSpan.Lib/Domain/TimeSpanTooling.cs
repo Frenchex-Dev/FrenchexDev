@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -17,9 +15,9 @@ public class TimeSpanTooling : ITimeSpanTooling
     {
         if (string.IsNullOrEmpty(timeSpan)) return null;
 
-        var l = timeSpan.Length - 1;
-        var value = timeSpan.Substring(0, l);
-        var type = timeSpan.Substring(l, 1);
+        int l = timeSpan.Length - 1;
+        string? value = timeSpan.Substring(0, l);
+        string? type = timeSpan.Substring(l, 1);
 
         switch (type)
         {
@@ -35,7 +33,7 @@ public class TimeSpanTooling : ITimeSpanTooling
 
     public int GetTotalMsConvertedToInt(string timeSpan, int? defaultValue = null)
     {
-        System.TimeSpan? ts = ConvertToTimeSpan(timeSpan);
+        var ts = ConvertToTimeSpan(timeSpan);
 
         if (ts is null)
         {

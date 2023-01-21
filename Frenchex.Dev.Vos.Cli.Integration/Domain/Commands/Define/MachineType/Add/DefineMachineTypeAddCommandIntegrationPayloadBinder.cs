@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -22,11 +20,12 @@ public class
     DefineMachineTypeAddCommandIntegrationPayloadBinder : IGenericBinder<DefineMachineTypeAddCommandIntegrationPayload>
 {
     private readonly Argument<string> _boxName;
+    private readonly Argument<string> _boxVersion;
     private readonly Option<bool> _is3DEnabled;
     private readonly Option<bool> _isEnabled;
     private readonly Argument<string> _name;
     private readonly Argument<string> _osType;
-    private readonly Argument<string> _osVersion;
+    private readonly Option<string> _osVersion;
     private readonly Argument<int> _ramMb;
     private readonly Option<string> _timeoutStr;
     private readonly Argument<int> _vCpus;
@@ -36,10 +35,11 @@ public class
     public DefineMachineTypeAddCommandIntegrationPayloadBinder(
         Argument<string> name,
         Argument<string> boxName,
+        Argument<string> boxVersion,
         Argument<int> vCpus,
         Argument<int> ramMb,
         Argument<string> osType,
-        Argument<string> osVersion,
+        Option<string> osVersion,
         Option<bool> isEnabled,
         Option<bool> is3DEnabled,
         Option<int> videoRamMb,
@@ -49,6 +49,7 @@ public class
     {
         _name = name;
         _boxName = boxName;
+        _boxVersion = boxVersion;
         _isEnabled = isEnabled;
         _is3DEnabled = is3DEnabled;
         _videoRamMb = videoRamMb;
@@ -65,6 +66,7 @@ public class
         return new DefineMachineTypeAddCommandIntegrationPayload
         {
             BoxName = invocationContext.ParseResult.GetValueForArgument(_boxName),
+            BoxVersion = invocationContext.ParseResult.GetValueForArgument(_boxVersion),
             RamInMb = invocationContext.ParseResult.GetValueForArgument(_ramMb),
             Enabled = invocationContext.ParseResult.GetValueForOption(_isEnabled),
             Name = invocationContext.ParseResult.GetValueForArgument(_name),
@@ -73,7 +75,7 @@ public class
             VideoRamInMb = invocationContext.ParseResult.GetValueForOption(_videoRamMb),
             TimeoutString = invocationContext.ParseResult.GetValueForOption(_timeoutStr),
             OsType = invocationContext.ParseResult.GetValueForArgument(_osType),
-            OsVersion = invocationContext.ParseResult.GetValueForArgument(_osVersion),
+            OsVersion = invocationContext.ParseResult.GetValueForOption(_osVersion),
             WorkingDirectory = invocationContext.ParseResult.GetValueForOption(_workingDir)
         };
     }

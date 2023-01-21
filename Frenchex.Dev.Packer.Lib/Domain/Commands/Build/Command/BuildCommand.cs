@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -48,7 +46,7 @@ public class BuildCommand : RootCommand, IBuildCommand
 
     public IBuildCommandResponse StartProcess(IBuildCommandRequest request)
     {
-        var responseBuilder = _buildCommandResponseBuilderFactory.Factory();
+        IBuildCommandResponseBuilder? responseBuilder = _buildCommandResponseBuilderFactory.Factory();
 
         BuildAndStartProcess(
             request,

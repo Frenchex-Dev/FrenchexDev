@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -34,6 +32,6 @@ public class DefineMachineTypeCommandIntegration : IDefineMachineTypeCommandInte
 
         rootDefineCommand.Add(command);
 
-        foreach (var item in _subs) item.Integrate(command);
+        foreach (IDefineMachineTypeSubCommandIntegration? item in _subs) item.Integrate(command);
     }
 }

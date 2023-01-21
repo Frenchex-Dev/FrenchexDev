@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -23,7 +21,8 @@ public class Configuration
     [JsonProperty("vagrant")] public VagrantConfiguration Vagrant { get; set; } = new();
 
     [JsonProperty("machine_types")]
-    public Dictionary<string, MachineTypeDefinitionDeclaration> MachineTypes { get; set; } = new();
+    public Dictionary<string, MachineTypeDefinitionDeclaration> MachineTypes { get; set; } =
+        new();
 
     [JsonProperty("machines")] public Dictionary<string, MachineDefinitionDeclaration> Machines { get; set; } = new();
 }

@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -53,7 +51,7 @@ public abstract class RootCommand : IRootCommand
         string arguments
     )
     {
-        var process = Build(new ProcessBuildingParameters(
+        IProcess? process = Build(new ProcessBuildingParameters(
             GetBinary(),
             arguments,
             request.Base.WorkingDirectory,
@@ -65,7 +63,7 @@ public abstract class RootCommand : IRootCommand
             true
         ));
 
-        var processExecutionResult = process.Start();
+        ProcessExecutionResult? processExecutionResult = process.Start();
 
         responseBuilder
             .SetProcess(process)

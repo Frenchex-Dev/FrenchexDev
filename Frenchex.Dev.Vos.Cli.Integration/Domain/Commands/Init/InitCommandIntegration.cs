@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -45,10 +43,10 @@ public class InitCommandIntegration : ABaseCommandIntegration, IInitCommandInteg
 
     public void IntegrateInto(Command parentCommand)
     {
-        Option<string>? namingPatternOpt = _namingPatternOptionBuilder.Build();
-        Option<int>? zeroesOpt = _zeroesOptionBuilder.Build();
-        Option<string>? timeoutStrOpt = TimeoutStrOptionBuilder.Build();
-        Option<string>? workingDirOpt = WorkingDirectoryOptionBuilder.Build();
+        var namingPatternOpt = _namingPatternOptionBuilder.Build();
+        var zeroesOpt = _zeroesOptionBuilder.Build();
+        var timeoutStrOpt = TimeoutStrOptionBuilder.Build();
+        var workingDirOpt = WorkingDirectoryOptionBuilder.Build();
 
         var command = new Command("init", "Runs Vex init")
         {
@@ -67,12 +65,12 @@ public class InitCommandIntegration : ABaseCommandIntegration, IInitCommandInteg
 
         command.SetHandler(async context =>
         {
-            var payload = binder.GetBoundValue(context);
-            var requestBuilder = _responseBuilderFactory.Factory();
+            InitCommandIntegrationPayload? payload = binder.GetBoundValue(context);
+            IInitCommandRequestBuilder? requestBuilder = _responseBuilderFactory.Factory();
 
             BuildBase(requestBuilder, payload);
 
-            var request = requestBuilder
+            IInitCommandRequest? request = requestBuilder
                     .WithNamingPattern(payload.Naming!)
                     .WithGivenLeadingZeroes(payload.Zeroes)
                     .Build()

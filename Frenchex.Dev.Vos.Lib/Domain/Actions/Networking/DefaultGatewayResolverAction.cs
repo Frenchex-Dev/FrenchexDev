@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -23,10 +21,10 @@ public class DefaultGatewayResolverAction : IDefaultGatewayResolverAction
 {
     public List<(NetworkInterface n, List<IPAddress?>?)> ResolveDefaultGateway()
     {
-        NetworkInterface[] interfaces = NetworkInterface
+        var interfaces = NetworkInterface
             .GetAllNetworkInterfaces();
 
-        List<(NetworkInterface n, List<IPAddress?>?)> upAndNotLoopBackInterface = interfaces
+        var upAndNotLoopBackInterface = interfaces
             .Where(n => n.OperationalStatus == OperationalStatus.Up)
             .Where(n => n.NetworkInterfaceType != NetworkInterfaceType.Loopback)
             // ReSharper disable ConstantConditionalAccessQualifier

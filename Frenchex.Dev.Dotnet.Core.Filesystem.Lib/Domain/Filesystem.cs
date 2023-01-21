@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -46,19 +44,19 @@ public class Filesystem : IFilesystem
         if (!Directory.Exists(target))
             Directory.CreateDirectory(target);
 
-        var files = Directory.GetFiles(source);
-        foreach (var file in files)
+        string[]? files = Directory.GetFiles(source);
+        foreach (string? file in files)
         {
-            var name = Path.GetFileName(file);
-            var dest = Path.Combine(target, name);
+            string? name = Path.GetFileName(file);
+            string? dest = Path.Combine(target, name);
             File.Copy(file, dest);
         }
 
-        var folders = Directory.GetDirectories(source);
-        foreach (var folder in folders)
+        string[]? folders = Directory.GetDirectories(source);
+        foreach (string? folder in folders)
         {
-            var name = Path.GetFileName(folder);
-            var dest = Path.Combine(target, name);
+            string? name = Path.GetFileName(folder);
+            string? dest = Path.Combine(target, name);
             DirectoryCopy(folder, dest);
         }
     }

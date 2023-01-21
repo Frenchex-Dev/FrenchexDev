@@ -4,20 +4,18 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
 #region
 
-using System.Diagnostics.CodeAnalysis;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Configuration.Load;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Configuration.Save;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Naming;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.Map.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.Map.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Provisioning.Map.Response;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Configuration;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Command;
 
@@ -27,8 +25,8 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Provisioning.Map.Command;
 
 public class DefineProvisioningMapCommand : RootCommand, IDefineProvisioningMapCommand
 {
-    private readonly IDefineProvisioningMapCommandResponseBuilderFactory _responseBuilderFactory;
     private readonly IConfigurationSaveAction _configurationSaveAction;
+    private readonly IDefineProvisioningMapCommandResponseBuilderFactory _responseBuilderFactory;
 
     public DefineProvisioningMapCommand(
         IDefineProvisioningMapCommandResponseBuilderFactory responseBuilderFactory,
@@ -43,49 +41,35 @@ public class DefineProvisioningMapCommand : RootCommand, IDefineProvisioningMapC
 
     public async Task<IDefineProvisioningMapCommandResponse> ExecuteAsync(IDefineProvisioningMapCommandRequest request)
     {
-        var config = await ConfigurationLoad(request.BaseCommand.WorkingDirectory);
+        Configuration? config = await ConfigurationLoad(request.BaseCommand.WorkingDirectory);
 
-        if (config is null)
-        {
-            throw new ArgumentNullException(nameof(config));
-        }
+        if (config is null) throw new ArgumentNullException(nameof(config));
 
-        var names = MapNamesToMachineNames(request.Names, request.BaseCommand.WorkingDirectory, config);
+        string[]? names = MapNamesToMachineNames(request.Names, request.BaseCommand.WorkingDirectory, config);
 
-        foreach (var name in names)
+        foreach (string? name in names)
         {
             MachineBaseDefinitionDeclaration? definition = null;
 
             if (request.MachineType)
             {
-                if (config.MachineTypes.ContainsKey(name))
-                {
-                    definition = config.MachineTypes[name].Base;
-                }
+                if (config.MachineTypes.ContainsKey(name)) definition = config.MachineTypes[name].Base;
             }
             else
             {
-                if (config.Machines.ContainsKey(name))
-                {
-                    definition = config.Machines[name].Base;
-                }
+                if (config.Machines.ContainsKey(name)) definition = config.Machines[name].Base;
             }
 
-            if (definition is null)
-            {
-                definition = new MachineBaseDefinitionDeclaration();
-            }
+            if (definition is null) definition = new MachineBaseDefinitionDeclaration();
 
             if (definition.Provisioning is null)
-            {
                 definition.Provisioning = new Dictionary<string, ProvisioningDefinition>();
-            }
 
-            definition.Provisioning.Add(request.ProvisioningName, new ProvisioningDefinition()
+            definition.Provisioning.Add(request.ProvisioningName, new ProvisioningDefinition
             {
                 Version = request.Version,
                 Env = request.Env,
-                Privileged = request.Privileged,
+                Privileged = request.Privileged
             });
         }
 

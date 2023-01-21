@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -80,8 +78,7 @@ public class ServicesConfiguration : IServicesConfiguration
                     Domain.Commands.Status.DependencyInjection.ServicesConfiguration
                         .ConfigureServices(serviceCollection);
 
-                    Domain.Commands.Up.DependencyInjection.ServicesConfiguration.
-                        ConfigureServices(serviceCollection);
+                    Domain.Commands.Up.DependencyInjection.ServicesConfiguration.ConfigureServices(serviceCollection);
                 },
                 () =>
                 {

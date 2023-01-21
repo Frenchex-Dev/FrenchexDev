@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -49,7 +47,7 @@ public class FilesystemCopyDirectoryTests : AbstractUnitTest
             {
                 var processBuilder = provider.GetRequiredService<IProcessBuilder>();
 
-                var process = processBuilder.Build(new ProcessBuildingParameters(
+                IProcess? process = processBuilder.Build(new ProcessBuildingParameters(
                     binary,
                     arguments,
                     Path.GetTempPath(),

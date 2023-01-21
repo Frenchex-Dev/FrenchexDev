@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -47,21 +45,23 @@ public class UpCommand : RootCommand, IUpCommand
 
     public async Task<IUpCommandResponse> ExecuteAsync(IUpCommandRequest request)
     {
-        var libRequest = _vagrantUpCommandRequestBuilderFactory.Factory()
-            .BaseBuilder
-            .UsingWorkingDirectory(request.BaseCommand.WorkingDirectory)
-            .UsingTimeout(request.BaseCommand.Timeout)
-            .Parent<IUpCommandRequestBuilder>()
-            .UsingNamesOrIds(
-                MapNamesToVagrantNames(
-                    request.Names,
-                    request.BaseCommand.WorkingDirectory,
-                    await ConfigurationLoad(request.BaseCommand.WorkingDirectory)
+        Vagrant.Lib.Abstractions.Domain.Commands.Up.Request.IUpCommandRequest? libRequest =
+            _vagrantUpCommandRequestBuilderFactory.Factory()
+                .BaseBuilder
+                .UsingWorkingDirectory(request.BaseCommand.WorkingDirectory)
+                .UsingTimeout(request.BaseCommand.Timeout)
+                .Parent<IUpCommandRequestBuilder>()
+                .UsingNamesOrIds(
+                    MapNamesToVagrantNames(
+                        request.Names,
+                        request.BaseCommand.WorkingDirectory,
+                        await ConfigurationLoad(request.BaseCommand.WorkingDirectory)
+                    )
                 )
-            )
-            .Build();
+                .Build();
 
-        var vagrantUpProcess = _vagrantUpCommand.StartProcess(libRequest);
+        Vagrant.Lib.Abstractions.Domain.Commands.Up.Response.IUpCommandResponse? vagrantUpProcess =
+            _vagrantUpCommand.StartProcess(libRequest);
 
         return _responseBuilderFactory.Factory()
             .WithUpResponse(vagrantUpProcess)

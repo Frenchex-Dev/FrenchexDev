@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -31,8 +29,8 @@ public class InitCommand : RootCommand, IInitCommand
     private readonly IConfigurationSaveAction _configurationActionSave;
     private readonly IFilesystem _filesystem;
     private readonly IInitCommandResponseBuilderFactory _responseBuilderFactory;
-    private readonly IVagrantfileResource _vagrantfileResource;
     private readonly IScriptsResource _scriptsResource;
+    private readonly IVagrantfileResource _vagrantfileResource;
 
     public InitCommand(
         IFilesystem fileSystemOperator,
@@ -68,9 +66,11 @@ public class InitCommand : RootCommand, IInitCommand
             request.BaseCommand.WorkingDirectory
         );
 
-        var provisioningPath = Path.GetFullPath(IVagrantfileResource.Provisioning, request.BaseCommand.WorkingDirectory);
-        var provisioningPathLink =
-            Path.GetFullPath(Path.Join("Resources", IVagrantfileResource.Provisioning), AppDomain.CurrentDomain.BaseDirectory);
+        string? provisioningPath =
+            Path.GetFullPath(IVagrantfileResource.Provisioning, request.BaseCommand.WorkingDirectory);
+        string? provisioningPathLink =
+            Path.GetFullPath(Path.Join("Resources", IVagrantfileResource.Provisioning),
+                AppDomain.CurrentDomain.BaseDirectory);
 
         _filesystem.DirectoryCopy(provisioningPathLink, provisioningPath);
 

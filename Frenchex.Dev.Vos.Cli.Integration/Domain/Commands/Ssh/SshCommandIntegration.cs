@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -52,13 +50,13 @@ public class SshCommandIntegration : ABaseCommandIntegration, ISshCommandIntegra
 
     public void IntegrateInto(Command parentCommand)
     {
-        Option<string[]>? namesOpts = _namesOptionBuilder.Build();
-        Option<string[]>? commandsOpt = _commandsOptionBuilder.Build();
-        Option<bool>? plainTextOpt = _plainTextOptionBuilder.Build();
-        Option<string>? extraSshArgsOpt = _extraSshArgsOptionBuilder.Build();
-        Option<string>? timeOutStrOpt = TimeoutStrOptionBuilder.Build();
-        Option<string>? vagrantBinPath = VagrantBinPathOptionBuilder.Build();
-        Option<string>? workingDir = WorkingDirectoryOptionBuilder.Build();
+        var namesOpts = _namesOptionBuilder.Build();
+        var commandsOpt = _commandsOptionBuilder.Build();
+        var plainTextOpt = _plainTextOptionBuilder.Build();
+        var extraSshArgsOpt = _extraSshArgsOptionBuilder.Build();
+        var timeOutStrOpt = TimeoutStrOptionBuilder.Build();
+        var vagrantBinPath = VagrantBinPathOptionBuilder.Build();
+        var workingDir = WorkingDirectoryOptionBuilder.Build();
 
         var command = new Command("ssh", "Runs ssh command")
         {
@@ -83,9 +81,9 @@ public class SshCommandIntegration : ABaseCommandIntegration, ISshCommandIntegra
 
         command.SetHandler(async context =>
         {
-            var payload = binder.GetBoundValue(context);
-            var requestBuilder = _requestBuilderFactory.Factory();
-            var request = requestBuilder
+            SshCommandIntegrationPayload? payload = binder.GetBoundValue(context);
+            ISshCommandRequestBuilder? requestBuilder = _requestBuilderFactory.Factory();
+            ISshCommandRequest? request = requestBuilder
                 .BaseBuilder
                 .UsingWorkingDirectory(payload.WorkingDirectory)
                 .UsingTimeout(payload.TimeoutString)

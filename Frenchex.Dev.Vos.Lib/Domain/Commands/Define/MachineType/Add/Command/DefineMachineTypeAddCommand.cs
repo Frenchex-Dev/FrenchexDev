@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -17,6 +15,7 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Naming;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Response;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Configuration;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Command;
 
 #endregion
@@ -44,11 +43,9 @@ public class DefineMachineTypeAddCommand : RootCommand, IDefineMachineTypeAddCom
     public async Task<IDefineMachineTypeAddCommandResponse> ExecuteAsync(IDefineMachineTypeAddCommandRequest request)
     {
         if (string.IsNullOrEmpty(request.BaseCommand.WorkingDirectory))
-        {
             throw new ArgumentNullException(nameof(request.BaseCommand.WorkingDirectory));
-        }
 
-        var config = await ConfigurationLoadAction.Load(request.BaseCommand.WorkingDirectory);
+        Configuration? config = await ConfigurationLoadAction.Load(request.BaseCommand.WorkingDirectory);
 
         if (request.DefinitionDeclaration.Name != null)
             config.MachineTypes.Add(request.DefinitionDeclaration.Name, request.DefinitionDeclaration);

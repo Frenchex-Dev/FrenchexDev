@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -13,23 +11,7 @@
 
 using Frenchex.Dev.OnSteroid.Lib.Abstractions.Domain.DependencyInjection;
 using Frenchex.Dev.OnSteroid.Lib.Domain.DependencyInjection;
-using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands;
-using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Define;
-using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Define.Machine;
-using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Define.Machine.Add;
-using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Define.MachineType;
-using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Define.MachineType.Add;
-using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Define.Provisioning;
-using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Destroy;
-using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Halt;
-using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Init;
-using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Name;
-using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Ssh;
-using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.SshConfig;
-using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Status;
-using Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Up;
-using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 using Frenchex.Dev.Vos.Cli.IntegrationLib.Domain;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -60,13 +42,10 @@ public class ServicesConfiguration : IServicesConfiguration
             {
                 services.AddScoped<IIntegration, Domain.Integration>();
 
-                Domain.Commands.DependencyInjectionConfigurator.ConfigureServices(services);
+                DependencyInjectionConfigurator.ConfigureServices(services);
                 Domain.Arguments.DependencyInjectionConfigurator.ConfigureServices(services);
                 Domain.Options.DependencyInjectionConfigurator.ConfigureServices(services);
             },
-            () =>
-            {
-                Lib.DependencyInjection.ServicesConfiguration.StaticConfigureServices(services);
-            });
+            () => { Lib.DependencyInjection.ServicesConfiguration.StaticConfigureServices(services); });
     }
 }

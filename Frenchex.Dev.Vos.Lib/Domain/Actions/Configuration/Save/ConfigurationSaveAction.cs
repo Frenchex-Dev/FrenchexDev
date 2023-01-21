@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -32,7 +30,7 @@ public class ConfigurationSaveAction : IConfigurationSaveAction
 
     public async Task Save(Abstractions.Domain.Configuration.Configuration configuration, string path)
     {
-        var serialized = JsonConvert.SerializeObject(configuration,
+        string? serialized = JsonConvert.SerializeObject(configuration,
             Formatting.Indented,
             new JsonSerializerSettings
             {

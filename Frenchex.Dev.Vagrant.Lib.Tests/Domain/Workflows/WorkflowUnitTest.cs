@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -14,15 +12,22 @@
 using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Command;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Destroy.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Halt.Command;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Halt.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Init.Command;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Init.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Provision.Command;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Provision.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Root.Response;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Command;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.SshConfig.Command;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.SshConfig.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Status.Command;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Status.Request;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Command;
-using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Up;
+using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Up.Request;
 using Frenchex.Dev.Vagrant.Lib.Tests.Abstractions.Domain;
 using Frenchex.Dev.Vagrant.Lib.Tests.Domain.Workflows.WorkflowData;
 using Microsoft.Extensions.DependencyInjection;
@@ -56,31 +61,34 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
         IVagrantLibWorkflowDataBuilder payloadBuilderPayload
     )
     {
-        var workingDirectory = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
-        var sp = GetUnitTest().GetScopedServiceProvider();
+        string? workingDirectory = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
+        IServiceProvider? sp = GetUnitTest().GetScopedServiceProvider();
 
         var payloadBuilder = new PayloadBuilder();
-        var payload = payloadBuilderPayload.Build(workingDirectory, sp);
+        PayloadBuilderPayload? payload = payloadBuilderPayload.Build(workingDirectory, sp);
 
         if (sp == null)
             throw new ArgumentNullException(nameof(sp));
 
-        var initRequest = payloadBuilder.InitCommandRequestBuilder.Invoke(payload.InitCommandRequestBuilderPayload!);
-        var upRequest = payloadBuilder.UpCommandRequestBuilder.Invoke(payload.UpCommandRequestBuilderPayload!);
-        var provisionRequest =
+        IInitCommandRequest? initRequest =
+            payloadBuilder.InitCommandRequestBuilder.Invoke(payload.InitCommandRequestBuilderPayload!);
+        IUpCommandRequest? upRequest =
+            payloadBuilder.UpCommandRequestBuilder.Invoke(payload.UpCommandRequestBuilderPayload!);
+        IProvisionCommandRequest? provisionRequest =
             payloadBuilder.ProvisionCommandRequestBuilder.Invoke(payload.ProvisionCommandRequestBuilderPayload!);
 
-        var statusRequest =
+        IStatusCommandRequest? statusRequest =
             payloadBuilder.StatusCommandRequestBuilder.Invoke(payload.StatusCommandRequestBuilderPayload!);
 
-        var sshConfigCommandRequest =
+        ISshConfigCommandRequest? sshConfigCommandRequest =
             payloadBuilder.SshConfigCommandRequestBuilder.Invoke(payload.SshConfigCommandRequestBuilderPayload!);
 
-        var sshCommandRequest =
+        ISshCommandRequest? sshCommandRequest =
             payloadBuilder.SshCommandRequestBuilder.Invoke(payload.SshCommandRequestBuilderPayload!);
 
-        var haltRequest = payloadBuilder.HaltCommandRequestBuilder.Invoke(payload.HaltCommandRequestBuilderPayload!);
-        var destroyRequest =
+        IHaltCommandRequest? haltRequest =
+            payloadBuilder.HaltCommandRequestBuilder.Invoke(payload.HaltCommandRequestBuilderPayload!);
+        IDestroyCommandRequest? destroyRequest =
             payloadBuilder.DestroyCommandRequestBuilder.Invoke(payload.DestroyCommandRequestBuilderPayload!);
 
         await GetUnitTest().ExecuteAndAssertAndCleanupAsync<ExecutionContext>(async (provider, _, _, _) =>
@@ -177,7 +185,7 @@ public class VagrantLibCompleteWorkflowTests : AbstractUnitTest
 
         response.ProcessExecutionResult.OutputStream.Position = 0;
         var outputReader = new StreamReader(response.ProcessExecutionResult.OutputStream);
-        var output = await outputReader.ReadToEndAsync();
+        string? output = await outputReader.ReadToEndAsync();
 
         if (response.ProcessExecutionResult.ExitCode is not null)
         {

@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -16,6 +14,7 @@ using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Name.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Name.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Name.Response;
 
 #endregion
 
@@ -43,9 +42,9 @@ public class NameCommandIntegration : ABaseCommandIntegration, INameCommandInteg
 
     public void IntegrateInto(Command parentCommand)
     {
-        Argument<string[]>? nameArg = _namesArgumentBuilder.Build();
-        Option<string>? workingDirOpt = WorkingDirectoryOptionBuilder.Build();
-        Option<string>? timeoutOpt = TimeoutStrOptionBuilder.Build();
+        var nameArg = _namesArgumentBuilder.Build();
+        var workingDirOpt = WorkingDirectoryOptionBuilder.Build();
+        var timeoutOpt = TimeoutStrOptionBuilder.Build();
 
         var command = new Command("name", "Output Vagrant machine names")
         {
@@ -62,17 +61,17 @@ public class NameCommandIntegration : ABaseCommandIntegration, INameCommandInteg
 
         command.SetHandler(async context =>
         {
-            var payload = binder.GetBoundValue(context);
-            var requestBuilder = _requestBuilderFactory.Factory();
+            NameCommandIntegrationPayload? payload = binder.GetBoundValue(context);
+            INameCommandRequestBuilder? requestBuilder = _requestBuilderFactory.Factory();
 
             BuildBase(requestBuilder, payload);
 
-            var response = await _command.ExecuteAsync(requestBuilder
+            INameCommandResponse? response = await _command.ExecuteAsync(requestBuilder
                 .WithNames(payload.Names!)
                 .Build()
             );
 
-            foreach (var name in response.Names) Console.Write(name);
+            foreach (string? name in response.Names) Console.Write(name);
         });
 
         parentCommand.AddCommand(command);

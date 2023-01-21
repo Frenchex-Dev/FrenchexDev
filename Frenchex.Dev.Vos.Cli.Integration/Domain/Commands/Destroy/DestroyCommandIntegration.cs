@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -52,13 +50,13 @@ public class DestroyCommandIntegration : ABaseCommandIntegration, IDestroyComman
 
     public void IntegrateInto(Command parentCommand)
     {
-        Argument<string[]>? namesArg = _namesArgumentBuilder.Build();
-        Option<bool>? forceOpt = _forceOptionBuilder.Build();
-        Option<bool>? parallelOpt = _parallelOptionBuilder.Build();
-        Option<bool>? gracefulOpt = _gracefulOptionBuilder.Build();
-        Option<string>? timeoutStrOpt = TimeoutStrOptionBuilder.Build();
-        Option<string>? workingDirOpt = WorkingDirectoryOptionBuilder.Build();
-        Option<string>? vagrantBinPath = VagrantBinPathOptionBuilder.Build();
+        var namesArg = _namesArgumentBuilder.Build();
+        var forceOpt = _forceOptionBuilder.Build();
+        var parallelOpt = _parallelOptionBuilder.Build();
+        var gracefulOpt = _gracefulOptionBuilder.Build();
+        var timeoutStrOpt = TimeoutStrOptionBuilder.Build();
+        var workingDirOpt = WorkingDirectoryOptionBuilder.Build();
+        var vagrantBinPath = VagrantBinPathOptionBuilder.Build();
 
         var command = new Command("destroy", "Runs Vex destroy")
         {
@@ -82,8 +80,8 @@ public class DestroyCommandIntegration : ABaseCommandIntegration, IDestroyComman
 
         command.SetHandler(async context =>
         {
-            var payload = binder.GetBoundValue(context);
-            var requestBuilder = _requestBuilderFactory.Factory();
+            DestroyCommandIntegrationPayload? payload = binder.GetBoundValue(context);
+            IDestroyCommandRequestBuilder? requestBuilder = _requestBuilderFactory.Factory();
 
             BuildBase(requestBuilder, payload);
 

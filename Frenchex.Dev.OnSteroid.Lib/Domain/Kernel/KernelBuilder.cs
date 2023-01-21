@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -36,8 +34,9 @@ public class KernelBuilder : IKernelBuilder
     {
         return await Task.Run(() =>
         {
-            var buildingContext = _kernelBuilderBuildingContextFactory.Factory(servicesCollection, kernelConfiguration);
-            var builtKernel = buildingContext.Build();
+            IKernelBuilderBuildingContext? buildingContext =
+                _kernelBuilderBuildingContextFactory.Factory(servicesCollection, kernelConfiguration);
+            IKernel? builtKernel = buildingContext.Build();
 
             return builtKernel;
         });

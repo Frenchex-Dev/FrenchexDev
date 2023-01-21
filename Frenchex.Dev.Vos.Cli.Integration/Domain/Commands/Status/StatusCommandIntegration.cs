@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -16,6 +14,7 @@ using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Response;
 
 #endregion
 
@@ -24,6 +23,7 @@ namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Status;
 public class StatusCommandIntegration : ABaseCommandIntegration, IStatusCommandIntegration
 {
     private readonly IStatusCommand _command;
+    private readonly IConsole _console;
     private readonly INamesArgumentBuilder _namesArgumentBuilder;
     private readonly IStatusCommandRequestBuilderFactory _requestBuilderFactory;
 
@@ -33,20 +33,22 @@ public class StatusCommandIntegration : ABaseCommandIntegration, IStatusCommandI
         INamesArgumentBuilder namesArgumentBuilder,
         IWorkingDirectoryOptionBuilder workingDirectoryOptionBuilder,
         ITimeoutMsOptionBuilder timeoutStrOptionBuilder,
-        IVagrantBinPathOptionBuilder vagrantBinPathOptionBuilder
+        IVagrantBinPathOptionBuilder vagrantBinPathOptionBuilder,
+        IConsole console
     ) : base(workingDirectoryOptionBuilder, timeoutStrOptionBuilder, vagrantBinPathOptionBuilder)
     {
         _command = command;
         _requestBuilderFactory = requestBuilderFactory;
         _namesArgumentBuilder = namesArgumentBuilder;
+        _console = console;
     }
 
     public void IntegrateInto(Command parentCommand)
     {
-        Argument<string[]>? nameArg = _namesArgumentBuilder.Build();
-        Option<string>? workingDirOpt = WorkingDirectoryOptionBuilder.Build();
-        Option<string>? timeoutOpt = TimeoutStrOptionBuilder.Build();
-        Option<string>? vagrantBinPath = VagrantBinPathOptionBuilder.Build();
+        var nameArg = _namesArgumentBuilder.Build();
+        var workingDirOpt = WorkingDirectoryOptionBuilder.Build();
+        var timeoutOpt = TimeoutStrOptionBuilder.Build();
+        var vagrantBinPath = VagrantBinPathOptionBuilder.Build();
 
         var command = new Command("status", "Runs Vagrant status")
         {
@@ -60,15 +62,17 @@ public class StatusCommandIntegration : ABaseCommandIntegration, IStatusCommandI
 
         command.SetHandler(async context =>
         {
-            var payload = binder.GetBoundValue(context);
-            var requestBuilder = _requestBuilderFactory.Factory();
+            StatusCommandIntegrationPayload? payload = binder.GetBoundValue(context);
+            IStatusCommandRequestBuilder? requestBuilder = _requestBuilderFactory.Factory();
 
             BuildBase(requestBuilder, payload);
 
-            await _command.ExecuteAsync(requestBuilder
+            IStatusCommandResponse? response = await _command.ExecuteAsync(requestBuilder
                 .WithNames(payload.Names!)
                 .Build()
             );
+
+            foreach (var status in response.Statuses) Console.WriteLine($"{status.Value.Item1} : {status.Value.Item2}");
         });
 
         parentCommand.AddCommand(command);

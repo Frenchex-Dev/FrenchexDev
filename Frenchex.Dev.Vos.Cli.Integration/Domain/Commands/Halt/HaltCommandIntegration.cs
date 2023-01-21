@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -16,6 +14,7 @@ using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Halt.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Halt.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Halt.Response;
 
 #endregion
 
@@ -46,17 +45,17 @@ public class HaltCommandIntegration : ABaseCommandIntegration, IHaltCommandInteg
 
     public void IntegrateInto(Command parentCommand)
     {
-        Argument<string[]>? namesArg = _namesArgumentBuilder.Build();
-        Option<bool>? forceOpt = _forceOptionBuilder.Build();
-        Option<string>? haltTimeoutStrOpt = TimeoutStrOptionBuilder.Build(
+        var namesArg = _namesArgumentBuilder.Build();
+        var forceOpt = _forceOptionBuilder.Build();
+        var haltTimeoutStrOpt = TimeoutStrOptionBuilder.Build(
             new[] { "--halt-timeoutms" },
             () => "10s",
             "Halt timeout"
         );
 
-        Option<string>? timeoutMsOpt = TimeoutStrOptionBuilder.Build("10s");
-        Option<string>? workingDirOpt = WorkingDirectoryOptionBuilder.Build();
-        Option<string>? vagrantBinPath = VagrantBinPathOptionBuilder.Build();
+        var timeoutMsOpt = TimeoutStrOptionBuilder.Build("10s");
+        var workingDirOpt = WorkingDirectoryOptionBuilder.Build();
+        var vagrantBinPath = VagrantBinPathOptionBuilder.Build();
 
         var command = new Command("halt", "Runs Vagrant halt")
         {
@@ -79,12 +78,12 @@ public class HaltCommandIntegration : ABaseCommandIntegration, IHaltCommandInteg
 
         command.SetHandler(async context =>
         {
-            var payload = binder.GetBoundValue(context);
-            var requestBuilder = _responseBuilderFactory.Factory();
+            HaltCommandIntegrationPayload payload = binder.GetBoundValue(context);
+            IHaltCommandRequestBuilder requestBuilder = _responseBuilderFactory.Factory();
 
             BuildBase(requestBuilder, payload);
 
-            var response = await _command.ExecuteAsync(requestBuilder
+            IHaltCommandResponse response = await _command.ExecuteAsync(requestBuilder
                     .UsingNames(payload.Names)
                     .WithForce(payload.Force)
                     .UsingHaltTimeout(payload.HaltTimeout)

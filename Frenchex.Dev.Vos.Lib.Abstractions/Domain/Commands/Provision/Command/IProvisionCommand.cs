@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -19,6 +17,7 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Root.Command;
 
 namespace Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Provision.Command;
 
-public interface IProvisionCommand : IAsyncCommand, IAsyncRootCommand<IProvisionCommandRequest, IProvisionCommandResponse>
+public interface IProvisionCommand : IAsyncCommand,
+    IAsyncRootCommand<IProvisionCommandRequest, IProvisionCommandResponse>
 {
 }

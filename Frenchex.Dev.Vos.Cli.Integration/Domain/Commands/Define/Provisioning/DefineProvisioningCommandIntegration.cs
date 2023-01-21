@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -34,6 +32,6 @@ public class DefineProvisioningCommandIntegration : IDefineProvisioningCommandIn
 
         parentCommand.Add(rootDefineCommand);
 
-        foreach (var item in _subs) item.Integrate(rootDefineCommand);
+        foreach (IDefineProvisioningSubCommandIntegration? item in _subs) item.Integrate(rootDefineCommand);
     }
 }

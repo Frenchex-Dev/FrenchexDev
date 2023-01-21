@@ -4,17 +4,16 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
 #region
 
+using System.CommandLine;
+using System.CommandLine.Parsing;
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Frenchex.Dev.Vos.Cli.IntegrationLib.Domain;
 using Microsoft.Extensions.DependencyInjection;
-using System.CommandLine;
 
 #endregion
 
@@ -31,7 +30,7 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
         int nbVosInstances = 3
     )
     {
-        List<object[]> listOfList = new();
+        var listOfList = new List<object[]>();
 
         for (var i = 0; i < nbTestCases; i++)
         {
@@ -41,7 +40,7 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
                 ListOfListOfCommands = new List<List<InputCommand>>(nbVosInstances)
             };
 
-            List<object> obj = new()
+            var obj = new List<object>
             {
                 payload.TestCaseName,
                 payload
@@ -61,7 +60,7 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
         await unitTest.ExecuteAndAssertAsync<ExecutionContext>(
             (provider, _, _, _) =>
             {
-                var sut = provider.GetRequiredService<SubjectUnderTest>().RootCommand;
+                RootCommand? sut = provider.GetRequiredService<SubjectUnderTest>().RootCommand;
                 var integration = provider.GetRequiredService<IIntegration>();
                 integration.Integrate(sut);
 
@@ -86,9 +85,9 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
             commands,
             (command, rootCommand) =>
             {
-                var parsed = rootCommand.Parse(command);
+                ParseResult? parsed = rootCommand.Parse(command);
 
-                var msgError = string.Join(Environment.NewLine, parsed.Errors.Select(x => x.Message));
+                string? msgError = string.Join(Environment.NewLine, parsed.Errors.Select(x => x.Message));
 
                 Assert.AreEqual(0, parsed.Errors.Count, msgError);
 
@@ -109,28 +108,32 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
 
     private static InputCommand[] ProduceTestData(string timeout)
     {
-        var timeOutOpt = "--timeout " + timeout;
+        string? timeOutOpt = "--timeout " + timeout;
 
         string BuildInternalCommandLineString(string command)
         {
             return BuildCommandLineString(command, timeOutOpt);
         }
 
-        return new InputCommand[]
+        return new[]
         {
             new("init", BuildInternalCommandLineString("init")),
-            new("d.m.t 1", BuildInternalCommandLineString("define machine-type add foo generic/alpine38 4 128 Debian_64 10.9.0 --vram-mb 16 --enabled")),
-            new("d.m.t 2", BuildInternalCommandLineString("define machine-type add bar generic/alpine38 4 128 Debian_64 10.9.0 --vram-mb 16 --enabled")),
-            new("d.m 1", BuildInternalCommandLineString("define machine add foo foo 4 --enabled ")),
-            new("d.m 2", BuildInternalCommandLineString("define machine add bar bar 4 --enabled")),
-            new("name", BuildInternalCommandLineString("name bar-0 foo-[2-*]")),
-            new("status", BuildInternalCommandLineString("status bar-* foo-[2-*]")),
-            new("up foo0", BuildInternalCommandLineString("up foo-0")),
-            new("up foo2-*", BuildInternalCommandLineString("up foo-[2-*]")),
-            new("status bar* foo2-*", BuildInternalCommandLineString("status bar-* foo-[2-*]")),
-            new("halt bar-* foo2-*", BuildInternalCommandLineString("halt bar-* foo-[2-*]")),
-            new("destroy foo2", BuildInternalCommandLineString("destroy foo-2 --force")),
-            new("destroy all", BuildInternalCommandLineString("destroy --force"))
+            new InputCommand("d.m.t 1",
+                BuildInternalCommandLineString(
+                    "define machine-type add foo generic/alpine38 4 128 Debian_64 10.9.0 --vram-mb 16 --enabled")),
+            new InputCommand("d.m.t 2",
+                BuildInternalCommandLineString(
+                    "define machine-type add bar generic/alpine38 4 128 Debian_64 10.9.0 --vram-mb 16 --enabled")),
+            new InputCommand("d.m 1", BuildInternalCommandLineString("define machine add foo foo 4 --enabled ")),
+            new InputCommand("d.m 2", BuildInternalCommandLineString("define machine add bar bar 4 --enabled")),
+            new InputCommand("name", BuildInternalCommandLineString("name bar-0 foo-[2-*]")),
+            new InputCommand("status", BuildInternalCommandLineString("status bar-* foo-[2-*]")),
+            new InputCommand("up foo0", BuildInternalCommandLineString("up foo-0")),
+            new InputCommand("up foo2-*", BuildInternalCommandLineString("up foo-[2-*]")),
+            new InputCommand("status bar* foo2-*", BuildInternalCommandLineString("status bar-* foo-[2-*]")),
+            new InputCommand("halt bar-* foo2-*", BuildInternalCommandLineString("halt bar-* foo-[2-*]")),
+            new InputCommand("destroy foo2", BuildInternalCommandLineString("destroy foo-2 --force")),
+            new InputCommand("destroy all", BuildInternalCommandLineString("destroy --force"))
         };
     }
 
@@ -145,14 +148,14 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
         await unitTest.ExecuteAndAssertAsync<ExecutionContext>(
             async (provider, _, _, _) =>
             {
-                var sut = provider.GetRequiredService<SubjectUnderTest>().RootCommand;
+                RootCommand? sut = provider.GetRequiredService<SubjectUnderTest>().RootCommand;
 
-                foreach (var workingDir in workingDirectories)
-                    foreach (var command in commands)
-                    {
-                        var vosCommand = $"{command.Command.Replace(WorkingDirectoryMarker, workingDir)}";
-                        await execCommand(vosCommand, sut);
-                    }
+                foreach (string? workingDir in workingDirectories)
+                foreach (InputCommand? command in commands)
+                {
+                    var vosCommand = $"{command.Command.Replace(WorkingDirectoryMarker, workingDir)}";
+                    await execCommand(vosCommand, sut);
+                }
             },
             (_, _, _) => Task.CompletedTask,
             unitTest.GetScopedServiceProvider(),

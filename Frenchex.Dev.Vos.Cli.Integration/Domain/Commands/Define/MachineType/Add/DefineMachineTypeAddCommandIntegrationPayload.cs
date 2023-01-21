@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -15,6 +13,7 @@ public class DefineMachineTypeAddCommandIntegrationPayload : CommandIntegrationP
 {
     public string? Name { get; set; }
     public string? BoxName { get; set; }
+    public string? BoxVersion { get; set; }
     public string? OsType { get; set; }
     public string? OsVersion { get; set; }
     public int VCpus { get; set; }

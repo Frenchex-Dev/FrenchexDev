@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -22,12 +20,10 @@ public interface IDefineProvisioningMapCommandRequestBuilder : IRootCommandReque
     IDefineProvisioningMapCommandRequestBuilder UsingNames(string[] names);
     IDefineProvisioningMapCommandRequestBuilder UsingProvisioning(string name);
     IDefineProvisioningMapCommandRequestBuilder UsingEnv(IDictionary<string, string>? env);
-    IDefineProvisioningMapCommandRequestBuilder Enable();
-    IDefineProvisioningMapCommandRequestBuilder Disable();
-    IDefineProvisioningMapCommandRequestBuilder Version(string version);
-    IDefineProvisioningMapCommandRequestBuilder Privileged();
-    IDefineProvisioningMapCommandRequestBuilder Unprivileged();
-    IDefineProvisioningMapCommandRequestBuilder Machine();
-    IDefineProvisioningMapCommandRequestBuilder MachineType();
+    IDefineProvisioningMapCommandRequestBuilder Enabled(bool? enabled);
+    IDefineProvisioningMapCommandRequestBuilder Version(string? version);
+    IDefineProvisioningMapCommandRequestBuilder Privileged(bool? privileged);
+    IDefineProvisioningMapCommandRequestBuilder Machine(bool? machine);
+    IDefineProvisioningMapCommandRequestBuilder MachineType(bool? machineType);
     IDefineProvisioningMapCommandRequest Build();
 }

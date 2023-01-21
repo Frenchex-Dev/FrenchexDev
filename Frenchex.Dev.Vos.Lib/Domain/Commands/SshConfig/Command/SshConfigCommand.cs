@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -50,20 +48,21 @@ public class SshConfigCommand : RootCommand, ISshConfigCommand
 
     public async Task<ISshConfigCommandResponse> ExecuteAsync(ISshConfigCommandRequest request)
     {
-        var process = _vagrantSshConfigCommand.StartProcess(_vagrantSshConfigCommandRequestBuilderFactory.Factory()
-            .BaseBuilder
-            .UsingWorkingDirectory(request.BaseCommand.WorkingDirectory)
-            .UsingTimeout(request.BaseCommand.Timeout)
-            .Parent<ISshConfigCommandRequestBuilder>()
-            .UsingName(
-                MapNamesToVagrantNames(
-                    request.NamesOrIds,
-                    request.BaseCommand.WorkingDirectory,
-                    await ConfigurationLoad(request.BaseCommand.WorkingDirectory)
-                )[0]
-            )
-            .Build()
-        );
+        Vagrant.Lib.Abstractions.Domain.Commands.SshConfig.Response.ISshConfigCommandResponse? process =
+            _vagrantSshConfigCommand.StartProcess(_vagrantSshConfigCommandRequestBuilderFactory.Factory()
+                .BaseBuilder
+                .UsingWorkingDirectory(request.BaseCommand.WorkingDirectory)
+                .UsingTimeout(request.BaseCommand.Timeout)
+                .Parent<ISshConfigCommandRequestBuilder>()
+                .UsingName(
+                    MapNamesToVagrantNames(
+                        request.NamesOrIds,
+                        request.BaseCommand.WorkingDirectory,
+                        await ConfigurationLoad(request.BaseCommand.WorkingDirectory)
+                    )[0]
+                )
+                .Build()
+            );
 
         if (null == process.ProcessExecutionResult.WaitForCompleteExit
             || null == process.ProcessExecutionResult.OutputStream
@@ -74,8 +73,8 @@ public class SshConfigCommand : RootCommand, ISshConfigCommand
 
         process.ProcessExecutionResult.OutputStream.Position = 0;
         var reader = new StreamReader(process.ProcessExecutionResult.OutputStream);
-        var output = await reader.ReadToEndAsync();
-        var responseBuilder = _responseBuilderFactory.Build();
+        string? output = await reader.ReadToEndAsync();
+        ISshConfigCommandResponseBuilder? responseBuilder = _responseBuilderFactory.Build();
 
         responseBuilder.WithContent(output);
 

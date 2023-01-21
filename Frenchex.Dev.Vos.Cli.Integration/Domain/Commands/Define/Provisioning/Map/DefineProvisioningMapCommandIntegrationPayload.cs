@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -18,4 +16,5 @@ public class DefineProvisioningMapCommandIntegrationPayload : CommandIntegration
     public string? Provision { get; set; }
     public bool Enable { get; set; }
     public string? Version { get; set; }
+    public bool Privileged { get; set; }
 }

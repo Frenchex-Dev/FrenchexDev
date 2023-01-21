@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -48,38 +46,39 @@ public class SshCommand : RootCommand, ISshCommand
 
     public async Task<ISshCommandResponse> ExecuteAsync(ISshCommandRequest request)
     {
-        foreach (var command in request.Commands)
+        foreach (string? command in request.Commands)
         {
-            var vagrantMachines = MapNamesToVagrantNames(
+            string[]? vagrantMachines = MapNamesToVagrantNames(
                 request.NamesOrIds,
                 request.BaseCommand.WorkingDirectory,
                 await ConfigurationLoad(request.BaseCommand.WorkingDirectory)
             );
 
-            foreach (var vagrantMachine in vagrantMachines)
+            foreach (string? vagrantMachine in vagrantMachines)
             {
-                var response = _vagrantSshCommand.StartProcess(_vagrantSshCommandRequestBuilderFactory.Factory()
-                    .BaseBuilder
-                    .UsingTimeout(request.BaseCommand.Timeout)
-                    .UsingWorkingDirectory(request.BaseCommand.WorkingDirectory)
-                    .Parent<ISshCommandRequestBuilder>()
-                    .UsingCommand(command)
-                    .UsingNameOrId(vagrantMachine)
-                    .Build()
-                );
+                Vagrant.Lib.Abstractions.Domain.Commands.Ssh.Response.ISshCommandResponse? response =
+                    _vagrantSshCommand.StartProcess(_vagrantSshCommandRequestBuilderFactory.Factory()
+                        .BaseBuilder
+                        .UsingTimeout(request.BaseCommand.Timeout)
+                        .UsingWorkingDirectory(request.BaseCommand.WorkingDirectory)
+                        .Parent<ISshCommandRequestBuilder>()
+                        .UsingCommand(command)
+                        .UsingNameOrId(vagrantMachine)
+                        .Build()
+                    );
 
                 if (null == response.ProcessExecutionResult.WaitForCompleteExit)
                     throw new InvalidOperationException("wait for complete exit is null");
 
                 await response.ProcessExecutionResult.WaitForCompleteExit;
 
-                var output =
+                string? output =
                     Encoding.UTF8.GetString(response.ProcessExecutionResult.OutputStream?.ToArray() ??
                                             Array.Empty<byte>());
             }
         }
 
-        var responseBuilder = _responseBuilderFactory.Build();
+        ISshCommandResponseBuilder? responseBuilder = _responseBuilderFactory.Build();
 
         return responseBuilder.Build();
     }

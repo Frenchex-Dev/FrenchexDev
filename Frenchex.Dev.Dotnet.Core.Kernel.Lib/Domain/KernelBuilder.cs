@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -26,7 +24,7 @@ public class KernelBuilder : IKernelBuilder
     )
     {
         await dependenciesCollectionFunc.Invoke(serviceCollection);
-        var serviceProvider = serviceCollection.BuildServiceProvider();
+        ServiceProvider? serviceProvider = serviceCollection.BuildServiceProvider();
         var kernel = new Kernel(serviceProvider);
         return kernel;
     }
@@ -37,7 +35,7 @@ public class KernelBuilder : IKernelBuilder
     )
     {
         dependenciesCollectionAction.Invoke(serviceCollection);
-        var serviceProvider = serviceCollection.BuildServiceProvider();
+        ServiceProvider? serviceProvider = serviceCollection.BuildServiceProvider();
         var kernel = new Kernel(serviceProvider);
         return kernel;
     }

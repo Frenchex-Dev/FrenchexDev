@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -33,9 +31,11 @@ public static class ServicesConfiguration
             .AddScoped<IDefineProvisioningMapCommand, DefineProvisioningMapCommand>()
             .AddScoped<IDefineProvisioningMapCommandFacade, DefineProvisioningMapCommandFacade>()
             .AddScoped<IDefineProvisioningMapCommandRequestBuilder, DefineProvisioningMapCommandRequestBuilder>()
-            .AddScoped<IDefineProvisioningMapCommandRequestBuilderFactory, DefineProvisioningMapCommandRequestBuilderFactory>()
+            .AddScoped<IDefineProvisioningMapCommandRequestBuilderFactory,
+                DefineProvisioningMapCommandRequestBuilderFactory>()
             .AddScoped<IDefineProvisioningMapCommandResponseBuilder, DefineProvisioningMapCommandResponseBuilder>()
-            .AddScoped<IDefineProvisioningMapCommandResponseBuilderFactory, DefineProvisioningMapCommandResponseBuilderFactory>()
+            .AddScoped<IDefineProvisioningMapCommandResponseBuilderFactory,
+                DefineProvisioningMapCommandResponseBuilderFactory>()
             ;
 
         return serviceCollection;

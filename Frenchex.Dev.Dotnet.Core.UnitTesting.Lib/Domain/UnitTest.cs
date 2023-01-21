@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -14,7 +12,6 @@
 using System.Diagnostics;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
-using Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib;
 using Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib.Domain;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -87,12 +84,12 @@ public class UnitTest : IAsyncDisposable
         VsCodeDebugging? vsCodeDebugging = null
     ) where T : WithWorkingDirectoryExecutionContext
     {
-        var timeoutMs = serviceProvider.GetRequiredService<ITimeSpanTooling>().GetTotalMsConvertedToInt(timeBox, -1);
+        int timeoutMs = serviceProvider.GetRequiredService<ITimeSpanTooling>().GetTotalMsConvertedToInt(timeBox, -1);
         if (timeoutMs == -1) throw new CannotParseString("timeout cannot be -1");
 
-        var timeout = Task.Delay(timeoutMs);
+        Task? timeout = Task.Delay(timeoutMs);
 
-        var run = RunInternalTaskAsync(
+        Task? run = RunInternalTaskAsync(
             executeFunc,
             assertFunc,
             (_, _, _) => Task.CompletedTask,
@@ -104,7 +101,7 @@ public class UnitTest : IAsyncDisposable
 
         if (vsCodeDebugging?.DevDebugging == false || _vsCodeDebugging?.DevDebugging == false) tasks.Add(timeout);
 
-        var firstFinishedTask = await Task.WhenAny(tasks);
+        Task? firstFinishedTask = await Task.WhenAny(tasks);
 
         if (firstFinishedTask == run && firstFinishedTask.IsCompletedSuccessfully) return;
 
@@ -123,12 +120,12 @@ public class UnitTest : IAsyncDisposable
         VsCodeDebugging? vsCodeDebugging = null
     ) where T : WithWorkingDirectoryExecutionContext
     {
-        var timeoutMs = serviceProvider.GetRequiredService<ITimeSpanTooling>().GetTotalMsConvertedToInt(timeBox, -1);
+        int timeoutMs = serviceProvider.GetRequiredService<ITimeSpanTooling>().GetTotalMsConvertedToInt(timeBox, -1);
         if (timeoutMs == -1) throw new CannotParseString("timeout cannot be -1");
 
-        var timeout = Task.Delay(timeoutMs);
+        Task? timeout = Task.Delay(timeoutMs);
 
-        var run = RunInternalTaskAsync(
+        Task? run = RunInternalTaskAsync(
             executeFunc,
             assertFunc,
             cleanupFunc,
@@ -140,7 +137,7 @@ public class UnitTest : IAsyncDisposable
 
         if (vsCodeDebugging?.DevDebugging == false || _vsCodeDebugging?.DevDebugging == false) tasks.Add(timeout);
 
-        var firstFinishedTask = await Task.WhenAny(tasks);
+        Task? firstFinishedTask = await Task.WhenAny(tasks);
 
         if (firstFinishedTask == timeout) throw new TimeoutException($"timeout {timeBox}");
     }
@@ -215,9 +212,9 @@ public class UnitTest : IAsyncDisposable
             if (_vsCodeDebugging?.VsProcess is not null)
                 return;
 
-            var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+            bool isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
 
-            _vsCodeDebugging!.VsProcess = Process.Start(new ProcessStartInfo()
+            _vsCodeDebugging!.VsProcess = Process.Start(new ProcessStartInfo
             {
                 Arguments = "-n " + workingDirectory,
                 WorkingDirectory = workingDirectory,
@@ -229,7 +226,8 @@ public class UnitTest : IAsyncDisposable
 
         var executionContextObject = serviceProvider.GetRequiredService<T>();
 
-        if (_vsCodeDebugging?.Open == true) openVsCodeDebugging.Invoke(executionContextObject.WorkingDirectory!);
+        if (_vsCodeDebugging?.Open == true && _vsCodeDebugging.OpenAuto)
+            openVsCodeDebugging.Invoke(executionContextObject.WorkingDirectory!);
 
         Exception? thrownException = null;
 
@@ -261,7 +259,7 @@ public class UnitTest : IAsyncDisposable
 
         if (thrownException is not null)
         {
-            var capture = ExceptionDispatchInfo.Capture(thrownException);
+            ExceptionDispatchInfo? capture = ExceptionDispatchInfo.Capture(thrownException);
             capture.Throw();
         }
     }
@@ -283,7 +281,7 @@ public class UnitTest : IAsyncDisposable
 
         _configureConfigurationFunc.Invoke(configurationBuilder);
 
-        var configuration = configurationBuilder.Build();
+        IConfigurationRoot? configuration = configurationBuilder.Build();
 
         var services = new ServiceCollection();
 
@@ -293,7 +291,7 @@ public class UnitTest : IAsyncDisposable
         _configureMocksFunc?.Invoke(services, configuration);
 
         OriginalServiceProvider = services.BuildServiceProvider(new ServiceProviderOptions
-        { ValidateScopes = true, ValidateOnBuild = true });
+            { ValidateScopes = true, ValidateOnBuild = true });
 
         DefaultAsyncScope = OriginalServiceProvider.CreateAsyncScope();
         ScopedServiceProvider = GetDefaultAsyncScope().ServiceProvider;
@@ -312,6 +310,7 @@ public class UnitTest : IAsyncDisposable
 
         public Process? VsProcess { get; set; }
         public bool DevDebugging { get; init; } = false;
+        public bool OpenAuto { get; set; }
 
         public async ValueTask DisposeAsync()
         {

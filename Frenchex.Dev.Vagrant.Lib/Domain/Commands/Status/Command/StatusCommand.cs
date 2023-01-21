@@ -4,14 +4,13 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
 #region
 
 using Frenchex.Dev.Dotnet.Core.Filesystem.Lib.Domain;
+using Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.Process;
 using Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.ProcessBuilder;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Status.Command;
 using Frenchex.Dev.Vagrant.Lib.Abstractions.Domain.Commands.Status.Request;
@@ -39,9 +38,9 @@ public class StatusCommand : RootCommand, IStatusCommand
 
     public IStatusCommandResponse StartProcess(IStatusCommandRequest request)
     {
-        var responseBuilder = _responseBuilderFactory.Build();
+        IStatusCommandResponseBuilder? responseBuilder = _responseBuilderFactory.Build();
 
-        var processExecution = BuildAndStartProcess(
+        ProcessExecutionResult? processExecution = BuildAndStartProcess(
             request,
             responseBuilder,
             BuildArguments(request)

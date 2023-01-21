@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -49,11 +47,9 @@ public class MachineBaseDefinitionDeclaration
     [JsonProperty("box")] public string? Box { get; set; }
     [JsonProperty("box_version")] public string? BoxVersion { get; set; }
 
-    [JsonProperty("provisioning")]
-    public Dictionary<string, ProvisioningDefinition>? Provisioning { get; set; }
+    [JsonProperty("provisioning")] public Dictionary<string, ProvisioningDefinition>? Provisioning { get; set; }
 
     [JsonProperty("files")] public Dictionary<string, FileCopyDefinition>? Files { get; set; }
 
-    [JsonProperty("shared_folders")]
-    public Dictionary<string, SharedFolderDefinition>? SharedFolders { get; set; }
+    [JsonProperty("shared_folders")] public Dictionary<string, SharedFolderDefinition>? SharedFolders { get; set; }
 }

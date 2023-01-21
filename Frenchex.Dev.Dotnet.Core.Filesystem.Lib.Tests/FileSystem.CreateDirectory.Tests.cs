@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -45,7 +43,7 @@ public class FileSystemCreateDirectoryTests : AbstractUnitTest
                 {
                     var fs = provider.GetRequiredService<IFilesystem>();
 
-                    var originalFileName = Path.GetFileName(originalFile);
+                    string? originalFileName = Path.GetFileName(originalFile);
                     context.FullDestinationDirectory = Path.Join(Path.GetTempPath(), originalFileName);
 
                     await Task.Run(() => { fs.DirectoryCreate(context.FullDestinationDirectory); });
@@ -58,7 +56,7 @@ public class FileSystemCreateDirectoryTests : AbstractUnitTest
                 {
                     await Task.Run(() =>
                     {
-                        var fileToDelete = context.FullDestinationDirectory;
+                        string? fileToDelete = context.FullDestinationDirectory;
                         Directory.Delete(fileToDelete!, true);
                     });
                 },

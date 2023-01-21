@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -53,7 +51,7 @@ public class UnitTestingTests
             unitTest.GetScopedServiceProvider()
         );
 
-        var buildingOk =
+        bool buildingOk =
             executionContext
                 .HasRanConfigureConfigurationFunction
                 .HasRanBefore(executionContext.HasRanConfigureServicesFunction)
@@ -62,7 +60,7 @@ public class UnitTestingTests
                 .HasRanConfigureServicesFunction
                 .HasRanBefore(executionContext.HasRanConfigureMocksFunction);
 
-        var executionOk = executionContext.HasRanExecutionFunction.HasRanBefore(executionContext.HasRanAssertFunction);
+        bool executionOk = executionContext.HasRanExecutionFunction.HasRanBefore(executionContext.HasRanAssertFunction);
 
         Assert.IsTrue(buildingOk);
         Assert.IsTrue(executionOk);
@@ -79,7 +77,7 @@ public class UnitTestingTests
 
         public bool HasRanBefore(HasRanFunction functionWhichShouldHaveRanBefore)
         {
-            var result = Time < functionWhichShouldHaveRanBefore.Time;
+            bool result = Time < functionWhichShouldHaveRanBefore.Time;
             return result;
         }
     }

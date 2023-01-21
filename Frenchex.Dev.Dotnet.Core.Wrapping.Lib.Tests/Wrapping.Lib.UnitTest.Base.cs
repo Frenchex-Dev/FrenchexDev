@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -32,7 +30,7 @@ public static class WrappingLibUnitTestBase
             (services, _) =>
             {
                 var configurationBuilder = new ConfigurationBuilder();
-                var configuration = configurationBuilder.Build();
+                IConfigurationRoot? configuration = configurationBuilder.Build();
 
                 services.AddScoped<IConfiguration>(_ => configuration);
 

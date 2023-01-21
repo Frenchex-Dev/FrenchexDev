@@ -4,13 +4,13 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
 #region
 
+using System.Net;
+using System.Net.NetworkInformation;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Networking;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.Machine.Add.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Request;
@@ -26,8 +26,6 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Up.Request;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
 using Microsoft.Extensions.DependencyInjection;
-using System.Net;
-using System.Net.NetworkInformation;
 
 #endregion
 
@@ -35,7 +33,7 @@ namespace Frenchex.Dev.Vos.Lib.Tests.Domain.UseCases.FullWorkflow2;
 
 public class Builder
 {
-    private const string BoxTest = "generic/alpine317";
+    private const string BoxTest = "roboxes/alpine317";
     private const string BoxVersionTest = "4.2.8";
 
     public Func<string, IServiceProvider, IInitCommandRequest> BuildInitCommandRequestBuilder =>
@@ -48,49 +46,51 @@ public class Builder
             .WithGivenLeadingZeroes(2)
             .Build();
 
-    public Func<string, IServiceProvider, List<IDefineMachineTypeAddCommandRequest>> BuildDefineMachineTypeAddCommandRequestsListBuilder =>
+    public Func<string, IServiceProvider, List<IDefineMachineTypeAddCommandRequest>>
+        BuildDefineMachineTypeAddCommandRequestsListBuilder =>
         (workingDirectory, serviceProvider) =>
         {
-            List<IDefineMachineTypeAddCommandRequest> list = new()
+            var list = new List<IDefineMachineTypeAddCommandRequest>
             {
                 BuildDefineMachineTypeAddCommandRequestWithSpecifiedBoxNameAndVersion(
                     workingDirectory,
                     "foo",
                     BoxTest,
                     BoxVersionTest,
-                    serviceProvider),
+                    serviceProvider)
             };
 
             return list;
         };
 
-    public Func<string, IServiceProvider, List<IDefineMachineAddCommandRequest>> BuildDefineMachineAddCommandRequestsListBuilder =>
+    public Func<string, IServiceProvider, List<IDefineMachineAddCommandRequest>>
+        BuildDefineMachineAddCommandRequestsListBuilder =>
         (workingDirectory, serviceProvider) =>
         {
-            List<(NetworkInterface n, List<IPAddress?>?)> defaultSystemNetworkBridge = serviceProvider
+            var defaultSystemNetworkBridge = serviceProvider
                 .GetRequiredService<IDefaultGatewayResolverAction>()
                 .ResolveDefaultGateway();
 
             var payloads = new List<DefineMachineAddCommandRequestPayload>
             {
-                new("foo", "foo", "10.100.2.#INSTANCE#", true),
+                new("foo", "foo", "10.100.2.#INSTANCE#", true)
             };
 
             return payloads.Select(payload => BuildDefineMachineAddCommandRequest(
-              workingDirectory: workingDirectory,
-              timeBox: "20s",
-              ramInMb: 256,
-              vCpus: 4,
-              machineTypeDefinitionName: payload.MachineTypeName,
-              name: payload.Name,
-              instances: 1,
-              ipv4Start: 2,
-              ipv4Pattern: payload.Ipv4Pattern,
-              isPrimary: payload.IsPrimary,
-              enabled: true,
-              defaultSystemNetworkBridge: defaultSystemNetworkBridge,
-              defineMachineAddCommandRequestBuilderFactory: serviceProvider.GetRequiredService<IDefineMachineAddCommandRequestBuilderFactory>(),
-              machineDefinitionBuilderFactory: serviceProvider.GetRequiredService<MachineDefinitionBuilderFactory>()
+                workingDirectory,
+                "20s",
+                256,
+                4,
+                payload.MachineTypeName,
+                payload.Name,
+                1,
+                2,
+                payload.Ipv4Pattern,
+                payload.IsPrimary,
+                true,
+                defaultSystemNetworkBridge,
+                serviceProvider.GetRequiredService<IDefineMachineAddCommandRequestBuilderFactory>(),
+                serviceProvider.GetRequiredService<MachineDefinitionBuilderFactory>()
             )).ToList();
         };
 
@@ -100,7 +100,7 @@ public class Builder
             var factory = serviceProvider.GetRequiredService<INameCommandRequestBuilderFactory>();
             var list = new List<NameCommandRequestPayload>();
 
-            var nameCommandRequest = factory.Factory()
+            INameCommandRequest? nameCommandRequest = factory.Factory()
                 .BaseBuilder
                 .UsingWorkingDirectory(workingDirectory)
                 .UsingTimeout("20s")
@@ -147,7 +147,7 @@ public class Builder
                     .UsingNames(new[] { "foo-0" })
                     .WithParallel(true)
                     .WithProvision(false)
-                    .Build(),
+                    .Build()
             };
         };
 
@@ -244,7 +244,8 @@ public class Builder
             };
         };
 
-    public Func<string, IServiceProvider, List<IDefineProvisioningMapCommandRequest>> BuildDefineProvisioningMapCommandRequestListBuilder =>
+    public Func<string, IServiceProvider, List<IDefineProvisioningMapCommandRequest>>
+        BuildDefineProvisioningMapCommandRequestListBuilder =>
         (workingDirectory, serviceProvider) =>
         {
             return new List<IDefineProvisioningMapCommandRequest>
@@ -254,28 +255,28 @@ public class Builder
                     .UsingWorkingDirectory(workingDirectory)
                     .UsingTimeout("1m")
                     .Parent<IDefineProvisioningMapCommandRequestBuilder>()
-                    .UsingNames(new string[]{"foo-0"})
+                    .UsingNames(new[] { "foo-0" })
                     .UsingProvisioning("docker-ce/install")
-                    .Privileged()
+                    .Privileged(true)
                     .Version("v1")
-                    .Enable()
-                    .Build(),
+                    .Enabled(true)
+                    .Build()
             };
         };
 
     public Func<string, IServiceProvider, List<IProvisionCommandRequest>> BuildProvisionCommandRequestsListBuilder =>
         (workingDirectory, provider) =>
         {
-            return new List<IProvisionCommandRequest>()
+            return new List<IProvisionCommandRequest>
             {
                 provider.GetRequiredService<IProvisionCommandRequestBuilderFactory>().Factory()
                     .BaseBuilder
                     .UsingWorkingDirectory(workingDirectory)
                     .UsingTimeout("10m")
                     .Parent<IProvisionCommandRequestBuilder>()
-                    .UsingNames(new string[]{"foo-0"})
-                    .UsingProvisionWith(new string[]{"docker-ce/install"})
-                    .Build(),
+                    .UsingNames(new[] { "foo-0" })
+                    .UsingProvisionWith(new[] { "docker-ce/install" })
+                    .Build()
             };
         };
 
@@ -351,7 +352,8 @@ public class Builder
 
     private class DefineMachineAddCommandRequestPayload
     {
-        public DefineMachineAddCommandRequestPayload(string name, string machineTypeName, string ipv4Pattern, bool isPrimary)
+        public DefineMachineAddCommandRequestPayload(string name, string machineTypeName, string ipv4Pattern,
+            bool isPrimary)
         {
             Name = name;
             MachineTypeName = machineTypeName;

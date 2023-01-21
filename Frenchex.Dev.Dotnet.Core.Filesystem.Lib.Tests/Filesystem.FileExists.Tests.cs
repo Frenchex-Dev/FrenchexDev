@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -60,7 +58,7 @@ public class FilesystemFileExistsTests : AbstractUnitTest
             {
                 await Task.Run(() =>
                 {
-                    var fileToDelete = context.FullDestinationFile;
+                    string? fileToDelete = context.FullDestinationFile;
                     File.Delete(fileToDelete!);
                 });
             },

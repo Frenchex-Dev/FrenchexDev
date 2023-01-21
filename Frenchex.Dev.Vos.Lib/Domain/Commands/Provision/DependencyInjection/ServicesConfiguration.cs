@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -19,7 +17,6 @@ using Frenchex.Dev.Vos.Lib.Domain.Commands.Provision.Command;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Provision.Facade;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Provision.Request;
 using Frenchex.Dev.Vos.Lib.Domain.Commands.Provision.Response;
-using Frenchex.Dev.Vos.Lib.Domain.Commands.Up.Request;
 using Microsoft.Extensions.DependencyInjection;
 
 #endregion

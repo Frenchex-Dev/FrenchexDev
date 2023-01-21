@@ -4,15 +4,13 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
 #region
 
-using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Naming;
 using System.Text.RegularExpressions;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Actions.Naming;
 
 #endregion
 
@@ -33,12 +31,13 @@ public class VosNameToVagrantNameConverter : IVosNameToVagrantNameConverter
     )
     {
         return ConvertAllInternal(
-            inputNamedPatterns: inputNamedPatterns,
-            workingDirectory: workingDirectory,
-            configuration: configuration,
-            machineNames: false
+            inputNamedPatterns,
+            workingDirectory,
+            configuration,
+            false
         );
     }
+
     public string[] GetMachineNames(
         string[] inputNamedPatterns,
         string? workingDirectory,
@@ -46,10 +45,10 @@ public class VosNameToVagrantNameConverter : IVosNameToVagrantNameConverter
     )
     {
         return ConvertAllInternal(
-            inputNamedPatterns: inputNamedPatterns,
-            workingDirectory: workingDirectory,
-            configuration: configuration,
-            machineNames: true
+            inputNamedPatterns,
+            workingDirectory,
+            configuration,
+            true
         );
     }
 
@@ -60,24 +59,21 @@ public class VosNameToVagrantNameConverter : IVosNameToVagrantNameConverter
         bool machineNames
     )
     {
-        if (null == configuration)
-        {
-            throw new ArgumentNullException(nameof(configuration));
-        }
+        if (null == configuration) throw new ArgumentNullException(nameof(configuration));
 
-        List<string> list = new();
-        var dirBase = Path.GetFileName(workingDirectory);
+        var list = new List<string>();
+        string? dirBase = Path.GetFileName(workingDirectory);
 
         if (null == dirBase)
             throw new ArgumentNullException(nameof(dirBase));
 
-        var prefixWithDirBase = configuration.Vagrant.PrefixWithDirBase;
-        var namingPattern = configuration.Vagrant.NamingPattern;
+        bool prefixWithDirBase = configuration.Vagrant.PrefixWithDirBase;
+        string? namingPattern = configuration.Vagrant.NamingPattern;
 
-        foreach (var name in inputNamedPatterns)
+        foreach (string? name in inputNamedPatterns)
         {
-            var _name = name.Trim().ToLowerInvariant();
-            var matchesPatternFromToWildcard = PatternFromToWildcard.Matches(_name);
+            string? _name = name.Trim().Trim('"', '\'').ToLowerInvariant();
+            MatchCollection? matchesPatternFromToWildcard = PatternFromToWildcard.Matches(_name);
             var from = 0;
             var to = 0;
             var machineName = "";
@@ -86,82 +82,80 @@ public class VosNameToVagrantNameConverter : IVosNameToVagrantNameConverter
             switch (matchesPatternFromToWildcard.Count)
             {
                 case 0:
+                {
+                    MatchCollection? matchesPatternFromTo = PatternFromTo.Matches(_name);
+
+                    Match? firstMatches = matchesPatternFromTo.FirstOrDefault();
+
+                    if (firstMatches == null && machineNames)
                     {
-                        var matchesPatternFromTo = PatternFromTo.Matches(_name);
-
-                        var firstMatches = matchesPatternFromTo.FirstOrDefault();
-
-                        if (firstMatches == null && machineNames)
-                        {
-                            list.Add(_name);
-                            continue;
-                        }
-
-                        if (firstMatches.Groups.ContainsKey("machine"))
-                        {
-                            machineName = firstMatches.Groups["machine"].Value.Trim().ToLowerInvariant();
-                        }
-
-                        if (machineNames)
-                        {
-                            list.Add(machineName);
-                            continue;
-                        }
-
-                        if (firstMatches.Groups.ContainsKey("instance"))
-                        {
-                            instances = firstMatches.Groups["instance"].Value.Trim().ToLowerInvariant();
-                        }
-
-                        if (instances == "*")
-                            to = (configuration?.Machines[machineName].Instances ?? 0) - 1;
-                        else
-                            from = to = int.Parse(instances);
-
-                        break;
+                        list.Add(_name);
+                        continue;
                     }
-                case > 0:
+
+                    if (firstMatches.Groups.ContainsKey("machine"))
+                        machineName = firstMatches.Groups["machine"].Value.Trim().ToLowerInvariant();
+
+                    if (machineNames)
                     {
-                        var firstMatches = matchesPatternFromToWildcard.First();
+                        list.Add(machineName);
+                        continue;
+                    }
 
-                        if (firstMatches.Groups.ContainsKey("machine"))
-                            machineName = firstMatches.Groups["machine"].Value.Trim().ToLowerInvariant();
+                    if (firstMatches.Groups.ContainsKey("instance"))
+                        instances = firstMatches.Groups["instance"].Value.Trim().ToLowerInvariant();
 
-                        if (firstMatches.Groups.ContainsKey("instance"))
-                            instances = firstMatches.Groups["instance"].Value.Trim().ToLowerInvariant();
+                    if (instances == "*")
+                        to = (configuration?.Machines[machineName].Instances ?? 0) - 1;
+                    else
+                        from = to = int.Parse(instances);
+
+                    break;
+                }
+                case > 0:
+                {
+                    Match? firstMatches = matchesPatternFromToWildcard.First();
+
+                    if (firstMatches.Groups.ContainsKey("machine"))
+                        machineName = firstMatches.Groups["machine"].Value.Trim().ToLowerInvariant();
+
+                    if (firstMatches.Groups.ContainsKey("instance"))
+                        instances = firstMatches.Groups["instance"].Value.Trim().ToLowerInvariant();
 
 
-                        if (instances.Contains('-')) // [2-*], [2-3-4], 
+                    if (instances.Contains('-')) // [2-*], [2-3-4], 
+                    {
+                        string[]? instancesSplit = instances.Split('-');
+
+                        from = int.Parse(instancesSplit[0]);
+
+                        if (instancesSplit.Length == 2)
                         {
-                            var instancesSplit = instances.Split('-');
+                            string? instanceSplitTo = instancesSplit[1];
 
-                            from = int.Parse(instancesSplit[0]);
-
-                            if (instancesSplit.Length == 2)
+                            if (instanceSplitTo == "*")
                             {
-                                var instanceSplitTo = instancesSplit[1];
-
-                                if (instanceSplitTo == "*")
-                                {
-                                    to = (configuration?.Machines[machineName]?.Instances - 1) ?? 0;
-                                }
-                                else
-                                {
-                                    to = int.Parse(instanceSplitTo);
-                                }
+                                if (!configuration.Machines.ContainsKey(machineName))
+                                    throw new Exception($"unknown machine  ${machineName}");
+                                to = configuration?.Machines[machineName]?.Instances - 1 ?? 0;
+                            }
+                            else
+                            {
+                                to = int.Parse(instanceSplitTo);
                             }
                         }
-
-                        break;
                     }
+
+                    break;
+                }
             }
 
             if (from > to)
                 throw new InvalidDataException("from is gt to");
 
-            for (var i = from; i <= to; i++)
+            for (int i = from; i <= to; i++)
             {
-                var instanceAsStr = string.Format(
+                string? instanceAsStr = string.Format(
                     $"{{0,{configuration?.Vagrant?.Zeroes}:D{configuration?.Vagrant?.Zeroes}}}",
                     i);
 

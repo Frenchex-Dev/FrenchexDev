@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -16,6 +14,7 @@ using Frenchex.Dev.Vos.Cli.Integration.Domain.Arguments;
 using Frenchex.Dev.Vos.Cli.Integration.Domain.Options;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Command;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Request;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Define.MachineType.Add.Response;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Definitions;
 
 #endregion
@@ -25,13 +24,14 @@ namespace Frenchex.Dev.Vos.Cli.Integration.Domain.Commands.Define.MachineType.Ad
 public class DefineMachineTypeAddCommandIntegration : ABaseCommandIntegration, IDefineMachineTypeAddCommandIntegration
 {
     private readonly IBoxNameArgumentBuilder _boxNameArgumentBuilder;
+    private readonly IBoxVersionArgumentBuilder _boxVersionArgumentBuilder;
     private readonly IDefineMachineTypeAddCommand _command;
     private readonly IEnabled3dOptionBuilder _enabled3dOptionBuilder;
     private readonly IEnabledOptionBuilder _enabledOptionBuilder;
     private readonly IMachineTypeDefinitionBuilderFactory _machineTypeDefinitionBuilder;
     private readonly INameArgumentBuilder _nameArgumentBuilder;
     private readonly IOsTypeArgumentBuilder _osTypeArgumentBuilder;
-    private readonly IOsVersionArgumentBuilder _osVersionArgumentBuilder;
+    private readonly IOsVersionOptionBuilder _osVersionOptionBuilder;
     private readonly IRamMbArgumentBuilder _ramMbArgumentBuilder;
     private readonly IDefineMachineTypeAddCommandRequestBuilderFactory _requestBuilderFactory;
     private readonly IVirtualCpusArgumentBuilder _virtualCpusArgumentBuilder;
@@ -43,10 +43,11 @@ public class DefineMachineTypeAddCommandIntegration : ABaseCommandIntegration, I
         IMachineTypeDefinitionBuilderFactory machineTypeDefinitionBuilderFactory,
         INameArgumentBuilder nameArgumentBuilder,
         IBoxNameArgumentBuilder boxNameArgumentBuilder,
+        IBoxVersionArgumentBuilder boxVersionArgumentBuilder,
         IVirtualCpusArgumentBuilder virtualCpusArgumentBuilder,
         IRamMbArgumentBuilder ramMbArgumentBuilder,
         IOsTypeArgumentBuilder osTypeArgumentBuilder,
-        IOsVersionArgumentBuilder osVersionArgumentBuilder,
+        IOsVersionOptionBuilder osVersionOptionBuilder,
         IEnabledOptionBuilder enabledOptionBuilder,
         IEnabled3dOptionBuilder enabled3dOptionBuilder,
         IVirtualRamMbOptionBuilder virtualRamMbOptionBuilder,
@@ -60,10 +61,11 @@ public class DefineMachineTypeAddCommandIntegration : ABaseCommandIntegration, I
         _machineTypeDefinitionBuilder = machineTypeDefinitionBuilderFactory;
         _nameArgumentBuilder = nameArgumentBuilder;
         _boxNameArgumentBuilder = boxNameArgumentBuilder;
+        _boxVersionArgumentBuilder = boxVersionArgumentBuilder;
         _virtualCpusArgumentBuilder = virtualCpusArgumentBuilder;
         _ramMbArgumentBuilder = ramMbArgumentBuilder;
         _osTypeArgumentBuilder = osTypeArgumentBuilder;
-        _osVersionArgumentBuilder = osVersionArgumentBuilder;
+        _osVersionOptionBuilder = osVersionOptionBuilder;
         _enabledOptionBuilder = enabledOptionBuilder;
         _enabled3dOptionBuilder = enabled3dOptionBuilder;
         _virtualRamMbOptionBuilder = virtualRamMbOptionBuilder;
@@ -71,29 +73,31 @@ public class DefineMachineTypeAddCommandIntegration : ABaseCommandIntegration, I
 
     public void Integrate(Command rootCommand)
     {
-        Argument<string>? nameArg = _nameArgumentBuilder.Build();
-        Argument<string>? boxNameArg = _boxNameArgumentBuilder.Build();
-        Argument<int>? vcpusArg = _virtualCpusArgumentBuilder.Build();
-        Argument<int>? ramMbArg = _ramMbArgumentBuilder.Build();
-        Argument<string>? osTypeArg = _osTypeArgumentBuilder.Build();
-        Argument<string>? osVersionArg = _osVersionArgumentBuilder.Build();
-        Option<bool>? isEnabledOpt = _enabledOptionBuilder.Build();
-        Option<bool>? isEnabled3dOpt = _enabled3dOptionBuilder.Build();
-        Option<int>? vramMbOpt = _virtualRamMbOptionBuilder.Build();
-        Option<string>? timeoutStrOpt = TimeoutStrOptionBuilder.Build();
-        Option<string>? workingDirOpt = WorkingDirectoryOptionBuilder.Build();
+        var nameArg = _nameArgumentBuilder.Build();
+        var boxNameArg = _boxNameArgumentBuilder.Build();
+        var boxVersionArg = _boxVersionArgumentBuilder.Build();
+        var vcpusArg = _virtualCpusArgumentBuilder.Build();
+        var ramMbArg = _ramMbArgumentBuilder.Build();
+        var osTypeArg = _osTypeArgumentBuilder.Build();
+        var osVersionOpt = _osVersionOptionBuilder.Build();
+        var isEnabledOpt = _enabledOptionBuilder.Build();
+        var isEnabled3dOpt = _enabled3dOptionBuilder.Build();
+        var vRamMbOpt = _virtualRamMbOptionBuilder.Build();
+        var timeoutStrOpt = TimeoutStrOptionBuilder.Build();
+        var workingDirOpt = WorkingDirectoryOptionBuilder.Build();
 
         var command = new Command("add", "Define Machine-Types")
         {
             nameArg,
             boxNameArg,
+            boxVersionArg,
             vcpusArg,
             ramMbArg,
             osTypeArg,
-            osVersionArg,
+
             isEnabledOpt,
             isEnabled3dOpt,
-            vramMbOpt,
+            vRamMbOpt,
             timeoutStrOpt,
             workingDirOpt
         };
@@ -101,37 +105,40 @@ public class DefineMachineTypeAddCommandIntegration : ABaseCommandIntegration, I
         var binder = new DefineMachineTypeAddCommandIntegrationPayloadBinder(
             nameArg,
             boxNameArg,
+            boxVersionArg,
             vcpusArg,
             ramMbArg,
             osTypeArg,
-            osVersionArg,
+            osVersionOpt,
             isEnabledOpt,
             isEnabled3dOpt,
-            vramMbOpt,
+            vRamMbOpt,
             timeoutStrOpt,
             workingDirOpt
         );
 
         command.SetHandler(async context =>
         {
-            var payload = binder.GetBoundValue(context);
+            DefineMachineTypeAddCommandIntegrationPayload? payload = binder.GetBoundValue(context);
 
             if (payload.OsType == null)
                 throw new ArgumentNullException(nameof(payload.OsType));
 
-            var requestBuilder = _requestBuilderFactory.Factory();
+            IDefineMachineTypeAddCommandRequestBuilder? requestBuilder = _requestBuilderFactory.Factory();
 
             BuildBase(requestBuilder, payload);
 
-            var request = requestBuilder
+            IDefineMachineTypeAddCommandRequest? request = requestBuilder
                 .UsingDefinition(_machineTypeDefinitionBuilder.Factory()
                     .BaseBuilder
                     .Enabled(payload.Enabled)
                     .With3DEnabled(payload.Enable3D)
                     .WithBox(payload.BoxName)
+                    .WithBoxVersion(payload.BoxVersion)
                     .WithRamInMb(payload.RamInMb)
                     .WithVirtualCpus(payload.VCpus)
                     .WithOsType(Enum.Parse<OsTypeEnum>(payload.OsType))
+                    .WithOsVersion(payload.OsVersion)
                     .WithVideoRamInMb(payload.VideoRamInMb)
                     .WithProvider(payload.Provider ?? string.Empty)
                     .Parent<IMachineTypeDefinitionBuilder>()
@@ -140,7 +147,7 @@ public class DefineMachineTypeAddCommandIntegration : ABaseCommandIntegration, I
                 )
                 .Build();
 
-            var response = await _command.ExecuteAsync(request);
+            IDefineMachineTypeAddCommandResponse? response = await _command.ExecuteAsync(request);
         });
 
         rootCommand.AddCommand(command);

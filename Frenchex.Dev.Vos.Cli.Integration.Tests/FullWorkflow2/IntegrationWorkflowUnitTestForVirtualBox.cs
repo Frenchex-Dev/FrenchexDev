@@ -4,17 +4,16 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
 #region
 
+using System.CommandLine;
+using System.CommandLine.Parsing;
 using Frenchex.Dev.Dotnet.Core.UnitTesting.Lib.Domain;
 using Frenchex.Dev.Vos.Cli.IntegrationLib.Domain;
 using Microsoft.Extensions.DependencyInjection;
-using System.CommandLine;
 
 #endregion
 
@@ -22,18 +21,19 @@ namespace Frenchex.Dev.Vos.Cli.Integration.Tests.FullWorkflow2;
 
 public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
 {
-    private const string BoxTest = "generic/alpine317";
-    private const string BoxVersionTest = "4.2.8";
+    protected const string BoxTest = "generic/alpine317";
+    protected const string BoxVersionTest = "4.2.8";
 
-    private const string WorkingDirectoryMarker = "##{{WORKING_DIRECTORY}}##";
+    protected const string WorkingDirectoryMarker = "##{{WORKING_DIRECTORY}}##";
 
     protected static IEnumerable<object[]> ProduceDataSets(
         string timeout,
+        Func<string, InputCommand[]> dataTestProducerFunc,
         int nbTestCases = 1,
         int nbVosInstances = 3
     )
     {
-        List<object[]> listOfList = new();
+        var listOfList = new List<object[]>();
 
         for (var i = 0; i < nbTestCases; i++)
         {
@@ -43,14 +43,14 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
                 ListOfListOfCommands = new List<List<InputCommand>>(nbVosInstances)
             };
 
-            List<object> obj = new()
+            var obj = new List<object>
             {
                 payload.TestCaseName,
                 payload
             };
 
             for (var x = 0; x < nbVosInstances; x++)
-                payload.ListOfListOfCommands.Add(ProduceTestData(timeout).ToList());
+                payload.ListOfListOfCommands.Add(dataTestProducerFunc(timeout).ToList());
 
             listOfList.Add(obj.ToArray());
         }
@@ -63,7 +63,7 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
         await unitTest.ExecuteAndAssertAsync<ExecutionContext>(
             (provider, _, _, _) =>
             {
-                var sut = provider.GetRequiredService<SubjectUnderTest>().RootCommand;
+                RootCommand sut = provider.GetRequiredService<SubjectUnderTest>().RootCommand;
                 var integration = provider.GetRequiredService<IIntegration>();
                 integration.Integrate(sut);
 
@@ -86,13 +86,13 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
                 workingDirectory
             },
             commands,
-            (command, rootCommand) =>
+            (commandName, command, rootCommand) =>
             {
-                var parsed = rootCommand.Parse(command);
+                ParseResult parsed = rootCommand.Parse(command);
 
-                var msgError = string.Join(Environment.NewLine, parsed.Errors.Select(x => x.Message));
+                string msgError = string.Join(Environment.NewLine, parsed.Errors.Select(x => x.Message));
 
-                Assert.AreEqual(0, parsed.Errors.Count, msgError);
+                Assert.AreEqual(0, parsed.Errors.Count, $"{commandName}: {msgError} : {command}");
 
                 return Task.CompletedTask;
             },
@@ -101,7 +101,7 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
         );
     }
 
-    private static string BuildCommandLineString(
+    protected static string BuildCommandLineString(
         string command,
         string timeOutOpt
     )
@@ -109,56 +109,120 @@ public class IntegrationWorkflowUnitTestForVirtualBox : AbstractUnitTest
         return $"{command} {timeOutOpt} --working-directory {WorkingDirectoryMarker}";
     }
 
-    private static InputCommand[] ProduceTestData(string timeout)
+    protected static InputCommand[] ProduceTestData_OneMachineType_MultipleMachines(string timeout)
     {
-        var timeOutOpt = "--timeout " + timeout;
+        string? timeOutOpt = "--timeout " + timeout;
 
         string BuildInternalCommandLineString(string command)
         {
             return BuildCommandLineString(command, timeOutOpt);
         }
 
-        return new InputCommand[]
+        return new[]
         {
             new("init", BuildInternalCommandLineString("init")),
-            new("d.m.t 1", BuildInternalCommandLineString($"define machine-type add foo ${BoxTest} 4 128 Linux_64 ${BoxVersionTest} --vram-mb 16 --enabled")),
-            new("d.m 1", BuildInternalCommandLineString("define machine add foo foo 4 --enabled ")),
-            new("d.m 1", BuildInternalCommandLineString("define provisioning map foo 'docker-ce/install' v1 --machine-type --enabled")),
-            new("name", BuildInternalCommandLineString("name 'foo-[2-*]'")),
-            new("status", BuildInternalCommandLineString("status 'foo-[2-*]'")),
-            new("up foo0", BuildInternalCommandLineString("up 'foo-0'")),
-            new("up foo2-*", BuildInternalCommandLineString("up 'foo-[2-*]'")),
-            new("status bar* foo2-*", BuildInternalCommandLineString("status 'foo-[2-*]'")),
-            new("provision", BuildInternalCommandLineString("provision 'foo-0' --provision-with 'docker-ce/install'")),
-            new("halt bar-* foo2-*", BuildInternalCommandLineString("halt 'foo-[2-*]'")),
-            new("destroy foo2", BuildInternalCommandLineString("destroy 'foo-0' --force")),
-            new("destroy all", BuildInternalCommandLineString("destroy --force"))
+            new InputCommand("d.m.t 1",
+                BuildInternalCommandLineString(
+                    $"define machine-type add foo {BoxTest} {BoxVersionTest} 4 128 Linux_64  --vram-mb 16 --enabled")),
+            new InputCommand("d.m 1",
+                BuildInternalCommandLineString("define machine add foo foo 4 --enabled --primary")),
+            new InputCommand("name without quotes", BuildInternalCommandLineString("name foo-[2-*]")),
+            new InputCommand("name with quotes", BuildInternalCommandLineString("name 'foo-[2-*]'")),
+            new InputCommand("status", BuildInternalCommandLineString("status foo-[2-*]")),
+            new InputCommand("up foo-0", BuildInternalCommandLineString("up foo-0")),
+            new InputCommand("up foo2-*", BuildInternalCommandLineString("up foo-[2-*]")),
+            new InputCommand("status bar* foo2-*", BuildInternalCommandLineString("status foo-[2-*]")),
+            new InputCommand("halt bar-* foo2-*", BuildInternalCommandLineString("halt foo-[2-*]")),
+            new InputCommand("destroy foo2", BuildInternalCommandLineString("destroy foo-0 --force")),
+            new InputCommand("destroy all", BuildInternalCommandLineString("destroy --force"))
         };
     }
+
 
     protected static async Task RunInternal(
         string[] workingDirectories,
         InputCommand[] commands,
-        Func<string, RootCommand, Task> execCommand,
+        Func<string, string, RootCommand, Task> execCommand,
         UnitTest.VsCodeDebugging vsCodeDebugging,
         UnitTest unitTest
     )
     {
         await unitTest.ExecuteAndAssertAsync<ExecutionContext>(
-            async (provider, _, _, _) =>
+            async (provider, _, _, openVsCodeDebugging) =>
             {
-                var sut = provider.GetRequiredService<SubjectUnderTest>().RootCommand;
-                vsCodeDebugging.Start();
-                foreach (var workingDir in workingDirectories)
-                    foreach (var command in commands)
+                RootCommand sut = provider.GetRequiredService<SubjectUnderTest>().RootCommand;
+                var vsCodeStarted = false;
+                foreach (string workingDir in workingDirectories)
+                foreach (InputCommand command in commands)
+                {
+                    var vosCommand = $"{command.Command.Replace(WorkingDirectoryMarker, workingDir)}";
+                    await execCommand(command.Name, vosCommand, sut);
+
+                    if (!vsCodeStarted && vsCodeDebugging.Open)
                     {
-                        var vosCommand = $"{command.Command.Replace(WorkingDirectoryMarker, workingDir)}";
-                        await execCommand(vosCommand, sut);
+                        vsCodeStarted = true;
+                        openVsCodeDebugging(workingDir);
                     }
+                }
+
+                vsCodeDebugging.Stop();
             },
             (_, _, _) => Task.CompletedTask,
             unitTest.GetScopedServiceProvider(),
             vsCodeDebugging);
+    }
+
+    protected static async Task<List<Task>> CreateRunInternal(
+        Payload payload,
+        Func<InputCommand[], string, UnitTest.VsCodeDebugging, UnitTest, Task> func,
+        UnitTest.VsCodeDebugging vsCodeDebugging,
+        UnitTest unitTest
+    )
+    {
+        unitTest.BuildIfNecessary();
+        await SetupUnitTest(unitTest, vsCodeDebugging);
+
+        int numberOfWorkingDirectories = payload.ListOfListOfCommands!.Count;
+
+        var workingDirectories = new List<string>(numberOfWorkingDirectories);
+
+        foreach (var _ in payload.ListOfListOfCommands)
+            workingDirectories.Add(Path.Join(Path.GetTempPath(), Path.GetRandomFileName()));
+
+        var tasks = new List<Task>();
+
+        var i = 0;
+
+        foreach (var run in payload.ListOfListOfCommands)
+        {
+            Task commandsRun = func.Invoke(run.ToArray(), workingDirectories[i++], vsCodeDebugging, unitTest);
+            tasks.Add(commandsRun);
+        }
+
+        return tasks;
+    }
+
+    protected async Task InternalRunExecution(
+        InputCommand[] commands,
+        string workingDirectory,
+        UnitTest.VsCodeDebugging vsCodeDebugging,
+        UnitTest unitTest
+    )
+    {
+        await RunInternal(new[]
+            {
+                workingDirectory
+            },
+            commands,
+            async (commandName, command, rootCommand) =>
+            {
+                int parsed = await rootCommand.InvokeAsync(command);
+
+                Assert.AreEqual(0, parsed, $"{commandName}: {command}");
+            },
+            vsCodeDebugging,
+            unitTest
+        );
     }
 
     public class Payload

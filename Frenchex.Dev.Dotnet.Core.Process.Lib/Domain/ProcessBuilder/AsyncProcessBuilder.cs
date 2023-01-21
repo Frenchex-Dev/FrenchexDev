@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -13,7 +11,6 @@
 
 using System.Diagnostics;
 using Frenchex.Dev.Dotnet.Core.Process.Lib.Domain.Process;
-using Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib;
 using Frenchex.Dev.Dotnet.Core.Tooling.TimeSpan.Lib.Domain;
 using Microsoft.Extensions.Logging;
 

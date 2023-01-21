@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -59,7 +57,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
     {
         for (var i = 0; i < maxX; i++)
         {
-            List<Builder> list = new();
+            var list = new List<Builder>();
 
             for (var j = 0; j < maxY; j++)
             {
@@ -114,11 +112,11 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
 
     private async Task VosWorkflowUnitTestInternal(Builder[] builders)
     {
-        Func<Builder, Task> taskBuilder = VosWorkflowUnitTestInternalInternal;
+        var taskBuilder = VosWorkflowUnitTestInternalInternal;
 
-        List<Task> allTasks = builders.Select(x => taskBuilder(x)).ToList();
+        var allTasks = builders.Select(x => taskBuilder(x)).ToList();
 
-        var tasks = Task.WhenAll(allTasks);
+        Task? tasks = Task.WhenAll(allTasks);
 
         await tasks;
 
@@ -128,9 +126,9 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
     private async Task VosWorkflowUnitTestInternalInternal(Builder builder)
     {
         var vsDebuggingContext = new UnitTest.VsCodeDebugging { TellMe = true, Keep = true, DevDebugging = true };
-        var workingDirectory = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
+        string? workingDirectory = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
 
-        var unitTest = _unitTest = VosUnitTestBase.CreateUnitTest<ExecutionContext>();
+        UnitTest? unitTest = _unitTest = VosUnitTestBase.CreateUnitTest<ExecutionContext>();
         unitTest.BuildIfNecessary();
 
         await RunInitCommandAsyncUnitTest(
@@ -219,20 +217,21 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             timeBox,
             async (provider, _, context, _) =>
             {
-                IList<IDestroyCommandRequest> list = destroyRequestsListBuilder(context.WorkingDirectory!, provider);
+                var list = destroyRequestsListBuilder(context.WorkingDirectory!, provider);
                 var command = provider.GetRequiredService<IDestroyCommand>();
                 context.DestroyCommandsResponses = new List<(IDestroyCommandRequest, IDestroyCommandResponse)>();
 
-                foreach (var item in list)
+                foreach (IDestroyCommandRequest? item in list)
                 {
-                    var response = await command.ExecuteAsync(item);
+                    IDestroyCommandResponse? response = await command.ExecuteAsync(item);
                     context.DestroyCommandsResponses.Add((item, response));
                 }
             },
             async (provider, _, context) =>
             {
                 var statusCommand = provider.GetRequiredService<IStatusCommand>();
-                var statusCommandRequest = provider.GetRequiredService<IStatusCommandRequestBuilderFactory>().Factory()
+                IStatusCommandRequest? statusCommandRequest = provider
+                    .GetRequiredService<IStatusCommandRequestBuilderFactory>().Factory()
                     .BaseBuilder
                     .UsingWorkingDirectory(context.WorkingDirectory)
                     .UsingTimeout("10s")
@@ -240,9 +239,9 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
                     .WithNames(context.WillBeUp!.ToArray())
                     .Build();
 
-                var statusCommandResponse = await statusCommand.ExecuteAsync(statusCommandRequest);
+                IStatusCommandResponse? statusCommandResponse = await statusCommand.ExecuteAsync(statusCommandRequest);
 
-                foreach (KeyValuePair<string, (string, VagrantMachineStatusEnum)> name in
+                foreach (var name in
                          statusCommandResponse.Statuses)
                     Assert.AreEqual(VagrantMachineStatusEnum.NotCreated.ToString(), name.Value.ToString());
             },
@@ -267,14 +266,14 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             timeBox,
             async (provider, _, context, _) =>
             {
-                IList<IHaltCommandRequest> list = haltRequestsListBuilder(context.WorkingDirectory!, provider);
+                var list = haltRequestsListBuilder(context.WorkingDirectory!, provider);
                 var command = provider.GetRequiredService<IHaltCommand>();
 
                 context.HaltCommandsResponses = new List<(IHaltCommandRequest, IHaltCommandResponse)>();
 
-                foreach (var item in list)
+                foreach (IHaltCommandRequest? item in list)
                 {
-                    var response = await command.ExecuteAsync(item);
+                    IHaltCommandResponse? response = await command.ExecuteAsync(item);
                     context.HaltCommandsResponses.Add((item, response));
                 }
             },
@@ -298,13 +297,13 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             timeBox,
             async (provider, _, context, _) =>
             {
-                IList<ISshCommandRequest> list = sshCommandRequestsListBuilder(context.WorkingDirectory!, provider);
+                var list = sshCommandRequestsListBuilder(context.WorkingDirectory!, provider);
                 var command = provider.GetRequiredService<ISshCommand>();
                 context.SshCommandsResponses = new List<(ISshCommandRequest, ISshCommandResponse)>();
 
-                foreach (var item in list)
+                foreach (ISshCommandRequest? item in list)
                 {
-                    var response = await command.ExecuteAsync(item);
+                    ISshCommandResponse? response = await command.ExecuteAsync(item);
                     context.SshCommandsResponses.Add((item, response));
                 }
             },
@@ -328,15 +327,15 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             timeSpan,
             async (provider, _, context, _) =>
             {
-                IList<ISshConfigCommandRequest> list =
+                var list =
                     sshConfigCommandRequestsListBuilder(context.WorkingDirectory!, provider);
 
                 var command = provider.GetRequiredService<ISshConfigCommand>();
                 context.SshConfigCommandsResponses = new List<(ISshConfigCommandRequest, ISshConfigCommandResponse)>();
 
-                foreach (var item in list)
+                foreach (ISshConfigCommandRequest? item in list)
                 {
-                    var response = await command.ExecuteAsync(item);
+                    ISshConfigCommandResponse? response = await command.ExecuteAsync(item);
                     context.SshConfigCommandsResponses.Add((item, response));
                 }
             },
@@ -344,10 +343,11 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             {
                 Assert.IsTrue(context.SshConfigCommandsResponses!.Any());
 
-                foreach (var runningContext in context.SshConfigCommandsResponses!)
+                foreach ((ISshConfigCommandRequest, ISshConfigCommandResponse) runningContext in context
+                             .SshConfigCommandsResponses!)
                 {
-                    var request = runningContext.Item1;
-                    var response = runningContext.Item2;
+                    ISshConfigCommandRequest? request = runningContext.Item1;
+                    ISshConfigCommandResponse? response = runningContext.Item2;
 
                     Assert.IsNotNull(request);
                     Assert.IsNotNull(response);
@@ -372,13 +372,13 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             async (provider, _, context, _) =>
             {
                 context.WillBeUp = new List<string>();
-                IList<IUpCommandRequest> list = upRequestsListBuilder(context.WorkingDirectory!, provider);
+                var list = upRequestsListBuilder(context.WorkingDirectory!, provider);
                 context.UpCommandsResponses = new List<(IUpCommandRequest, IUpCommandResponse)>();
                 var command = provider.GetRequiredService<IUpCommand>();
 
-                foreach (var item in list)
+                foreach (IUpCommandRequest? item in list)
                 {
-                    var upResponse = await command.ExecuteAsync(item);
+                    IUpCommandResponse? upResponse = await command.ExecuteAsync(item);
                     context.UpCommandsResponses.Add((item, upResponse));
                     Assert.IsNotNull(upResponse.Response);
                     Assert.IsNotNull(upResponse.Response.ProcessExecutionResult.WaitForCompleteExit);
@@ -395,7 +395,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
                     var nameCommandRequestBuilderFactory =
                         provider.GetRequiredService<INameCommandRequestBuilderFactory>();
 
-                    var realNames = await nameCommand.ExecuteAsync(
+                    INameCommandResponse? realNames = await nameCommand.ExecuteAsync(
                         nameCommandRequestBuilderFactory.Factory()
                             .BaseBuilder
                             .UsingWorkingDirectory(context.WorkingDirectory)
@@ -408,18 +408,18 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             },
             async (provider, _, context) =>
             {
-                IList<IStatusCommandRequest> listStatusRequestAfterUp =
+                var listStatusRequestAfterUp =
                     statusAfterUpCommandRequestsListBuilder(context.WorkingDirectory!, provider);
 
                 var statusCommand = provider.GetRequiredService<IStatusCommand>();
 
-                foreach (var subItem in listStatusRequestAfterUp)
+                foreach (IStatusCommandRequest? subItem in listStatusRequestAfterUp)
                 {
-                    var statusResponse = await statusCommand.ExecuteAsync(subItem);
+                    IStatusCommandResponse? statusResponse = await statusCommand.ExecuteAsync(subItem);
                     Assert.IsNotNull(statusResponse);
                     Assert.IsTrue(statusResponse.Statuses.Any());
 
-                    foreach (var (key, value) in statusResponse.Statuses)
+                    foreach ((string? key, (string, VagrantMachineStatusEnum) value) in statusResponse.Statuses)
                         Assert.IsTrue(value.ToString().Contains(
                             context.WillBeUp!.Contains(key)
                                 ? VagrantMachineStatusEnum.Running.ToString()
@@ -443,20 +443,20 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             async (provider, _, context, _) =>
             {
                 var statusCommand = provider.GetRequiredService<IStatusCommand>();
-                IList<IStatusCommandRequest> list =
+                var list =
                     statusBeforeUpCommandRequestsListBuilder(context.WorkingDirectory!, provider);
 
                 context.StatusCommandsResponseBeforeUp = new List<IStatusCommandResponse>();
-                foreach (var item in list)
+                foreach (IStatusCommandRequest? item in list)
                 {
-                    var statusResponse = await statusCommand.ExecuteAsync(item);
+                    IStatusCommandResponse? statusResponse = await statusCommand.ExecuteAsync(item);
                     context.StatusCommandsResponseBeforeUp.Add(statusResponse);
                 }
             },
             (_, _, context) =>
             {
                 Assert.IsTrue(context.StatusCommandsResponseBeforeUp!.Any());
-                foreach (var response in context.StatusCommandsResponseBeforeUp!)
+                foreach (IStatusCommandResponse? response in context.StatusCommandsResponseBeforeUp!)
                 {
                     Assert.IsNotNull(response, "got status response");
                     Assert.IsTrue(response.Statuses.Any(), "got machines in status response");
@@ -485,14 +485,14 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             async (provider, _, context, _) =>
             {
                 var nameCommand = provider.GetRequiredService<INameCommand>();
-                IList<NameCommandRequestPayload>? list =
+                var list =
                     nameCommandRequestsListBuilder(context.WorkingDirectory!, provider);
 
                 context.NameCommandsResponses = new List<(NameCommandRequestPayload, INameCommandResponse)>();
 
-                foreach (var item in list)
+                foreach (NameCommandRequestPayload? item in list)
                 {
-                    var response = await nameCommand.ExecuteAsync(item.Request);
+                    INameCommandResponse? response = await nameCommand.ExecuteAsync(item.Request);
                     context.NameCommandsResponses.Add((item, response));
                 }
             },
@@ -500,7 +500,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             {
                 Assert.IsTrue(context.NameCommandsResponses!.Any());
 
-                foreach (var item in context.NameCommandsResponses!)
+                foreach ((NameCommandRequestPayload, INameCommandResponse) item in context.NameCommandsResponses!)
                     if (item.Item1.ExpectedNames.Any())
                         Assert.IsTrue(item.Item1.ExpectedNames.All(x => item.Item2.Names.Contains(x)));
 
@@ -523,13 +523,13 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             async (provider, _, context, _) =>
             {
                 var defineMachineAddCommand = provider.GetRequiredService<IDefineMachineAddCommand>();
-                IList<IDefineMachineAddCommandRequest> list =
+                var list =
                     defineMachineAddCommandRequestsListBuilder(context.WorkingDirectory!, provider);
 
                 context.DefineMachineAddCommandsResponses = new List<IDefineMachineAddCommandResponse>();
-                foreach (var item in list)
+                foreach (IDefineMachineAddCommandRequest? item in list)
                 {
-                    var response = await defineMachineAddCommand.ExecuteAsync(item);
+                    IDefineMachineAddCommandResponse? response = await defineMachineAddCommand.ExecuteAsync(item);
                     context.DefineMachineAddCommandsResponses.Add(response);
                 }
             },
@@ -556,13 +556,14 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
             async (provider, _, context, _) =>
             {
                 var defineMachineTypeAddCommand = provider.GetRequiredService<IDefineMachineTypeAddCommand>();
-                IList<IDefineMachineTypeAddCommandRequest> list =
+                var list =
                     defineMachineTypeAddCommandRequestsListBuilder(context.WorkingDirectory!, provider);
 
                 context.DefineMachineTypeAddCommandsResponses = new List<IDefineMachineTypeAddCommandResponse>();
-                foreach (var item in list)
+                foreach (IDefineMachineTypeAddCommandRequest? item in list)
                 {
-                    var response = await defineMachineTypeAddCommand.ExecuteAsync(item);
+                    IDefineMachineTypeAddCommandResponse? response =
+                        await defineMachineTypeAddCommand.ExecuteAsync(item);
                     context.DefineMachineTypeAddCommandsResponses.Add(response);
                 }
             },
@@ -591,7 +592,7 @@ public class VosLibCompleteWorkflowTests : AbstractUnitTest
                 context.WorkingDirectory = workingDirectory;
 
                 var initCommand = provider.GetRequiredService<IInitCommand>();
-                var initRequest = initRequestBuilder(workingDirectory, provider);
+                IInitCommandRequest? initRequest = initRequestBuilder(workingDirectory, provider);
                 context.InitCommandResponse = await initCommand.ExecuteAsync(initRequest);
 
                 vsCode.Invoke(context.WorkingDirectory);

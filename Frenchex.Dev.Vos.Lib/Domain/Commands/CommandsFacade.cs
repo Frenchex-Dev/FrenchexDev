@@ -4,8 +4,6 @@
 // All rights reserved.
 // 
 // Licencing : stephane.erard@gmail.com
-// 
-// 
 
 #endregion
 
@@ -19,6 +17,7 @@ using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Destroy.Facade;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Halt.Facade;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Init.Facade;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Name.Facade;
+using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Provision.Facade;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Ssh.Facade;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.SshConfig.Facade;
 using Frenchex.Dev.Vos.Lib.Abstractions.Domain.Commands.Status.Facade;
@@ -41,7 +40,8 @@ public class CommandsFacade : ICommandsFacade
         ISshCommandFacade sshCommandFacade,
         ISshConfigCommandFacade sshConfigCommandFacade,
         IStatusCommandFacade statusCommandFacade,
-        IUpCommandFacade upCommandFacade
+        IUpCommandFacade upCommandFacade,
+        IProvisionCommandFacade provisionCommandFacade
     )
     {
         DefineMachineTypeAddCommandFacade = defineMachineTypeAddCommandFacade;
@@ -55,7 +55,10 @@ public class CommandsFacade : ICommandsFacade
         SshConfigCommandFacade = sshConfigCommandFacade;
         StatusCommandFacade = statusCommandFacade;
         UpCommandFacade = upCommandFacade;
+        ProvisionCommandFacade = provisionCommandFacade;
     }
+
+    public IProvisionCommandFacade ProvisionCommandFacade { get; }
 
     public IDefineMachineTypeAddCommandFacade DefineMachineTypeAddCommandFacade { get; }
     public IDefineMachineAddCommandFacade DefineMachineAddCommandFacade { get; }
