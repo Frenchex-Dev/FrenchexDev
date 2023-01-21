@@ -70,10 +70,10 @@ public class VosNameToVagrantNameConverter : IVosNameToVagrantNameConverter
         bool prefixWithDirBase = configuration.Vagrant.PrefixWithDirBase;
         string? namingPattern = configuration.Vagrant.NamingPattern;
 
-        foreach (string? name in inputNamedPatterns)
+        foreach (string? inputNamedPattern in inputNamedPatterns)
         {
-            string? _name = name.Trim().Trim('"', '\'').ToLowerInvariant();
-            MatchCollection? matchesPatternFromToWildcard = PatternFromToWildcard.Matches(_name);
+            string? cleanInputNamePattern = inputNamedPattern.Trim().Trim('"', '\'').ToLowerInvariant();
+            MatchCollection? matchesPatternFromToWildcard = PatternFromToWildcard.Matches(cleanInputNamePattern);
             var from = 0;
             var to = 0;
             var machineName = "";
@@ -83,13 +83,13 @@ public class VosNameToVagrantNameConverter : IVosNameToVagrantNameConverter
             {
                 case 0:
                 {
-                    MatchCollection? matchesPatternFromTo = PatternFromTo.Matches(_name);
+                    MatchCollection? matchesPatternFromTo = PatternFromTo.Matches(cleanInputNamePattern);
 
                     Match? firstMatches = matchesPatternFromTo.FirstOrDefault();
 
                     if (firstMatches == null && machineNames)
                     {
-                        list.Add(_name);
+                        list.Add(cleanInputNamePattern);
                         continue;
                     }
 

@@ -18,7 +18,7 @@ namespace Frenchex.Dev.Vos.Cli.Integration.Tests.FullWorkflow2;
 
 [TestClass]
 [TestCategory(TestCategories.NeedVagrant)]
-public class SingleRun_OneMachineType_MultipleMachines : IntegrationWorkflowUnitTestForVirtualBox
+public class SingleRunOneMachineTypeMultipleMachines : IntegrationWorkflowUnitTestForVirtualBox
 {
     public static IEnumerable<object[]> Test_Data_SingleRun_OneMachineType_MultipleMachines()
     {

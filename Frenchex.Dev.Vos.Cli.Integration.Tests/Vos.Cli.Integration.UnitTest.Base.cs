@@ -22,9 +22,9 @@ namespace Frenchex.Dev.Vos.Cli.Integration.Tests;
 
 public static class VosCliIntegrationUnitTestBase
 {
-    public static UnitTest CreateUnitTest<T, V>()
+    public static UnitTest CreateUnitTest<T, TV>()
         where T : class
-        where V : class
+        where TV : class
     {
         var unitTest = new UnitTest(
             builder =>
@@ -42,7 +42,7 @@ public static class VosCliIntegrationUnitTestBase
 
                 services.AddScoped<IConfiguration>(_ => configuration);
                 services.AddScoped<T>();
-                services.AddScoped<V>();
+                services.AddScoped<TV>();
             }
         );
 

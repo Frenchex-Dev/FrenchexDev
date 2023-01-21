@@ -18,7 +18,7 @@ namespace Frenchex.Dev.Vos.Cli.Integration.Tests.FullWorkflow2;
 
 [TestClass]
 [TestCategory(TestCategories.NeedVagrant)]
-public class SingleRun_OneMachineType_OneMachine_ProvisioningDockerCeInstall : IntegrationWorkflowUnitTestForVirtualBox
+public class SingleRunOneMachineTypeOneMachineProvisioningDockerCeInstall : IntegrationWorkflowUnitTestForVirtualBox
 {
     public static InputCommand[] ProduceTestData_OneMachineType_OneMachine_ProvisioningDockerCeInstallPrivileged(
         string timeout)
@@ -45,7 +45,7 @@ public class SingleRun_OneMachineType_OneMachine_ProvisioningDockerCeInstall : I
             new InputCommand("up foo-0", BuildInternalCommandLineString("up foo-0 --provision false")),
             new InputCommand("provision",
                 BuildInternalCommandLineString("provision foo-0 --provision-with docker-ce/install")),
-            new InputCommand("halt bar-* foo2-*", BuildInternalCommandLineString("halt foo-*")),
+            new InputCommand("halt", BuildInternalCommandLineString("halt foo-*")),
             new InputCommand("destroy all", BuildInternalCommandLineString("destroy --force"))
         };
     }
