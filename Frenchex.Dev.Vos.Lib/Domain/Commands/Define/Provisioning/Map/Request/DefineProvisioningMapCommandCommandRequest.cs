@@ -19,6 +19,11 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Define.Provisioning.Map.Request;
 
 public class DefineProvisioningMapCommandCommandRequest : RootCommandRequest, IDefineProvisioningMapCommandRequest
 {
+    public DefineProvisioningMapCommandCommandRequest() : base()
+    {
+
+    }
+
     public DefineProvisioningMapCommandCommandRequest(
         IBaseCommandRequest baseCommandRequest,
         string[] names,

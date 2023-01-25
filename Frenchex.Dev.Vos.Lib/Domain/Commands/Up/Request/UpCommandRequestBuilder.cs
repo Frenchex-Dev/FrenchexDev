@@ -37,7 +37,7 @@ public class UpCommandRequestBuilder : RootCommandRequestBuilder, IUpCommandRequ
 
     public IUpCommandRequest Build()
     {
-        return new UpCommandCommandRequest(
+        return new UpCommandRequest(
             _namesOrIds ?? Array.Empty<string>(),
             _provision ?? false,
             _provisionWith ?? Array.Empty<string>(),

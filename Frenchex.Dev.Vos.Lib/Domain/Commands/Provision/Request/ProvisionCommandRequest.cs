@@ -19,6 +19,11 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Provision.Request;
 
 public class ProvisionCommandRequest : RootCommandRequest, IProvisionCommandRequest
 {
+    public ProvisionCommandRequest()
+    {
+
+    }
+
     public ProvisionCommandRequest(
         string[] namesOrIds,
         bool provision,

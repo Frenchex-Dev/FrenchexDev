@@ -17,9 +17,14 @@ using Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Request;
 
 namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Up.Request;
 
-public class UpCommandCommandRequest : RootCommandRequest, IUpCommandRequest
+public class UpCommandRequest : RootCommandRequest, IUpCommandRequest
 {
-    public UpCommandCommandRequest(
+    public UpCommandRequest()
+    {
+
+    }
+
+    public UpCommandRequest(
         string[] namesOrIds,
         bool provision,
         string[] provisionWith,
@@ -58,7 +63,7 @@ public class UpCommandCommandRequest : RootCommandRequest, IUpCommandRequest
 
     public IUpCommandRequest CloneWithNewNames(string[] names)
     {
-        return new UpCommandCommandRequest(
+        return new UpCommandRequest(
             names,
             Provision,
             ProvisionWith,

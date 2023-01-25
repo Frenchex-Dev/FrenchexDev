@@ -18,6 +18,11 @@ namespace Frenchex.Dev.Vos.Lib.Domain.Commands.Root.Request;
 
 public class RootCommandRequest : IRootCommandRequest
 {
+    public RootCommandRequest()
+    {
+
+    }
+
     public RootCommandRequest(IBaseCommandRequest baseCommand)
     {
         BaseCommand = baseCommand;
