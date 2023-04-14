@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Frenchex.Dev.DotnetCore.Process.Lib\Frenchex.Dev.DotnetCore.Process.Lib.csproj" />
+    <ProjectReference Include="..\Frenchex.Dev.Vagrant.Lib.Domain\Frenchex.Dev.Vagrant.Lib.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
