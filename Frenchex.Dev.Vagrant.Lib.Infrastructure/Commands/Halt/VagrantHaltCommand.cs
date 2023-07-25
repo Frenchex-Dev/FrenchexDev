@@ -15,7 +15,7 @@ public class VagrantHaltCommand : AbstractVagrantCommand, IVagrantHaltCommand
     private readonly IVagrantHaltCommandLineBuilder _commandLineBuilder;
 
     public VagrantHaltCommand(
-        IProcessStarterFactory         processStarterFactory
+        IProcessStarterFactory processStarterFactory
       , IVagrantHaltCommandLineBuilder commandLineBuilder
     ) : base(processStarterFactory)
     {
@@ -23,18 +23,22 @@ public class VagrantHaltCommand : AbstractVagrantCommand, IVagrantHaltCommand
     }
 
     public async Task<VagrantHaltResponse> StartAsync(
-        VagrantHaltRequest                request
-      , IVagrantCommandExecutionContext   context
+        VagrantHaltRequest request
+      , IVagrantCommandExecutionContext context
       , IVagrantCommandExecutionListeners listeners
     )
     {
-        var processContext = new ProcessExecutionContext(context.WorkingDirectory, "vagrant"
-                                                       , _commandLineBuilder.BuildCommandLineArguments(request)
-                                                       , new Dictionary<string, string>(), false, false);
+        var processContext
+            = CreateProcessExecutionContext(context, _commandLineBuilder.BuildCommandLineArguments(request));
 
         var processStarter = ProcessStarterFactory.Factory();
 
+        PrepareProcess(listeners, processStarter);
+
         var process = await processStarter.StartAsync(processContext);
+
+        await WaitProcessForExitAsync(context, process);
+
 
         var response = new VagrantHaltResponse(process.ExitCode);
 

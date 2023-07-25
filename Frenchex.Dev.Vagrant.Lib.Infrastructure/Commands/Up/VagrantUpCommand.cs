@@ -13,14 +13,14 @@ namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Up;
 /// </summary>
 public class VagrantUpCommand : AbstractVagrantCommand, IVagrantUpCommand
 {
-    private readonly IVagrantUpCommandLineBuilder _vagrantUpCommandLineBuilder;
+    private readonly IVagrantUpCommandLineBuilder _commandLineBuilder;
 
     public VagrantUpCommand(
         IProcessStarterFactory       processStarterFactory
-      , IVagrantUpCommandLineBuilder vagrantUpCommandLineBuilder
+      , IVagrantUpCommandLineBuilder commandLineBuilder
     ) : base(processStarterFactory)
     {
-        _vagrantUpCommandLineBuilder = vagrantUpCommandLineBuilder;
+        _commandLineBuilder = commandLineBuilder;
     }
 
     public async Task<UpCommandResponse> StartAsync(
@@ -29,17 +29,16 @@ public class VagrantUpCommand : AbstractVagrantCommand, IVagrantUpCommand
       , IVagrantCommandExecutionListeners listeners
     )
     {
-        var processContext = new ProcessExecutionContext(context.WorkingDirectory, context.VagrantBin
-                                                       , _vagrantUpCommandLineBuilder.BuildCommandLineArguments(request)
-                                                       , context.Environment, context.SaveStdOutStream
-                                                       , context.SaveStdErrStream);
+        var processContext
+            = CreateProcessExecutionContext(context, _commandLineBuilder.BuildCommandLineArguments(request));
 
         var processStarter = ProcessStarterFactory.Factory();
 
-        foreach (var listener in listeners.GetStdErrListeners())
-            processStarter.AddProcessPreparer(async process => { });
+        PrepareProcess(listeners, processStarter);
 
         var process = await processStarter.StartAsync(processContext);
+
+        await WaitProcessForExitAsync(context, process);
 
         var response = new UpCommandResponse(process.ExitCode);
 

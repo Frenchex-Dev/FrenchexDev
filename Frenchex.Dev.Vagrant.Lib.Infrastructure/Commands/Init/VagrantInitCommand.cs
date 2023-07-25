@@ -12,25 +12,24 @@ namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Init;
 /// </summary>
 public class VagrantInitCommand : AbstractVagrantCommand, IVagrantInitCommand
 {
-    private readonly IVagrantInitCommandLineBuilder _vagrantInitCommandLineBuilder;
+    private readonly IVagrantInitCommandLineBuilder _commandLineBuilder;
 
     public VagrantInitCommand(
-        IProcessStarterFactory         processExecutor
-      , IVagrantInitCommandLineBuilder vagrantInitCommandLineBuilder
+        IProcessStarterFactory processExecutor
+      , IVagrantInitCommandLineBuilder commandLineBuilder
     ) : base(processExecutor)
     {
-        _vagrantInitCommandLineBuilder = vagrantInitCommandLineBuilder;
+        _commandLineBuilder = commandLineBuilder;
     }
 
     public async Task<VagrantInitResponse> StartAsync(
-        VagrantInitRequest                request
-      , IVagrantCommandExecutionContext   context
+        VagrantInitRequest request
+      , IVagrantCommandExecutionContext context
       , IVagrantCommandExecutionListeners listeners
     )
     {
         var processContext
-            = CreateProcessExecutionContext(request, context
-                                 ,                   _vagrantInitCommandLineBuilder.BuildCommandLineArguments(request));
+            = CreateProcessExecutionContext(context, _commandLineBuilder.BuildCommandLineArguments(request));
 
         var processStarter = ProcessStarterFactory.Factory();
 

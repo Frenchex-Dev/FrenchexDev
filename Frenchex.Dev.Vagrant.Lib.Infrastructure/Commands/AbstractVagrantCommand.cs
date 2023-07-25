@@ -2,7 +2,6 @@
 
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
-using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Init;
 
 #endregion
 
@@ -19,8 +18,7 @@ public abstract class AbstractVagrantCommand
 
 
     protected ProcessExecutionContext CreateProcessExecutionContext(
-        VagrantInitRequest              request
-      , IVagrantCommandExecutionContext context
+        IVagrantCommandExecutionContext context
       , string                          arguments
     )
     {

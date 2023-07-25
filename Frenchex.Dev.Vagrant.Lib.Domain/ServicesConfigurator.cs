@@ -19,12 +19,20 @@ public static class ServicesConfigurator
     public static void Configure(IServiceCollection services)
     {
         services.AddScoped<IVagrantDestroyCommandLineBuilder, VagrantDestroyCommandLineBuilder>()
+                .AddScoped<IVagrantDestroyRequestBuilder, VagrantDestroyRequestBuilder>()
                 .AddScoped<IVagrantHaltCommandLineBuilder, VagrantHaltCommandLineBuilder>()
+                .AddScoped<IVagrantHaltRequestBuilder, VagrantHaltRequestBuilder>()
                 .AddScoped<IVagrantInitCommandLineBuilder, VagrantInitCommandLineBuilder>()
+                .AddScoped<IVagrantInitRequestBuilder, VagrantInitRequestBuilder>()
                 .AddScoped<IVagrantProvisionCommandLineBuilder, VagrantProvisionCommandLineBuilder>()
+                .AddScoped<IVagrantProvisionRequestBuilder, VagrantProvisionRequestBuilder>()
                 .AddScoped<IVagrantSshCommandLineBuilder, VagrantSshCommandLineBuilder>()
+                .AddScoped<IVagrantSshRequestBuilder, VagrantSshRequestBuilder>()
                 .AddScoped<IVagrantSshConfigCommandLineBuilder, VagrantSshConfigCommandLineBuilder>()
+                .AddScoped<IVagrantSshConfigRequestBuilder, VagrantSshConfigRequestBuilder>()
                 .AddScoped<IVagrantStatusCommandLineBuilder, VagrantStatusCommandLineBuilder>()
-                .AddScoped<IVagrantUpCommandLineBuilder, VagrantUpCommandLineBuilder>();
+                .AddScoped<IVagrantStatusRequestBuilder, VagrantStatusRequestBuilder>()
+                .AddScoped<IVagrantUpCommandLineBuilder, VagrantUpCommandLineBuilder>()
+                .AddScoped<IVagrantUpRequestBuilder, VagrantUpRequestBuilder>();
     }
 }
