@@ -2,5 +2,10 @@
 
 public class VagrantProvisionResponse : IVagrantProvisionResponse
 {
-    public int ExitCode { get; }
+    public VagrantProvisionResponse(int exitCode)
+    {
+        ExitCode = exitCode;
+    }
+
+    public int ExitCode { get; set; }
 }

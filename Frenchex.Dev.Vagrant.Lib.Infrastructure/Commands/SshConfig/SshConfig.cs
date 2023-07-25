@@ -2,28 +2,26 @@
 
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
-using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Halt;
+using Frenchex.Dev.Vagrant.Lib.Domain.Commands.SshConfig;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Halt;
+namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.SshConfig;
 
-/// <summary>
-/// </summary>
-public class VagrantHaltCommand : AbstractVagrantCommand, IVagrantHaltCommand
+public class VagrantSshConfigCommand : AbstractVagrantCommand, IVagrantSshConfigCommand
 {
-    private readonly IVagrantHaltCommandLineBuilder _commandLineBuilder;
+    private readonly IVagrantSshConfigCommandLineBuilder _commandLineBuilder;
 
-    public VagrantHaltCommand(
-        IProcessStarterFactory         processStarterFactory
-      , IVagrantHaltCommandLineBuilder commandLineBuilder
-    ) : base(processStarterFactory)
+    public VagrantSshConfigCommand(
+        IProcessStarterFactory              processExecutor
+      , IVagrantSshConfigCommandLineBuilder commandLineBuilder
+    ) : base(processExecutor)
     {
         _commandLineBuilder = commandLineBuilder;
     }
 
-    public async Task<VagrantHaltResponse> StartAsync(
-        VagrantHaltRequest                request
+    public async Task<VagrantSshConfigResponse> StartAsync(
+        VagrantSshConfigRequest           request
       , IVagrantCommandExecutionContext   context
       , IVagrantCommandExecutionListeners listeners
     )
@@ -39,8 +37,7 @@ public class VagrantHaltCommand : AbstractVagrantCommand, IVagrantHaltCommand
 
         await WaitProcessForExitAsync(context, process);
 
-
-        var response = new VagrantHaltResponse(process.ExitCode);
+        var response = new VagrantSshConfigResponse(process.ExitCode);
 
         return response;
     }

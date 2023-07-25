@@ -2,29 +2,27 @@
 
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
-using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Init;
+using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Status;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Init;
+namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Status;
 
-/// <summary>
-/// </summary>
-public class VagrantInitCommand : AbstractVagrantCommand, IVagrantInitCommand
+public class VagrantStatusCommand : AbstractVagrantCommand, IVagrantStatusCommand
 {
-    private readonly IVagrantInitCommandLineBuilder _commandLineBuilder;
+    private readonly IVagrantStatusCommandLineBuilder _commandLineBuilder;
 
-    public VagrantInitCommand(
-        IProcessStarterFactory         processExecutor
-      , IVagrantInitCommandLineBuilder commandLineBuilder
+    public VagrantStatusCommand(
+        IProcessStarterFactory processExecutor
+      , IVagrantStatusCommandLineBuilder commandLineBuilder
     ) : base(processExecutor)
     {
         _commandLineBuilder = commandLineBuilder;
     }
 
-    public async Task<VagrantInitResponse> StartAsync(
-        VagrantInitRequest                request
-      , IVagrantCommandExecutionContext   context
+    public async Task<VagrantStatusResponse> StartAsync(
+        VagrantStatusRequest request
+      , IVagrantCommandExecutionContext context
       , IVagrantCommandExecutionListeners listeners
     )
     {
@@ -39,7 +37,7 @@ public class VagrantInitCommand : AbstractVagrantCommand, IVagrantInitCommand
 
         await WaitProcessForExitAsync(context, process);
 
-        var response = new VagrantInitResponse(process.ExitCode);
+        var response = new VagrantStatusResponse(process.ExitCode);
 
         return response;
     }

@@ -2,28 +2,26 @@
 
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
-using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Halt;
+using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Provision;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Halt;
+namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Provision;
 
-/// <summary>
-/// </summary>
-public class VagrantHaltCommand : AbstractVagrantCommand, IVagrantHaltCommand
+public class VagrantProvisionCommand : AbstractVagrantCommand, IVagrantProvisionCommand
 {
-    private readonly IVagrantHaltCommandLineBuilder _commandLineBuilder;
+    private readonly IVagrantProvisionCommandLineBuilder _commandLineBuilder;
 
-    public VagrantHaltCommand(
-        IProcessStarterFactory         processStarterFactory
-      , IVagrantHaltCommandLineBuilder commandLineBuilder
-    ) : base(processStarterFactory)
+    public VagrantProvisionCommand(
+        IProcessStarterFactory              processExecutor
+      , IVagrantProvisionCommandLineBuilder commandLineBuilder
+    ) : base(processExecutor)
     {
         _commandLineBuilder = commandLineBuilder;
     }
 
-    public async Task<VagrantHaltResponse> StartAsync(
-        VagrantHaltRequest                request
+    public async Task<VagrantProvisionResponse> StartAsync(
+        VagrantProvisionRequest           request
       , IVagrantCommandExecutionContext   context
       , IVagrantCommandExecutionListeners listeners
     )
@@ -39,8 +37,7 @@ public class VagrantHaltCommand : AbstractVagrantCommand, IVagrantHaltCommand
 
         await WaitProcessForExitAsync(context, process);
 
-
-        var response = new VagrantHaltResponse(process.ExitCode);
+        var response = new VagrantProvisionResponse(process.ExitCode);
 
         return response;
     }

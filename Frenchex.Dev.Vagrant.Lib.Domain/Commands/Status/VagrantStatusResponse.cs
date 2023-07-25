@@ -2,5 +2,10 @@
 
 public class VagrantStatusResponse : IVagrantStatusResponse
 {
-    public int ExitCode { get; }
+    public VagrantStatusResponse(int exitCode)
+    {
+        ExitCode = exitCode;
+    }
+
+    public int ExitCode { get;  }
 }
