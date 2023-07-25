@@ -2,32 +2,36 @@
 
 public class ProcessExecutionContext : IProcessExecutionContext
 {
-    private readonly List<Func<string, Task>> _stdOutListeners;
     private readonly List<Func<string, Task>> _stdErrListeners;
+    private readonly List<Func<string, Task>> _stdOutListeners;
 
     public ProcessExecutionContext(
-        string path,
-        string binary,
-        string[] arguments,
-        Dictionary<string, string> environment,
-        bool saveStdOutStream, 
-        bool saveStdErrStream
+        string                     path
+      , string                     binary
+      , string                     arguments
+      , Dictionary<string, string> environment
+      , bool                       saveStdOutStream
+      , bool                       saveStdErrStream
     )
     {
         WorkingDirectory = path;
-        Binary = binary;
-        Arguments = arguments;
-        Environment = environment;
+        Binary           = binary;
+        Arguments        = arguments;
+        Environment      = environment;
         SaveStdOutStream = saveStdOutStream;
         SaveStdErrStream = saveStdErrStream;
         _stdOutListeners = new List<Func<string, Task>>();
         _stdErrListeners = new List<Func<string, Task>>();
     }
 
-    public string WorkingDirectory { get; }
-    public string Binary { get; }
-    public string[] Arguments { get; }
-    public Dictionary<string, string> Environment { get; }
+    public bool SaveStdOutStream { get; }
+    public bool SaveStdErrStream { get; }
+
+    public string                     WorkingDirectory { get; }
+    public string                     Binary           { get; }
+    public string                     Arguments        { get; }
+    public Dictionary<string, string> Environment      { get; }
+
     public IProcessExecutionContext AddStdOutListener(Func<string, Task> listener)
     {
         _stdOutListeners.Add(listener);
@@ -50,8 +54,6 @@ public class ProcessExecutionContext : IProcessExecutionContext
         return _stdErrListeners;
     }
 
-    public bool SaveStdOutStream { get;  }
-    public bool SaveStdErrStream { get;  }
     public IProcessExecutionContext SetInputStreamHandler(Func<Task<string>> inputStreamHandler)
     {
         throw new NotImplementedException();

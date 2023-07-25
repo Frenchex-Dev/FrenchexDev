@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="TimeSpanParserUtil" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Frenchex.Dev.DotnetCore.Process.Lib\Frenchex.Dev.DotnetCore.Process.Lib.csproj" />
     <ProjectReference Include="..\Frenchex.Dev.Vagrant.Lib.Domain\Frenchex.Dev.Vagrant.Lib.Domain.csproj" />
   </ItemGroup>

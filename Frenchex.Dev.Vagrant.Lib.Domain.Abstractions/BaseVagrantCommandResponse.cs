@@ -10,7 +10,6 @@ public abstract class BaseVagrantCommandResponse : IVagrantCommandResponse
     }
 
     /// <summary>
-    /// 
     /// </summary>
     public int ExitCode { get; }
 }

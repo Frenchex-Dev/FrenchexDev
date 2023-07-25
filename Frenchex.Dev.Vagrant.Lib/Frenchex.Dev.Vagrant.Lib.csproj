@@ -11,8 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Frenchex.Dev.Packer.Lib.Domain\Frenchex.Dev.Packer.Lib.Domain.csproj" />
-    <ProjectReference Include="..\Frenchex.Dev.Packer.Lib.Infrastructure\Frenchex.Dev.Packer.Lib.Infrastructure.csproj" />
     <ProjectReference Include="..\Frenchex.Dev.Vagrant.Lib.Domain\Frenchex.Dev.Vagrant.Lib.Domain.csproj" />
     <ProjectReference Include="..\Frenchex.Dev.Vagrant.Lib.Infrastructure\Frenchex.Dev.Vagrant.Lib.Infrastructure.csproj" />
   </ItemGroup>

@@ -1,55 +1,47 @@
-﻿using Frenchex.Dev.DotnetCore.Process.Lib;
+﻿#region Usings
+
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Init;
 
+#endregion
+
 namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Init;
 
 /// <summary>
-/// 
 /// </summary>
 public class VagrantInitCommand : AbstractVagrantCommand, IVagrantInitCommand
 {
-    public VagrantInitCommand(IProcess processExecutor) : base(processExecutor)
+    private readonly IVagrantInitCommandLineBuilder _vagrantInitCommandLineBuilder;
+
+    public VagrantInitCommand(
+        IProcessStarterFactory         processExecutor
+      , IVagrantInitCommandLineBuilder vagrantInitCommandLineBuilder
+    ) : base(processExecutor)
     {
+        _vagrantInitCommandLineBuilder = vagrantInitCommandLineBuilder;
     }
 
     public async Task<VagrantInitResponse> StartAsync(
-        VagrantInitRequest request,
-        IVagrantCommandExecutionContext context,
-        IVagrantCommandExecutionListeners listeners)
+        VagrantInitRequest                request
+      , IVagrantCommandExecutionContext   context
+      , IVagrantCommandExecutionListeners listeners
+    )
     {
-        var processContext = new ProcessExecutionContext(
-            path: context.WorkingDirectory,
-            binary: "vagrant",
-            arguments: BuildVagrantArgumentsAndOptions(request, context),
-            environment: new Dictionary<string, string>(),
-            saveStdOutStream: false,
-            saveStdErrStream: false
-        );
+        var processContext
+            = CreateProcessExecutionContext(request, context
+                                 ,                   _vagrantInitCommandLineBuilder.BuildCommandLineArguments(request));
 
-        var process = await ProcessExecutor.StartAsync(processContext);
+        var processStarter = ProcessStarterFactory.Factory();
+
+        PrepareProcess(listeners, processStarter);
+
+        var process = await processStarter.StartAsync(processContext);
+
+        await WaitProcessForExitAsync(context, process);
 
         var response = new VagrantInitResponse(process.ExitCode);
 
         return response;
-    }
-
-
-    public Task StopAsync(TimeSpan timeOut)
-    {
-        throw new NotImplementedException();
-    }
-
-    protected override string[] BuildVagrantArgumentsAndOptions(IVagrantCommandRequest request, IVagrantCommandExecutionContext context)
-    {
-        if (!(request is VagrantInitRequest vagrantInitRequest))
-        {
-            return Array.Empty<string>();
-        }
-
-        var arguments = new List<string>() { "init" };
-
-        return arguments.ToArray();
     }
 }

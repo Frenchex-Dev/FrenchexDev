@@ -1,26 +1,43 @@
-﻿using Frenchex.Dev.DotnetCore.Process.Lib;
+﻿#region Usings
+
+using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Halt;
+
+#endregion
 
 namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Halt;
 
 /// <summary>
-/// 
 /// </summary>
 public class VagrantHaltCommand : AbstractVagrantCommand, IVagrantHaltCommand
 {
-    public VagrantHaltCommand(IProcess processExecutor) : base(processExecutor)
+    private readonly IVagrantHaltCommandLineBuilder _commandLineBuilder;
+
+    public VagrantHaltCommand(
+        IProcessStarterFactory         processStarterFactory
+      , IVagrantHaltCommandLineBuilder commandLineBuilder
+    ) : base(processStarterFactory)
     {
+        _commandLineBuilder = commandLineBuilder;
     }
 
-    public Task<HaltCommandResponse> StartAsync(HaltCommandRequest request, IVagrantCommandExecutionContext context,
-        IVagrantCommandExecutionListeners listeners)
+    public async Task<VagrantHaltResponse> StartAsync(
+        VagrantHaltRequest                request
+      , IVagrantCommandExecutionContext   context
+      , IVagrantCommandExecutionListeners listeners
+    )
     {
-        throw new NotImplementedException();
-    }
+        var processContext = new ProcessExecutionContext(context.WorkingDirectory, "vagrant"
+                                                       , _commandLineBuilder.BuildCommandLineArguments(request)
+                                                       , new Dictionary<string, string>(), false, false);
 
-    public Task StopAsync(TimeSpan timeOut)
-    {
-        throw new NotImplementedException();
+        var processStarter = ProcessStarterFactory.Factory();
+
+        var process = await processStarter.StartAsync(processContext);
+
+        var response = new VagrantHaltResponse(process.ExitCode);
+
+        return response;
     }
 }

@@ -1,24 +1,48 @@
-﻿using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
+﻿#region Usings
+
+using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
+
+#endregion
 
 namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Init;
 
 /// <summary>
-/// 
+///     Represents a Vagrant Init command request
 /// </summary>
-public class VagrantInitRequest : BaseVagrantCommandRequest
+public class VagrantInitRequest : BaseVagrantCommandRequest, IVagrantInitRequest
 {
-    public string Name { get; set; }
-    public string Url { get; set; }
-    public string BoxVersion { get; set; }
-    public bool Force { get; set; }
-    public bool Minimal { get; set; }
-    public string Outfile { get; set; }
-    public string Template { get; set; }
-    public bool Color { get; set; }
-    public bool MachineReadable { get; set; }
-    public bool Version { get; set; }
-    public bool Debug { get; set; }
-    public bool Timestamp { get; set; }
-    public bool DebugTimestamp { get; set; }
-    public bool NoTty { get; set; }
+    public VagrantInitRequest(
+        string? name
+      , string? url
+      , string? boxVersion
+      , bool    force
+      , bool    minimal
+      , string? output
+      , string? template
+      , bool?   color
+      , bool?   machineReadable
+      , bool?   version
+      , bool?   debug
+      , bool?   timestamp
+      , bool?   debugTimestamp
+      , bool?   tty
+      , bool?   help
+    ) : base(color, machineReadable, version, debug, timestamp, debugTimestamp, tty, help)
+    {
+        Name       = name;
+        Url        = url ?? string.Empty;
+        BoxVersion = boxVersion;
+        Force      = force;
+        Minimal    = minimal;
+        Output     = output;
+        Template   = template;
+    }
+
+    public string? Name       { get; set; }
+    public string? Url        { get; set; }
+    public string? BoxVersion { get; set; }
+    public bool    Force      { get; set; }
+    public bool    Minimal    { get; set; }
+    public string? Output     { get; set; }
+    public string? Template   { get; set; }
 }
