@@ -17,7 +17,9 @@ public static class ServicesConfigurator
     ///     Static method to configures an <see cref="IServiceCollection" /> to use this lib.
     /// </summary>
     /// <param name="services"></param>
-    public static void Configure(IServiceCollection services)
+    public static void Configure(
+        IServiceCollection services
+    )
     {
         // scoping Domain interfaces services with Infrastructure implementations services
         services.AddTransient<IProcessStarter, ProcessStarter>()

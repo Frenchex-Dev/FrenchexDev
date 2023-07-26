@@ -25,43 +25,57 @@ public class VagrantInitRequestBuilder : AbstractVagrantRequestBuilder, IVagrant
     }
 
 
-    public IVagrantInitRequestBuilder WithName(string name)
+    public IVagrantInitRequestBuilder WithName(
+        string name
+    )
     {
         _name = name;
         return this;
     }
 
-    public IVagrantInitRequestBuilder WithUrl(string url)
+    public IVagrantInitRequestBuilder WithUrl(
+        string url
+    )
     {
         _url = url;
         return this;
     }
 
-    public IVagrantInitRequestBuilder WithBoxVersion(string boxVersion)
+    public IVagrantInitRequestBuilder WithBoxVersion(
+        string boxVersion
+    )
     {
         _boxVersion = boxVersion;
         return this;
     }
 
-    public IVagrantInitRequestBuilder WithForce(bool force)
+    public IVagrantInitRequestBuilder WithForce(
+        bool force
+    )
     {
         _force = force;
         return this;
     }
 
-    public IVagrantInitRequestBuilder WithMinimal(bool minimal)
+    public IVagrantInitRequestBuilder WithMinimal(
+        bool minimal
+    )
     {
         _minimal = minimal;
         return this;
     }
 
-    public IVagrantInitRequestBuilder WithOutput(string output)
+    public IVagrantInitRequestBuilder WithOutput(
+        string output
+    )
     {
         _output = output;
         return this;
     }
 
-    public IVagrantInitRequestBuilder WithTemplate(string template)
+    public IVagrantInitRequestBuilder WithTemplate(
+        string template
+    )
     {
         _template = template;
         return this;

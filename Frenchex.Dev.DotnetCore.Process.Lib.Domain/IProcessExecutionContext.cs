@@ -30,7 +30,9 @@ public interface IProcessExecutionContext
     /// </summary>
     /// <param name="listener"></param>
     /// <returns></returns>
-    IProcessExecutionContext AddStdOutListener(Func<string, Task> listener);
+    IProcessExecutionContext AddStdOutListener(
+        Func<string, Task> listener
+    );
 
     /// <summary>
     ///     Get listeners of StandardOutput data
@@ -43,7 +45,9 @@ public interface IProcessExecutionContext
     /// </summary>
     /// <param name="listener"></param>
     /// <returns></returns>
-    IProcessExecutionContext AddStdErrListener(Func<string, Task> listener);
+    IProcessExecutionContext AddStdErrListener(
+        Func<string, Task> listener
+    );
 
     /// <summary>
     ///     Get listeners for StandardError data
@@ -56,5 +60,7 @@ public interface IProcessExecutionContext
     /// </summary>
     /// <param name="inputStreamHandler"></param>
     /// <returns></returns>
-    IProcessExecutionContext SetInputStreamHandler(Func<Task<string>> inputStreamHandler);
+    IProcessExecutionContext SetInputStreamHandler(
+        Func<Task<string>> inputStreamHandler
+    );
 }

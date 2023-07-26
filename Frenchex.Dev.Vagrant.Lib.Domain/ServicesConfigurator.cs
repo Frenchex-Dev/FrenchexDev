@@ -16,7 +16,9 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain;
 
 public static class ServicesConfigurator
 {
-    public static void Configure(IServiceCollection services)
+    public static void Configure(
+        IServiceCollection services
+    )
     {
         services.AddScoped<IVagrantDestroyCommandLineBuilder, VagrantDestroyCommandLineBuilder>()
                 .AddScoped<IVagrantDestroyRequestBuilder, VagrantDestroyRequestBuilder>()

@@ -25,7 +25,9 @@ public class VagrantCommandExecutionListeners : IVagrantCommandExecutionListener
     /// </summary>
     /// <param name="listener"></param>
     /// <returns></returns>
-    public IVagrantCommandExecutionListeners AddStdOutListener(Func<string, Task> listener)
+    public IVagrantCommandExecutionListeners AddStdOutListener(
+        Func<string, Task> listener
+    )
     {
         _stdOutListeners.Add(listener);
         return this;
@@ -43,7 +45,9 @@ public class VagrantCommandExecutionListeners : IVagrantCommandExecutionListener
     /// </summary>
     /// <param name="listener"></param>
     /// <returns></returns>
-    public IVagrantCommandExecutionListeners AddStdErrListener(Func<string, Task> listener)
+    public IVagrantCommandExecutionListeners AddStdErrListener(
+        Func<string, Task> listener
+    )
     {
         _stdErrListeners.Add(listener);
         return this;

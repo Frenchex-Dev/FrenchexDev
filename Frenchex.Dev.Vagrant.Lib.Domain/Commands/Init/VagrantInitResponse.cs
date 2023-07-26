@@ -10,7 +10,9 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Init;
 /// </summary>
 public class VagrantInitResponse : BaseVagrantCommandResponse
 {
-    public VagrantInitResponse(int exitCode) : base(exitCode)
+    public VagrantInitResponse(
+        int exitCode
+    ) : base(exitCode)
     {
     }
 }

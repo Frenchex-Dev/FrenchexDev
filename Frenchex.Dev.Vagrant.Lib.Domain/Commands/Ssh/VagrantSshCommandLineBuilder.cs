@@ -9,7 +9,9 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Ssh;
 
 public class VagrantSshCommandLineBuilder : AbstractVagrantCommandLineBuilder, IVagrantSshCommandLineBuilder
 {
-    public string BuildCommandLineArguments(VagrantSshRequest request)
+    public string BuildCommandLineArguments(
+        VagrantSshRequest request
+    )
     {
         return BuildArguments(GetCliCommandName(), request, false, request.ExtraSshArgs);
     }
@@ -19,7 +21,9 @@ public class VagrantSshCommandLineBuilder : AbstractVagrantCommandLineBuilder, I
         return "ssh";
     }
 
-    protected override string BuildVagrantOptions(IVagrantCommandRequest request)
+    protected override string BuildVagrantOptions(
+        IVagrantCommandRequest request
+    )
     {
         if (request is VagrantSshRequest sshRequest)
         {
@@ -33,7 +37,9 @@ public class VagrantSshCommandLineBuilder : AbstractVagrantCommandLineBuilder, I
         throw new NotImplementedException();
     }
 
-    protected override string BuildVagrantArguments(IVagrantCommandRequest request)
+    protected override string BuildVagrantArguments(
+        IVagrantCommandRequest request
+    )
     {
         if (request is VagrantSshRequest sshRequest)
         {

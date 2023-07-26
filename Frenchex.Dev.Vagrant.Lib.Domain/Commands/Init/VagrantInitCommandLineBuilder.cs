@@ -9,7 +9,9 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Init;
 
 public class VagrantInitCommandLineBuilder : AbstractVagrantCommandLineBuilder, IVagrantInitCommandLineBuilder
 {
-    public string BuildCommandLineArguments(VagrantInitRequest request)
+    public string BuildCommandLineArguments(
+        VagrantInitRequest request
+    )
     {
         return BuildArguments(GetCliCommandName(), request);
     }
@@ -19,7 +21,9 @@ public class VagrantInitCommandLineBuilder : AbstractVagrantCommandLineBuilder, 
         return "init";
     }
 
-    protected override string BuildVagrantOptions(IVagrantCommandRequest request)
+    protected override string BuildVagrantOptions(
+        IVagrantCommandRequest request
+    )
     {
         if (request is VagrantInitRequest initRequest)
         {
@@ -43,7 +47,9 @@ public class VagrantInitCommandLineBuilder : AbstractVagrantCommandLineBuilder, 
         return string.Empty;
     }
 
-    protected override string BuildVagrantArguments(IVagrantCommandRequest request)
+    protected override string BuildVagrantArguments(
+        IVagrantCommandRequest request
+    )
     {
         if (request is VagrantInitRequest initRequest)
         {

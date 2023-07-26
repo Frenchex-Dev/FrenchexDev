@@ -2,7 +2,9 @@
 
 public class VagrantDestroyResponse : IVagrantDestroyResponse
 {
-    public VagrantDestroyResponse(int exitCode)
+    public VagrantDestroyResponse(
+        int exitCode
+    )
     {
         ExitCode = exitCode;
     }

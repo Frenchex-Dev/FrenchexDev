@@ -10,7 +10,9 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Halt;
 /// </summary>
 public class VagrantHaltResponse : BaseVagrantCommandResponse, IVagrantHaltResponse
 {
-    public VagrantHaltResponse(int exitCode) : base(exitCode)
+    public VagrantHaltResponse(
+        int exitCode
+    ) : base(exitCode)
     {
     }
 }

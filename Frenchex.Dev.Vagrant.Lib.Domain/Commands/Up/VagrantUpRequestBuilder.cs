@@ -24,43 +24,57 @@ public class VagrantUpRequestBuilder : AbstractVagrantRequestBuilder, IVagrantUp
                                   , BaseBuilder.DebugTimestamp, BaseBuilder.NoTty, BaseBuilder.Help);
     }
 
-    public IVagrantUpRequestBuilder WithNameOrId(string nameOrId)
+    public IVagrantUpRequestBuilder WithNameOrId(
+        string nameOrId
+    )
     {
         _nameOrId = nameOrId;
         return this;
     }
 
-    public IVagrantUpRequestBuilder WithProvision(bool provision)
+    public IVagrantUpRequestBuilder WithProvision(
+        bool provision
+    )
     {
         _provision = provision;
         return this;
     }
 
-    public IVagrantUpRequestBuilder WithProvisionWith(string provision)
+    public IVagrantUpRequestBuilder WithProvisionWith(
+        string provision
+    )
     {
         _provisionWith.Add(provision);
         return this;
     }
 
-    public IVagrantUpRequestBuilder WithDestroyOnError(bool destroyOnError)
+    public IVagrantUpRequestBuilder WithDestroyOnError(
+        bool destroyOnError
+    )
     {
         _destroyOnError = destroyOnError;
         return this;
     }
 
-    public IVagrantUpRequestBuilder WithParallel(bool parallel)
+    public IVagrantUpRequestBuilder WithParallel(
+        bool parallel
+    )
     {
         _parallel = parallel;
         return this;
     }
 
-    public IVagrantUpRequestBuilder WithProvider(string provider)
+    public IVagrantUpRequestBuilder WithProvider(
+        string provider
+    )
     {
         _provider = provider;
         return this;
     }
 
-    public IVagrantUpRequestBuilder WithInstallProvider(bool installProvider)
+    public IVagrantUpRequestBuilder WithInstallProvider(
+        bool installProvider
+    )
     {
         _installProvider = installProvider;
         return this;

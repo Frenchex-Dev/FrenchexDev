@@ -10,11 +10,16 @@ public interface IProcessStarter
     /// <param name="context"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task<IProcessExecution> StartAsync(IProcessExecutionContext context, CancellationToken cancellationToken = default);
+    Task<IProcessExecution> StartAsync(
+        IProcessExecutionContext context
+      , CancellationToken        cancellationToken = default
+    );
 
     /// <summary>
     ///     Gives developer access to underlying process before starting it
     /// </summary>
     /// <param name="processPreparer"></param>
-    void AddProcessPreparer(Func<System.Diagnostics.Process, Task> processPreparer);
+    void AddProcessPreparer(
+        Func<System.Diagnostics.Process, Task> processPreparer
+    );
 }

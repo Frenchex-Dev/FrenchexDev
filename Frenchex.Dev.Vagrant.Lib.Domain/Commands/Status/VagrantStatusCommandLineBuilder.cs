@@ -9,7 +9,9 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Status;
 
 public class VagrantStatusCommandLineBuilder : AbstractVagrantCommandLineBuilder, IVagrantStatusCommandLineBuilder
 {
-    public string BuildCommandLineArguments(VagrantStatusRequest request)
+    public string BuildCommandLineArguments(
+        VagrantStatusRequest request
+    )
     {
         return BuildArguments(GetCliCommandName(), request, false, string.Empty);
     }
@@ -19,12 +21,16 @@ public class VagrantStatusCommandLineBuilder : AbstractVagrantCommandLineBuilder
         return "status";
     }
 
-    protected override string BuildVagrantOptions(IVagrantCommandRequest request)
+    protected override string BuildVagrantOptions(
+        IVagrantCommandRequest request
+    )
     {
         return string.Empty;
     }
 
-    protected override string BuildVagrantArguments(IVagrantCommandRequest request)
+    protected override string BuildVagrantArguments(
+        IVagrantCommandRequest request
+    )
     {
         if (request is VagrantStatusRequest statusRequest)
         {

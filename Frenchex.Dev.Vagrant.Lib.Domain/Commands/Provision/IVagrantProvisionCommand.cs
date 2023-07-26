@@ -13,8 +13,13 @@ public interface IVagrantProvisionCommand : IVagrantCommand<VagrantProvisionRequ
 
 public interface IVagrantProvisionRequestBuilder : IVagrantRequestBuilder<VagrantProvisionRequest>
 {
-    IVagrantProvisionRequestBuilder WithNameOrId(string      nameOrId);
-    IVagrantProvisionRequestBuilder WithProvisionWith(string provisionWith);
+    IVagrantProvisionRequestBuilder WithNameOrId(
+        string nameOrId
+    );
+
+    IVagrantProvisionRequestBuilder WithProvisionWith(
+        string provisionWith
+    );
 }
 
 public class VagrantProvisionRequestBuilder : AbstractVagrantRequestBuilder, IVagrantProvisionRequestBuilder
@@ -30,13 +35,17 @@ public class VagrantProvisionRequestBuilder : AbstractVagrantRequestBuilder, IVa
                                          , BaseBuilder.Help);
     }
 
-    public IVagrantProvisionRequestBuilder WithNameOrId(string nameOrId)
+    public IVagrantProvisionRequestBuilder WithNameOrId(
+        string nameOrId
+    )
     {
         _nameOrId = nameOrId;
         return this;
     }
 
-    public IVagrantProvisionRequestBuilder WithProvisionWith(string provisionWith)
+    public IVagrantProvisionRequestBuilder WithProvisionWith(
+        string provisionWith
+    )
     {
         _provisionWith.Add(provisionWith);
         return this;

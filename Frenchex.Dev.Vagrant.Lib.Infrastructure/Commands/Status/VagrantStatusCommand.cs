@@ -13,7 +13,7 @@ public class VagrantStatusCommand : AbstractVagrantCommand, IVagrantStatusComman
     private readonly IVagrantStatusCommandLineBuilder _commandLineBuilder;
 
     public VagrantStatusCommand(
-        IProcessStarterFactory processExecutor
+        IProcessStarterFactory           processExecutor
       , IVagrantStatusCommandLineBuilder commandLineBuilder
     ) : base(processExecutor)
     {
@@ -21,8 +21,8 @@ public class VagrantStatusCommand : AbstractVagrantCommand, IVagrantStatusComman
     }
 
     public async Task<VagrantStatusResponse> StartAsync(
-        VagrantStatusRequest request
-      , IVagrantCommandExecutionContext context
+        VagrantStatusRequest              request
+      , IVagrantCommandExecutionContext   context
       , IVagrantCommandExecutionListeners listeners
     )
     {

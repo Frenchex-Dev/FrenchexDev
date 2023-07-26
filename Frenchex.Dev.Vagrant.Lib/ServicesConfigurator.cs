@@ -32,7 +32,7 @@ public static class ServicesConfigurator
     /// </summary>
     /// <param name="services"></param>
     public static void Configure(
-    IServiceCollection services
+        IServiceCollection services
     )
     {
         Infrastructure.ServicesConfigurator.Configure(services);

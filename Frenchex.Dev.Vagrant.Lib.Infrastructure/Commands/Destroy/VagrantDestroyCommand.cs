@@ -15,7 +15,7 @@ public class VagrantDestroyCommand : AbstractVagrantCommand, IVagrantDestroyComm
     private readonly IVagrantDestroyCommandLineBuilder _commandLineBuilder;
 
     public VagrantDestroyCommand(
-        IProcessStarterFactory         processStarterFactory
+        IProcessStarterFactory            processStarterFactory
       , IVagrantDestroyCommandLineBuilder commandLineBuilder
     ) : base(processStarterFactory)
     {
@@ -23,7 +23,7 @@ public class VagrantDestroyCommand : AbstractVagrantCommand, IVagrantDestroyComm
     }
 
     public async Task<VagrantDestroyResponse> StartAsync(
-        VagrantDestroyRequest                request
+        VagrantDestroyRequest             request
       , IVagrantCommandExecutionContext   context
       , IVagrantCommandExecutionListeners listeners
     )

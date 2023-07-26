@@ -24,7 +24,10 @@ public sealed class ProcessExecution : IProcessExecution
     /// <param name="internalProcess"></param>
     /// <param name="hasStarted"></param>
     /// <param name="tscFinished"></param>
-    public ProcessExecution(System.Diagnostics.Process internalProcess, bool hasStarted)
+    public ProcessExecution(
+        System.Diagnostics.Process internalProcess
+      , bool                       hasStarted
+    )
     {
         _internalProcess = internalProcess;
         HasStarted       = hasStarted;
@@ -95,7 +98,10 @@ public sealed class ProcessExecution : IProcessExecution
     /// <param name="timeOut"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task StopAsync(TimeSpan timeOut, CancellationToken cancellationToken = default)
+    public async Task StopAsync(
+        TimeSpan          timeOut
+      , CancellationToken cancellationToken = default
+    )
     {
         await StopAsync((int)timeOut.TotalMilliseconds, cancellationToken);
     }
@@ -110,7 +116,10 @@ public sealed class ProcessExecution : IProcessExecution
     /// <param name="timeOutMs">Timeout in milliseconds</param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task StopAsync(int timeOutMs, CancellationToken cancellationToken = default)
+    public async Task StopAsync(
+        int               timeOutMs
+      , CancellationToken cancellationToken = default
+    )
     {
         var cancellationTokenSource = new CancellationTokenSource();
         cancellationTokenSource.CancelAfter(timeOutMs);
@@ -126,7 +135,9 @@ public sealed class ProcessExecution : IProcessExecution
     ///         Implementation : Kills the <see cref="_internalProcess" />
     ///     </para>
     /// </summary>
-    public void Kill(bool entireProcessTree)
+    public void Kill(
+        bool entireProcessTree
+    )
     {
         _internalProcess.Kill(entireProcessTree);
     }
@@ -137,7 +148,9 @@ public sealed class ProcessExecution : IProcessExecution
     ///         Implementation : Kills the <see cref="_internalProcess" /> wrapped in a try/catch
     ///     </para>
     /// </summary>
-    public void TryKill(bool entireProcessTree)
+    public void TryKill(
+        bool entireProcessTree
+    )
     {
         try
         {
@@ -157,7 +170,9 @@ public sealed class ProcessExecution : IProcessExecution
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
-    public async Task WaitForExitAsync(CancellationToken cancellationToken = default)
+    public async Task WaitForExitAsync(
+        CancellationToken cancellationToken = default
+    )
     {
         await _internalProcess.WaitForExitAsync(cancellationToken);
     }
@@ -168,7 +183,10 @@ public sealed class ProcessExecution : IProcessExecution
     /// <param name="timeoutMs"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task WaitForExitAsync(int timeoutMs, CancellationToken cancellationToken = default)
+    public async Task WaitForExitAsync(
+        int               timeoutMs
+      , CancellationToken cancellationToken = default
+    )
     {
         await StopAsync(timeoutMs, cancellationToken);
     }
@@ -179,7 +197,10 @@ public sealed class ProcessExecution : IProcessExecution
     /// <param name="timeout"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    public async Task WaitForExitAsync(TimeSpan timeout, CancellationToken cancellationToken = default)
+    public async Task WaitForExitAsync(
+        TimeSpan          timeout
+      , CancellationToken cancellationToken = default
+    )
     {
         await StopAsync(timeout, cancellationToken);
     }

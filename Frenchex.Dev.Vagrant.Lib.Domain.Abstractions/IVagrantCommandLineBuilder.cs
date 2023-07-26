@@ -2,5 +2,7 @@
 
 public interface IVagrantCommandLineBuilder<in TRequest> where TRequest : IVagrantCommandRequest
 {
-    string BuildCommandLineArguments(TRequest request);
+    string BuildCommandLineArguments(
+        TRequest request
+    );
 }

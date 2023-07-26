@@ -9,7 +9,9 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Up;
 
 public class VagrantUpCommandLineBuilder : AbstractVagrantCommandLineBuilder, IVagrantUpCommandLineBuilder
 {
-    public string BuildCommandLineArguments(VagrantUpRequest request)
+    public string BuildCommandLineArguments(
+        VagrantUpRequest request
+    )
     {
         return BuildArguments(GetCliCommandName(), request);
     }
@@ -19,7 +21,9 @@ public class VagrantUpCommandLineBuilder : AbstractVagrantCommandLineBuilder, IV
         return "up";
     }
 
-    protected override string BuildVagrantOptions(IVagrantCommandRequest request)
+    protected override string BuildVagrantOptions(
+        IVagrantCommandRequest request
+    )
     {
         if (request is VagrantUpRequest upRequest)
         {
@@ -38,7 +42,9 @@ public class VagrantUpCommandLineBuilder : AbstractVagrantCommandLineBuilder, IV
         throw new NotImplementedException();
     }
 
-    protected override string BuildVagrantArguments(IVagrantCommandRequest request)
+    protected override string BuildVagrantArguments(
+        IVagrantCommandRequest request
+    )
     {
         if (request is VagrantUpRequest upRequest) return upRequest.NameOrId;
 

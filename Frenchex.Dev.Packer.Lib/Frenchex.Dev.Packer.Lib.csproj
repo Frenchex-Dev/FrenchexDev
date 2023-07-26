@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Frenchex.Dev.Packer.Lib.Domain\Frenchex.Dev.Packer.Lib.Domain.csproj" />
+    <ProjectReference Include="..\Frenchex.Dev.Packer.Lib.Infrastructure\Frenchex.Dev.Packer.Lib.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

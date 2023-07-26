@@ -4,7 +4,9 @@ public class BaseVagrantCommandRequestBuilder : IBaseVagrantCommandRequestBuilde
 {
     private readonly object _owner;
 
-    public BaseVagrantCommandRequestBuilder(object owner)
+    public BaseVagrantCommandRequestBuilder(
+        object owner
+    )
     {
         _owner = owner;
     }
@@ -18,49 +20,65 @@ public class BaseVagrantCommandRequestBuilder : IBaseVagrantCommandRequestBuilde
     public bool  DebugTimestamp  { get; private set; }
     public bool? NoTty           { get; private set; } = false;
 
-    public IBaseVagrantCommandRequestBuilder WithColor(bool withColor)
+    public IBaseVagrantCommandRequestBuilder WithColor(
+        bool withColor
+    )
     {
         Color = withColor;
         return this;
     }
 
-    public IBaseVagrantCommandRequestBuilder WithMachineReadable(bool withMachineReadable)
+    public IBaseVagrantCommandRequestBuilder WithMachineReadable(
+        bool withMachineReadable
+    )
     {
         MachineReadable = withMachineReadable;
         return this;
     }
 
-    public IBaseVagrantCommandRequestBuilder WithVersion(bool withVersion)
+    public IBaseVagrantCommandRequestBuilder WithVersion(
+        bool withVersion
+    )
     {
         Version = withVersion;
         return this;
     }
 
-    public IBaseVagrantCommandRequestBuilder WithDebug(bool withDebug)
+    public IBaseVagrantCommandRequestBuilder WithDebug(
+        bool withDebug
+    )
     {
         Debug = withDebug;
         return this;
     }
 
-    public IBaseVagrantCommandRequestBuilder WithTimestamp(bool withTimestamp)
+    public IBaseVagrantCommandRequestBuilder WithTimestamp(
+        bool withTimestamp
+    )
     {
         Timestamp = withTimestamp;
         return this;
     }
 
-    public IBaseVagrantCommandRequestBuilder WithDebugTimestamp(bool withTimestamp)
+    public IBaseVagrantCommandRequestBuilder WithDebugTimestamp(
+        bool withTimestamp
+    )
     {
         DebugTimestamp = withTimestamp;
         return this;
     }
 
-    public IBaseVagrantCommandRequestBuilder WithHelp(bool withHelp)
+    public IBaseVagrantCommandRequestBuilder WithHelp(
+        bool withHelp
+    )
     {
         Help = withHelp;
         return this;
     }
 
-    public IBaseVagrantCommandRequestBuilder WithNoTty(bool withNoTty)
+    public IBaseVagrantCommandRequestBuilder WithNoTty(
+        bool withNoTty
+    )
     {
         NoTty = withNoTty;
         return this;

@@ -21,7 +21,9 @@ public static class ServicesConfigurator
     ///     await using var scope =
     /// </example>
     /// <param name="services"></param>
-    public static void Configure(IServiceCollection services)
+    public static void Configure(
+        IServiceCollection services
+    )
     {
         DotnetCore.Process.Lib.ServicesConfigurator.Configure(services);
     }

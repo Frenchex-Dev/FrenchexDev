@@ -9,7 +9,9 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Destroy;
 
 public class VagrantDestroyCommandLineBuilder : AbstractVagrantCommandLineBuilder, IVagrantDestroyCommandLineBuilder
 {
-    public string BuildCommandLineArguments(VagrantDestroyRequest request)
+    public string BuildCommandLineArguments(
+        VagrantDestroyRequest request
+    )
     {
         return BuildArguments(GetCliCommandName(), request);
     }
@@ -19,7 +21,9 @@ public class VagrantDestroyCommandLineBuilder : AbstractVagrantCommandLineBuilde
         return "destroy";
     }
 
-    protected override string BuildVagrantOptions(IVagrantCommandRequest request)
+    protected override string BuildVagrantOptions(
+        IVagrantCommandRequest request
+    )
     {
         if (request is VagrantDestroyRequest destroyRequest)
         {
@@ -37,7 +41,9 @@ public class VagrantDestroyCommandLineBuilder : AbstractVagrantCommandLineBuilde
         throw new NotImplementedException();
     }
 
-    protected override string BuildVagrantArguments(IVagrantCommandRequest request)
+    protected override string BuildVagrantArguments(
+        IVagrantCommandRequest request
+    )
     {
         if (request is VagrantDestroyRequest destroyRequest)
         {

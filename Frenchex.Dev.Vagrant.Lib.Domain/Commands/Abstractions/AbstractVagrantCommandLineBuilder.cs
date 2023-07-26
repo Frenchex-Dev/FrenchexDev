@@ -10,7 +10,9 @@ public abstract class AbstractVagrantCommandLineBuilder
 {
     protected abstract string GetCliCommandName();
 
-    protected static List<string> BuildRootVagrantOptions(IVagrantCommandRequest request)
+    protected static List<string> BuildRootVagrantOptions(
+        IVagrantCommandRequest request
+    )
     {
         var parts = new List<string>();
 
@@ -65,7 +67,11 @@ public abstract class AbstractVagrantCommandLineBuilder
         return string.Join(" ", parts);
     }
 
-    protected abstract string BuildVagrantOptions(IVagrantCommandRequest request);
+    protected abstract string BuildVagrantOptions(
+        IVagrantCommandRequest request
+    );
 
-    protected abstract string BuildVagrantArguments(IVagrantCommandRequest request);
+    protected abstract string BuildVagrantArguments(
+        IVagrantCommandRequest request
+    );
 }

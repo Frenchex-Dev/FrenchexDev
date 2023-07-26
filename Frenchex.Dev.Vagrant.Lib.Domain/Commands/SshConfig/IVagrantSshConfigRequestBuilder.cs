@@ -8,6 +8,11 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.SshConfig;
 
 public interface IVagrantSshConfigRequestBuilder : IVagrantRequestBuilder<VagrantSshConfigRequest>
 {
-    IVagrantSshConfigRequestBuilder WithNameOrId(string nameOrId);
-    IVagrantSshConfigRequestBuilder WithHost(string     host);
+    IVagrantSshConfigRequestBuilder WithNameOrId(
+        string nameOrId
+    );
+
+    IVagrantSshConfigRequestBuilder WithHost(
+        string host
+    );
 }

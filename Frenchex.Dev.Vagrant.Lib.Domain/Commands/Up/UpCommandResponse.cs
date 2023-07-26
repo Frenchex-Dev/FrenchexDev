@@ -10,7 +10,9 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Up;
 /// </summary>
 public class UpCommandResponse : BaseVagrantCommandResponse, IUpCommandResponse
 {
-    public UpCommandResponse(int exitCode) : base(exitCode)
+    public UpCommandResponse(
+        int exitCode
+    ) : base(exitCode)
     {
     }
 }

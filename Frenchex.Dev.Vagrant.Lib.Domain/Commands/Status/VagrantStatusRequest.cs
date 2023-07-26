@@ -29,7 +29,9 @@ public class VagrantStatusRequest : BaseVagrantCommandRequest, IVagrantStatusReq
 
 public interface IVagrantStatusRequestBuilder : IVagrantRequestBuilder<VagrantStatusRequest>
 {
-    IVagrantStatusRequestBuilder WithNameOrId(string nameOrId);
+    IVagrantStatusRequestBuilder WithNameOrId(
+        string nameOrId
+    );
 }
 
 public class VagrantStatusRequestBuilder : AbstractVagrantRequestBuilder, IVagrantStatusRequestBuilder
@@ -43,7 +45,9 @@ public class VagrantStatusRequestBuilder : AbstractVagrantRequestBuilder, IVagra
                                       , BaseBuilder.NoTty, BaseBuilder.Help);
     }
 
-    public IVagrantStatusRequestBuilder WithNameOrId(string nameOrId)
+    public IVagrantStatusRequestBuilder WithNameOrId(
+        string nameOrId
+    )
     {
         _nameOrId = nameOrId;
         return this;

@@ -18,13 +18,17 @@ public class VagrantSshConfigRequestBuilder : AbstractVagrantRequestBuilder, IVa
                                          , BaseBuilder.DebugTimestamp, BaseBuilder.NoTty, BaseBuilder.Help);
     }
 
-    public IVagrantSshConfigRequestBuilder WithNameOrId(string nameOrId)
+    public IVagrantSshConfigRequestBuilder WithNameOrId(
+        string nameOrId
+    )
     {
         _nameOrId = nameOrId;
         return this;
     }
 
-    public IVagrantSshConfigRequestBuilder WithHost(string host)
+    public IVagrantSshConfigRequestBuilder WithHost(
+        string host
+    )
     {
         _host = host;
         return this;

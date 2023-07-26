@@ -11,7 +11,9 @@ public class ProcessStarterFactory : IProcessStarterFactory
 {
     private readonly IServiceProvider _serviceProvider;
 
-    public ProcessStarterFactory(IServiceProvider serviceProvider)
+    public ProcessStarterFactory(
+        IServiceProvider serviceProvider
+    )
     {
         _serviceProvider = serviceProvider;
     }

@@ -21,25 +21,33 @@ public class VagrantDestroyRequestBuilder : AbstractVagrantRequestBuilder, IVagr
                                        , BaseBuilder.Help);
     }
 
-    public IVagrantDestroyRequestBuilder WithNameOrId(string nameOrId)
+    public IVagrantDestroyRequestBuilder WithNameOrId(
+        string nameOrId
+    )
     {
         _nameOrId = nameOrId;
         return this;
     }
 
-    public IVagrantDestroyRequestBuilder WithGraceful(bool graceful)
+    public IVagrantDestroyRequestBuilder WithGraceful(
+        bool graceful
+    )
     {
         _graceful = graceful;
         return this;
     }
 
-    public IVagrantDestroyRequestBuilder WithForce(bool force)
+    public IVagrantDestroyRequestBuilder WithForce(
+        bool force
+    )
     {
         _force = force;
         return this;
     }
 
-    public IVagrantDestroyRequestBuilder WithParallel(bool parallel)
+    public IVagrantDestroyRequestBuilder WithParallel(
+        bool parallel
+    )
     {
         _parallel = parallel;
         return this;

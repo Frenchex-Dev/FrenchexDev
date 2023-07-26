@@ -11,7 +11,9 @@ public abstract class AbstractVagrantCommand
 {
     protected readonly IProcessStarterFactory ProcessStarterFactory;
 
-    protected AbstractVagrantCommand(IProcessStarterFactory processStarterFactory)
+    protected AbstractVagrantCommand(
+        IProcessStarterFactory processStarterFactory
+    )
     {
         ProcessStarterFactory = processStarterFactory;
     }
@@ -48,25 +50,34 @@ public abstract class AbstractVagrantCommand
     }
 
 
-    protected static void PrepareProcess(IVagrantCommandExecutionListeners listeners, IProcessStarter processStarter)
+    protected static void PrepareProcess(
+        IVagrantCommandExecutionListeners listeners
+      , IProcessStarter                   processStarter
+    )
     {
         processStarter.AddProcessPreparer(process =>
                                           {
-                                              process.OutputDataReceived += async (_, e) =>
+                                              process.OutputDataReceived += async (
+                                                                                _
+                                                                              , e
+                                                                            ) =>
                                                                             {
                                                                                 if (e.Data == null) return;
 
                                                                                 foreach (var listener in listeners
-                                                                                            .GetStdOutListeners())
+                                                                                             .GetStdOutListeners())
                                                                                     await listener(e.Data);
                                                                             };
 
-                                              process.ErrorDataReceived += async (_, e) =>
+                                              process.ErrorDataReceived += async (
+                                                                               _
+                                                                             , e
+                                                                           ) =>
                                                                            {
                                                                                if (e.Data == null) return;
 
                                                                                foreach (var listener in listeners
-                                                                                           .GetStdErrListeners())
+                                                                                            .GetStdErrListeners())
                                                                                    await listener(e.Data);
                                                                            };
 

@@ -9,7 +9,9 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Halt;
 
 public class VagrantHaltCommandLineBuilder : AbstractVagrantCommandLineBuilder, IVagrantHaltCommandLineBuilder
 {
-    public string BuildCommandLineArguments(VagrantHaltRequest request)
+    public string BuildCommandLineArguments(
+        VagrantHaltRequest request
+    )
     {
         return BuildArguments(GetCliCommandName(), request);
     }
@@ -19,7 +21,9 @@ public class VagrantHaltCommandLineBuilder : AbstractVagrantCommandLineBuilder, 
         return "halt";
     }
 
-    protected override string BuildVagrantOptions(IVagrantCommandRequest request)
+    protected override string BuildVagrantOptions(
+        IVagrantCommandRequest request
+    )
     {
         if (request is VagrantHaltRequest haltRequest)
         {
@@ -33,7 +37,9 @@ public class VagrantHaltCommandLineBuilder : AbstractVagrantCommandLineBuilder, 
         throw new NotImplementedException();
     }
 
-    protected override string BuildVagrantArguments(IVagrantCommandRequest request)
+    protected override string BuildVagrantArguments(
+        IVagrantCommandRequest request
+    )
     {
         if (request is VagrantHaltRequest haltRequest)
         {

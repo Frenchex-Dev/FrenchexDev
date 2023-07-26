@@ -18,13 +18,17 @@ public class VagrantHaltRequestBuilder : AbstractVagrantRequestBuilder, IVagrant
                                     , BaseBuilder.DebugTimestamp, BaseBuilder.NoTty, BaseBuilder.Help);
     }
 
-    public IVagrantHaltRequestBuilder WithNameOrId(string nameOrId)
+    public IVagrantHaltRequestBuilder WithNameOrId(
+        string nameOrId
+    )
     {
         _nameOrId = nameOrId;
         return this;
     }
 
-    public IVagrantHaltRequestBuilder WithForce(bool force)
+    public IVagrantHaltRequestBuilder WithForce(
+        bool force
+    )
     {
         _force = force;
         return this;

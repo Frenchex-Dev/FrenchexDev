@@ -19,19 +19,25 @@ public class VagrantSshRequestBuilder : AbstractVagrantRequestBuilder, IVagrantS
                                    , BaseBuilder.DebugTimestamp, BaseBuilder.NoTty, BaseBuilder.Help);
     }
 
-    public IVagrantSshRequestBuilder WithNameOrId(string nameOrId)
+    public IVagrantSshRequestBuilder WithNameOrId(
+        string nameOrId
+    )
     {
         _nameOrId = nameOrId;
         return this;
     }
 
-    public IVagrantSshRequestBuilder WithCommand(string command)
+    public IVagrantSshRequestBuilder WithCommand(
+        string command
+    )
     {
         _command = command;
         return this;
     }
 
-    public IVagrantSshRequestBuilder WithExtraSshArgs(string extraSshArgs)
+    public IVagrantSshRequestBuilder WithExtraSshArgs(
+        string extraSshArgs
+    )
     {
         _extraSshArgs = extraSshArgs;
         return this;

@@ -2,7 +2,9 @@
 
 internal class Combinations
 {
-    public static List<List<T>> AllCombinationsOf<T>(params List<T>[] sets)
+    public static List<List<T>> AllCombinationsOf<T>(
+        params List<T>[] sets
+    )
     {
         // need array bounds checking etc for production
         var combinations = new List<List<T>>();
@@ -15,7 +17,10 @@ internal class Combinations
         return combinations;
     }
 
-    private static List<List<T>> AddExtraSet<T>(List<List<T>> combinations, List<T> set)
+    private static List<List<T>> AddExtraSet<T>(
+        List<List<T>> combinations
+      , List<T>       set
+    )
     {
         IEnumerable<List<T>> newCombinations = from value in set
                                                from combination in combinations

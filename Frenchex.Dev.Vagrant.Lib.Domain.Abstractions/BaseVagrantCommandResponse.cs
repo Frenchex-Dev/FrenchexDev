@@ -4,7 +4,9 @@
 /// </summary>
 public abstract class BaseVagrantCommandResponse : IVagrantCommandResponse
 {
-    protected BaseVagrantCommandResponse(int exitCode)
+    protected BaseVagrantCommandResponse(
+        int exitCode
+    )
     {
         ExitCode = exitCode;
     }

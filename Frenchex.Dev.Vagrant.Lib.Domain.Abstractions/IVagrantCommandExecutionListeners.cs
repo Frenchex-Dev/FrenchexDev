@@ -11,7 +11,9 @@ public interface IVagrantCommandExecutionListeners
     /// </summary>
     /// <param name="listener"></param>
     /// <returns></returns>
-    IVagrantCommandExecutionListeners AddStdOutListener(Func<string, Task> listener);
+    IVagrantCommandExecutionListeners AddStdOutListener(
+        Func<string, Task> listener
+    );
 
     /// <summary>
     /// </summary>
@@ -22,7 +24,9 @@ public interface IVagrantCommandExecutionListeners
     /// </summary>
     /// <param name="listener"></param>
     /// <returns></returns>
-    IVagrantCommandExecutionListeners AddStdErrListener(Func<string, Task> listener);
+    IVagrantCommandExecutionListeners AddStdErrListener(
+        Func<string, Task> listener
+    );
 
     /// <summary>
     /// </summary>

@@ -43,7 +43,10 @@ public interface IProcessExecution
     /// <returns>
     ///     <see cref="Task" />
     /// </returns>
-    Task StopAsync(TimeSpan timeOut, CancellationToken cancellationToken = default);
+    Task StopAsync(
+        TimeSpan          timeOut
+      , CancellationToken cancellationToken = default
+    );
 
     /// <summary>
     ///     Stops the process asynchronously within given timeout in milliseconds or cancellation requested
@@ -53,26 +56,35 @@ public interface IProcessExecution
     /// <returns>
     ///     <see cref="Task" />
     /// </returns>
-    Task StopAsync(int timeOutMs, CancellationToken cancellationToken = default);
+    Task StopAsync(
+        int               timeOutMs
+      , CancellationToken cancellationToken = default
+    );
 
     /// <summary>
     ///     Kills the process
     /// </summary>
     /// <param name="entireProcessTree"></param>
-    void Kill(bool entireProcessTree);
+    void Kill(
+        bool entireProcessTree
+    );
 
     /// <summary>
     ///     Kills the process
     /// </summary>
     /// <param name="allTree"></param>
-    void TryKill(bool allTree);
+    void TryKill(
+        bool allTree
+    );
 
     /// <summary>
     ///     Waits for the process to exit or cancellation requested
     /// </summary>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task WaitForExitAsync(CancellationToken cancellationToken = default);
+    Task WaitForExitAsync(
+        CancellationToken cancellationToken = default
+    );
 
     /// <summary>
     ///     Waits for the process to exit within timeoutMs or cancellation requested
@@ -80,7 +92,10 @@ public interface IProcessExecution
     /// <param name="timeoutMs"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task WaitForExitAsync(int timeoutMs, CancellationToken cancellationToken = default);
+    Task WaitForExitAsync(
+        int               timeoutMs
+      , CancellationToken cancellationToken = default
+    );
 
     /// <summary>
     ///     Waits for the process to exit within timeout or cancellation requested
@@ -88,5 +103,8 @@ public interface IProcessExecution
     /// <param name="timeout"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    Task WaitForExitAsync(TimeSpan timeout, CancellationToken cancellationToken = default);
+    Task WaitForExitAsync(
+        TimeSpan          timeout
+      , CancellationToken cancellationToken = default
+    );
 }

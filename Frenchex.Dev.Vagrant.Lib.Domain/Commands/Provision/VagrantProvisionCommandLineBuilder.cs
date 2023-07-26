@@ -9,7 +9,9 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Provision;
 
 public class VagrantProvisionCommandLineBuilder : AbstractVagrantCommandLineBuilder, IVagrantProvisionCommandLineBuilder
 {
-    public string BuildCommandLineArguments(VagrantProvisionRequest request)
+    public string BuildCommandLineArguments(
+        VagrantProvisionRequest request
+    )
     {
         return BuildArguments(GetCliCommandName(), request, true);
     }
@@ -19,7 +21,9 @@ public class VagrantProvisionCommandLineBuilder : AbstractVagrantCommandLineBuil
         return "provision";
     }
 
-    protected override string BuildVagrantOptions(IVagrantCommandRequest request)
+    protected override string BuildVagrantOptions(
+        IVagrantCommandRequest request
+    )
     {
         if (request is VagrantProvisionRequest provisionRequest)
         {
@@ -35,7 +39,9 @@ public class VagrantProvisionCommandLineBuilder : AbstractVagrantCommandLineBuil
         throw new NotImplementedException();
     }
 
-    protected override string BuildVagrantArguments(IVagrantCommandRequest request)
+    protected override string BuildVagrantArguments(
+        IVagrantCommandRequest request
+    )
     {
         if (request is VagrantProvisionRequest provisionRequest)
         {

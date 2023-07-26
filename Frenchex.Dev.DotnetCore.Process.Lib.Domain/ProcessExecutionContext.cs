@@ -32,7 +32,9 @@ public class ProcessExecutionContext : IProcessExecutionContext
     public string                     Arguments        { get; }
     public Dictionary<string, string> Environment      { get; }
 
-    public IProcessExecutionContext AddStdOutListener(Func<string, Task> listener)
+    public IProcessExecutionContext AddStdOutListener(
+        Func<string, Task> listener
+    )
     {
         _stdOutListeners.Add(listener);
         return this;
@@ -43,7 +45,9 @@ public class ProcessExecutionContext : IProcessExecutionContext
         return _stdOutListeners;
     }
 
-    public IProcessExecutionContext AddStdErrListener(Func<string, Task> listener)
+    public IProcessExecutionContext AddStdErrListener(
+        Func<string, Task> listener
+    )
     {
         _stdErrListeners.Add(listener);
         return this;
@@ -54,7 +58,9 @@ public class ProcessExecutionContext : IProcessExecutionContext
         return _stdErrListeners;
     }
 
-    public IProcessExecutionContext SetInputStreamHandler(Func<Task<string>> inputStreamHandler)
+    public IProcessExecutionContext SetInputStreamHandler(
+        Func<Task<string>> inputStreamHandler
+    )
     {
         throw new NotImplementedException();
     }
