@@ -39,7 +39,6 @@ public class VagrantHaltCommand : AbstractVagrantCommand, IVagrantHaltCommand
 
         await WaitProcessForExitAsync(context, process);
 
-
         var response = new VagrantHaltResponse(process.ExitCode);
 
         return response;

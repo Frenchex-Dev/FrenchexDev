@@ -21,8 +21,8 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Tests;
     #region Internals
 
     protected async Task ExecuteInternal<TService, TRequest>(string expected, Func<TService, string> action)
-        where TService : IVagrantCommandLineBuilder<TRequest>
-        where TRequest : IVagrantCommandRequest
+    where TService : IVagrantCommandLineBuilder<TRequest>
+    where TRequest : IVagrantCommandRequest
     {
         #region Prepare
 
@@ -32,8 +32,8 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Tests;
 
         var services = servicesBuilder.BuildServiceProvider(new ServiceProviderOptions
                                                             {
-                                                                ValidateOnBuild = true
-                                                              , ValidateScopes  = true
+                                                            ValidateOnBuild = true
+                                                          , ValidateScopes  = true
                                                             });
 
         await using var scope = services.CreateAsyncScope();
@@ -50,7 +50,8 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Tests;
 
         #region Asserts
 
-        builtCommandLine.Should().BeEquivalentTo(expected, "expected command line arguments generated");
+        builtCommandLine.Should()
+                        .BeEquivalentTo(expected, "expected command line arguments generated");
 
         #endregion
     }
@@ -63,21 +64,25 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Tests;
     {
         yield return new object[]
                      {
-                         new VagrantDestroyRequestBuilder().WithNameOrId("default").WithForce(true).Build()
-                       , "destroy --force default"
+                     new VagrantDestroyRequestBuilder().WithNameOrId("default")
+                                                       .WithForce(true)
+                                                       .Build()
+                   , "destroy --force default"
                      };
 
         yield return new object[]
                      {
-                         new VagrantDestroyRequestBuilder().WithNameOrId("default").Build()
-                       , "destroy default"
+                     new VagrantDestroyRequestBuilder().WithNameOrId("default")
+                                                       .Build()
+                   , "destroy default"
                      };
 
         yield return new object[]
                      {
-                         new VagrantDestroyRequestBuilder().WithNameOrId("default").WithGraceful(true)
-                                                           .Build()
-                       , "destroy --graceful default"
+                     new VagrantDestroyRequestBuilder().WithNameOrId("default")
+                                                       .WithGraceful(true)
+                                                       .Build()
+                   , "destroy --graceful default"
                      };
     }
 
@@ -86,7 +91,7 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Tests;
     {
         await ExecuteInternal<IVagrantDestroyCommandLineBuilder, VagrantDestroyRequest>(expected
                                                                                       , builder => builder
-                                                                                           .BuildCommandLineArguments(request));
+                                                                                        .BuildCommandLineArguments(request));
     }
 
     #endregion
@@ -97,14 +102,17 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Tests;
     {
         yield return new object[]
                      {
-                         new VagrantHaltRequestBuilder().WithNameOrId("default").WithForce(true).Build()
-                       , "halt --force default"
+                     new VagrantHaltRequestBuilder().WithNameOrId("default")
+                                                    .WithForce(true)
+                                                    .Build()
+                   , "halt --force default"
                      };
 
         yield return new object[]
                      {
-                         new VagrantHaltRequestBuilder().WithNameOrId("default").Build()
-                       , "halt default"
+                     new VagrantHaltRequestBuilder().WithNameOrId("default")
+                                                    .Build()
+                   , "halt default"
                      };
     }
 
@@ -113,7 +121,7 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Tests;
     {
         await ExecuteInternal<IVagrantHaltCommandLineBuilder, VagrantHaltRequest>(expected
                                                                                 , builder => builder
-                                                                                     .BuildCommandLineArguments(request));
+                                                                                  .BuildCommandLineArguments(request));
     }
 
     #endregion
@@ -124,16 +132,19 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Tests;
     {
         yield return new object[]
                      {
-                         new VagrantInitRequestBuilder().WithName("generic/alpine317").WithForce(true)
-                                                        .Build()
-                       , "init --force generic/alpine317"
+                     new VagrantInitRequestBuilder().WithName("generic/alpine317")
+                                                    .WithForce(true)
+                                                    .Build()
+                   , "init --force generic/alpine317"
                      };
 
         yield return new object[]
                      {
-                         new VagrantInitRequestBuilder().WithName("generic/alpine317")
-                                                        .WithBoxVersion("4.2.14").WithForce(true).Build()
-                       , "init --box-version 4.2.14 --force generic/alpine317"
+                     new VagrantInitRequestBuilder().WithName("generic/alpine317")
+                                                    .WithBoxVersion("4.2.14")
+                                                    .WithForce(true)
+                                                    .Build()
+                   , "init --box-version 4.2.14 --force generic/alpine317"
                      };
     }
 
@@ -142,7 +153,7 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Tests;
     {
         await ExecuteInternal<IVagrantInitCommandLineBuilder, VagrantInitRequest>(expected
                                                                                 , builder => builder
-                                                                                     .BuildCommandLineArguments(request));
+                                                                                  .BuildCommandLineArguments(request));
     }
 
     #endregion
@@ -153,18 +164,19 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Tests;
     {
         yield return new object[]
                      {
-                         new VagrantProvisionRequestBuilder().Base()
-                                                             .GetOwner<VagrantProvisionRequestBuilder>()
-                                                             .Build()
-                       , "provision"
+                     new VagrantProvisionRequestBuilder().Base()
+                                                         .GetOwner<VagrantProvisionRequestBuilder>()
+                                                         .Build()
+                   , "provision"
                      };
 
         yield return new object[]
                      {
-                         new VagrantProvisionRequestBuilder().WithProvisionWith("my-script1.sh")
-                                                             .WithProvisionWith("my-script2.sh")
-                                                             .WithNameOrId("default").Build()
-                       , "provision default --provision-with my-script1.sh --provision-with my-script2.sh"
+                     new VagrantProvisionRequestBuilder().WithProvisionWith("my-script1.sh")
+                                                         .WithProvisionWith("my-script2.sh")
+                                                         .WithNameOrId("default")
+                                                         .Build()
+                   , "provision default --provision-with my-script1.sh --provision-with my-script2.sh"
                      };
     }
 
@@ -173,7 +185,7 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Tests;
     {
         await ExecuteInternal<IVagrantProvisionCommandLineBuilder, VagrantProvisionRequest>(expected
                                                                                           , builder => builder
-                                                                                               .BuildCommandLineArguments(request));
+                                                                                            .BuildCommandLineArguments(request));
     }
 
     #endregion
@@ -184,22 +196,26 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Tests;
     {
         yield return new object[]
                      {
-                         new VagrantSshRequestBuilder().Base().GetOwner<VagrantSshRequestBuilder>().Build()
-                       , "ssh"
+                     new VagrantSshRequestBuilder().Base()
+                                                   .GetOwner<VagrantSshRequestBuilder>()
+                                                   .Build()
+                   , "ssh"
                      };
 
         yield return new object[]
                      {
-                         new VagrantSshRequestBuilder().WithNameOrId("default").Build()
-                       , "ssh default"
+                     new VagrantSshRequestBuilder().WithNameOrId("default")
+                                                   .Build()
+                   , "ssh default"
                      };
 
         yield return new object[]
                      {
-                         new VagrantSshRequestBuilder().WithNameOrId("default")
-                                                       .WithCommand("echo 'hello world'")
-                                                       .WithExtraSshArgs("--extra-ssh-args").Build()
-                       , "ssh --command \"echo 'hello world'\" default -- --extra-ssh-args"
+                     new VagrantSshRequestBuilder().WithNameOrId("default")
+                                                   .WithCommand("echo 'hello world'")
+                                                   .WithExtraSshArgs("--extra-ssh-args")
+                                                   .Build()
+                   , "ssh --command \"echo 'hello world'\" default -- --extra-ssh-args"
                      };
     }
 
@@ -208,7 +224,7 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Tests;
     {
         await ExecuteInternal<IVagrantSshCommandLineBuilder, VagrantSshRequest>(expected
                                                                               , builder => builder
-                                                                                   .BuildCommandLineArguments(request));
+                                                                                .BuildCommandLineArguments(request));
     }
 
     #endregion
@@ -219,17 +235,18 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Tests;
     {
         yield return new object[]
                      {
-                         new VagrantSshConfigRequestBuilder().Base()
-                                                             .GetOwner<VagrantSshConfigRequestBuilder>()
-                                                             .Build()
-                       , "ssh-config"
+                     new VagrantSshConfigRequestBuilder().Base()
+                                                         .GetOwner<VagrantSshConfigRequestBuilder>()
+                                                         .Build()
+                   , "ssh-config"
                      };
 
         yield return new object[]
                      {
-                         new VagrantSshConfigRequestBuilder().WithNameOrId("default").WithHost("my-host")
-                                                             .Build()
-                       , "ssh-config --host my-host default"
+                     new VagrantSshConfigRequestBuilder().WithNameOrId("default")
+                                                         .WithHost("my-host")
+                                                         .Build()
+                   , "ssh-config --host my-host default"
                      };
     }
 
@@ -238,7 +255,7 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Tests;
     {
         await ExecuteInternal<IVagrantSshConfigCommandLineBuilder, VagrantSshConfigRequest>(expected
                                                                                           , builder => builder
-                                                                                               .BuildCommandLineArguments(request));
+                                                                                            .BuildCommandLineArguments(request));
     }
 
     #endregion
@@ -249,15 +266,17 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Tests;
     {
         yield return new object[]
                      {
-                         new VagrantStatusRequestBuilder().Base().GetOwner<VagrantStatusRequestBuilder>()
-                                                          .Build()
-                       , "status"
+                     new VagrantStatusRequestBuilder().Base()
+                                                      .GetOwner<VagrantStatusRequestBuilder>()
+                                                      .Build()
+                   , "status"
                      };
 
         yield return new object[]
                      {
-                         new VagrantStatusRequestBuilder().WithNameOrId("default").Build()
-                       , "status default"
+                     new VagrantStatusRequestBuilder().WithNameOrId("default")
+                                                      .Build()
+                   , "status default"
                      };
     }
 
@@ -266,7 +285,7 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Tests;
     {
         await ExecuteInternal<IVagrantStatusCommandLineBuilder, VagrantStatusRequest>(expected
                                                                                     , builder => builder
-                                                                                         .BuildCommandLineArguments(request));
+                                                                                      .BuildCommandLineArguments(request));
     }
 
     #endregion
@@ -277,13 +296,17 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Tests;
     {
         yield return new object[]
                      {
-                         new VagrantUpRequestBuilder().WithNameOrId("default").Build(), "up default"
+                     new VagrantUpRequestBuilder().WithNameOrId("default")
+                                                  .Build()
+                   , "up default"
                      };
 
         yield return new object[]
                      {
-                         new VagrantUpRequestBuilder().WithNameOrId("default").WithProvision(false).Build()
-                       , "up --no-provision default"
+                     new VagrantUpRequestBuilder().WithNameOrId("default")
+                                                  .WithProvision(false)
+                                                  .Build()
+                   , "up --no-provision default"
                      };
     }
 
@@ -292,7 +315,7 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Tests;
     {
         await ExecuteInternal<IVagrantUpCommandLineBuilder, VagrantUpRequest>(expected
                                                                             , builder => builder
-                                                                                 .BuildCommandLineArguments(request));
+                                                                              .BuildCommandLineArguments(request));
     }
 
     #endregion

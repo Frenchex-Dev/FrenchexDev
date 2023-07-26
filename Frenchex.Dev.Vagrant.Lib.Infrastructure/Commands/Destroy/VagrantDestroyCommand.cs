@@ -39,7 +39,6 @@ public class VagrantDestroyCommand : AbstractVagrantCommand, IVagrantDestroyComm
 
         await WaitProcessForExitAsync(context, process);
 
-
         var response = new VagrantDestroyResponse(process.ExitCode);
 
         return response;
