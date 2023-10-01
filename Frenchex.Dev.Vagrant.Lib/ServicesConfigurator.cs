@@ -39,28 +39,13 @@ public static class ServicesConfigurator
         Domain.ServicesConfigurator.Configure(services);
 
         services.AddScoped<IVagrantDestroyCommand, VagrantDestroyCommand>()
-                .AddScoped<IVagrantDestroyCommandLineBuilder, VagrantDestroyCommandLineBuilder>()
-                .AddScoped<IVagrantDestroyRequestBuilder, VagrantDestroyRequestBuilder>()
                 .AddScoped<IVagrantHaltCommand, VagrantHaltCommand>()
-                .AddScoped<IVagrantHaltCommandLineBuilder, VagrantHaltCommandLineBuilder>()
-                .AddScoped<IVagrantHaltRequestBuilder, VagrantHaltRequestBuilder>()
                 .AddScoped<IVagrantInitCommand, VagrantInitCommand>()
-                .AddScoped<IVagrantInitCommandLineBuilder, VagrantInitCommandLineBuilder>()
-                .AddScoped<IVagrantInitRequestBuilder, VagrantInitRequestBuilder>()
                 .AddScoped<IVagrantProvisionCommand, VagrantProvisionCommand>()
-                .AddScoped<IVagrantProvisionCommandLineBuilder, VagrantProvisionCommandLineBuilder>()
-                .AddScoped<IVagrantProvisionRequestBuilder, VagrantProvisionRequestBuilder>()
                 .AddScoped<IVagrantSshCommand, VagrantSshCommand>()
-                .AddScoped<IVagrantSshCommandLineBuilder, VagrantSshCommandLineBuilder>()
-                .AddScoped<IVagrantSshRequestBuilder, VagrantSshRequestBuilder>()
                 .AddScoped<IVagrantSshConfigCommand, VagrantSshConfigCommand>()
-                .AddScoped<IVagrantSshConfigCommandLineBuilder, VagrantSshConfigCommandLineBuilder>()
-                .AddScoped<IVagrantSshConfigRequestBuilder, VagrantSshConfigRequestBuilder>()
                 .AddScoped<IVagrantStatusCommand, VagrantStatusCommand>()
-                .AddScoped<IVagrantStatusCommandLineBuilder, VagrantStatusCommandLineBuilder>()
-                .AddScoped<IVagrantStatusRequestBuilder, VagrantStatusRequestBuilder>()
                 .AddScoped<IVagrantUpCommand, VagrantUpCommand>()
-                .AddScoped<IVagrantUpCommandLineBuilder, VagrantUpCommandLineBuilder>()
-                .AddScoped<IVagrantUpRequestBuilder, VagrantUpRequestBuilder>();
+                ;
     }
 }
