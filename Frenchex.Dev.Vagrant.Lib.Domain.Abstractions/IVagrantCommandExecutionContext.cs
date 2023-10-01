@@ -32,5 +32,5 @@ public interface IVagrantCommandExecutionContext
 
     /// <summary>
     /// </summary>
-    string Timeout { get; }
+    string? Timeout { get; }
 }

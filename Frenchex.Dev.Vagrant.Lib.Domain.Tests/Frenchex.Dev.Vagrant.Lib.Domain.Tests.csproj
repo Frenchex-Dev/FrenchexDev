@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Frenchex.Dev.DotnetCore.Process.Lib\Frenchex.Dev.DotnetCore.Process.Lib.csproj" />
-    <ProjectReference Include="..\Frenchex.Dev.Packer.Lib.Domain\Frenchex.Dev.Packer.Lib.Domain.csproj" />
     <ProjectReference Include="..\Frenchex.Dev.Vagrant.Lib.Domain\Frenchex.Dev.Vagrant.Lib.Domain.csproj" />
   </ItemGroup>
 
