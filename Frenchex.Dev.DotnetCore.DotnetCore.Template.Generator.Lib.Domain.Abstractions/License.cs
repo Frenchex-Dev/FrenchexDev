@@ -4,5 +4,8 @@ public class License : ILicense
 {
     public required string Content { get; set; }
 
-    public override string ToString() => Content;
+    public override string ToString()
+    {
+        return Content;
+    }
 }

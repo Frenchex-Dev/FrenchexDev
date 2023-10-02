@@ -1,5 +1,5 @@
-﻿using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
-using System.Text.Json;
+﻿using System.Text.Json;
+using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
 
 namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain;
 
@@ -60,10 +60,11 @@ public class ProjectTemplateGenerator : IProjectTemplateGenerator
                                                                                                   , Type = x.Type
                                                                                                 })
                                                                                    .ToList()
-                                                                     }, new JsonSerializerOptions()
+                                                                     }, new JsonSerializerOptions
                                                                         {
-                                                                            WriteIndented = true,
-                                                                            DictionaryKeyPolicy = JsonNamingPolicy.SnakeCaseLower,
+                                                                            WriteIndented = true
+                                                                          , DictionaryKeyPolicy
+                                                                                = JsonNamingPolicy.SnakeCaseLower
                                                                         })
                                 , Extension = ".json"
                                 , FileName  = "template.json"
@@ -86,10 +87,11 @@ public class ProjectTemplateGenerator : IProjectTemplateGenerator
                                                                                                           .LongName
                                                                                                   })
                                                                                       .ToList()
-                                                                     }, new JsonSerializerOptions()
+                                                                     }, new JsonSerializerOptions
                                                                         {
-                                                                            WriteIndented = true,
-                                                                            DictionaryKeyPolicy = JsonNamingPolicy.SnakeCaseLower,
+                                                                            WriteIndented = true
+                                                                          , DictionaryKeyPolicy
+                                                                                = JsonNamingPolicy.SnakeCaseLower
                                                                         })
                                 , Extension = ".json"
                                 , FileName = "dotnetcli.host.json"
@@ -99,5 +101,3 @@ public class ProjectTemplateGenerator : IProjectTemplateGenerator
         return Task.CompletedTask;
     }
 }
-
-

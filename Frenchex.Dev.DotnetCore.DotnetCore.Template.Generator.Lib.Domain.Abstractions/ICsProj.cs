@@ -2,9 +2,7 @@
 
 public interface ICsProj
 {
-    string ToString();
-
-    string Sdk                       { get;  }
+    string Sdk                       { get; }
     string TargetFramework           { get; }
     bool   ImplicitUsings            { get; }
     bool   Nullable                  { get; }
@@ -13,4 +11,5 @@ public interface ICsProj
     bool   EnforceCodeStyleInBuild   { get; }
     string PackageLicenseFile        { get; }
     bool   GenerateDocumentationFile { get; }
+    string ToString();
 }

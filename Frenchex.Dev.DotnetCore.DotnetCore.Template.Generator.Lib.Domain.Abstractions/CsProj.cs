@@ -14,13 +14,10 @@ public class CsProj : ICsProj
 
     public override string ToString()
     {
-        return $"<Project Sdk=\"{Sdk}\">\r\n"
-             + "    <ItemGroup>\r\n"
+        return $"<Project Sdk=\"{Sdk}\">\r\n" + "    <ItemGroup>\r\n"
              + "        <None Include=\"README.md\" Pack=\"true\" PackagePath=\"\\\">\r\n"
-             + "            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>\r\n"
-             + "        </None>\r\n"
-             + "    </ItemGroup>\r\n"
-             + "    <PropertyGroup>\r\n"
+             + "            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>\r\n" + "        </None>\r\n"
+             + "    </ItemGroup>\r\n" + "    <PropertyGroup>\r\n"
              + $"        <TargetFramework>{TargetFramework}</TargetFramework>\r\n"
              + $"        <ImplicitUsings>{ImplicitUsings}</ImplicitUsings>\r\n"
              + $"        <Nullable>{Nullable}</Nullable>\r\n"
@@ -29,7 +26,6 @@ public class CsProj : ICsProj
              + $"        <EnforceCodeStyleInBuild>{EnforceCodeStyleInBuild}</EnforceCodeStyleInBuild>\r\n"
              + $"        <PackageLicenseFile>{PackageLicenseFile}</PackageLicenseFile>\r\n"
              + $"        <GenerateDocumentationFile>{GenerateDocumentationFile}</GenerateDocumentationFile>\r\n"
-             + "    </PropertyGroup>\r\n"
-             + "</Project>";
+             + "    </PropertyGroup>\r\n" + "</Project>";
     }
 }

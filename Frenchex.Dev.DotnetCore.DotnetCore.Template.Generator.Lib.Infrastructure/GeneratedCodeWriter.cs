@@ -17,7 +17,7 @@ public class GeneratedCodeWriter(
         await Parallel.ForEachAsync(files.AsEnumerable(), new ParallelOptions
                                                           {
                                                               CancellationToken      = cancellationToken
-                                                            , MaxDegreeOfParallelism = 10
+                                                            , MaxDegreeOfParallelism = 500
                                                             , TaskScheduler          = TaskScheduler.Current
                                                           }, async (
                                                                  x
@@ -25,7 +25,8 @@ public class GeneratedCodeWriter(
                                                              ) =>
                                                              {
                                                                  await fileWriter.WriteAllTextAsync(x.Path, x.Content
-                                                                                                   , Encoding.Unicode, ct);
+                                                                                                  , Encoding.Unicode
+                                                                                                  , ct);
                                                              });
     }
 
@@ -34,19 +35,18 @@ public class GeneratedCodeWriter(
     )
     {
         var directories = new Dictionary<string, DirectoryInfo>();
-        foreach (var file in files)
-        {
-            var dirInfo = new FileInfo(file.Path);
+        files.ToList()
+             .ForEach(file =>
+                      {
+                          var dirInfo = new FileInfo(file.Path);
 
-            if (dirInfo.Directory == null)
-            {
-                throw new DirectoryNotFoundException(dirInfo.FullName);
-            }
+                          if (dirInfo.Directory == null) throw new DirectoryNotFoundException(dirInfo.FullName);
 
-            directories.TryAdd(dirInfo.Directory.FullName, dirInfo.Directory);
-        }
+                          directories.TryAdd(dirInfo.Directory.FullName, dirInfo.Directory);
+                      });
 
-        foreach (var directory in directories.Values) directory.Create();
+        directories.Values.ToList()
+                   .ForEach(file => { file.Create(); });
 
         return Task.CompletedTask;
     }

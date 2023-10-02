@@ -2,6 +2,10 @@
 
 public class Readme : IReadme
 {
-    public required string Content    { get; set; }
-    public override string ToString() => Content.ToString();
+    public required string Content { get; set; }
+
+    public override string ToString()
+    {
+        return Content;
+    }
 }

@@ -42,7 +42,10 @@ public abstract class AbstractVagrantCommandLineBuilder
       , string                 extraArgs              = ""
     )
     {
-        var parts = new List<string> { command };
+        var parts = new List<string>
+                    {
+                        command
+                    };
 
         var options = BuildVagrantOptions(request);
         var args    = BuildVagrantArguments(request);

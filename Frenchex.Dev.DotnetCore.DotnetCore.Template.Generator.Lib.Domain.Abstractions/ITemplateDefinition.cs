@@ -2,11 +2,11 @@
 
 public interface ITemplateDefinition
 {
-    string Name { get; }
-    string Author { get; }
-    IList<string> Classifications { get; }
-    string Identity { get; }
-    string ShortName { get; }
-    IDictionary<string, string> Tags { get; }
-    IList<ISymbolDefinition> Symbols { get; }
+    string                      Name            { get; }
+    string                      Author          { get; }
+    IList<string>               Classifications { get; }
+    string                      Identity        { get; }
+    string                      ShortName       { get; }
+    IDictionary<string, string> Tags            { get; }
+    IList<ISymbolDefinition>    Symbols         { get; }
 }

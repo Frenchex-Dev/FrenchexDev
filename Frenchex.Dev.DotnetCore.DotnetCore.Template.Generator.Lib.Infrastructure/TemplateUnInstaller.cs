@@ -13,19 +13,14 @@ public class TemplateUnInstaller : ITemplateUnInstaller
     {
         var process = new Process
                       {
-                          StartInfo = new ProcessStartInfo("dotnet"
-                                                         , $"new install {csProjPath.Path}")
+                          StartInfo = new ProcessStartInfo("dotnet", $"new install {csProjPath.Path}")
                                       {
-                                          CreateNoWindow = true
-                                         ,
-                                          RedirectStandardError = true
-                                         ,
-                                          RedirectStandardInput = true
-                                         ,
-                                          RedirectStandardOutput = true
+                                          CreateNoWindow         = true
+                                        , RedirectStandardError  = true
+                                        , RedirectStandardInput  = true
+                                        , RedirectStandardOutput = true
                                       }
-                         ,
-                          EnableRaisingEvents = true
+                        , EnableRaisingEvents = true
                       };
 
         var started = process.Start();

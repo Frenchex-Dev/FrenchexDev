@@ -34,7 +34,8 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Tests;
 
         var services = servicesBuilder.BuildServiceProvider(new ServiceProviderOptions
                                                             {
-                                                                ValidateOnBuild = true, ValidateScopes = true
+                                                                ValidateOnBuild = true
+                                                              , ValidateScopes  = true
                                                             });
 
         await using var scope = services.CreateAsyncScope();

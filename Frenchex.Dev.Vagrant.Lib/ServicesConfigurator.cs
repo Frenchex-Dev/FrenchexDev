@@ -45,7 +45,6 @@ public static class ServicesConfigurator
                 .AddScoped<IVagrantSshCommand, VagrantSshCommand>()
                 .AddScoped<IVagrantSshConfigCommand, VagrantSshConfigCommand>()
                 .AddScoped<IVagrantStatusCommand, VagrantStatusCommand>()
-                .AddScoped<IVagrantUpCommand, VagrantUpCommand>()
-                ;
+                .AddScoped<IVagrantUpCommand, VagrantUpCommand>();
     }
 }

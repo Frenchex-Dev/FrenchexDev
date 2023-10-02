@@ -9,7 +9,6 @@ public static class ServicesConfigurator
     )
     {
         services.AddTransient<ITemplateGenerator, TemplateGenerator>()
-                .AddTransient<IProjectTemplateGenerator, ProjectTemplateGenerator>()
-                ;
+                .AddTransient<IProjectTemplateGenerator, ProjectTemplateGenerator>();
     }
 }

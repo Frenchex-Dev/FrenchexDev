@@ -53,14 +53,18 @@ public class Tests
 
         var services = servicesBuilder.BuildServiceProvider(new ServiceProviderOptions
                                                             {
-                                                                ValidateOnBuild = true, ValidateScopes = true
+                                                                ValidateOnBuild = true
+                                                              , ValidateScopes  = true
                                                             });
 
         await using var scope = services.CreateAsyncScope();
 
         var tempFile = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
 
-        var context = new VagrantCommandExecutionContext { WorkingDirectory = tempFile };
+        var context = new VagrantCommandExecutionContext
+                      {
+                          WorkingDirectory = tempFile
+                      };
 
         Directory.CreateDirectory(tempFile);
 

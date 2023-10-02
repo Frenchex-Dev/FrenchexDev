@@ -2,6 +2,7 @@
 
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
+using TimeSpanParserUtil;
 
 #endregion
 
@@ -39,7 +40,7 @@ public abstract class AbstractVagrantCommand
     {
         if (!string.IsNullOrEmpty(context.Timeout))
         {
-            var timeOutMs = TimeSpanParserUtil.TimeSpanParser.Parse(context.Timeout);
+            var timeOutMs = TimeSpanParser.Parse(context.Timeout);
 
             await process.WaitForExitAsync((int)timeOutMs.TotalMilliseconds);
         }

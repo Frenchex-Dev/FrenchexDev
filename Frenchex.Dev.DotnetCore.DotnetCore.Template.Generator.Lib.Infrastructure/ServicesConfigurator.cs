@@ -14,7 +14,6 @@ public static class ServicesConfigurator
                 .AddTransient<IPackagesInstaller, PackagesInstaller>()
                 .AddTransient<IGeneratedCodeWriter, GeneratedCodeWriter>()
                 .AddTransient<ITemplateInstaller, TemplateInstaller>()
-                .AddTransient<ITemplateUnInstaller, TemplateUnInstaller>()
-                ;
+                .AddTransient<ITemplateUnInstaller, TemplateUnInstaller>();
     }
 }

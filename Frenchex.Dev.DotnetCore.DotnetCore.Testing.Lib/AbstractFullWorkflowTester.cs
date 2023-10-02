@@ -1,6 +1,7 @@
+﻿using System.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Tests;
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Testing.Lib;
 
 public abstract class AbstractFullWorkflowTester
 {
@@ -42,5 +43,32 @@ public abstract class AbstractFullWorkflowTester
         await using var scope = services.CreateAsyncScope();
         var             r     = await bizFunc(scope, cancellationToken);
         return r;
+    }
+
+    protected static async Task OpenVsCodeAsync(
+        string            path
+      , string            vsCodePath        = "C:\\Program Files\\Microsoft VS Code\\Code.exe"
+      , CancellationToken cancellationToken = default
+    )
+    {
+        var codeProcess = new Process
+                          {
+                              StartInfo = new ProcessStartInfo
+                                          {
+                                              FileName = vsCodePath
+                                            , ArgumentList =
+                                              {
+                                                  path
+                                                , "-n"
+                                              }
+                                            , RedirectStandardInput  = true
+                                            , RedirectStandardOutput = true
+                                            , RedirectStandardError  = true
+                                            , CreateNoWindow         = false
+                                          }
+                          };
+
+        codeProcess.Start();
+        await codeProcess.WaitForExitAsync(cancellationToken);
     }
 }
