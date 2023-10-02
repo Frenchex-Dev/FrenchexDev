@@ -39,7 +39,7 @@ public class Tests
     }
 
     [Test] [TestCaseSource(nameof(WorkflowData))]
-    public async Task Init(
+    public async Task FullWorkflow(
         VagrantInitRequest      initRequest
       , VagrantUpRequest        upRequest
       , VagrantStatusRequest    statusRequest

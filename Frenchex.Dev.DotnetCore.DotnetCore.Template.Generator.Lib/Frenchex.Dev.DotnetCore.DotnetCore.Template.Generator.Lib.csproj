@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain\Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.csproj" />
+    <ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Infrastructure\Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
