@@ -50,7 +50,7 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
 
         var solutionGenerationResult = await solutionGenerator.GenerateAsync(solutionDefinition, ct);
 
-        solutionGenerationResult.ShouldNotBeNull();
+        solutionGenerationResult.ShouldBeAssignableTo<SolutionGeneratedResult>();
     }
 
     protected override Task ConfigureServicesAsync(

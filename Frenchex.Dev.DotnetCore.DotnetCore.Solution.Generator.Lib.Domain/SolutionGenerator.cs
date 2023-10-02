@@ -10,27 +10,25 @@ public class SolutionGenerator : ISolutionGenerator
       , CancellationToken   cancellationToken = default
     )
     {
+        var dirInfo = new DirectoryInfo(solution.Path);
+
+        if (!dirInfo.Exists)
+        {
+            dirInfo.Create();
+        }
+
         var process = new Process
                       {
-                          StartInfo = new ProcessStartInfo
-                                      {
-                                          FileName = "dotnet"
-                                        , ArgumentList =
-                                          {
-                                              "new"
-                                            , "sln"
-                                            , "--name"
-                                            , solution.Name
-                                            , "-o"
-                                            , solution.Path
-                                            , "--force"
-                                          }
-                                        , WorkingDirectory       = solution.Path
-                                        , RedirectStandardInput  = true
-                                        , RedirectStandardOutput = true
-                                        , RedirectStandardError  = true
-                                        , CreateNoWindow         = true
-                                      }
+                          StartInfo
+                              = new ProcessStartInfo("dotnet"
+                                                   , $"new sln --name {solution.Name} -o {solution.Path} --force")
+                                {
+                                    WorkingDirectory       = solution.Path
+                                  , RedirectStandardInput  = true
+                                  , RedirectStandardOutput = true
+                                  , RedirectStandardError  = true
+                                  , CreateNoWindow         = true
+                                }
                       };
 
         var started = process.Start();
