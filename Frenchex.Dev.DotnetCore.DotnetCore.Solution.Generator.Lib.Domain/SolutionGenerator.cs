@@ -44,11 +44,6 @@ public class SolutionGenerator : ISolutionGenerator
     }
 }
 
-public class ProcessNotStartedException : Exception
-{
-    public ProcessNotStartedException(
-        string message
-    ) : base(message)
-    {
-    }
-}
+public class ProcessNotStartedException(
+    string message
+) : Exception(message);

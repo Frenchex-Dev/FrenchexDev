@@ -7,19 +7,12 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.DotnetCore.Process.Lib.Infrastructure;
 
-public class ProcessStarterFactory : IProcessStarterFactory
+public class ProcessStarterFactory(
+    IServiceProvider serviceProvider
+) : IProcessStarterFactory
 {
-    private readonly IServiceProvider _serviceProvider;
-
-    public ProcessStarterFactory(
-        IServiceProvider serviceProvider
-    )
-    {
-        _serviceProvider = serviceProvider;
-    }
-
     public IProcessStarter Factory()
     {
-        return _serviceProvider.GetRequiredService<IProcessStarter>();
+        return serviceProvider.GetRequiredService<IProcessStarter>();
     }
 }

@@ -2,17 +2,10 @@
 
 namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Abstractions;
 
-public class BaseVagrantCommandRequestBuilder : IBaseVagrantCommandRequestBuilder
+public class BaseVagrantCommandRequestBuilder(
+    object owner
+) : IBaseVagrantCommandRequestBuilder
 {
-    private readonly object _owner;
-
-    public BaseVagrantCommandRequestBuilder(
-        object owner
-    )
-    {
-        _owner = owner;
-    }
-
     public bool  Color           { get; private set; } = true;
     public bool  MachineReadable { get; private set; }
     public bool  Version         { get; private set; }
@@ -88,6 +81,6 @@ public class BaseVagrantCommandRequestBuilder : IBaseVagrantCommandRequestBuilde
 
     public T GetOwner<T>()
     {
-        return (T)_owner;
+        return (T)owner;
     }
 }

@@ -37,11 +37,6 @@ public class TemplateInstaller : ITemplateInstaller
     }
 }
 
-public class TemplateInstallationException : Exception
-{
-    public TemplateInstallationException(
-        string message
-    ) : base(message)
-    {
-    }
-}
+public class TemplateInstallationException(
+    string message
+) : Exception(message);

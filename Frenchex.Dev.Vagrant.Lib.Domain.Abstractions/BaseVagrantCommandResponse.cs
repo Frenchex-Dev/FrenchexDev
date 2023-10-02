@@ -2,16 +2,11 @@
 
 /// <summary>
 /// </summary>
-public abstract class BaseVagrantCommandResponse : IVagrantCommandResponse
+public abstract class BaseVagrantCommandResponse(
+    int exitCode
+) : IVagrantCommandResponse
 {
-    protected BaseVagrantCommandResponse(
-        int exitCode
-    )
-    {
-        ExitCode = exitCode;
-    }
-
     /// <summary>
     /// </summary>
-    public int ExitCode { get; }
+    public int ExitCode { get; } = exitCode;
 }

@@ -1,13 +1,8 @@
 ﻿namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Provision;
 
-public class VagrantProvisionResponse : IVagrantProvisionResponse
+public class VagrantProvisionResponse(
+    int exitCode
+) : IVagrantProvisionResponse
 {
-    public VagrantProvisionResponse(
-        int exitCode
-    )
-    {
-        ExitCode = exitCode;
-    }
-
-    public int ExitCode { get; set; }
+    public int ExitCode { get; set; } = exitCode;
 }

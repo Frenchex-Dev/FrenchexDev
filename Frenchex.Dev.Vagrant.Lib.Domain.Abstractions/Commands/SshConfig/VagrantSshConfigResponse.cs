@@ -1,13 +1,8 @@
 ﻿namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.SshConfig;
 
-public class VagrantSshConfigResponse : IVagrantSshConfigResponse
+public class VagrantSshConfigResponse(
+    int exitCode
+) : IVagrantSshConfigResponse
 {
-    public VagrantSshConfigResponse(
-        int exitCode
-    )
-    {
-        ExitCode = exitCode;
-    }
-
-    public int ExitCode { get; }
+    public int ExitCode { get; } = exitCode;
 }

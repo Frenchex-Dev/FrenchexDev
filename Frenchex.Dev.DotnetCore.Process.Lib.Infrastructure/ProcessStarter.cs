@@ -8,12 +8,7 @@ namespace Frenchex.Dev.DotnetCore.Process.Lib.Infrastructure;
 
 public class ProcessStarter : IProcessStarter
 {
-    private readonly List<Func<System.Diagnostics.Process, Task>> _processPreparers;
-
-    public ProcessStarter()
-    {
-        _processPreparers = new List<Func<System.Diagnostics.Process, Task>>();
-    }
+    private readonly List<Func<System.Diagnostics.Process, Task>> _processPreparers = new();
 
     public void AddProcessPreparer(
         Func<System.Diagnostics.Process, Task> processPreparer

@@ -6,24 +6,20 @@ using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Base;
 
 namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Status;
 
-public class VagrantStatusRequest : BaseVagrantCommandRequest, IVagrantStatusRequest
+public class VagrantStatusRequest(
+    string nameOrId
+  , bool?  color
+  , bool?  machineReadable
+  , bool?  version
+  , bool?  debug
+  , bool?  timestamp
+  , bool?  debugTimestamp
+  , bool?  noTty
+  , bool?  help
+) : BaseVagrantCommandRequest(color, machineReadable, version, debug, timestamp, debugTimestamp, noTty, help)
+  , IVagrantStatusRequest
 {
-    public VagrantStatusRequest(
-        string nameOrId
-      , bool?  color
-      , bool?  machineReadable
-      , bool?  version
-      , bool?  debug
-      , bool?  timestamp
-      , bool?  debugTimestamp
-      , bool?  noTty
-      , bool?  help
-    ) : base(color, machineReadable, version, debug, timestamp, debugTimestamp, noTty, help)
-    {
-        NameOrId = nameOrId;
-    }
-
-    public string NameOrId { get; }
+    public string NameOrId { get; } = nameOrId;
 }
 
 public interface IVagrantStatusRequestBuilder : IVagrantRequestBuilder<VagrantStatusRequest>
