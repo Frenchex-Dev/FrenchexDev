@@ -8,17 +8,9 @@ using TimeSpanParserUtil;
 
 namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands;
 
-public abstract class AbstractVagrantCommand
+public abstract class AbstractVagrantCommand(IProcessStarterFactory processStarterFactory)
 {
-    protected readonly IProcessStarterFactory ProcessStarterFactory;
-
-    protected AbstractVagrantCommand(
-        IProcessStarterFactory processStarterFactory
-    )
-    {
-        ProcessStarterFactory = processStarterFactory;
-    }
-
+    protected readonly IProcessStarterFactory ProcessStarterFactory = processStarterFactory;
 
     protected ProcessExecutionContext CreateProcessExecutionContext(
         IVagrantCommandExecutionContext context
@@ -31,7 +23,6 @@ public abstract class AbstractVagrantCommand
 
         return processContext;
     }
-
 
     protected static async Task WaitProcessForExitAsync(
         IVagrantCommandExecutionContext context
@@ -49,7 +40,6 @@ public abstract class AbstractVagrantCommand
             await process.WaitForExitAsync();
         }
     }
-
 
     protected static void PrepareProcess(
         IVagrantCommandExecutionListeners listeners

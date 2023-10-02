@@ -2,24 +2,18 @@
 
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
+using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Ssh;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Ssh;
 
 #endregion
 
 namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Ssh;
 
-public class VagrantSshCommand : AbstractVagrantCommand, IVagrantSshCommand
+public class VagrantSshCommand(
+    IProcessStarterFactory        processExecutor
+  , IVagrantSshCommandLineBuilder commandLineBuilder
+) : AbstractVagrantCommand(processExecutor), IVagrantSshCommand
 {
-    private readonly IVagrantSshCommandLineBuilder _commandLineBuilder;
-
-    public VagrantSshCommand(
-        IProcessStarterFactory        processExecutor
-      , IVagrantSshCommandLineBuilder commandLineBuilder
-    ) : base(processExecutor)
-    {
-        _commandLineBuilder = commandLineBuilder;
-    }
-
     public async Task<VagrantSshResponse> StartAsync(
         VagrantSshRequest                 request
       , IVagrantCommandExecutionContext   context
@@ -27,7 +21,7 @@ public class VagrantSshCommand : AbstractVagrantCommand, IVagrantSshCommand
     )
     {
         var processContext
-            = CreateProcessExecutionContext(context, _commandLineBuilder.BuildCommandLineArguments(request));
+            = CreateProcessExecutionContext(context, commandLineBuilder.BuildCommandLineArguments(request));
 
         var processStarter = ProcessStarterFactory.Factory();
 

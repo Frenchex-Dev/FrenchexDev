@@ -2,6 +2,7 @@
 
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
+using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Halt;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Halt;
 
 #endregion
@@ -10,18 +11,11 @@ namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Halt;
 
 /// <summary>
 /// </summary>
-public class VagrantHaltCommand : AbstractVagrantCommand, IVagrantHaltCommand
+public class VagrantHaltCommand(
+    IProcessStarterFactory         processStarterFactory
+  , IVagrantHaltCommandLineBuilder commandLineBuilder
+) : AbstractVagrantCommand(processStarterFactory), IVagrantHaltCommand
 {
-    private readonly IVagrantHaltCommandLineBuilder _commandLineBuilder;
-
-    public VagrantHaltCommand(
-        IProcessStarterFactory         processStarterFactory
-      , IVagrantHaltCommandLineBuilder commandLineBuilder
-    ) : base(processStarterFactory)
-    {
-        _commandLineBuilder = commandLineBuilder;
-    }
-
     public async Task<VagrantHaltResponse> StartAsync(
         VagrantHaltRequest                request
       , IVagrantCommandExecutionContext   context
@@ -29,7 +23,7 @@ public class VagrantHaltCommand : AbstractVagrantCommand, IVagrantHaltCommand
     )
     {
         var processContext
-            = CreateProcessExecutionContext(context, _commandLineBuilder.BuildCommandLineArguments(request));
+            = CreateProcessExecutionContext(context, commandLineBuilder.BuildCommandLineArguments(request));
 
         var processStarter = ProcessStarterFactory.Factory();
 

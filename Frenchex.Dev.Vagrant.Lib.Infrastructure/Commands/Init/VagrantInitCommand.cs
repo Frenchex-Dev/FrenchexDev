@@ -2,6 +2,7 @@
 
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
+using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Init;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Init;
 
 #endregion
@@ -10,18 +11,11 @@ namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Init;
 
 /// <summary>
 /// </summary>
-public class VagrantInitCommand : AbstractVagrantCommand, IVagrantInitCommand
+public class VagrantInitCommand(
+    IProcessStarterFactory         processExecutor
+  , IVagrantInitCommandLineBuilder commandLineBuilder
+) : AbstractVagrantCommand(processExecutor), IVagrantInitCommand
 {
-    private readonly IVagrantInitCommandLineBuilder _commandLineBuilder;
-
-    public VagrantInitCommand(
-        IProcessStarterFactory         processExecutor
-      , IVagrantInitCommandLineBuilder commandLineBuilder
-    ) : base(processExecutor)
-    {
-        _commandLineBuilder = commandLineBuilder;
-    }
-
     public async Task<VagrantInitResponse> StartAsync(
         VagrantInitRequest                request
       , IVagrantCommandExecutionContext   context
@@ -29,7 +23,7 @@ public class VagrantInitCommand : AbstractVagrantCommand, IVagrantInitCommand
     )
     {
         var processContext
-            = CreateProcessExecutionContext(context, _commandLineBuilder.BuildCommandLineArguments(request));
+            = CreateProcessExecutionContext(context, commandLineBuilder.BuildCommandLineArguments(request));
 
         var processStarter = ProcessStarterFactory.Factory();
 

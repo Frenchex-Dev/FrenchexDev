@@ -11,18 +11,11 @@ namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Up;
 /// <summary>
 ///     <inheritdoc cref="IVagrantUpCommand" />
 /// </summary>
-public class VagrantUpCommand : AbstractVagrantCommand, IVagrantUpCommand
+public class VagrantUpCommand(
+    IProcessStarterFactory       processStarterFactory
+  , IVagrantUpCommandLineBuilder commandLineBuilder
+) : AbstractVagrantCommand(processStarterFactory), IVagrantUpCommand
 {
-    private readonly IVagrantUpCommandLineBuilder _commandLineBuilder;
-
-    public VagrantUpCommand(
-        IProcessStarterFactory       processStarterFactory
-      , IVagrantUpCommandLineBuilder commandLineBuilder
-    ) : base(processStarterFactory)
-    {
-        _commandLineBuilder = commandLineBuilder;
-    }
-
     public async Task<UpCommandResponse> StartAsync(
         VagrantUpRequest                  request
       , IVagrantCommandExecutionContext   context
@@ -30,7 +23,7 @@ public class VagrantUpCommand : AbstractVagrantCommand, IVagrantUpCommand
     )
     {
         var processContext
-            = CreateProcessExecutionContext(context, _commandLineBuilder.BuildCommandLineArguments(request));
+            = CreateProcessExecutionContext(context, commandLineBuilder.BuildCommandLineArguments(request));
 
         var processStarter = ProcessStarterFactory.Factory();
 

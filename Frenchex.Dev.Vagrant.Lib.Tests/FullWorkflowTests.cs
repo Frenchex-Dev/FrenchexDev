@@ -3,6 +3,10 @@
 using System.Reflection;
 using FluentAssertions;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
+using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Destroy;
+using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Init;
+using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.SshConfig;
+using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Status;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Destroy;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Init;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.SshConfig;
