@@ -23,7 +23,6 @@ public sealed class ProcessExecution : IProcessExecution
     /// </summary>
     /// <param name="internalProcess"></param>
     /// <param name="hasStarted"></param>
-    /// <param name="tscFinished"></param>
     public ProcessExecution(
         System.Diagnostics.Process internalProcess
       , bool                       hasStarted
@@ -68,8 +67,8 @@ public sealed class ProcessExecution : IProcessExecution
     ///         <see cref="_internalProcess" />.
     ///     </para>
     /// </summary>
-    public StreamReader? StdOutStream => _internalProcess.StandardOutput;
-
+    public StreamReader StdOutStream => _internalProcess.StandardOutput;
+    
     /// <summary>
     ///     Interface : <inheritdoc />
     ///     <para>
@@ -77,7 +76,7 @@ public sealed class ProcessExecution : IProcessExecution
     ///         <see cref="_internalProcess" />
     ///     </para>
     /// </summary>
-    public StreamReader? StdErrStream => _internalProcess.StandardError;
+    public StreamReader StdErrStream => _internalProcess.StandardError;
 
     /// <summary>
     ///     Interface : <inheritdoc />
@@ -86,7 +85,7 @@ public sealed class ProcessExecution : IProcessExecution
     ///         <see cref="_internalProcess" />
     ///     </para>
     /// </summary>
-    public StreamWriter? StdInStream => _internalProcess.StandardInput;
+    public StreamWriter StdInStream => _internalProcess.StandardInput;
 
     /// <summary>
     ///     Interface : <inheritdoc />

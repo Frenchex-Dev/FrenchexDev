@@ -2,6 +2,7 @@
 
 using System.Reflection;
 using FluentAssertions;
+using Frenchex.Dev.DotnetCore.DotnetCore.Testing.Lib;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Destroy;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Init;
@@ -18,7 +19,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.Vagrant.Lib.Tests;
 
-public class Tests
+public class Tests : AbstractFullWorkflowTester
 {
     protected static IEnumerable<object[]> WorkflowData()
     {
@@ -51,18 +52,28 @@ public class Tests
       , VagrantDestroyRequest   destroyRequest
     )
     {
-        var servicesBuilder = new ServiceCollection();
+        var services = await BuildServiceProviderAsync();
 
-        ServicesConfigurator.Configure(servicesBuilder);
+        await RunScopedAsync(services, async (
+                                           serviceScope
+                                         , token
+                                       ) =>
+                                       {
+                                           await RunInternalAsync(serviceScope, initRequest, upRequest, statusRequest
+                                                                , sshConfigRequest, destroyRequest, token);
+                                       });
+    }
 
-        var services = servicesBuilder.BuildServiceProvider(new ServiceProviderOptions
-                                                            {
-                                                                ValidateOnBuild = true
-                                                              , ValidateScopes  = true
-                                                            });
-
-        await using var scope = services.CreateAsyncScope();
-
+    private async Task RunInternalAsync(
+        AsyncServiceScope       scope
+      , VagrantInitRequest      initRequest
+      , VagrantUpRequest        upRequest
+      , VagrantStatusRequest    statusRequest
+      , VagrantSshConfigRequest sshConfigRequest
+      , VagrantDestroyRequest   destroyRequest
+      , CancellationToken       cancellationToken = default
+    )
+    {
         var tempFile = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
 
         var context = new VagrantCommandExecutionContext
@@ -101,5 +112,14 @@ public class Tests
             = await destroyCommand.StartAsync(destroyRequest, context, new VagrantCommandExecutionListeners());
         destroyResponse.ExitCode.Should()
                        .Be(0);
+    }
+
+    protected override Task ConfigureServicesAsync(
+        IServiceCollection services
+      , CancellationToken  cancellationToken = default
+    )
+    {
+        ServicesConfigurator.Configure(services);
+        return Task.CompletedTask;
     }
 }

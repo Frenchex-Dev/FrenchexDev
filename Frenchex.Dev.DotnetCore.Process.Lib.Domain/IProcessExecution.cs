@@ -23,17 +23,17 @@ public interface IProcessExecution
     /// <summary>
     ///     Returns the StandardOutput of the process
     /// </summary>
-    StreamReader? StdOutStream { get; }
+    StreamReader StdOutStream { get; }
 
     /// <summary>
     ///     Returns the StandardError of the process
     /// </summary>
-    StreamReader? StdErrStream { get; }
+    StreamReader StdErrStream { get; }
 
     /// <summary>
     ///     Returns the StandardInput of the process
     /// </summary>
-    StreamWriter? StdInStream { get; }
+    StreamWriter StdInStream { get; }
 
     /// <summary>
     ///     Stops the process asynchronously within given timeout or cancellation requested

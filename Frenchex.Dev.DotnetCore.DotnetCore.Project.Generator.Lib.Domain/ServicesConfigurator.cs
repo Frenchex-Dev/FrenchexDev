@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Infrastructure;
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain;
 
 public static class ServicesConfigurator
 {
@@ -8,6 +8,6 @@ public static class ServicesConfigurator
         IServiceCollection services
     )
     {
-        Process.Lib.ServicesConfigurator.Configure(services);
+
     }
 }

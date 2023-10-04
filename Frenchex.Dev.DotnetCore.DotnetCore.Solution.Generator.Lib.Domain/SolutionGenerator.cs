@@ -1,9 +1,11 @@
-﻿using System.Diagnostics;
-using Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions;
+﻿using Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions;
+using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 
 namespace Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain;
 
-public class SolutionGenerator : ISolutionGenerator
+public class SolutionGenerator(
+    IProcessStarterFactory processStarterFactory
+) : ISolutionGenerator
 {
     public async Task<ISolutionGenerationResult> GenerateAsync(
         ISolutionDefinition solution
@@ -17,26 +19,19 @@ public class SolutionGenerator : ISolutionGenerator
             dirInfo.Create();
         }
 
-        var process = new Process
-                      {
-                          StartInfo
-                              = new ProcessStartInfo("dotnet"
-                                                   , $"new sln --name {solution.Name} -o {solution.Path} --force")
-                                {
-                                    WorkingDirectory       = solution.Path
-                                  , RedirectStandardInput  = true
-                                  , RedirectStandardOutput = true
-                                  , RedirectStandardError  = true
-                                  , CreateNoWindow         = true
-                                }
-                      };
+        var process = processStarterFactory.Factory();
 
-        var started = process.Start();
+        var processExecution = await process.StartAsync(new ProcessExecutionContext(solution.Path, "dotnet"
+                                                                                   , $"new sln --name {solution.Name} -o {solution.Path} --force"
+                                                                                   , new Dictionary<string, string>()
+                                                                                   , true, true), cancellationToken);
+        if (!processExecution.HasStarted)
+        {
+            throw new ProcessNotStartedException(await processExecution.StdErrStream.ReadToEndAsync(cancellationToken));
+        }
 
-        if (!started)
-            throw new ProcessNotStartedException(await process.StandardError.ReadToEndAsync(cancellationToken));
+        await processExecution.WaitForExitAsync(cancellationToken);
 
-        await process.WaitForExitAsync(cancellationToken);
 
         return new SolutionGeneratedResult();
     }

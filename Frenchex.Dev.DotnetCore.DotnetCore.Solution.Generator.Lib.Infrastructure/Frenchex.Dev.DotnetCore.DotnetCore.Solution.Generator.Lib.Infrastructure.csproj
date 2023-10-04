@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain\Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.csproj" />
+    <ProjectReference Include="..\Frenchex.Dev.DotnetCore.Process.Lib\Frenchex.Dev.DotnetCore.Process.Lib.csproj" />
   </ItemGroup>
 
 </Project>

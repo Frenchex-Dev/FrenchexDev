@@ -54,19 +54,31 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.DotnetCore.Dot
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Generator", "Generator", "{53BD619D-5164-4B05-966C-5BB175293566}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib", "Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib\Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.csproj", "{BFB2B839-13FD-4635-A414-F62ABFFB202B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib", "Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib\Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.csproj", "{BFB2B839-13FD-4635-A414-F62ABFFB202B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain", "Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain\Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.csproj", "{1F4200BD-B858-42F6-9CE0-0BAD99E2F909}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain", "Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain\Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.csproj", "{1F4200BD-B858-42F6-9CE0-0BAD99E2F909}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions", "Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions\Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions.csproj", "{01260F9E-E473-4D9B-91AD-E19F1F35D8AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions", "Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions\Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions.csproj", "{01260F9E-E473-4D9B-91AD-E19F1F35D8AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Infrastructure", "Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Infrastructure\Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Infrastructure.csproj", "{8CE096C9-A750-47A4-9756-91CA77A41675}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Infrastructure", "Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Infrastructure\Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Infrastructure.csproj", "{8CE096C9-A750-47A4-9756-91CA77A41675}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Tests", "Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Tests\Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Tests.csproj", "{4CB16E37-F5A5-4C7C-8640-CD6EBD0EA126}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Tests", "Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Tests\Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Tests.csproj", "{4CB16E37-F5A5-4C7C-8640-CD6EBD0EA126}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{439266F6-40E4-4CD8-93F6-AEF64000FEF3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.DotnetCore.DotnetCore.Testing.Lib", "Frenchex.Dev.DotnetCore.DotnetCore.Testing.Lib\Frenchex.Dev.DotnetCore.DotnetCore.Testing.Lib.csproj", "{057434C3-3E96-414C-94DE-BCE1143EAE20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.DotnetCore.DotnetCore.Testing.Lib", "Frenchex.Dev.DotnetCore.DotnetCore.Testing.Lib\Frenchex.Dev.DotnetCore.DotnetCore.Testing.Lib.csproj", "{057434C3-3E96-414C-94DE-BCE1143EAE20}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Generator", "Generator", "{D6922EC7-4027-45A6-9639-595319963ACB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib", "Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib\Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.csproj", "{27FA51E4-7BBF-4332-B31C-FA038BF43553}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain", "Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain\Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.csproj", "{1ED79886-35CD-41A4-AD88-5ACF6618DF82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions", "Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions\Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions.csproj", "{06AF84B5-E661-4A7A-BBFA-5EE70F7AE2D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Infrastructure", "Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Infrastructure\Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Infrastructure.csproj", "{3080DE09-B161-4BEA-91B2-6E71D36242E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Tests", "Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Tests\Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Tests.csproj", "{143A7CC0-899F-4EF3-8BEE-5B1D21075FA2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -154,6 +166,26 @@ Global
 		{057434C3-3E96-414C-94DE-BCE1143EAE20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{057434C3-3E96-414C-94DE-BCE1143EAE20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{057434C3-3E96-414C-94DE-BCE1143EAE20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27FA51E4-7BBF-4332-B31C-FA038BF43553}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27FA51E4-7BBF-4332-B31C-FA038BF43553}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27FA51E4-7BBF-4332-B31C-FA038BF43553}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27FA51E4-7BBF-4332-B31C-FA038BF43553}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1ED79886-35CD-41A4-AD88-5ACF6618DF82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ED79886-35CD-41A4-AD88-5ACF6618DF82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ED79886-35CD-41A4-AD88-5ACF6618DF82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ED79886-35CD-41A4-AD88-5ACF6618DF82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06AF84B5-E661-4A7A-BBFA-5EE70F7AE2D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06AF84B5-E661-4A7A-BBFA-5EE70F7AE2D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06AF84B5-E661-4A7A-BBFA-5EE70F7AE2D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06AF84B5-E661-4A7A-BBFA-5EE70F7AE2D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3080DE09-B161-4BEA-91B2-6E71D36242E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3080DE09-B161-4BEA-91B2-6E71D36242E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3080DE09-B161-4BEA-91B2-6E71D36242E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3080DE09-B161-4BEA-91B2-6E71D36242E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{143A7CC0-899F-4EF3-8BEE-5B1D21075FA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{143A7CC0-899F-4EF3-8BEE-5B1D21075FA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{143A7CC0-899F-4EF3-8BEE-5B1D21075FA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{143A7CC0-899F-4EF3-8BEE-5B1D21075FA2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -187,6 +219,12 @@ Global
 		{4CB16E37-F5A5-4C7C-8640-CD6EBD0EA126} = {53BD619D-5164-4B05-966C-5BB175293566}
 		{439266F6-40E4-4CD8-93F6-AEF64000FEF3} = {CA1A6E50-64F0-46FE-BD24-24B827056E6F}
 		{057434C3-3E96-414C-94DE-BCE1143EAE20} = {439266F6-40E4-4CD8-93F6-AEF64000FEF3}
+		{D6922EC7-4027-45A6-9639-595319963ACB} = {CDCD5829-7A1D-4A75-9635-722F5510CF6A}
+		{27FA51E4-7BBF-4332-B31C-FA038BF43553} = {D6922EC7-4027-45A6-9639-595319963ACB}
+		{1ED79886-35CD-41A4-AD88-5ACF6618DF82} = {D6922EC7-4027-45A6-9639-595319963ACB}
+		{06AF84B5-E661-4A7A-BBFA-5EE70F7AE2D0} = {D6922EC7-4027-45A6-9639-595319963ACB}
+		{3080DE09-B161-4BEA-91B2-6E71D36242E4} = {D6922EC7-4027-45A6-9639-595319963ACB}
+		{143A7CC0-899F-4EF3-8BEE-5B1D21075FA2} = {D6922EC7-4027-45A6-9639-595319963ACB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4FC281B1-B4CB-4880-B811-BD07AD3EE896}

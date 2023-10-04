@@ -11,8 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions\Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions.csproj" />
-    <ProjectReference Include="..\Frenchex.Dev.DotnetCore.Process.Lib.Domain\Frenchex.Dev.DotnetCore.Process.Lib.Domain.csproj" />
+    <ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions\Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>
