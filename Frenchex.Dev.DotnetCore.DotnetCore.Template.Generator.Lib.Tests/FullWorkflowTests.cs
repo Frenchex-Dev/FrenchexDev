@@ -1,6 +1,6 @@
 using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain;
 using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
-using Frenchex.Dev.DotnetCore.DotnetCore.Testing.Lib;
+using Frenchex.Dev.DotnetCore.Testing.Lib;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Tests;

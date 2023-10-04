@@ -3,7 +3,7 @@
 /// <summary>
 /// </summary>
 /// <typeparam name="TRequest"></typeparam>
-public interface IVagrantRequestBuilder<out TRequest>
+public interface IVagrantRequestBuilder<out TRequest> where TRequest : IVagrantCommandRequest
 {
     /// <summary>
     /// </summary>

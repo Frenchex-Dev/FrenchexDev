@@ -26,7 +26,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Testing.Lib\Frenchex.Dev.DotnetCore.DotnetCore.Testing.Lib.csproj" />
+		<ProjectReference Include="..\Frenchex.Dev.DotnetCore.Testing.Lib\Frenchex.Dev.DotnetCore.Testing.Lib.csproj" />
 		<ProjectReference Include="..\Frenchex.Dev.Vagrant.Lib\Frenchex.Dev.Vagrant.Lib.csproj" />
 	</ItemGroup>
 

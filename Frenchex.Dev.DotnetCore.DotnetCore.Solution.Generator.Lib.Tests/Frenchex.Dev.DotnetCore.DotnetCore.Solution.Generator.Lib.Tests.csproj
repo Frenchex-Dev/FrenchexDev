@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib\Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.csproj" />
-    <ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Testing.Lib\Frenchex.Dev.DotnetCore.DotnetCore.Testing.Lib.csproj" />
   </ItemGroup>
 
 </Project>

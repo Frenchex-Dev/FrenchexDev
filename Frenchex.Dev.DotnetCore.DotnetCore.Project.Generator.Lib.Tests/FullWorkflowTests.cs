@@ -1,5 +1,5 @@
 using Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions;
-using Frenchex.Dev.DotnetCore.DotnetCore.Testing.Lib;
+using Frenchex.Dev.DotnetCore.Testing.Lib;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
 

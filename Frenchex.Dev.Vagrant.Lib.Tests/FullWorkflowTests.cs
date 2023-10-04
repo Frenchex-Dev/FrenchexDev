@@ -2,7 +2,7 @@
 
 using System.Reflection;
 using FluentAssertions;
-using Frenchex.Dev.DotnetCore.DotnetCore.Testing.Lib;
+using Frenchex.Dev.DotnetCore.Testing.Lib;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Destroy;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Init;
