@@ -1,4 +1,10 @@
-﻿#region Usings
+﻿#region Licensing
+
+// Licensing please read LICENSE.md
+
+#endregion
+
+#region Usings
 
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
@@ -8,7 +14,9 @@ using TimeSpanParserUtil;
 
 namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands;
 
-public abstract class AbstractVagrantCommand(IProcessStarterFactory processStarterFactory)
+public abstract class AbstractVagrantCommand(
+    IProcessStarterFactory processStarterFactory
+)
 {
     protected readonly IProcessStarterFactory ProcessStarterFactory = processStarterFactory;
 

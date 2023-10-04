@@ -1,4 +1,6 @@
-﻿#region Usings
+﻿#region Licensing
+
+// Licensing please read LICENSE.md
 
 #endregion
 

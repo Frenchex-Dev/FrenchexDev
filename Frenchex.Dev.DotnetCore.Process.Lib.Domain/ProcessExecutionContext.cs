@@ -1,4 +1,10 @@
-﻿namespace Frenchex.Dev.DotnetCore.Process.Lib.Domain;
+﻿#region Licensing
+
+// Licensing please read LICENSE.md
+
+#endregion
+
+namespace Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 
 public class ProcessExecutionContext(
     string                     path

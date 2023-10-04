@@ -1,9 +1,14 @@
-﻿#region Usings
+﻿#region Licensing
+
+// Licensing please read LICENSE.md
+
+#endregion
+
+#region Usings
 
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Provision;
-using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Provision;
 
 #endregion
 

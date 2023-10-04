@@ -1,4 +1,10 @@
-﻿#region Usings
+﻿#region Licensing
+
+// Licensing please read LICENSE.md
+
+#endregion
+
+#region Usings
 
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 

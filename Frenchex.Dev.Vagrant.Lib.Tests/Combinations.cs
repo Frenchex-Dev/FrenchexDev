@@ -1,4 +1,10 @@
-﻿namespace Frenchex.Dev.Vagrant.Lib.Tests;
+﻿#region Licensing
+
+// Licensing please read LICENSE.md
+
+#endregion
+
+namespace Frenchex.Dev.Vagrant.Lib.Tests;
 
 internal class Combinations
 {

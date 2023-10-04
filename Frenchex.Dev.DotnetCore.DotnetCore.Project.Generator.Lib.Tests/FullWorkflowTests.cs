@@ -1,7 +1,17 @@
+#region Licensing
+
+// Licensing please read LICENSE.md
+
+#endregion
+
+#region Usings
+
 using Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions;
 using Frenchex.Dev.DotnetCore.Testing.Lib;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
+
+#endregion
 
 namespace Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Tests;
 
@@ -11,23 +21,24 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
     {
         yield return new object[]
                      {
-                         "test case 1", new Payload()
+                         "test case 1", new Payload
                                         {
-                                            ProjectDefinition = new ProjectDefinition()
-                                                               {
-                                                                   TemplateName = "lib",
-                                                                   Language = "C#",
-                                                                   Name = "MyProject",
-                                                                   ExtraArgs = new Dictionary<string, string>(),
-                                                                   ProjectsReferences = new List<IProjectReference>(){}
-                                                               }
+                                            ProjectDefinition = new ProjectDefinition
+                                                                {
+                                                                    TemplateName = "lib"
+                                                                  , Language = "C#"
+                                                                  , Name = "MyProject"
+                                                                  , ExtraArgs = new Dictionary<string, string>()
+                                                                  , ProjectsReferences = new List<IProjectReference>()
+                                                                }
                                         }
                      };
     }
 
-    [Test]
-    [TestCaseSource(nameof(Data))]
-    public async Task FullWorkflow(string testCaseName, Payload payload)
+    [Test] [TestCaseSource(nameof(Data))] public async Task FullWorkflow(
+        string  testCaseName
+      , Payload payload
+    )
     {
         var services = await BuildServiceProviderAsync();
 
@@ -48,7 +59,7 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
     {
         var projectGenerator = scope.ServiceProvider.GetRequiredService<IProjectGenerator>();
 
-        var generationContext = new GenerationContext()
+        var generationContext = new GenerationContext
                                 {
                                     Path = Path.Join(Path.GetTempPath(), Path.GetRandomFileName())
                                 };

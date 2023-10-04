@@ -1,5 +1,15 @@
-﻿using System.Diagnostics;
+﻿#region Licensing
+
+// Licensing please read LICENSE.md
+
+#endregion
+
+#region Usings
+
+using System.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace Frenchex.Dev.DotnetCore.Testing.Lib;
 

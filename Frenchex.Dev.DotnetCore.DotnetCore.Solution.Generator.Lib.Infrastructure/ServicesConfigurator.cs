@@ -1,4 +1,14 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿#region Licensing
+
+// Licensing please read LICENSE.md
+
+#endregion
+
+#region Usings
+
+using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Infrastructure;
 

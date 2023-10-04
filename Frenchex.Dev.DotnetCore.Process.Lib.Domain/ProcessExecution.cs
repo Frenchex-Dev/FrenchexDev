@@ -1,4 +1,10 @@
-﻿namespace Frenchex.Dev.DotnetCore.Process.Lib.Domain;
+﻿#region Licensing
+
+// Licensing please read LICENSE.md
+
+#endregion
+
+namespace Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 
 /// <summary>
 ///     Implementation of <see cref="IProcessExecution" /> using an internal <see cref="System.Diagnostics.Process" /> to
@@ -68,7 +74,7 @@ public sealed class ProcessExecution : IProcessExecution
     ///     </para>
     /// </summary>
     public StreamReader StdOutStream => _internalProcess.StandardOutput;
-    
+
     /// <summary>
     ///     Interface : <inheritdoc />
     ///     <para>

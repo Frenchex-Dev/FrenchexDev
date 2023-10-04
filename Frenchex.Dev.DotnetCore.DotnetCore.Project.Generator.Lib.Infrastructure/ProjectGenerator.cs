@@ -1,5 +1,15 @@
-﻿using Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions;
+﻿#region Licensing
+
+// Licensing please read LICENSE.md
+
+#endregion
+
+#region Usings
+
 using System.Diagnostics;
+using Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions;
+
+#endregion
 
 namespace Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Infrastructure;
 
@@ -7,27 +17,24 @@ public class ProjectGenerator : IProjectGenerator
 {
     public async Task<IProjectGenerationResult> GenerateAsync(
         IProjectDefinition projectDefinition
-        , IGenerationContext generationContext
+      , IGenerationContext generationContext
       , CancellationToken  cancellationToken = default
     )
     {
-        if (!Directory.Exists(generationContext.Path))
-        {
-            Directory.CreateDirectory(generationContext.Path);
-        }
+        if (!Directory.Exists(generationContext.Path)) Directory.CreateDirectory(generationContext.Path);
 
-        List<string> arguments = new List<string>()
-                                 {
-                                     "new", 
-                                     projectDefinition.TemplateName,
-                                     projectDefinition.Language,
-                                     generationContext.Path,
-                                     projectDefinition.Name
-                                 };
+        var arguments = new List<string>
+                        {
+                            "new"
+                          , projectDefinition.TemplateName
+                          , projectDefinition.Language
+                          , generationContext.Path
+                          , projectDefinition.Name
+                        };
 
-        var process = new Process()
+        var process = new Process
                       {
-                          StartInfo = new ProcessStartInfo()
+                          StartInfo = new ProcessStartInfo
                                       {
                                           FileName               = "dotnet"
                                         , Arguments              = string.Join(" ", arguments)
@@ -43,9 +50,7 @@ public class ProjectGenerator : IProjectGenerator
 
 
         if (!started)
-        {
             throw new ProcessNotStartedException(await process.StandardError.ReadToEndAsync(cancellationToken));
-        }
 
         await process.WaitForExitAsync(cancellationToken);
 
@@ -53,13 +58,11 @@ public class ProjectGenerator : IProjectGenerator
     }
 }
 
-
 public class ProcessNotStartedException : Exception
 {
     public ProcessNotStartedException(
         string message
     ) : base(message)
     {
-
     }
 }

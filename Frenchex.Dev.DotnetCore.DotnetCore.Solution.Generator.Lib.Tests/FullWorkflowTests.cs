@@ -1,7 +1,15 @@
+#region Licensing
+
+// Licensing please read LICENSE.md
+
+#endregion
+
+#region Usings
+
 using Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions;
-using Frenchex.Dev.DotnetCore.DotnetCore.Testing.Lib;
 using Microsoft.Extensions.DependencyInjection;
-using Shouldly;
+
+#endregion
 
 namespace Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Tests;
 

@@ -1,7 +1,17 @@
+#region Licensing
+
+// Licensing please read LICENSE.md
+
+#endregion
+
+#region Usings
+
 using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain;
 using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
 using Frenchex.Dev.DotnetCore.Testing.Lib;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Tests;
 

@@ -1,5 +1,15 @@
-﻿using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain;
+﻿#region Licensing
+
+// Licensing please read LICENSE.md
+
+#endregion
+
+#region Usings
+
+using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain;
 using Microsoft.Extensions.DependencyInjection;
+
+#endregion
 
 namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Infrastructure;
 

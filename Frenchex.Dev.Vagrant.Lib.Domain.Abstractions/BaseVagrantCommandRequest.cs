@@ -1,4 +1,10 @@
-﻿namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
+﻿#region Licensing
+
+// Licensing please read LICENSE.md
+
+#endregion
+
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
 
 /// <summary>
 ///     Represents the basic common options for all vagrant command requests
