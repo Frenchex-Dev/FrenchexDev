@@ -7,7 +7,6 @@
 #region Usings
 
 using System.Diagnostics;
-using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain;
 using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
 
 #endregion

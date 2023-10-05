@@ -8,6 +8,4 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstr
 
 public interface ITemplateGenerationResult
 {
-    IList<IGeneratedFile>   Generation { get; }
-    IList<IGenerationError> Errors     { get; }
 }

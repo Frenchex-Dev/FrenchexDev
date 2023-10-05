@@ -19,13 +19,21 @@ public abstract class AbstractFullWorkflowTester
         CancellationToken cancellationToken = default
     )
     {
-        var serviceCollection = new ServiceCollection();
-        await ConfigureServicesAsync(serviceCollection, cancellationToken);
-        return serviceCollection.BuildServiceProvider(new ServiceProviderOptions
-                                                      {
-                                                          ValidateOnBuild = true
-                                                        , ValidateScopes  = true
-                                                      });
+        try
+        {
+            var serviceCollection = new ServiceCollection();
+            await ConfigureServicesAsync(serviceCollection, cancellationToken);
+            return serviceCollection.BuildServiceProvider(new ServiceProviderOptions
+                                                          {
+                                                              ValidateOnBuild = true
+                                                            , ValidateScopes  = true
+                                                          });
+        }
+        catch (Exception ex )
+        {
+            throw ex;
+        }
+        
     }
 
     protected abstract Task ConfigureServicesAsync(

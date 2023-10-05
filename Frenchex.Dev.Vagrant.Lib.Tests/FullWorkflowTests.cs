@@ -31,7 +31,7 @@ public class Tests : AbstractFullWorkflowTester
     {
         yield return new object[]
                      {
-                         new VagrantInitRequestBuilder().WithName("generic/alpine317")
+                         new VagrantInitRequestBuilder().WithName("generic/alpine318")
                                                         .WithTemplate(Path.Join(Path.GetDirectoryName(Assembly
                                                                                                       .GetCallingAssembly()
                                                                                                       .Location)

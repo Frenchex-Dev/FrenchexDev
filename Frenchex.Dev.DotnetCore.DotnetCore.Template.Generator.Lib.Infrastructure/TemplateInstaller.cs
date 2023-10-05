@@ -7,7 +7,6 @@
 #region Usings
 
 using System.Diagnostics;
-using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain;
 using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
 
 #endregion
@@ -16,6 +15,15 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Infrastructu
 
 public class TemplateInstaller : ITemplateInstaller
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="csProjPath"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="DirectoryNotFoundException"></exception>
+    /// <exception cref="ProcessNotStartedException"></exception>
+    /// <exception cref="TemplateInstallationException"></exception>
     public async Task InstallAsync(
         ICsProjPath       csProjPath
       , CancellationToken cancellationToken = default
@@ -29,7 +37,7 @@ public class TemplateInstaller : ITemplateInstaller
                                         , RedirectStandardError  = true
                                         , RedirectStandardInput  = true
                                         , RedirectStandardOutput = true
-                                        , WorkingDirectory       = new FileInfo(csProjPath.Path).Directory.FullName
+                                        , WorkingDirectory       = new FileInfo(csProjPath.Path)?.Directory?.FullName ?? throw new DirectoryNotFoundException(csProjPath.Path)
                                       }
                         , EnableRaisingEvents = true
                       };

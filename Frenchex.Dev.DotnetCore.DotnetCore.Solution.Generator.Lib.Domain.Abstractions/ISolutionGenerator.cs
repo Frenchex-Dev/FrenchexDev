@@ -10,6 +10,7 @@ public interface ISolutionGenerator
 {
     Task<ISolutionGenerationResult> GenerateAsync(
         ISolutionDefinition solution
+      , IGenerationContext  generationContext
       , CancellationToken   cancellationToken = default
     );
 }

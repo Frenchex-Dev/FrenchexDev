@@ -6,10 +6,10 @@
 
 #region Usings
 
-using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain;
 using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
 using Frenchex.Dev.DotnetCore.Testing.Lib;
 using Microsoft.Extensions.DependencyInjection;
+using Shouldly;
 
 #endregion
 
@@ -114,8 +114,11 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
       , CancellationToken ct
     )
     {
-        var templateGenerator = scope.ServiceProvider.GetRequiredService<ITemplateGenerator>();
-
+        var templateGenerator   = scope.ServiceProvider.GetRequiredService<ITemplateGenerator>();
+        var codeWriter          = scope.ServiceProvider.GetRequiredService<IGeneratedCodeWriter>();
+        var templateInstaller   = scope.ServiceProvider.GetRequiredService<ITemplateInstaller>();
+        var packagesInstaller   = scope.ServiceProvider.GetRequiredService<IPackagesInstaller>();
+        var templateUninstaller = scope.ServiceProvider.GetRequiredService<ITemplateUnInstaller>();
 
         var generationContext = new GenerationContext
                                 {
@@ -125,19 +128,17 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
         var generationResult
             = await templateGenerator.GenerateAsync(payload.ProjectTemplateDefinition, generationContext, ct);
 
-        Assert.IsNotNull(generationResult);
+        generationResult.ShouldBeAssignableTo<TemplateGenerationOkResult>();
+
+        var okGenerationResult = (TemplateGenerationOkResult)generationResult;
 
         var csProjPath = new CsProjPath
                          {
                              Path = $"{generationContext.Path}\\{payload.ProjectTemplateDefinition.Name}.csproj"
                          };
 
-        var codeWriter          = scope.ServiceProvider.GetRequiredService<IGeneratedCodeWriter>();
-        var templateInstaller   = scope.ServiceProvider.GetRequiredService<ITemplateInstaller>();
-        var packagesInstaller   = scope.ServiceProvider.GetRequiredService<IPackagesInstaller>();
-        var templateUninstaller = scope.ServiceProvider.GetRequiredService<ITemplateUnInstaller>();
 
-        await codeWriter.WriteAsync(generationResult.Generation, ct);
+        await codeWriter.WriteAsync(okGenerationResult.Generation, ct);
         await packagesInstaller.InstallAsync(csProjPath, payload.ProjectTemplateDefinition.Packages, ct);
         await templateInstaller.InstallAsync(csProjPath, ct);
         await templateUninstaller.UnInstallAsync(csProjPath, ct);

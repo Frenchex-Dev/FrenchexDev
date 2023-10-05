@@ -14,7 +14,7 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstr
 
 public class TemplateSymbolDefinitionJson
 {
-    [JsonPropertyName("longName")] public string LongName { get; set; }
+    [JsonPropertyName("longName")] public required string LongName { get; set; }
 
-    [JsonPropertyName("shortName")] public string ShortName { get; set; }
+    [JsonPropertyName("shortName")] public required string ShortName { get; set; }
 }

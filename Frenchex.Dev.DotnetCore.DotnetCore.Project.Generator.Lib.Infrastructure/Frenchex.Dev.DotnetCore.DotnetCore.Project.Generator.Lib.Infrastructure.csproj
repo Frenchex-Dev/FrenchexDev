@@ -1,14 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
+		<TargetFramework>net7.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<LangVersion>preview</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference
-			Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain\Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.csproj" />
+		<ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain\Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.csproj" />
+		<ProjectReference Include="..\Frenchex.Dev.DotnetCore.Process.Lib\Frenchex.Dev.DotnetCore.Process.Lib.csproj" />
 	</ItemGroup>
 
 </Project>

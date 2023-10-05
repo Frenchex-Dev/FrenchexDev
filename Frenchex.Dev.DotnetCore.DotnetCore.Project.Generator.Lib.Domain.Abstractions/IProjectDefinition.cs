@@ -12,5 +12,5 @@ public interface IProjectDefinition
     string                     Language           { get; }
     string                     TemplateName       { get; }
     Dictionary<string, string> ExtraArgs          { get; }
-    List<IProjectReference>    ProjectsReferences { get; set; }
+    List<IProjectReference>    ProjectsReferences { get; }
 }

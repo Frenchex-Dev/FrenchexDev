@@ -9,5 +9,4 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstr
 public class SolutionDefinition : ISolutionDefinition
 {
     public required string Name { get; set; }
-    public required string Path { get; set; }
 }

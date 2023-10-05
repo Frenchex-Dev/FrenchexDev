@@ -14,9 +14,9 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstr
 
 public class SymbolDefinitionJson
 {
-    [JsonPropertyName("type")] public string Type { get; set; }
+    [JsonPropertyName("type")] public required string Type { get; set; }
 
-    [JsonPropertyName("defaultValue")] public string DefaultValue { get; set; }
+    [JsonPropertyName("defaultValue")] public required string DefaultValue { get; set; }
 
-    [JsonPropertyName("replaces")] public string Replaces { get; set; }
+    [JsonPropertyName("replaces")] public required string Replaces { get; set; }
 }

@@ -19,6 +19,6 @@ public static class ServicesConfigurator
         IServiceCollection services
     )
     {
-        services.AddTransient<IProjectGenerator, ProjectGenerator>();
+        Process.Lib.ServicesConfigurator.Configure(services);
     }
 }

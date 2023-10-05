@@ -8,4 +8,7 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstr
 
 public interface IGenerationError
 {
+    string Error    { get; }
+    string Path     { get; }
+    string FileName { get; }
 }

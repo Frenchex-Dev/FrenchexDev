@@ -22,14 +22,16 @@ public class TemplateGenerator(
       , CancellationToken   cancellationToken = default
     )
     {
-        var result = new TemplateGenerationResult();
-
         switch (definition)
         {
             case IProjectTemplateDefinition projectTemplateDefinition:
+                var okResult    = new TemplateGenerationOkResult();
+                var errorResult = new TemplateGenerationErrorResult();
+
                 await projectTemplateGenerator.GenerateProjectTemplateAsync(projectTemplateDefinition, generationContext
-                                                                          , result, cancellationToken);
-                return result;
+                                                                          , okResult, errorResult, cancellationToken);
+
+                return errorResult.Errors.Count > 0 ? errorResult : okResult;
             default:
                 throw new NotImplementedException(definition.GetType()
                                                             .FullName);

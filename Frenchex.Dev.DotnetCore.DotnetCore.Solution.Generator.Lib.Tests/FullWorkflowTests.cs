@@ -7,7 +7,9 @@
 #region Usings
 
 using Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions;
+using Frenchex.Dev.DotnetCore.Testing.Lib;
 using Microsoft.Extensions.DependencyInjection;
+using Shouldly;
 
 #endregion
 
@@ -50,15 +52,19 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
     {
         var solutionDefinition = new SolutionDefinition
                                  {
-                                     Path = Path.Join(Path.GetTempPath(), Path.GetRandomFileName())
-                                   , Name = payload.Name
+                                     Name = payload.Name
                                  };
+
+        var generationContext = new GenerationContext
+                                {
+                                    Path = Path.Join(Path.GetTempPath(), Path.GetRandomFileName())
+                                };
 
         var solutionGenerator = scope.ServiceProvider.GetRequiredService<ISolutionGenerator>();
 
-        var solutionGenerationResult = await solutionGenerator.GenerateAsync(solutionDefinition, ct);
+        var solutionGenerationResult = await solutionGenerator.GenerateAsync(solutionDefinition, generationContext, ct);
 
-        solutionGenerationResult.ShouldBeAssignableTo<SolutionGeneratedResult>();
+        solutionGenerationResult.ShouldBeAssignableTo<SolutionGenerationOkResult>();
     }
 
     protected override Task ConfigureServicesAsync(

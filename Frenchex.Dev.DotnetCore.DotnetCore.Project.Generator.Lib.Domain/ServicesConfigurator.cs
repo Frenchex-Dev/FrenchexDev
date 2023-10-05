@@ -6,6 +6,7 @@
 
 #region Usings
 
+using Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
 #endregion
@@ -18,5 +19,6 @@ public static class ServicesConfigurator
         IServiceCollection services
     )
     {
+        services.AddTransient<IProjectGenerator, ProjectGenerator>();
     }
 }

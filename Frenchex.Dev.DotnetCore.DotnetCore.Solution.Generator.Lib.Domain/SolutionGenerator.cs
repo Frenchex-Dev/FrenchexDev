@@ -19,10 +19,11 @@ public class SolutionGenerator(
 {
     public async Task<ISolutionGenerationResult> GenerateAsync(
         ISolutionDefinition solution
+      , IGenerationContext  generationContext
       , CancellationToken   cancellationToken = default
     )
     {
-        var dirInfo = new DirectoryInfo(solution.Path);
+        var dirInfo = new DirectoryInfo(generationContext.Path);
 
         if (!dirInfo.Exists) dirInfo.Create();
 
@@ -30,15 +31,20 @@ public class SolutionGenerator(
 
         var processExecution
             = await
-                  process.StartAsync(new ProcessExecutionContext(solution.Path, "dotnet", $"new sln --name {solution.Name} -o {solution.Path} --force", new Dictionary<string, string>(), true, true)
+                  process.StartAsync(new ProcessExecutionContext(generationContext.Path, "dotnet", $"new sln --name {solution.Name} -o {generationContext.Path} --force", new Dictionary<string, string>(), true, true)
                                    , cancellationToken);
         if (!processExecution.HasStarted)
             throw new ProcessNotStartedException(await processExecution.StdErrStream.ReadToEndAsync(cancellationToken));
 
         await processExecution.WaitForExitAsync(cancellationToken);
 
+        if (processExecution.ExitCode > 0)
+            return new SolutionGenerationErrorResult
+                   {
+                       Error = await processExecution.StdErrStream.ReadToEndAsync(cancellationToken)
+                   };
 
-        return new SolutionGeneratedResult();
+        return new SolutionGenerationOkResult();
     }
 }
 

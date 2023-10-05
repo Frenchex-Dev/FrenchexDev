@@ -6,16 +6,14 @@
 
 #region Usings
 
-using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
-
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain;
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
 
 public interface ITemplateInstaller
 {
     Task InstallAsync(
-        ICsProjPath       csProjPath
+        ICsProjPath csProjPath
       , CancellationToken cancellationToken = default
     );
 }
