@@ -1,6 +1,13 @@
-﻿namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions;
+﻿#region Licensing
 
-public interface IGenerationContext
+// Licensing please read LICENSE.md
+
+#endregion
+
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions
 {
-    string Path { get; }
+    public interface IGenerationContext
+    {
+        string Path { get; }
+    }
 }

@@ -10,22 +10,23 @@ using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Base;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Abstractions;
-
-public class AbstractVagrantRequestBuilder
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Abstractions
 {
-    protected readonly BaseVagrantCommandRequestBuilder BaseBuilder;
-
-    public AbstractVagrantRequestBuilder()
+    public class AbstractVagrantRequestBuilder
     {
-        BaseBuilder = new BaseVagrantCommandRequestBuilder(this);
-    }
+        protected readonly BaseVagrantCommandRequestBuilder BaseBuilder;
 
-    /// <summary>
-    /// </summary>
-    /// <returns></returns>
-    public IBaseVagrantCommandRequestBuilder Base()
-    {
-        return BaseBuilder;
+        public AbstractVagrantRequestBuilder()
+        {
+            BaseBuilder = new BaseVagrantCommandRequestBuilder(this);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <returns></returns>
+        public IBaseVagrantCommandRequestBuilder Base()
+        {
+            return BaseBuilder;
+        }
     }
 }

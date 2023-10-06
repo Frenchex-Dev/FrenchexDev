@@ -8,13 +8,14 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
-
-public interface IPackagesInstaller
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions
 {
-    Task InstallAsync(
-        ICsProjPath csProjPath
-      , IList<IPackageReference> packages
-      , CancellationToken cancellationToken = default
-    );
+    public interface IPackagesInstaller
+    {
+        Task InstallAsync(
+            ICsProjPath              csProjPath
+          , IList<IPackageReference> packages
+          , CancellationToken        cancellationToken = default
+        );
+    }
 }

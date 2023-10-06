@@ -4,11 +4,12 @@
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
-
-public interface IVagrantCommandLineBuilder<in TRequest> where TRequest : IVagrantCommandRequest
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions
 {
-    string BuildCommandLineArguments(
-        TRequest request
-    );
+    public interface IVagrantCommandLineBuilder<in TRequest> where TRequest : IVagrantCommandRequest
+    {
+        string BuildCommandLineArguments(
+            TRequest request
+        );
+    }
 }

@@ -4,9 +4,10 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
-
-public interface ILicense
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions
 {
-    string ToString();
+    public interface ILicense
+    {
+        string ToString();
+    }
 }

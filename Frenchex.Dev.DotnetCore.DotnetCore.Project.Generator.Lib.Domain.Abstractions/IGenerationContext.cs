@@ -4,9 +4,10 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions;
-
-public interface IGenerationContext
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions
 {
-    string Path { get; }
+    public interface IGenerationContext
+    {
+        string Path { get; }
+    }
 }

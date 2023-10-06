@@ -6,22 +6,32 @@
 
 #region Usings
 
-using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
 using System.Text;
+using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Infrastructure;
-
-public class FileWriter : IFileWriter
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Infrastructure
 {
-    public async Task WriteAllTextAsync(
-        string            path
-      , string            content
-      , Encoding          encoding
-      , CancellationToken cancellationToken = default
-    )
+    /// <summary>
+    /// </summary>
+    public class FileWriter : IFileWriter
     {
-        await File.WriteAllTextAsync(path, content, encoding, cancellationToken);
+        /// <summary>
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="content"></param>
+        /// <param name="encoding"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task WriteAllTextAsync(
+            string            path
+          , string            content
+          , Encoding          encoding
+          , CancellationToken cancellationToken = default
+        )
+        {
+            await File.WriteAllTextAsync(path, content, encoding, cancellationToken);
+        }
     }
 }

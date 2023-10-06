@@ -4,8 +4,9 @@
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Ssh;
-
-public interface IVagrantSshCommandLineBuilder : IVagrantCommandLineBuilder<VagrantSshRequest>
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Ssh
 {
+    public interface IVagrantSshCommandLineBuilder : IVagrantCommandLineBuilder<VagrantSshRequest>
+    {
+    }
 }

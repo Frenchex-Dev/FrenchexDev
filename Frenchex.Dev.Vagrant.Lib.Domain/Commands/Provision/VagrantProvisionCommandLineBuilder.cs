@@ -12,53 +12,61 @@ using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Abstractions;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Provision;
-
-public class VagrantProvisionCommandLineBuilder : AbstractVagrantCommandLineBuilder, IVagrantProvisionCommandLineBuilder
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Provision
 {
-    public string BuildCommandLineArguments(
-        VagrantProvisionRequest request
-    )
+    public class VagrantProvisionCommandLineBuilder : AbstractVagrantCommandLineBuilder, IVagrantProvisionCommandLineBuilder
     {
-        return BuildArguments(GetCliCommandName(), request, true);
-    }
-
-    protected override string GetCliCommandName()
-    {
-        return "provision";
-    }
-
-    protected override string BuildVagrantOptions(
-        IVagrantCommandRequest request
-    )
-    {
-        if (request is VagrantProvisionRequest provisionRequest)
+        public string BuildCommandLineArguments(
+            VagrantProvisionRequest request
+        )
         {
-            var parts = new List<string>();
-
-            if (provisionRequest.ProvisionWith.Length > 0)
-                foreach (var provisionWith in provisionRequest.ProvisionWith)
-                    parts.Add("--provision-with " + provisionWith);
-
-            return string.Join(" ", parts);
+            return BuildArguments(GetCliCommandName(), request, true);
         }
 
-        throw new NotImplementedException();
-    }
-
-    protected override string BuildVagrantArguments(
-        IVagrantCommandRequest request
-    )
-    {
-        if (request is VagrantProvisionRequest provisionRequest)
+        protected override string GetCliCommandName()
         {
-            var parts = new List<string>();
-
-            if (!string.IsNullOrEmpty(provisionRequest.NameOrId)) parts.Add(provisionRequest.NameOrId);
-
-            return string.Join(" ", parts);
+            return "provision";
         }
 
-        throw new NotImplementedException();
+        protected override string BuildVagrantOptions(
+            IVagrantCommandRequest request
+        )
+        {
+            if (request is VagrantProvisionRequest provisionRequest)
+            {
+                var parts = new List<string>();
+
+                if (provisionRequest.ProvisionWith.Length > 0)
+                {
+                    foreach (var provisionWith in provisionRequest.ProvisionWith)
+                    {
+                        parts.Add("--provision-with " + provisionWith);
+                    }
+                }
+
+                return string.Join(" ", parts);
+            }
+
+            throw new NotImplementedException();
+        }
+
+        protected override string BuildVagrantArguments(
+            IVagrantCommandRequest request
+        )
+        {
+            if (request is VagrantProvisionRequest provisionRequest)
+            {
+                var parts = new List<string>();
+
+                if (!string.IsNullOrEmpty(provisionRequest.NameOrId))
+                {
+                    parts.Add(provisionRequest.NameOrId);
+                }
+
+                return string.Join(" ", parts);
+            }
+
+            throw new NotImplementedException();
+        }
     }
 }

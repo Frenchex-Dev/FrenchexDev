@@ -4,8 +4,9 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions;
-
-public class ProjectGenerationOk : IProjectGenerationResult
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions
 {
+    public class ProjectGenerationOk : IProjectGenerationResult
+    {
+    }
 }

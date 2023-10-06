@@ -6,17 +6,16 @@
 
 #region Usings
 
-using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
-
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
-
-public interface ITemplateGenerator
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions
 {
-    Task<ITemplateGenerationResult> GenerateAsync(
-        ITemplateDefinition definition
-      , IGenerationContext  generationContext
-      , CancellationToken   cancellationToken = default
-    );
+    public interface ITemplateGenerator
+    {
+        Task<ITemplateGenerationResult> GenerateAsync(
+            ITemplateDefinition definition
+          , IGenerationContext  generationContext
+          , CancellationToken   cancellationToken = default
+        );
+    }
 }

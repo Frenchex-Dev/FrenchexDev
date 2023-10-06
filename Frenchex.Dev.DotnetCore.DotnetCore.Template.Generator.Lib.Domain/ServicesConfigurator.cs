@@ -11,15 +11,17 @@ using Microsoft.Extensions.DependencyInjection;
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain;
-
-public static class ServicesConfigurator
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain
 {
-    public static void Configure(
-        IServiceCollection services
-    )
+    public static class ServicesConfigurator
     {
-        services.AddTransient<ITemplateGenerator, TemplateGenerator>()
-                .AddTransient<IProjectTemplateGenerator, ProjectTemplateGenerator>();
+        public static void Configure(
+            IServiceCollection services
+        )
+        {
+            services.AddTransient<ITemplateGenerator, TemplateGenerator>()
+                    .AddTransient<IProjectTemplateGenerator, ProjectTemplateGenerator>()
+                    .AddTransient<IPackagesInstaller, PackagesInstaller>();
+        }
     }
 }

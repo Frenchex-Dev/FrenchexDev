@@ -1,16 +1,26 @@
-﻿// Licensing please read LICENSE.md
+﻿#region Licensing
+
+// Licensing please read LICENSE.md
+
+#endregion
+
+#region Usings
 
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Infrastructure;
-public static class ServicesConfigurator
+#endregion
+
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Infrastructure
 {
-    public static void ConfigureServices(
-        IServiceCollection services
-    )
+    public static class ServicesConfigurator
     {
-        Solution.Generator.Lib.ServicesConfigurator.Configure(services);
-        Project.Generator.Lib.ServicesConfigurator.Configure(services);
-        Template.Generator.Lib.ServicesConfigurator.Configure(services);
+        public static void ConfigureServices(
+            IServiceCollection services
+        )
+        {
+            Solution.Generator.Lib.ServicesConfigurator.Configure(services);
+            Project.Generator.Lib.ServicesConfigurator.Configure(services);
+            Template.Generator.Lib.ServicesConfigurator.Configure(services);
+        }
     }
 }

@@ -8,12 +8,13 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
-
-public interface ITemplateUnInstaller
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions
 {
-    Task UnInstallAsync(
-        ICsProjPath csProjPath
-      , CancellationToken cancellationToken = default
-    );
+    public interface ITemplateUnInstaller
+    {
+        Task UnInstallAsync(
+            ICsProjPath       csProjPath
+          , CancellationToken cancellationToken = default
+        );
+    }
 }

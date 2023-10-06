@@ -4,12 +4,13 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
-
-public interface IProjectTemplateDefinition : ITemplateDefinition
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions
 {
-    ICsProj                  CsProj   { get; }
-    ILicense                 License  { get; }
-    IReadme                  Readme   { get; }
-    IList<IPackageReference> Packages { get; }
+    public interface IProjectTemplateDefinition : ITemplateDefinition
+    {
+        ICsProj                  CsProj   { get; }
+        ILicense                 License  { get; }
+        IReadme                  Readme   { get; }
+        IList<IPackageReference> Packages { get; }
+    }
 }

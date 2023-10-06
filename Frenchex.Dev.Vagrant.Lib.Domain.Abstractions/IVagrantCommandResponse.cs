@@ -4,12 +4,13 @@
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
-
-/// <summary>
-///     Represents the base interface for Vagrant command responses
-/// </summary>
-public interface IVagrantCommandResponse
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions
 {
-    int ExitCode { get; }
+    /// <summary>
+    ///     Represents the base interface for Vagrant command responses
+    /// </summary>
+    public interface IVagrantCommandResponse
+    {
+        int ExitCode { get; }
+    }
 }

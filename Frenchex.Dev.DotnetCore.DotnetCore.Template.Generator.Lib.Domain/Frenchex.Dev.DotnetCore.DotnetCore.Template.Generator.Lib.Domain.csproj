@@ -9,10 +9,12 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.6.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions\Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions.csproj" />
+		<ProjectReference Include="..\Frenchex.Dev.DotnetCore.Process.Lib.Domain\Frenchex.Dev.DotnetCore.Process.Lib.Domain.csproj" />
 	</ItemGroup>
 
 </Project>

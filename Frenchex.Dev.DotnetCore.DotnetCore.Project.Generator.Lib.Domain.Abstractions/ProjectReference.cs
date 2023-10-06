@@ -4,9 +4,10 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions;
-
-public class ProjectReference : IProjectReference
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions
 {
-    public required ICsProjPath CsProjPath { get; set; }
+    public class ProjectReference : IProjectReference
+    {
+        public required ICsProjPath CsProjPath { get; set; }
+    }
 }

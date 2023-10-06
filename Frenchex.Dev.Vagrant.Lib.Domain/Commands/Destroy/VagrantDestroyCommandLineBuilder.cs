@@ -12,55 +12,68 @@ using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Abstractions;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Destroy;
-
-public class VagrantDestroyCommandLineBuilder : AbstractVagrantCommandLineBuilder, IVagrantDestroyCommandLineBuilder
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Destroy
 {
-    public string BuildCommandLineArguments(
-        VagrantDestroyRequest request
-    )
+    public class VagrantDestroyCommandLineBuilder : AbstractVagrantCommandLineBuilder, IVagrantDestroyCommandLineBuilder
     {
-        return BuildArguments(GetCliCommandName(), request);
-    }
-
-    protected override string GetCliCommandName()
-    {
-        return "destroy";
-    }
-
-    protected override string BuildVagrantOptions(
-        IVagrantCommandRequest request
-    )
-    {
-        if (request is VagrantDestroyRequest destroyRequest)
+        public string BuildCommandLineArguments(
+            VagrantDestroyRequest request
+        )
         {
-            var parts = new List<string>();
-
-            if (destroyRequest.Force) parts.Add("--force");
-
-            if (destroyRequest.Parallel) parts.Add("--parallel");
-
-            if (destroyRequest.Graceful) parts.Add("--graceful");
-
-            return string.Join(",", parts);
+            return BuildArguments(GetCliCommandName(), request);
         }
 
-        throw new NotImplementedException();
-    }
-
-    protected override string BuildVagrantArguments(
-        IVagrantCommandRequest request
-    )
-    {
-        if (request is VagrantDestroyRequest destroyRequest)
+        protected override string GetCliCommandName()
         {
-            var parts = new List<string>();
-
-            if (!string.IsNullOrEmpty(destroyRequest.NameOrId)) parts.Add(destroyRequest.NameOrId);
-
-            return string.Join(",", parts);
+            return "destroy";
         }
 
-        throw new NotImplementedException();
+        protected override string BuildVagrantOptions(
+            IVagrantCommandRequest request
+        )
+        {
+            if (request is VagrantDestroyRequest destroyRequest)
+            {
+                var parts = new List<string>();
+
+                if (destroyRequest.Force)
+                {
+                    parts.Add("--force");
+                }
+
+                if (destroyRequest.Parallel)
+                {
+                    parts.Add("--parallel");
+                }
+
+                if (destroyRequest.Graceful)
+                {
+                    parts.Add("--graceful");
+                }
+
+                return string.Join(",", parts);
+            }
+
+            throw new NotImplementedException();
+        }
+
+        protected override string BuildVagrantArguments(
+            IVagrantCommandRequest request
+        )
+        {
+            if (request is VagrantDestroyRequest destroyRequest)
+            {
+                var parts = new List<string>();
+
+                if (!string.IsNullOrEmpty(destroyRequest.NameOrId))
+                {
+                    parts.Add(destroyRequest.NameOrId);
+                }
+
+                return string.Join(",", parts);
+            }
+
+            throw new NotImplementedException();
+        }
     }
 }

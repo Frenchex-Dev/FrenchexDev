@@ -4,11 +4,12 @@
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Ssh;
-
-public interface IVagrantSshRequest : IVagrantCommandRequest
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Ssh
 {
-    string NameOrId     { get; }
-    string ExtraSshArgs { get; }
-    string Command      { get; }
+    public interface IVagrantSshRequest : IVagrantCommandRequest
+    {
+        string NameOrId     { get; }
+        string ExtraSshArgs { get; }
+        string Command      { get; }
+    }
 }

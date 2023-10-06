@@ -25,29 +25,30 @@ using Microsoft.Extensions.DependencyInjection;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain;
-
-public static class ServicesConfigurator
+namespace Frenchex.Dev.Vagrant.Lib.Domain
 {
-    public static void Configure(
-        IServiceCollection services
-    )
+    public static class ServicesConfigurator
     {
-        services.AddScoped<IVagrantDestroyCommandLineBuilder, VagrantDestroyCommandLineBuilder>()
-                .AddScoped<IVagrantDestroyRequestBuilder, VagrantDestroyRequestBuilder>()
-                .AddScoped<IVagrantHaltCommandLineBuilder, VagrantHaltCommandLineBuilder>()
-                .AddScoped<IVagrantHaltRequestBuilder, VagrantHaltRequestBuilder>()
-                .AddScoped<IVagrantInitCommandLineBuilder, VagrantInitCommandLineBuilder>()
-                .AddScoped<IVagrantInitRequestBuilder, VagrantInitRequestBuilder>()
-                .AddScoped<IVagrantProvisionCommandLineBuilder, VagrantProvisionCommandLineBuilder>()
-                .AddScoped<IVagrantProvisionRequestBuilder, VagrantProvisionRequestBuilder>()
-                .AddScoped<IVagrantSshCommandLineBuilder, VagrantSshCommandLineBuilder>()
-                .AddScoped<IVagrantSshRequestBuilder, VagrantSshRequestBuilder>()
-                .AddScoped<IVagrantSshConfigCommandLineBuilder, VagrantSshConfigCommandLineBuilder>()
-                .AddScoped<IVagrantSshConfigRequestBuilder, VagrantSshConfigRequestBuilder>()
-                .AddScoped<IVagrantStatusCommandLineBuilder, VagrantStatusCommandLineBuilder>()
-                .AddScoped<IVagrantStatusRequestBuilder, VagrantStatusRequestBuilder>()
-                .AddScoped<IVagrantUpCommandLineBuilder, VagrantUpCommandLineBuilder>()
-                .AddScoped<IVagrantUpRequestBuilder, VagrantUpRequestBuilder>();
+        public static void Configure(
+            IServiceCollection services
+        )
+        {
+            services.AddTransient<IVagrantDestroyCommandLineBuilder, VagrantDestroyCommandLineBuilder>()
+                    .AddTransient<IVagrantDestroyRequestBuilder, VagrantDestroyRequestBuilder>()
+                    .AddTransient<IVagrantHaltCommandLineBuilder, VagrantHaltCommandLineBuilder>()
+                    .AddTransient<IVagrantHaltRequestBuilder, VagrantHaltRequestBuilder>()
+                    .AddTransient<IVagrantInitCommandLineBuilder, VagrantInitCommandLineBuilder>()
+                    .AddTransient<IVagrantInitRequestBuilder, VagrantInitRequestBuilder>()
+                    .AddTransient<IVagrantProvisionCommandLineBuilder, VagrantProvisionCommandLineBuilder>()
+                    .AddTransient<IVagrantProvisionRequestBuilder, VagrantProvisionRequestBuilder>()
+                    .AddTransient<IVagrantSshCommandLineBuilder, VagrantSshCommandLineBuilder>()
+                    .AddTransient<IVagrantSshRequestBuilder, VagrantSshRequestBuilder>()
+                    .AddTransient<IVagrantSshConfigCommandLineBuilder, VagrantSshConfigCommandLineBuilder>()
+                    .AddTransient<IVagrantSshConfigRequestBuilder, VagrantSshConfigRequestBuilder>()
+                    .AddTransient<IVagrantStatusCommandLineBuilder, VagrantStatusCommandLineBuilder>()
+                    .AddTransient<IVagrantStatusRequestBuilder, VagrantStatusRequestBuilder>()
+                    .AddTransient<IVagrantUpCommandLineBuilder, VagrantUpCommandLineBuilder>()
+                    .AddTransient<IVagrantUpRequestBuilder, VagrantUpRequestBuilder>();
+        }
     }
 }

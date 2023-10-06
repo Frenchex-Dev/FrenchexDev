@@ -12,75 +12,91 @@ using TimeSpanParserUtil;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands;
-
-public abstract class AbstractVagrantCommand(
-    IProcessStarterFactory processStarterFactory
-)
+namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands
 {
-    protected readonly IProcessStarterFactory ProcessStarterFactory = processStarterFactory;
-
-    protected ProcessExecutionContext CreateProcessExecutionContext(
-        IVagrantCommandExecutionContext context
-      , string                          arguments
+    public abstract class AbstractVagrantCommand(
+        IProcessStarterFactory processStarterFactory
     )
     {
-        var processContext = new ProcessExecutionContext(context.WorkingDirectory, context.VagrantBin, arguments
-                                                       , context.Environment, context.SaveStdOutStream
-                                                       , context.SaveStdErrStream);
+        protected readonly IProcessStarterFactory ProcessStarterFactory = processStarterFactory;
 
-        return processContext;
-    }
-
-    protected static async Task WaitProcessForExitAsync(
-        IVagrantCommandExecutionContext context
-      , IProcessExecution               process
-    )
-    {
-        if (!string.IsNullOrEmpty(context.Timeout))
+        protected ProcessExecutionContext CreateProcessExecutionContext(
+            IVagrantCommandExecutionContext context
+          , string                          arguments
+        )
         {
-            var timeOutMs = TimeSpanParser.Parse(context.Timeout);
+            var processContext = new ProcessExecutionContext(
+                                                             context.WorkingDirectory
+                                                           , context.VagrantBin
+                                                           , arguments
+                                                           , context.Environment
+                                                           , context.SaveStdOutStream
+                                                           , context.SaveStdErrStream);
 
-            await process.WaitForExitAsync((int)timeOutMs.TotalMilliseconds);
+            return processContext;
         }
-        else
+
+        protected static async Task WaitProcessForExitAsync(
+            IVagrantCommandExecutionContext context
+          , IProcessExecution               process
+        )
         {
-            await process.WaitForExitAsync();
+            if (!string.IsNullOrEmpty(context.Timeout))
+            {
+                var timeOutMs = TimeSpanParser.Parse(context.Timeout);
+
+                await process.WaitForExitAsync((int)timeOutMs.TotalMilliseconds);
+            }
+            else
+            {
+                await process.WaitForExitAsync();
+            }
         }
-    }
 
-    protected static void PrepareProcess(
-        IVagrantCommandExecutionListeners listeners
-      , IProcessStarter                   processStarter
-    )
-    {
-        processStarter.AddProcessPreparer(process =>
-                                          {
-                                              process.OutputDataReceived += async (
-                                                                                _
-                                                                              , e
-                                                                            ) =>
-                                                                            {
-                                                                                if (e.Data == null) return;
+        protected static void PrepareProcess(
+            IVagrantCommandExecutionListeners listeners
+          , IProcessStarter                   processStarter
+        )
+        {
+            processStarter.AddProcessPreparer(
+                                              process =>
+                                              {
+                                                  process.OutputDataReceived += async (
+                                                                                    _
+                                                                                  , e
+                                                                                ) =>
+                                                                                {
+                                                                                    if (e.Data == null)
+                                                                                    {
+                                                                                        return;
+                                                                                    }
 
-                                                                                foreach (var listener in listeners
-                                                                                             .GetStdOutListeners())
-                                                                                    await listener(e.Data);
-                                                                            };
+                                                                                    foreach (var listener in listeners
+                                                                                                 .GetStdOutListeners())
+                                                                                    {
+                                                                                        await listener(e.Data);
+                                                                                    }
+                                                                                };
 
-                                              process.ErrorDataReceived += async (
-                                                                               _
-                                                                             , e
-                                                                           ) =>
-                                                                           {
-                                                                               if (e.Data == null) return;
+                                                  process.ErrorDataReceived += async (
+                                                                                   _
+                                                                                 , e
+                                                                               ) =>
+                                                                               {
+                                                                                   if (e.Data == null)
+                                                                                   {
+                                                                                       return;
+                                                                                   }
 
-                                                                               foreach (var listener in listeners
-                                                                                            .GetStdErrListeners())
-                                                                                   await listener(e.Data);
-                                                                           };
+                                                                                   foreach (var listener in listeners
+                                                                                                .GetStdErrListeners())
+                                                                                   {
+                                                                                       await listener(e.Data);
+                                                                                   }
+                                                                               };
 
-                                              return Task.CompletedTask;
-                                          });
+                                                  return Task.CompletedTask;
+                                              });
+        }
     }
 }

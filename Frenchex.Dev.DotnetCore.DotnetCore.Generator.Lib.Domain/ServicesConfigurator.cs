@@ -11,14 +11,15 @@ using Microsoft.Extensions.DependencyInjection;
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain;
-
-public static class ServicesConfigurator
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain
 {
-    public static void ConfigureServices(
-        IServiceCollection services
-    )
+    public static class ServicesConfigurator
     {
-        services.AddTransient<IMetaSolutionDefinitionGenerator, MetaSolutionDefinitionGenerator>();
+        public static void ConfigureServices(
+            IServiceCollection services
+        )
+        {
+            services.AddTransient<IMetaSolutionDefinitionGenerator, MetaSolutionDefinitionGenerator>();
+        }
     }
 }

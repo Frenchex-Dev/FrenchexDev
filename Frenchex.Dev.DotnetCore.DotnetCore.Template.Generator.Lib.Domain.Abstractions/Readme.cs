@@ -4,14 +4,15 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
-
-public class Readme : IReadme
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions
 {
-    public required string Content { get; set; }
-
-    public override string ToString()
+    public class Readme : IReadme
     {
-        return Content;
+        public required string Content { get; set; }
+
+        public override string ToString()
+        {
+            return Content;
+        }
     }
 }

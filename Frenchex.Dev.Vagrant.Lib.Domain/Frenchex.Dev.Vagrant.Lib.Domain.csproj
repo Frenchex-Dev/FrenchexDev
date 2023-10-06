@@ -9,9 +9,11 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+		<PackageReference Include="TimeSpanParserUtil" Version="1.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Frenchex.Dev.DotnetCore.Process.Lib.Domain\Frenchex.Dev.DotnetCore.Process.Lib.Domain.csproj" />
 		<ProjectReference Include="..\Frenchex.Dev.Vagrant.Lib.Domain.Abstractions\Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.csproj" />
 	</ItemGroup>
 

@@ -7,86 +7,135 @@
 #region Usings
 
 using System.Diagnostics;
+using System.Runtime.ExceptionServices;
 using Microsoft.Extensions.DependencyInjection;
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.Testing.Lib;
-
-public abstract class AbstractFullWorkflowTester
+namespace Frenchex.Dev.DotnetCore.Testing.Lib
 {
-    public async Task<ServiceProvider> BuildServiceProviderAsync(
-        CancellationToken cancellationToken = default
-    )
+    public abstract class AbstractFullWorkflowTester
     {
-        try
+        public async Task<ServiceProvider> BuildServiceProviderAsync(
+            CancellationToken cancellationToken = default
+        )
         {
-            var serviceCollection = new ServiceCollection();
-            await ConfigureServicesAsync(serviceCollection, cancellationToken);
-            return serviceCollection.BuildServiceProvider(new ServiceProviderOptions
-                                                          {
-                                                              ValidateOnBuild = true
-                                                            , ValidateScopes  = true
-                                                          });
+            return await TryCatchAsync<ServiceProvider, Exception>(
+                                                                   async () =>
+                                                                   {
+                                                                       var serviceCollection = new ServiceCollection();
+                                                                       await ConfigureServicesAsync(
+                                                                                                    serviceCollection
+                                                                                                  , cancellationToken);
+                                                                       return serviceCollection.BuildServiceProvider(
+                                                                                                                     new
+                                                                                                                     ServiceProviderOptions
+                                                                                                                     {
+                                                                                                                         ValidateOnBuild
+                                                                                                                             = true
+                                                                                                                       , ValidateScopes
+                                                                                                                             = true
+                                                                                                                     });
+                                                                   });
         }
-        catch (Exception ex )
+
+        protected static async Task TryCatchAsync<TException>(
+            Func<Task>              function
+          , Func<TException, Task>? catcher = null
+        ) where TException : Exception
         {
-            throw ex;
+            try
+            {
+                await function();
+            }
+            catch (TException ex)
+            {
+                if (catcher != null)
+                {
+                    await catcher(ex);
+                }
+
+                ExceptionDispatchInfo.Capture(ex)
+                                     .Throw();
+                throw;
+            }
         }
-        
-    }
 
-    protected abstract Task ConfigureServicesAsync(
-        IServiceCollection services
-      , CancellationToken  cancellationToken = default
-    );
+        protected static async Task<TReturn> TryCatchAsync<TReturn, TException>(
+            Func<Task<TReturn>>     function
+          , Func<TException, Task>? catcher = null
+        ) where TException : Exception
+        {
+            try
+            {
+                var result = await function();
+                return result;
+            }
+            catch (TException ex)
+            {
+                if (catcher != null)
+                {
+                    await catcher(ex);
+                }
 
-    public async Task RunScopedAsync(
-        ServiceProvider                                  services
-      , Func<AsyncServiceScope, CancellationToken, Task> bizFunc
-      , CancellationToken                                cancellationToken = default
-    )
-    {
-        await using var scope = services.CreateAsyncScope();
-        await bizFunc(scope, cancellationToken);
-    }
+                ExceptionDispatchInfo.Capture(ex)
+                                     .Throw();
+                throw;
+            }
+        }
+
+        protected abstract Task ConfigureServicesAsync(
+            IServiceCollection services
+          , CancellationToken  cancellationToken = default
+        );
+
+        public static async Task RunScopedAsync(
+            ServiceProvider                                  services
+          , Func<AsyncServiceScope, CancellationToken, Task> function
+          , CancellationToken                                cancellationToken = default
+        )
+        {
+            await using var scope = services.CreateAsyncScope();
+            await function(scope, cancellationToken);
+        }
 
 
-    public async Task<T> RunScopedAsync<T>(
-        ServiceProvider                                     services
-      , Func<AsyncServiceScope, CancellationToken, Task<T>> bizFunc
-      , CancellationToken                                   cancellationToken = default
-    )
-    {
-        await using var scope = services.CreateAsyncScope();
-        var             r     = await bizFunc(scope, cancellationToken);
-        return r;
-    }
+        public static async Task<T> RunScopedAsync<T>(
+            ServiceProvider                                     services
+          , Func<AsyncServiceScope, CancellationToken, Task<T>> function
+          , CancellationToken                                   cancellationToken = default
+        )
+        {
+            await using var scope = services.CreateAsyncScope();
+            var             r     = await function(scope, cancellationToken);
+            return r;
+        }
 
-    protected static async Task OpenVsCodeAsync(
-        string            path
-      , string            vsCodePath        = "C:\\Program Files\\Microsoft VS Code\\Code.exe"
-      , CancellationToken cancellationToken = default
-    )
-    {
-        var codeProcess = new Process
-                          {
-                              StartInfo = new ProcessStartInfo
-                                          {
-                                              FileName = vsCodePath
-                                            , ArgumentList =
+        protected static async Task OpenVsCodeAsync(
+            string            path
+          , string            vsCodePath        = "C:\\Program Files\\Microsoft VS Code\\Code.exe"
+          , CancellationToken cancellationToken = default
+        )
+        {
+            var codeProcess = new Process
+                              {
+                                  StartInfo = new ProcessStartInfo
                                               {
-                                                  path
-                                                , "-n"
+                                                  FileName = vsCodePath
+                                                , ArgumentList =
+                                                  {
+                                                      path
+                                                    , "-n"
+                                                  }
+                                                , RedirectStandardInput  = true
+                                                , RedirectStandardOutput = true
+                                                , RedirectStandardError  = true
+                                                , CreateNoWindow         = false
                                               }
-                                            , RedirectStandardInput  = true
-                                            , RedirectStandardOutput = true
-                                            , RedirectStandardError  = true
-                                            , CreateNoWindow         = false
-                                          }
-                          };
+                              };
 
-        codeProcess.Start();
-        await codeProcess.WaitForExitAsync(cancellationToken);
+            codeProcess.Start();
+            await codeProcess.WaitForExitAsync(cancellationToken);
+        }
     }
 }

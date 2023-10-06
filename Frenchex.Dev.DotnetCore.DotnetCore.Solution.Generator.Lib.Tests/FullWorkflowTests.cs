@@ -13,71 +13,74 @@ using Shouldly;
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Tests;
-
-public class FullWorkflowTests : AbstractFullWorkflowTester
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Tests
 {
-    protected static IEnumerable<object[]> Data()
+    public class FullWorkflowTests : AbstractFullWorkflowTester
     {
-        yield return new object[]
-                     {
-                         "test case 1", new Payload
-                                        {
-                                            Name = "Foo"
-                                        }
-                     };
-    }
+        protected static IEnumerable<object[]> Data()
+        {
+            yield return new object[]
+                         {
+                             "test case 1", new Payload
+                                            {
+                                                Name = "Foo"
+                                            }
+                         };
+        }
 
-    [Test] [TestCaseSource(nameof(Data))] public async Task FullWorkflow(
-        string  _
-      , Payload payload
-    )
-    {
-        var services = await BuildServiceProviderAsync();
+        [Test] [TestCaseSource(nameof(Data))] public async Task FullWorkflow(
+            string  _
+          , Payload payload
+        )
+        {
+            var services = await BuildServiceProviderAsync();
 
-        await RunScopedAsync(services, async (
-                                           scope
-                                         , ct
-                                       ) =>
-                                       {
-                                           await RunInternalAsync(scope, payload, ct);
-                                       });
-    }
-
-    private static async Task RunInternalAsync(
-        AsyncServiceScope scope
-      , Payload           payload
-      , CancellationToken ct
-    )
-    {
-        var solutionDefinition = new SolutionDefinition
+            await RunScopedAsync(
+                                 services
+                               , async (
+                                     scope
+                                   , ct
+                                 ) =>
                                  {
-                                     Name = payload.Name
-                                 };
+                                     await RunInternalAsync(scope, payload, ct);
+                                 });
+        }
 
-        var generationContext = new GenerationContext
-                                {
-                                    Path = Path.Join(Path.GetTempPath(), Path.GetRandomFileName())
-                                };
+        private static async Task RunInternalAsync(
+            AsyncServiceScope scope
+          , Payload           payload
+          , CancellationToken ct
+        )
+        {
+            var solutionDefinition = new SolutionDefinition
+                                     {
+                                         Name = payload.Name
+                                     };
 
-        var solutionGenerator = scope.ServiceProvider.GetRequiredService<ISolutionGenerator>();
+            var generationContext = new GenerationContext
+                                    {
+                                        Path = Path.Join(Path.GetTempPath(), Path.GetRandomFileName())
+                                    };
 
-        var solutionGenerationResult = await solutionGenerator.GenerateAsync(solutionDefinition, generationContext, ct);
+            var solutionGenerator = scope.ServiceProvider.GetRequiredService<ISolutionGenerator>();
 
-        solutionGenerationResult.ShouldBeAssignableTo<SolutionGenerationOkResult>();
+            var solutionGenerationResult = await solutionGenerator.GenerateAsync(solutionDefinition, generationContext, ct);
+
+            solutionGenerationResult.ShouldBeAssignableTo<SolutionGenerationOkResult>();
+        }
+
+        protected override Task ConfigureServicesAsync(
+            IServiceCollection services
+          , CancellationToken  cancellationToken = default
+        )
+        {
+            ServicesConfigurator.Configure(services);
+            return Task.CompletedTask;
+        }
     }
 
-    protected override Task ConfigureServicesAsync(
-        IServiceCollection services
-      , CancellationToken  cancellationToken = default
-    )
+    public class Payload
     {
-        ServicesConfigurator.Configure(services);
-        return Task.CompletedTask;
+        public required string Name { get; set; }
     }
-}
-
-public class Payload
-{
-    public required string Name { get; set; }
 }

@@ -12,11 +12,12 @@ using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstracti
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions;
-
-public interface IMetaSolutionDefinition
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions
 {
-    ISolutionDefinition        SolutionDefinition   { get; }
-    IList<ITemplateDefinition> TemplatesDefinitions { get; }
-    IList<IProjectDefinition>  ProjectsDefinitions  { get; }
+    public interface IMetaSolutionDefinition
+    {
+        ISolutionDefinition        SolutionDefinition   { get; }
+        IList<ITemplateDefinition> TemplatesDefinitions { get; }
+        IList<IProjectDefinition>  ProjectsDefinitions  { get; }
+    }
 }

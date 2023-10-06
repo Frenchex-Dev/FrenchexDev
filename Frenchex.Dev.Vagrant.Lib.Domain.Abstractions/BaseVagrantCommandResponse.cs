@@ -4,15 +4,16 @@
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
-
-/// <summary>
-/// </summary>
-public abstract class BaseVagrantCommandResponse(
-    int exitCode
-) : IVagrantCommandResponse
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions
 {
     /// <summary>
     /// </summary>
-    public int ExitCode { get; } = exitCode;
+    public abstract class BaseVagrantCommandResponse(
+        int exitCode
+    ) : IVagrantCommandResponse
+    {
+        /// <summary>
+        /// </summary>
+        public int ExitCode { get; } = exitCode;
+    }
 }

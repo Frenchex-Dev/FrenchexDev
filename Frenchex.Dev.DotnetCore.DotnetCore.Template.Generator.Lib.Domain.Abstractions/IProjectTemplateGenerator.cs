@@ -6,19 +6,28 @@
 
 #region Usings
 
-using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
-
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
-
-public interface IProjectTemplateGenerator
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions
 {
-    Task GenerateProjectTemplateAsync(
-        IProjectTemplateDefinition    projectTemplateDefinition
-      , IGenerationContext            generationContext
-      , TemplateGenerationOkResult    okResult
-      , TemplateGenerationErrorResult errorResult
-      , CancellationToken             cancellationToken
-    );
+    /// <summary>
+    /// </summary>
+    public interface IProjectTemplateGenerator
+    {
+        /// <summary>
+        /// </summary>
+        /// <param name="projectTemplateDefinition"></param>
+        /// <param name="generationContext"></param>
+        /// <param name="okResult"></param>
+        /// <param name="errorResult"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        Task GenerateProjectTemplateAsync(
+            IProjectTemplateDefinition    projectTemplateDefinition
+          , IGenerationContext            generationContext
+          , TemplateGenerationOkResult    okResult
+          , TemplateGenerationErrorResult errorResult
+          , CancellationToken             cancellationToken
+        );
+    }
 }

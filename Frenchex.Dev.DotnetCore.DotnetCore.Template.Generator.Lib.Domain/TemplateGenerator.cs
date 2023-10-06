@@ -10,31 +10,47 @@ using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstracti
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain;
-
-public class TemplateGenerator(
-    IProjectTemplateGenerator projectTemplateGenerator
-) : ITemplateGenerator
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain
 {
-    public async Task<ITemplateGenerationResult> GenerateAsync(
-        ITemplateDefinition definition
-      , IGenerationContext  generationContext
-      , CancellationToken   cancellationToken = default
-    )
+    /// <summary>
+    /// </summary>
+    /// <param name="projectTemplateGenerator"></param>
+    public class TemplateGenerator(
+        IProjectTemplateGenerator projectTemplateGenerator
+    ) : ITemplateGenerator
     {
-        switch (definition)
+        /// <summary>
+        /// </summary>
+        /// <param name="definition"></param>
+        /// <param name="generationContext"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<ITemplateGenerationResult> GenerateAsync(
+            ITemplateDefinition definition
+          , IGenerationContext  generationContext
+          , CancellationToken   cancellationToken = default
+        )
         {
-            case IProjectTemplateDefinition projectTemplateDefinition:
-                var okResult    = new TemplateGenerationOkResult();
-                var errorResult = new TemplateGenerationErrorResult();
+            switch (definition)
+            {
+                case IProjectTemplateDefinition projectTemplateDefinition:
+                    var okResult    = new TemplateGenerationOkResult();
+                    var errorResult = new TemplateGenerationErrorResult();
 
-                await projectTemplateGenerator.GenerateProjectTemplateAsync(projectTemplateDefinition, generationContext
-                                                                          , okResult, errorResult, cancellationToken);
+                    await projectTemplateGenerator.GenerateProjectTemplateAsync(
+                                                                                projectTemplateDefinition
+                                                                              , generationContext
+                                                                              , okResult
+                                                                              , errorResult
+                                                                              , cancellationToken);
 
-                return errorResult.Errors.Count > 0 ? errorResult : okResult;
-            default:
-                throw new NotImplementedException(definition.GetType()
-                                                            .FullName);
+                    return errorResult.Errors.Count > 0 ? errorResult : okResult;
+                default:
+                    throw new NotImplementedException(
+                                                      definition.GetType()
+                                                                .FullName);
+            }
         }
     }
 }

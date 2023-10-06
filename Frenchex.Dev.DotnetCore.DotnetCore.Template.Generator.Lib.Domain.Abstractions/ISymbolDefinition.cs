@@ -4,14 +4,15 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
-
-public interface ISymbolDefinition
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions
 {
-    string Type         { get; }
-    string DefaultValue { get; }
-    string Replaces     { get; }
-    string Name         { get; }
-    string ShortName    { get; }
-    string LongName     { get; set; }
+    public interface ISymbolDefinition
+    {
+        string Type         { get; }
+        string DefaultValue { get; }
+        string Replaces     { get; }
+        string Name         { get; }
+        string ShortName    { get; }
+        string LongName     { get; set; }
+    }
 }

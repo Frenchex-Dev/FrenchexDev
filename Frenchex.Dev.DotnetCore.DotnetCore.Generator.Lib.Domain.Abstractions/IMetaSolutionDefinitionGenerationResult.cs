@@ -1,12 +1,23 @@
-﻿using Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions;
+﻿#region Licensing
+
+// Licensing please read LICENSE.md
+
+#endregion
+
+#region Usings
+
+using Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions;
 using Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions;
 using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions;
+#endregion
 
-public interface IMetaSolutionDefinitionGenerationResult
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions
 {
-    ISolutionGenerationResult        SolutionGenerationResult    { get; }
-    IList<ITemplateGenerationResult> TemplatesGenerationsResults { get; }
-    IList<IProjectGenerationResult>  ProjectsGenerationsResults  { get; }
+    public interface IMetaSolutionDefinitionGenerationResult
+    {
+        ISolutionGenerationResult        SolutionGenerationResult    { get; }
+        IList<ITemplateGenerationResult> TemplatesGenerationsResults { get; }
+        IList<IProjectGenerationResult>  ProjectsGenerationsResults  { get; }
+    }
 }

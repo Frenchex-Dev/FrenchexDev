@@ -12,34 +12,34 @@ using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Init;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Init;
-
-/// <summary>
-/// </summary>
-public class VagrantInitCommand(
-    IProcessStarterFactory         processExecutor
-  , IVagrantInitCommandLineBuilder commandLineBuilder
-) : AbstractVagrantCommand(processExecutor), IVagrantInitCommand
+namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Init
 {
-    public async Task<VagrantInitResponse> StartAsync(
-        VagrantInitRequest                request
-      , IVagrantCommandExecutionContext   context
-      , IVagrantCommandExecutionListeners listeners
-    )
+    /// <summary>
+    /// </summary>
+    public class VagrantInitCommand(
+        IProcessStarterFactory         processExecutor
+      , IVagrantInitCommandLineBuilder commandLineBuilder
+    ) : AbstractVagrantCommand(processExecutor), IVagrantInitCommand
     {
-        var processContext
-            = CreateProcessExecutionContext(context, commandLineBuilder.BuildCommandLineArguments(request));
+        public async Task<VagrantInitResponse> StartAsync(
+            VagrantInitRequest                request
+          , IVagrantCommandExecutionContext   context
+          , IVagrantCommandExecutionListeners listeners
+        )
+        {
+            var processContext = CreateProcessExecutionContext(context, commandLineBuilder.BuildCommandLineArguments(request));
 
-        var processStarter = ProcessStarterFactory.Factory();
+            var processStarter = ProcessStarterFactory.Factory();
 
-        PrepareProcess(listeners, processStarter);
+            PrepareProcess(listeners, processStarter);
 
-        var process = await processStarter.StartAsync(processContext);
+            var process = await processStarter.StartAsync(processContext);
 
-        await WaitProcessForExitAsync(context, process);
+            await WaitProcessForExitAsync(context, process);
 
-        var response = new VagrantInitResponse(process.ExitCode);
+            var response = new VagrantInitResponse(process.ExitCode);
 
-        return response;
+            return response;
+        }
     }
 }

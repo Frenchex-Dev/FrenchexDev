@@ -23,109 +23,118 @@ using Microsoft.Extensions.DependencyInjection;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Tests;
-
-public class Tests : AbstractFullWorkflowTester
+namespace Frenchex.Dev.Vagrant.Lib.Tests
 {
-    protected static IEnumerable<object[]> WorkflowData()
+    public class Tests : AbstractFullWorkflowTester
     {
-        yield return new object[]
-                     {
-                         new VagrantInitRequestBuilder().WithName("generic/alpine318")
-                                                        .WithTemplate(Path.Join(Path.GetDirectoryName(Assembly
-                                                                                                      .GetCallingAssembly()
-                                                                                                      .Location)
-                                                                              , "Resources", "Vagrantfile"))
-                                                        .Build()
-                       , new VagrantUpRequestBuilder().WithNameOrId("default")
-                                                      .Build()
-                       , new VagrantStatusRequestBuilder().WithNameOrId("default")
+        protected static IEnumerable<object[]> WorkflowData()
+        {
+            yield return new object[]
+                         {
+                             new VagrantInitRequestBuilder().WithName("generic/alpine318")
+                                                            .WithTemplate(
+                                                                          Path.Join(
+                                                                                    Path.GetDirectoryName(
+                                                                                                          Assembly.GetCallingAssembly()
+                                                                                                                  .Location)
+                                                                                  , "Resources"
+                                                                                  , "Vagrantfile"))
+                                                            .Build()
+                           , new VagrantUpRequestBuilder().WithNameOrId("default")
                                                           .Build()
-                       , new VagrantSshConfigRequestBuilder().WithNameOrId("default")
-                                                             .Build()
-                       , new VagrantDestroyRequestBuilder().WithNameOrId("default")
-                                                           .WithForce(true)
-                                                           .Build()
-                     };
-    }
+                           , new VagrantStatusRequestBuilder().WithNameOrId("default")
+                                                              .Build()
+                           , new VagrantSshConfigRequestBuilder().WithNameOrId("default")
+                                                                 .Build()
+                           , new VagrantDestroyRequestBuilder().WithNameOrId("default")
+                                                               .WithForce(true)
+                                                               .Build()
+                         };
+        }
 
-    [Test] [TestCaseSource(nameof(WorkflowData))]
-    public async Task FullWorkflow(
-        VagrantInitRequest      initRequest
-      , VagrantUpRequest        upRequest
-      , VagrantStatusRequest    statusRequest
-      , VagrantSshConfigRequest sshConfigRequest
-      , VagrantDestroyRequest   destroyRequest
-    )
-    {
-        var services = await BuildServiceProviderAsync();
+        [Test] [TestCaseSource(nameof(WorkflowData))]
+        public async Task FullWorkflow(
+            VagrantInitRequest      initRequest
+          , VagrantUpRequest        upRequest
+          , VagrantStatusRequest    statusRequest
+          , VagrantSshConfigRequest sshConfigRequest
+          , VagrantDestroyRequest   destroyRequest
+        )
+        {
+            var services = await BuildServiceProviderAsync();
 
-        await RunScopedAsync(services, async (
-                                           serviceScope
-                                         , token
-                                       ) =>
-                                       {
-                                           await RunInternalAsync(serviceScope, initRequest, upRequest, statusRequest
-                                                                , sshConfigRequest, destroyRequest, token);
-                                       });
-    }
+            await RunScopedAsync(
+                                 services
+                               , async (
+                                     serviceScope
+                                   , token
+                                 ) =>
+                                 {
+                                     await RunInternalAsync(
+                                                            serviceScope
+                                                          , initRequest
+                                                          , upRequest
+                                                          , statusRequest
+                                                          , sshConfigRequest
+                                                          , destroyRequest
+                                                          , token);
+                                 });
+        }
 
-    private static async Task RunInternalAsync(
-        AsyncServiceScope       scope
-      , VagrantInitRequest      initRequest
-      , VagrantUpRequest        upRequest
-      , VagrantStatusRequest    statusRequest
-      , VagrantSshConfigRequest sshConfigRequest
-      , VagrantDestroyRequest   destroyRequest
-      , CancellationToken       _ = default
-    )
-    {
-        var tempFile = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
+        private static async Task RunInternalAsync(
+            AsyncServiceScope       scope
+          , VagrantInitRequest      initRequest
+          , VagrantUpRequest        upRequest
+          , VagrantStatusRequest    statusRequest
+          , VagrantSshConfigRequest sshConfigRequest
+          , VagrantDestroyRequest   destroyRequest
+          , CancellationToken       _ = default
+        )
+        {
+            var tempFile = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());
 
-        var context = new VagrantCommandExecutionContext
-                      {
-                          WorkingDirectory = tempFile
-                      };
+            var context = new VagrantCommandExecutionContext
+                          {
+                              WorkingDirectory = tempFile
+                          };
 
-        Directory.CreateDirectory(tempFile);
+            Directory.CreateDirectory(tempFile);
 
-        var initCommand  = scope.ServiceProvider.GetRequiredService<IVagrantInitCommand>();
-        var initResponse = await initCommand.StartAsync(initRequest, context, new VagrantCommandExecutionListeners());
-        initResponse.Should()
-                    .NotBeNull();
-        initResponse.ExitCode.Should()
-                    .Be(0);
+            var initCommand  = scope.ServiceProvider.GetRequiredService<IVagrantInitCommand>();
+            var initResponse = await initCommand.StartAsync(initRequest, context, new VagrantCommandExecutionListeners());
+            initResponse.Should()
+                        .NotBeNull();
+            initResponse.ExitCode.Should()
+                        .Be(0);
 
-        var upCommand  = scope.ServiceProvider.GetRequiredService<IVagrantUpCommand>();
-        var upResponse = await upCommand.StartAsync(upRequest, context, new VagrantCommandExecutionListeners());
-        upResponse.ExitCode.Should()
-                  .Be(0);
-
-        var statusCommand = scope.ServiceProvider.GetRequiredService<IVagrantStatusCommand>();
-        var statusResponse
-            = await statusCommand.StartAsync(statusRequest, context, new VagrantCommandExecutionListeners());
-        statusResponse.ExitCode.Should()
+            var upCommand  = scope.ServiceProvider.GetRequiredService<IVagrantUpCommand>();
+            var upResponse = await upCommand.StartAsync(upRequest, context, new VagrantCommandExecutionListeners());
+            upResponse.ExitCode.Should()
                       .Be(0);
 
-        var sshConfigCommand = scope.ServiceProvider.GetRequiredService<IVagrantSshConfigCommand>();
-        var sshConfigResponse
-            = await sshConfigCommand.StartAsync(sshConfigRequest, context, new VagrantCommandExecutionListeners());
-        sshConfigResponse.ExitCode.Should()
-                         .Be(0);
+            var statusCommand  = scope.ServiceProvider.GetRequiredService<IVagrantStatusCommand>();
+            var statusResponse = await statusCommand.StartAsync(statusRequest, context, new VagrantCommandExecutionListeners());
+            statusResponse.ExitCode.Should()
+                          .Be(0);
 
-        var destroyCommand = scope.ServiceProvider.GetRequiredService<IVagrantDestroyCommand>();
-        var destroyResponse
-            = await destroyCommand.StartAsync(destroyRequest, context, new VagrantCommandExecutionListeners());
-        destroyResponse.ExitCode.Should()
-                       .Be(0);
-    }
+            var sshConfigCommand  = scope.ServiceProvider.GetRequiredService<IVagrantSshConfigCommand>();
+            var sshConfigResponse = await sshConfigCommand.StartAsync(sshConfigRequest, context, new VagrantCommandExecutionListeners());
+            sshConfigResponse.ExitCode.Should()
+                             .Be(0);
 
-    protected override Task ConfigureServicesAsync(
-        IServiceCollection services
-      , CancellationToken  cancellationToken = default
-    )
-    {
-        ServicesConfigurator.Configure(services);
-        return Task.CompletedTask;
+            var destroyCommand  = scope.ServiceProvider.GetRequiredService<IVagrantDestroyCommand>();
+            var destroyResponse = await destroyCommand.StartAsync(destroyRequest, context, new VagrantCommandExecutionListeners());
+            destroyResponse.ExitCode.Should()
+                           .Be(0);
+        }
+
+        protected override Task ConfigureServicesAsync(
+            IServiceCollection services
+          , CancellationToken  cancellationToken = default
+        )
+        {
+            ServicesConfigurator.Configure(services);
+            return Task.CompletedTask;
+        }
     }
 }

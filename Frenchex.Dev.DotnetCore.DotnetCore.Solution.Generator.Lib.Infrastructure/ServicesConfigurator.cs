@@ -10,14 +10,15 @@ using Microsoft.Extensions.DependencyInjection;
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Infrastructure;
-
-public static class ServicesConfigurator
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Infrastructure
 {
-    public static void Configure(
-        IServiceCollection services
-    )
+    public static class ServicesConfigurator
     {
-        Process.Lib.ServicesConfigurator.Configure(services);
+        public static void Configure(
+            IServiceCollection services
+        )
+        {
+            Process.Lib.ServicesConfigurator.Configure(services);
+        }
     }
 }

@@ -4,10 +4,11 @@
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Halt;
-
-public interface IVagrantHaltRequest : IVagrantCommandRequest
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Halt
 {
-    string? NameOrId { get; }
-    bool    Force    { get; }
+    public interface IVagrantHaltRequest : IVagrantCommandRequest
+    {
+        string? NameOrId { get; }
+        bool    Force    { get; }
+    }
 }

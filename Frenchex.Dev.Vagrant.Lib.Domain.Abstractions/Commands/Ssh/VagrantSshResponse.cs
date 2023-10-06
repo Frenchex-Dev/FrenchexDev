@@ -4,11 +4,12 @@
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Ssh;
-
-public class VagrantSshResponse(
-    int exitCode
-) : IVagrantSshResponse
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Ssh
 {
-    public int ExitCode { get; } = exitCode;
+    public class VagrantSshResponse(
+        int exitCode
+    ) : IVagrantSshResponse
+    {
+        public int ExitCode { get; } = exitCode;
+    }
 }
