@@ -60,9 +60,7 @@ public class ProjectGenerator(
 
 public class ProcessNotStartedException : Exception
 {
-    public ProcessNotStartedException(
-        string message
-    ) : base(message)
+    public ProcessNotStartedException(string message):base(message)
     {
     }
 }

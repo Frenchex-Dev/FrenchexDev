@@ -8,5 +8,5 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstra
 
 public class ProjectReference : IProjectReference
 {
-    public ICsProjPath CsProjPath { get; }
+    public required ICsProjPath CsProjPath { get; set; }
 }

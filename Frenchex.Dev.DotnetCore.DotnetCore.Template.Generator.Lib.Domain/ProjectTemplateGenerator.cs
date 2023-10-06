@@ -169,7 +169,7 @@ public class ProjectTemplateGenerator : IProjectTemplateGenerator
                                                                }, okResult, errorResult, cancellationToken);
     }
 
-    private async Task TryAddFileGenerationAsync(
+    private static async Task TryAddFileGenerationAsync(
         string                                       path
       , string                                       fileName
       , Func<CancellationToken, Task<GeneratedFile>> fileGenerator

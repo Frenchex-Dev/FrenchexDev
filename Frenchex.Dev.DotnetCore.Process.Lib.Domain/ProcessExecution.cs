@@ -11,92 +11,69 @@ namespace Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 ///     handle
 ///     the process lifecycle.
 /// </summary>
-public sealed class ProcessExecution : IProcessExecution
+public sealed class ProcessExecution(
+    System.Diagnostics.Process internalProcess
+  , bool                       hasStarted
+) : IProcessExecution
 {
-    #region Privates
-
-    /// <summary>
-    ///     The internally wrapped <see cref="System.Diagnostics.Process" />.
-    /// </summary>
-    private readonly System.Diagnostics.Process _internalProcess;
-
-    #endregion
-
-    #region Constructors
-
-    /// <summary>
-    ///     Public constructor
-    /// </summary>
-    /// <param name="internalProcess"></param>
-    /// <param name="hasStarted"></param>
-    public ProcessExecution(
-        System.Diagnostics.Process internalProcess
-      , bool                       hasStarted
-    )
-    {
-        _internalProcess = internalProcess;
-        HasStarted       = hasStarted;
-    }
-
-    #endregion
 
     #region Public API
 
     /// <summary>
     ///     Interface: <inheritdoc />
     ///     <para>
-    ///         Implementation: Returns if the <see cref="_internalProcess" /> has started.
+    ///         Implementation: Returns if the <see cref="internalProcess" /> has started.
     ///     </para>
     /// </summary>
-    public bool HasStarted { get; }
+    public bool HasStarted { get; } = hasStarted;
 
     /// <summary>
     ///     Interface : <inheritdoc />
     ///     <para>
-    ///         Implementation : Returns if the <see cref="_internalProcess" /> has completely exited.
+    ///         Implementation : Returns if the <see cref="internalProcess" /> has completely exited.
     ///     </para>
     /// </summary>
-    public bool HasExited => _internalProcess.HasExited;
+    public bool HasExited => internalProcess.HasExited;
 
     /// <summary>
     ///     Interface : <inheritdoc />
     ///     <para>
-    ///         Implementation : Returns the <see cref="_internalProcess" /> Exit code if set.
+    ///         Implementation : Returns the <see cref="internalProcess" /> Exit code if set.
     ///     </para>
     /// </summary>
-    public int ExitCode => _internalProcess.ExitCode;
+    public int ExitCode => internalProcess.ExitCode;
 
     /// <summary>
     ///     Interface : <inheritdoc />
     ///     <para>
     ///         Implementation : Returns the <see cref="StreamReader" /> of the StandardOutput of the
-    ///         <see cref="_internalProcess" />.
+    ///         <see cref="internalProcess" />.
     ///     </para>
     /// </summary>
-    public StreamReader StdOutStream => _internalProcess.StandardOutput;
+    public StreamReader StdOutStream => internalProcess.StandardOutput;
 
     /// <summary>
     ///     Interface : <inheritdoc />
     ///     <para>
     ///         Implementation : Returns the <see cref="StreamReader" /> of the StandardError of the
-    ///         <see cref="_internalProcess" />
+    ///         <see cref="internalProcess" />
     ///     </para>
     /// </summary>
-    public StreamReader StdErrStream => _internalProcess.StandardError;
+    public StreamReader StdErrStream => internalProcess.StandardError;
 
     /// <summary>
     ///     Interface : <inheritdoc />
     ///     <para>
     ///         Implementation : Returns the <see cref="StreamWriter" /> of the StandardInput of the
-    ///         <see cref="_internalProcess" />
+    ///         <see cref="internalProcess" />
     ///     </para>
     /// </summary>
-    public StreamWriter StdInStream => _internalProcess.StandardInput;
+    public StreamWriter StdInStream => internalProcess.StandardInput;
 
     /// <summary>
     ///     Interface : <inheritdoc />
     ///     <para>
-    ///         Implementation : Stops the <see cref="_internalProcess" /> asynchronously within given timeout ot cancellation
+    ///         Implementation : Stops the <see cref="internalProcess" /> asynchronously within given timeout ot cancellation
     ///         requested.
     ///     </para>
     /// </summary>
@@ -114,7 +91,7 @@ public sealed class ProcessExecution : IProcessExecution
     /// <summary>
     ///     Interface : <inheritdoc />
     ///     <para>
-    ///         Implementation : Stops the <see cref="_internalProcess" /> asynchronously within given timeout ot cancellation
+    ///         Implementation : Stops the <see cref="internalProcess" /> asynchronously within given timeout ot cancellation
     ///         requested.
     ///     </para>
     /// </summary>
@@ -131,26 +108,26 @@ public sealed class ProcessExecution : IProcessExecution
 
         var jointSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
 
-        await _internalProcess.WaitForExitAsync(jointSource.Token);
+        await internalProcess.WaitForExitAsync(jointSource.Token);
     }
 
     /// <summary>
     ///     Interface : <inheritdoc />
     ///     <para>
-    ///         Implementation : Kills the <see cref="_internalProcess" />
+    ///         Implementation : Kills the <see cref="internalProcess" />
     ///     </para>
     /// </summary>
     public void Kill(
         bool entireProcessTree
     )
     {
-        _internalProcess.Kill(entireProcessTree);
+        internalProcess.Kill(entireProcessTree);
     }
 
     /// <summary>
     ///     Interface : <inheritdoc />
     ///     <para>
-    ///         Implementation : Kills the <see cref="_internalProcess" /> wrapped in a try/catch
+    ///         Implementation : Kills the <see cref="internalProcess" /> wrapped in a try/catch
     ///     </para>
     /// </summary>
     public void TryKill(
@@ -159,7 +136,7 @@ public sealed class ProcessExecution : IProcessExecution
     {
         try
         {
-            _internalProcess.Kill(entireProcessTree);
+            internalProcess.Kill(entireProcessTree);
         }
         catch
         {
@@ -169,7 +146,7 @@ public sealed class ProcessExecution : IProcessExecution
     /// <summary>
     ///     Interface : <inheritdoc />
     ///     <para>
-    ///         Implementation: awaits for WaitForExitAsync() on <see cref="_internalProcess" />
+    ///         Implementation: awaits for WaitForExitAsync() on <see cref="internalProcess" />
     ///     </para>
     /// </summary>
     /// <param name="cancellationToken"></param>
@@ -179,7 +156,7 @@ public sealed class ProcessExecution : IProcessExecution
         CancellationToken cancellationToken = default
     )
     {
-        await _internalProcess.WaitForExitAsync(cancellationToken);
+        await internalProcess.WaitForExitAsync(cancellationToken);
     }
 
     /// <summary>

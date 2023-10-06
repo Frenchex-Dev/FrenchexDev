@@ -17,7 +17,7 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Tests;
 
 public class FullWorkflowTests : AbstractFullWorkflowTester
 {
-    public static IEnumerable<object[]> Data()
+    protected static IEnumerable<object[]> Data()
     {
         var templateGuid = Guid.NewGuid();
         yield return new object[]
@@ -93,7 +93,7 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
     }
 
     [Test] [TestCaseSource(nameof(Data))] public async Task FullWorkflow(
-        string  testCaseName
+        string  _
       , Payload payload
     )
     {

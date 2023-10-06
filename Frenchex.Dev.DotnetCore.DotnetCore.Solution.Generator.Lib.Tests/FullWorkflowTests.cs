@@ -17,7 +17,7 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Tests;
 
 public class FullWorkflowTests : AbstractFullWorkflowTester
 {
-    public static IEnumerable<object[]> Data()
+    protected static IEnumerable<object[]> Data()
     {
         yield return new object[]
                      {
@@ -29,7 +29,7 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
     }
 
     [Test] [TestCaseSource(nameof(Data))] public async Task FullWorkflow(
-        string  testCaseName
+        string  _
       , Payload payload
     )
     {

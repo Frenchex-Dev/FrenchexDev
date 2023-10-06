@@ -40,7 +40,7 @@ public class GeneratedCodeWriter(
                                                              });
     }
 
-    private Task CreateDirectories(
+    private static Task CreateDirectories(
         IList<IGeneratedFile> files
     )
     {

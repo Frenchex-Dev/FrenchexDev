@@ -17,7 +17,7 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Tests;
 
 public class FullWorkflowTests : AbstractFullWorkflowTester
 {
-    public static IEnumerable<object[]> Data()
+    protected static IEnumerable<object[]> Data()
     {
         yield return new object[]
                      {
@@ -25,7 +25,7 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
                                         {
                                             ProjectDefinition = new ProjectDefinition
                                                                 {
-                                                                    TemplateName = "lib"
+                                                                    TemplateName = "classlib"
                                                                   , Language = "C#"
                                                                   , Name = "MyProject"
                                                                   , ExtraArgs = new Dictionary<string, string>()
@@ -51,7 +51,7 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
                                        });
     }
 
-    private async Task RunInternalAsync(
+    private static async Task RunInternalAsync(
         AsyncServiceScope scope
       , Payload           payload
       , CancellationToken token

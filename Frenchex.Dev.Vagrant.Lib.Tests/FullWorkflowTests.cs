@@ -70,14 +70,14 @@ public class Tests : AbstractFullWorkflowTester
                                        });
     }
 
-    private async Task RunInternalAsync(
+    private static async Task RunInternalAsync(
         AsyncServiceScope       scope
       , VagrantInitRequest      initRequest
       , VagrantUpRequest        upRequest
       , VagrantStatusRequest    statusRequest
       , VagrantSshConfigRequest sshConfigRequest
       , VagrantDestroyRequest   destroyRequest
-      , CancellationToken       cancellationToken = default
+      , CancellationToken       _ = default
     )
     {
         var tempFile = Path.Join(Path.GetTempPath(), Path.GetRandomFileName());

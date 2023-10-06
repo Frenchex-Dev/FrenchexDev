@@ -33,8 +33,8 @@ public class MetaSolutionDefinitionGenerator(
                    {
                        TemplatesGenerationsResults = new List<ITemplateGenerationResult>()
                      , ProjectsGenerationsResults  = new List<IProjectGenerationResult>()
-                     , SolutionGenerationResult    = solutionGenerationResult
-                   };
+                     , SolutionGenerationResult    = solutionGenerationErrorResult
+            };
         }
 
         var templatesGenerationsResults = new ConcurrentBag<ITemplateGenerationResult>();
