@@ -14,7 +14,7 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Infrastructure;
 
 public static class ServicesConfigurator
 {
-    public static void ConfigureServices(
+    public static void Configure(
         IServiceCollection services
     )
     {

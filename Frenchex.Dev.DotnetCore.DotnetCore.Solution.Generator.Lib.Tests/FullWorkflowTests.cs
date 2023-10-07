@@ -57,7 +57,7 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
                                      Name = payload.Name
                                  };
 
-        var generationContext = new GenerationContext
+        var generationContext = new SolutionGenerationContext
                                 {
                                     Path = Path.Join(Path.GetTempPath(), Path.GetRandomFileName())
                                 };

@@ -9,8 +9,8 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstr
 public interface ISolutionGenerator
 {
     Task<ISolutionGenerationResult> GenerateAsync(
-        ISolutionDefinition solution
-      , IGenerationContext  generationContext
-      , CancellationToken   cancellationToken = default
+        ISolutionDefinition        solution
+      , ISolutionGenerationContext solutionGenerationContext
+      , CancellationToken          cancellationToken = default
     );
 }

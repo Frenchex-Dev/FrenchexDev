@@ -8,28 +8,46 @@
 
 using System.Collections.Concurrent;
 using Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions;
+using Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.Project;
+using Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.Solution;
+using Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.Template;
+using Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Project;
+using Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Solution;
+using Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Template;
 
 #endregion
 
 namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain;
 
+/// <summary>
+/// </summary>
+/// <param name="solutionGenerator"></param>
+/// <param name="templateGenerator"></param>
+/// <param name="projectGenerator"></param>
 public class MetaSolutionDefinitionGenerator(
     ISolutionGenerator solutionGenerator
   , ITemplateGenerator templateGenerator
   , IProjectGenerator  projectGenerator
+  , IMetaSolutionDefinitionGeneratorOptions metaSolutionDefinitionGeneratorOptions
 ) : IMetaSolutionDefinitionGenerator
 {
+    /// <summary>
+    /// </summary>
+    /// <param name="metaSolutionDefinition"></param>
+    /// <param name="metaSolutionGenerationContext"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     public async Task<IMetaSolutionDefinitionGenerationResult> GenerateAsync(
-        IMetaSolutionDefinition metaSolutionDefinition
-      , IGenerationContext      generationContext
-      , CancellationToken       cancellationToken = default
+        IMetaSolutionDefinition        metaSolutionDefinition
+      , IMetaSolutionGenerationContext metaSolutionGenerationContext
+      , CancellationToken              cancellationToken = default
     )
     {
         var solutionGenerationResult = await solutionGenerator.GenerateAsync(
                                                                              metaSolutionDefinition.SolutionDefinition
                                                                            , new SolutionGenerationContext
                                                                              {
-                                                                                 Path = generationContext.Path
+                                                                                 Path = metaSolutionGenerationContext.Path
                                                                              }
                                                                            , cancellationToken);
 
@@ -47,7 +65,7 @@ public class MetaSolutionDefinitionGenerator(
                                     metaSolutionDefinition.TemplatesDefinitions
                                   , new ParallelOptions
                                     {
-                                        MaxDegreeOfParallelism = 100
+                                        MaxDegreeOfParallelism = metaSolutionDefinitionGeneratorOptions.TemplatesGenerationMaxConcurrency
                                       , CancellationToken      = cancellationToken
                                     }
                                   , async (
@@ -60,8 +78,9 @@ public class MetaSolutionDefinitionGenerator(
                                                                                                            , new
                                                                                                              TemplateGenerationContext
                                                                                                              {
-                                                                                                                 Path = generationContext
-                                                                                                                     .Path
+                                                                                                                 Path
+                                                                                                                     = metaSolutionGenerationContext
+                                                                                                                         .Path
                                                                                                              }
                                                                                                            , token);
 
@@ -84,7 +103,7 @@ public class MetaSolutionDefinitionGenerator(
                                     graphOfBuildGenerationOrder
                                   , new ParallelOptions
                                     {
-                                        MaxDegreeOfParallelism = 100
+                                        MaxDegreeOfParallelism = metaSolutionDefinitionGeneratorOptions.ProjectsGenerationMaxConcurrency
                                       , CancellationToken      = cancellationToken
                                     }
                                   , async (
@@ -100,7 +119,7 @@ public class MetaSolutionDefinitionGenerator(
                                                                                                                ProjectGenerationContext
                                                                                                                {
                                                                                                                    Path
-                                                                                                                       = generationContext
+                                                                                                                       = metaSolutionGenerationContext
                                                                                                                            .Path
                                                                                                                }
                                                                                                              , token);

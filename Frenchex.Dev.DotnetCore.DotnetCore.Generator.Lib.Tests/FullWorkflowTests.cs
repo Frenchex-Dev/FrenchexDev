@@ -8,6 +8,10 @@
 
 using Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain;
 using Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions;
+using Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.Project;
+using Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.Solution;
+using Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.Solution.Global;
+using Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.Template;
 using Frenchex.Dev.DotnetCore.Testing.Lib;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -127,7 +131,7 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
     {
         var service = scope.ServiceProvider.GetRequiredService<IMetaSolutionDefinitionGenerator>();
 
-        var generationContext = new GenerationContext
+        var generationContext = new MetaSolutionGenerationContext
                                 {
                                     Path = Path.Join(Path.GetTempPath(), Path.GetRandomFileName())
                                 };
@@ -156,7 +160,7 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
       , CancellationToken  cancellationToken = default
     )
     {
-        ServicesConfigurator.ConfigureServices(services);
+        ServicesConfigurator.Configure(services);
         return Task.CompletedTask;
     }
 }

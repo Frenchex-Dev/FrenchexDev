@@ -14,11 +14,11 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib;
 
 public static class ServicesConfigurator
 {
-    public static void ConfigureServices(
+    public static void Configure(
         IServiceCollection services
     )
     {
-        Domain.ServicesConfigurator.ConfigureServices(services);
-        Infrastructure.ServicesConfigurator.ConfigureServices(services);
+        Domain.ServicesConfigurator.Configure(services);
+        Infrastructure.ServicesConfigurator.Configure(services);
     }
 }

@@ -13,6 +13,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions\Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.csproj" />
+    <ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Project.AddPackage.Lib.Domain.Abstractions\Frenchex.Dev.DotnetCore.DotnetCore.Project.AddPackage.Lib.Domain.Abstractions.csproj" />
+    <ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Project.AddProjectReference.Lib.Domain.Abstractions\Frenchex.Dev.DotnetCore.DotnetCore.Project.AddProjectReference.Lib.Domain.Abstractions.csproj" />
+    <ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions\Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions.csproj" />
+    <ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions\Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

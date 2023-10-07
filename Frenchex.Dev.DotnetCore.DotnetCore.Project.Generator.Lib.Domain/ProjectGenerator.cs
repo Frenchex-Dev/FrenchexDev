@@ -56,7 +56,7 @@ public class ProjectGenerator(
         await processExecutionContext.WaitForExitAsync(cancellationToken);
 
         if (processExecutionContext.ExitCode > 0)
-            return new ProjectGenerationError
+            return new ProjectGenerationErrorResult
                    {
                        Message = await processExecutionContext.StdErrStream.ReadToEndAsync(cancellationToken)
                    };

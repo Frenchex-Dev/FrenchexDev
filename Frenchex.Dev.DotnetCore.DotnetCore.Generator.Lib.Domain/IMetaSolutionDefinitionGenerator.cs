@@ -16,7 +16,7 @@ public interface IMetaSolutionDefinitionGenerator
 {
     Task<IMetaSolutionDefinitionGenerationResult> GenerateAsync(
         IMetaSolutionDefinition metaSolutionDefinition
-      , IGenerationContext      generationContext
+      , IMetaSolutionGenerationContext      metaSolutionGenerationContext
       , CancellationToken       cancellationToken = default
     );
 }
