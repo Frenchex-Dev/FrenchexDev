@@ -24,9 +24,7 @@ public abstract class AbstractFullWorkflowTester
                                                                async () =>
                                                                {
                                                                    var serviceCollection = new ServiceCollection();
-                                                                   await ConfigureServicesAsync(
-                                                                                                serviceCollection
-                                                                                              , cancellationToken);
+                                                                   await ConfigureServicesAsync(serviceCollection, cancellationToken);
                                                                    return serviceCollection.BuildServiceProvider(
                                                                                                                  new
                                                                                                                  ServiceProviderOptions
@@ -50,13 +48,11 @@ public abstract class AbstractFullWorkflowTester
         }
         catch (TException ex)
         {
-            if (catcher != null)
-            {
-                await catcher(ex);
-            }
+            if (catcher != null) await catcher(ex);
 
-            ExceptionDispatchInfo.Capture(ex)
-                                 .Throw();
+            ExceptionDispatchInfo
+                .Capture(ex)
+                .Throw();
             throw;
         }
     }
@@ -73,13 +69,11 @@ public abstract class AbstractFullWorkflowTester
         }
         catch (TException ex)
         {
-            if (catcher != null)
-            {
-                await catcher(ex);
-            }
+            if (catcher != null) await catcher(ex);
 
-            ExceptionDispatchInfo.Capture(ex)
-                                 .Throw();
+            ExceptionDispatchInfo
+                .Capture(ex)
+                .Throw();
             throw;
         }
     }

@@ -19,6 +19,10 @@ public static class ServicesConfigurator
         IServiceCollection services
     )
     {
-        services.AddTransient<IMetaSolutionDefinitionGenerator, MetaSolutionDefinitionGenerator>();
+        services
+            .AddTransient<IMetaSolutionDefinitionGenerator, MetaSolutionDefinitionGenerator>()
+            .AddTransient<ISolutionGenerator, SolutionGenerator>()
+            .AddTransient<ITemplateGenerator, TemplateGenerator>()
+            .AddTransient<IProjectGenerator, ProjectGenerator>();
     }
 }

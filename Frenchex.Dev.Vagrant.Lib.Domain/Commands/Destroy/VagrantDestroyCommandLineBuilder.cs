@@ -36,20 +36,11 @@ public class VagrantDestroyCommandLineBuilder : AbstractVagrantCommandLineBuilde
         {
             var parts = new List<string>();
 
-            if (destroyRequest.Force)
-            {
-                parts.Add("--force");
-            }
+            if (destroyRequest.Force) parts.Add("--force");
 
-            if (destroyRequest.Parallel)
-            {
-                parts.Add("--parallel");
-            }
+            if (destroyRequest.Parallel) parts.Add("--parallel");
 
-            if (destroyRequest.Graceful)
-            {
-                parts.Add("--graceful");
-            }
+            if (destroyRequest.Graceful) parts.Add("--graceful");
 
             return string.Join(",", parts);
         }
@@ -65,10 +56,7 @@ public class VagrantDestroyCommandLineBuilder : AbstractVagrantCommandLineBuilde
         {
             var parts = new List<string>();
 
-            if (!string.IsNullOrEmpty(destroyRequest.NameOrId))
-            {
-                parts.Add(destroyRequest.NameOrId);
-            }
+            if (!string.IsNullOrEmpty(destroyRequest.NameOrId)) parts.Add(destroyRequest.NameOrId);
 
             return string.Join(",", parts);
         }

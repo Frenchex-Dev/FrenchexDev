@@ -27,11 +27,12 @@ public static class ServicesConfigurator
     {
         Process.Lib.ServicesConfigurator.Configure(services);
 
-        services.AddTransient<IPackagesInstaller, PackagesInstaller>()
-                .AddTransient<IFileWriter, FileWriter>()
-                .AddTransient<IPackagesInstaller, PackagesInstaller>()
-                .AddTransient<IGeneratedCodeWriter, GeneratedCodeWriter>()
-                .AddTransient<ITemplateInstaller, TemplateInstaller>()
-                .AddTransient<ITemplateUnInstaller, TemplateUnInstaller>();
+        services
+            .AddTransient<IPackagesInstaller, PackagesInstaller>()
+            .AddTransient<IFileWriter, FileWriter>()
+            .AddTransient<IPackagesInstaller, PackagesInstaller>()
+            .AddTransient<IGeneratedCodeWriter, GeneratedCodeWriter>()
+            .AddTransient<ITemplateInstaller, TemplateInstaller>()
+            .AddTransient<ITemplateUnInstaller, TemplateUnInstaller>();
     }
 }

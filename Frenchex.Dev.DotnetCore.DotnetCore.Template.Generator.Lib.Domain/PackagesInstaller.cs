@@ -42,28 +42,24 @@ public class PackagesInstaller(
 
         foreach (var package in packages)
         {
-            var processExecution = await processStarterFactory.Factory()
-                                                              .StartAsync(
-                                                                          new ProcessExecutionContext(
-                                                                                                      dirPath
-                                                                                                    , "dotnet"
-                                                                                                    , $"add {csProjPath.Path} package {package.Name} --version {package.Version}"
-                                                                                                    , new Dictionary<string,
-                                                                                                          string>()
-                                                                                                    , true
-                                                                                                    , true)
-                                                                        , cancellationToken);
+            var processExecution = await processStarterFactory
+                                         .Factory()
+                                         .StartAsync(
+                                                     new ProcessExecutionContext(
+                                                                                 dirPath
+                                                                               , "dotnet"
+                                                                               , $"add {csProjPath.Path} package {package.Name} --version {package.Version}"
+                                                                               , new Dictionary<string, string>()
+                                                                               , true
+                                                                               , true)
+                                                   , cancellationToken);
             if (!processExecution.HasStarted)
-            {
                 throw new ProcessNotStartedException(await processExecution.StdErrStream.ReadToEndAsync(cancellationToken));
-            }
 
             await processExecution.WaitForExitAsync(cancellationToken);
 
             if (processExecution.ExitCode > 0)
-            {
                 throw new PackageInstallationException(await processExecution.StdErrStream.ReadToEndAsync(cancellationToken));
-            }
         }
     }
 }

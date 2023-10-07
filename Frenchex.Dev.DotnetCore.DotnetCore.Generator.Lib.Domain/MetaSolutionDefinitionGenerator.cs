@@ -8,12 +8,6 @@
 
 using System.Collections.Concurrent;
 using Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions;
-using Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions;
-using Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions;
-using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
-using IGenerationContext = Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.IGenerationContext;
-using TemplateGenerationContext = Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions.GenerationContext;
-using SolutionGenerationContext = Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions.GenerationContext;
 
 #endregion
 
@@ -40,14 +34,12 @@ public class MetaSolutionDefinitionGenerator(
                                                                            , cancellationToken);
 
         if (solutionGenerationResult is SolutionGenerationErrorResult solutionGenerationErrorResult)
-        {
             return new MetaSolutionDefinitionGenerationResult
                    {
                        TemplatesGenerationsResults = new List<ITemplateGenerationResult>()
                      , ProjectsGenerationsResults  = new List<IProjectGenerationResult>()
                      , SolutionGenerationResult    = solutionGenerationErrorResult
                    };
-        }
 
         var templatesGenerationsResults = new ConcurrentBag<ITemplateGenerationResult>();
 
@@ -68,9 +60,8 @@ public class MetaSolutionDefinitionGenerator(
                                                                                                            , new
                                                                                                              TemplateGenerationContext
                                                                                                              {
-                                                                                                                 Path
-                                                                                                                     = generationContext
-                                                                                                                         .Path
+                                                                                                                 Path = generationContext
+                                                                                                                     .Path
                                                                                                              }
                                                                                                            , token);
 
@@ -78,14 +69,12 @@ public class MetaSolutionDefinitionGenerator(
                                     });
 
         if (templatesGenerationsResults.Any(x => x is TemplateGenerationErrorResult))
-        {
             return new MetaSolutionDefinitionGenerationResult
                    {
                        TemplatesGenerationsResults = templatesGenerationsResults.ToList()
                      , ProjectsGenerationsResults  = new List<IProjectGenerationResult>()
                      , SolutionGenerationResult    = solutionGenerationResult
                    };
-        }
 
         var graphOfBuildGenerationOrder = await BuildGraphOfGenerationOrder(metaSolutionDefinition.ProjectsDefinitions);
 
@@ -107,10 +96,8 @@ public class MetaSolutionDefinitionGenerator(
                                         {
                                             var projectGenerationResult = await projectGenerator.GenerateAsync(
                                                                                                                definition
-                                                                                                             , new Project.Generator.
-                                                                                                               Lib.Domain.
-                                                                                                               Abstractions.
-                                                                                                               GenerationContext
+                                                                                                             , new
+                                                                                                               ProjectGenerationContext
                                                                                                                {
                                                                                                                    Path
                                                                                                                        = generationContext

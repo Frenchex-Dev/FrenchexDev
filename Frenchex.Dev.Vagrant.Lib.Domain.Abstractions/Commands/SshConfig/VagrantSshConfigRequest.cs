@@ -17,8 +17,7 @@ public class VagrantSshConfigRequest(
   , bool?  debugTimestamp
   , bool?  noTty
   , bool?  help
-) : BaseVagrantCommandRequest(color, machineReadable, version, debug, timestamp, debugTimestamp, noTty, help)
-  , IVagrantSshConfigRequest
+) : BaseVagrantCommandRequest(color, machineReadable, version, debug, timestamp, debugTimestamp, noTty, help), IVagrantSshConfigRequest
 {
     public string NameOrId { get; } = nameOrId;
     public string Host     { get; } = host;

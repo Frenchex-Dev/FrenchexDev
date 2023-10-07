@@ -37,27 +37,24 @@ public class TemplateInstaller(
     {
         var dirPath = new FileInfo(csProjPath.Path)?.DirectoryName ?? throw new DirectoryNotFoundException(csProjPath.Path);
 
-        var processExecution = await processStarterFactory.Factory()
-                                                          .StartAsync(
-                                                                      new ProcessExecutionContext(
-                                                                                                  dirPath
-                                                                                                , "dotnet"
-                                                                                                , "new install ./"
-                                                                                                , new Dictionary<string, string>()
-                                                                                                , true
-                                                                                                , true)
-                                                                    , cancellationToken);
+        var processExecution = await processStarterFactory
+                                     .Factory()
+                                     .StartAsync(
+                                                 new ProcessExecutionContext(
+                                                                             dirPath
+                                                                           , "dotnet"
+                                                                           , "new install ./"
+                                                                           , new Dictionary<string, string>()
+                                                                           , true
+                                                                           , true)
+                                               , cancellationToken);
 
         if (!processExecution.HasStarted)
-        {
             throw new ProcessNotStartedException(await processExecution.StdErrStream.ReadToEndAsync(cancellationToken));
-        }
 
         await processExecution.WaitForExitAsync(cancellationToken);
 
         if (processExecution.ExitCode > 0)
-        {
             throw new TemplateInstallationException(await processExecution.StdErrStream.ReadToEndAsync(cancellationToken));
-        }
     }
 }

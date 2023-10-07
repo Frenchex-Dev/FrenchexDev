@@ -66,16 +66,10 @@ public abstract class AbstractVagrantCommand(
                                                                               , e
                                                                             ) =>
                                                                             {
-                                                                                if (e.Data == null)
-                                                                                {
-                                                                                    return;
-                                                                                }
+                                                                                if (e.Data == null) return;
 
-                                                                                foreach (var listener in
-                                                                                         listeners.GetStdOutListeners())
-                                                                                {
+                                                                                foreach (var listener in listeners.GetStdOutListeners())
                                                                                     await listener(e.Data);
-                                                                                }
                                                                             };
 
                                               process.ErrorDataReceived += async (
@@ -83,16 +77,10 @@ public abstract class AbstractVagrantCommand(
                                                                              , e
                                                                            ) =>
                                                                            {
-                                                                               if (e.Data == null)
-                                                                               {
-                                                                                   return;
-                                                                               }
+                                                                               if (e.Data == null) return;
 
-                                                                               foreach (var listener in
-                                                                                        listeners.GetStdErrListeners())
-                                                                               {
+                                                                               foreach (var listener in listeners.GetStdErrListeners())
                                                                                    await listener(e.Data);
-                                                                               }
                                                                            };
 
                                               return Task.CompletedTask;

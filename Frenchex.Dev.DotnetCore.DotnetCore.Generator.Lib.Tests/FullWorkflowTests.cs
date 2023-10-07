@@ -6,14 +6,11 @@
 
 #region Usings
 
+using Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain;
 using Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions;
-using Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions;
-using Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions;
-using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
 using Frenchex.Dev.DotnetCore.Testing.Lib;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
-using GenerationContext = Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.GenerationContext;
 
 #endregion
 
@@ -32,40 +29,71 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
                                                                          SolutionDefinition = new SolutionDefinition
                                                                                               {
                                                                                                   Name = "Foo"
+                                                                                                , Gobal = new Global
+                                                                                                          {
+                                                                                                              Sdk = new Sdk
+                                                                                                                    {
+                                                                                                                        Version
+                                                                                                                            = "7.0.400"
+                                                                                                                      , RollForward
+                                                                                                                            = "latestPatch"
+                                                                                                                    }
+                                                                                                          }
                                                                                               }
                                                                        , ProjectsDefinitions = new List<IProjectDefinition>
                                                                                                {
-                                                                                                   new ProjectDefinition
+                                                                                                   new ProjectDefintion
                                                                                                    {
-                                                                                                       ExtraArgs
-                                                                                                           = new Dictionary<string,
-                                                                                                                 string>
-                                                                                                             {
-                                                                                                                 {
-                                                                                                                     "--framework"
-                                                                                                                   , "net-8.0"
-                                                                                                                 }
-                                                                                                                ,
-                                                                                                                 {
-                                                                                                                     "--langVersion"
-                                                                                                                   , "latest"
-                                                                                                                 }
-                                                                                                             }
-                                                                                                     , Name = "Foo.Lib"
+                                                                                                       CsProj = new CsProj
+                                                                                                                {
+                                                                                                                    Name = "Foo.Lib"
+                                                                                                                  , SolutionFolder
+                                                                                                                        = "Foo"
+                                                                                                                }
+                                                                                                     , ExternalProjectsReferences
+                                                                                                           = new List<
+                                                                                                               IExternalProjectReference>()
+                                                                                                     , PackagesReferences
+                                                                                                           = new List<
+                                                                                                               IPackageReference>()
                                                                                                      , ProjectsReferences
                                                                                                            = new List<
                                                                                                                IProjectReference>()
-                                                                                                     , TemplateName = "classlib"
-                                                                                                     , Language     = "C#"
+                                                                                                     , Template = "classlib"
+                                                                                                     , TemplateArgs
+                                                                                                           = new Dictionary<string,
+                                                                                                               string>()
                                                                                                    }
                                                                                                }
-                                                                       , TemplatesDefinitions = new List<ITemplateDefinition>()
+                                                                       , TemplatesDefinitions = new List<ITemplateDefinition>
+                                                                                                {
+                                                                                                    new TemplateDefinition
+                                                                                                    {
+                                                                                                        Name
+                                                                                                            = $"Foo.Lib.Template_{Guid.NewGuid()}"
+                                                                                                      , Args
+                                                                                                            = new List<
+                                                                                                                  ITemplateArgumentDefinition>
+                                                                                                              {
+                                                                                                                  new
+                                                                                                                  TemplateArgumentDefinition
+                                                                                                                  {
+                                                                                                                      Name = "licencing"
+                                                                                                                    , DefaultValue
+                                                                                                                          = "// Please read LICENSE.md"
+                                                                                                                    , Replace
+                                                                                                                          = "(licensing)"
+                                                                                                                    , Type = "parameter"
+                                                                                                                  }
+                                                                                                              }
+                                                                                                    }
+                                                                                                }
                                                                      }
                                         }
                      };
     }
 
-    [Test] [TestCaseSource(nameof(Data))] public async Task Test1(
+    [Test] [TestCaseSource(nameof(Data))] public async Task FullWorkflowTest(
         string  testCaseName
       , Payload payload
     )
@@ -111,11 +139,16 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
         response.ShouldBeAssignableTo<MetaSolutionDefinitionGenerationResult>();
 
         response.SolutionGenerationResult.ShouldBeAssignableTo<SolutionGenerationOkResult>();
-        response.TemplatesGenerationsResults.ToList()
-                .ForEach(x => x.ShouldBeAssignableTo<TemplateGenerationOkResult>());
 
-        response.ProjectsGenerationsResults.ToList()
-                .ForEach(x => x.ShouldBeAssignableTo<ProjectGenerationOk>());
+        response
+            .TemplatesGenerationsResults
+            .ToList()
+            .ForEach(x => x.ShouldBeAssignableTo<TemplateGenerationOkResult>());
+
+        response
+            .ProjectsGenerationsResults
+            .ToList()
+            .ForEach(x => x.ShouldBeAssignableTo<ProjectGenerationOkResult>());
     }
 
     protected override Task ConfigureServicesAsync(

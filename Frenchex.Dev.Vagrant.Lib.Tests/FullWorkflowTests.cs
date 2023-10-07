@@ -31,24 +31,29 @@ public class Tests : AbstractFullWorkflowTester
     {
         yield return new object[]
                      {
-                         new VagrantInitRequestBuilder().WithName("generic/alpine318")
-                                                        .WithTemplate(
-                                                                      Path.Join(
-                                                                                Path.GetDirectoryName(
-                                                                                                      Assembly.GetCallingAssembly()
-                                                                                                              .Location)
-                                                                              , "Resources"
-                                                                              , "Vagrantfile"))
-                                                        .Build()
-                       , new VagrantUpRequestBuilder().WithNameOrId("default")
-                                                      .Build()
-                       , new VagrantStatusRequestBuilder().WithNameOrId("default")
-                                                          .Build()
-                       , new VagrantSshConfigRequestBuilder().WithNameOrId("default")
-                                                             .Build()
-                       , new VagrantDestroyRequestBuilder().WithNameOrId("default")
-                                                           .WithForce(true)
-                                                           .Build()
+                         new VagrantInitRequestBuilder()
+                             .WithName("generic/alpine318")
+                             .WithTemplate(
+                                           Path.Join(
+                                                     Path.GetDirectoryName(
+                                                                           Assembly.GetCallingAssembly()
+                                                                                   .Location)
+                                                   , "Resources"
+                                                   , "Vagrantfile"))
+                             .Build()
+                       , new VagrantUpRequestBuilder()
+                         .WithNameOrId("default")
+                         .Build()
+                       , new VagrantStatusRequestBuilder()
+                         .WithNameOrId("default")
+                         .Build()
+                       , new VagrantSshConfigRequestBuilder()
+                         .WithNameOrId("default")
+                         .Build()
+                       , new VagrantDestroyRequestBuilder()
+                         .WithNameOrId("default")
+                         .WithForce(true)
+                         .Build()
                      };
     }
 
@@ -102,30 +107,41 @@ public class Tests : AbstractFullWorkflowTester
 
         var initCommand  = scope.ServiceProvider.GetRequiredService<IVagrantInitCommand>();
         var initResponse = await initCommand.StartAsync(initRequest, context, new VagrantCommandExecutionListeners());
-        initResponse.Should()
-                    .NotBeNull();
-        initResponse.ExitCode.Should()
-                    .Be(0);
+        initResponse
+            .Should()
+            .NotBeNull();
+        initResponse
+            .ExitCode
+            .Should()
+            .Be(0);
 
         var upCommand  = scope.ServiceProvider.GetRequiredService<IVagrantUpCommand>();
         var upResponse = await upCommand.StartAsync(upRequest, context, new VagrantCommandExecutionListeners());
-        upResponse.ExitCode.Should()
-                  .Be(0);
+        upResponse
+            .ExitCode
+            .Should()
+            .Be(0);
 
         var statusCommand  = scope.ServiceProvider.GetRequiredService<IVagrantStatusCommand>();
         var statusResponse = await statusCommand.StartAsync(statusRequest, context, new VagrantCommandExecutionListeners());
-        statusResponse.ExitCode.Should()
-                      .Be(0);
+        statusResponse
+            .ExitCode
+            .Should()
+            .Be(0);
 
         var sshConfigCommand  = scope.ServiceProvider.GetRequiredService<IVagrantSshConfigCommand>();
         var sshConfigResponse = await sshConfigCommand.StartAsync(sshConfigRequest, context, new VagrantCommandExecutionListeners());
-        sshConfigResponse.ExitCode.Should()
-                         .Be(0);
+        sshConfigResponse
+            .ExitCode
+            .Should()
+            .Be(0);
 
         var destroyCommand  = scope.ServiceProvider.GetRequiredService<IVagrantDestroyCommand>();
         var destroyResponse = await destroyCommand.StartAsync(destroyRequest, context, new VagrantCommandExecutionListeners());
-        destroyResponse.ExitCode.Should()
-                       .Be(0);
+        destroyResponse
+            .ExitCode
+            .Should()
+            .Be(0);
     }
 
     protected override Task ConfigureServicesAsync(

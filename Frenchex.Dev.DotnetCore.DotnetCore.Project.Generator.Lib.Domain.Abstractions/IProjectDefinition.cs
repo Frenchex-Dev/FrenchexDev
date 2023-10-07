@@ -8,9 +8,8 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstra
 
 public interface IProjectDefinition
 {
-    string                     Name               { get; }
-    string                     Language           { get; }
-    string                     TemplateName       { get; }
-    Dictionary<string, string> ExtraArgs          { get; }
-    List<IProjectReference>    ProjectsReferences { get; }
+    string                     Name         { get; }
+    string                     Language     { get; }
+    string                     TemplateName { get; }
+    Dictionary<string, string> ExtraArgs    { get; }
 }

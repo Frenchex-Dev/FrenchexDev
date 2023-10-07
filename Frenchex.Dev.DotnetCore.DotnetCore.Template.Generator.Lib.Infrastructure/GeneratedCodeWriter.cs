@@ -53,22 +53,22 @@ public class GeneratedCodeWriter(
     )
     {
         var directories = new Dictionary<string, DirectoryInfo>();
-        files.ToList()
-             .ForEach(
-                      file =>
-                      {
-                          var dirInfo = new FileInfo(file.Path);
+        files
+            .ToList()
+            .ForEach(
+                     file =>
+                     {
+                         var dirInfo = new FileInfo(file.Path);
 
-                          if (dirInfo.Directory == null)
-                          {
-                              throw new DirectoryNotFoundException(dirInfo.FullName);
-                          }
+                         if (dirInfo.Directory == null) throw new DirectoryNotFoundException(dirInfo.FullName);
 
-                          directories.TryAdd(dirInfo.Directory.FullName, dirInfo.Directory);
-                      });
+                         directories.TryAdd(dirInfo.Directory.FullName, dirInfo.Directory);
+                     });
 
-        directories.Values.ToList()
-                   .ForEach(file => { file.Create(); });
+        directories
+            .Values
+            .ToList()
+            .ForEach(file => { file.Create(); });
 
         return Task.CompletedTask;
     }

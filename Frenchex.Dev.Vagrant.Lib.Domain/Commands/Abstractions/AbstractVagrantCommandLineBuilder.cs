@@ -22,45 +22,21 @@ public abstract class AbstractVagrantCommandLineBuilder
     {
         var parts = new List<string>();
 
-        if (!request.Color)
-        {
-            parts.Add("--no-color");
-        }
+        if (!request.Color) parts.Add("--no-color");
 
-        if (request.MachineReadable)
-        {
-            parts.Add("--machine-readable");
-        }
+        if (request.MachineReadable) parts.Add("--machine-readable");
 
-        if (request.Version)
-        {
-            parts.Add("--version");
-        }
+        if (request.Version) parts.Add("--version");
 
-        if (request.Debug)
-        {
-            parts.Add("--debug");
-        }
+        if (request.Debug) parts.Add("--debug");
 
-        if (request.Timestamp)
-        {
-            parts.Add("--timestamp");
-        }
+        if (request.Timestamp) parts.Add("--timestamp");
 
-        if (request.DebugTimestamp)
-        {
-            parts.Add("--debug-timestamp");
-        }
+        if (request.DebugTimestamp) parts.Add("--debug-timestamp");
 
-        if (request.NoTty)
-        {
-            parts.Add("no-tty");
-        }
+        if (request.NoTty) parts.Add("no-tty");
 
-        if (request.Help)
-        {
-            parts.Add("--help");
-        }
+        if (request.Help) parts.Add("--help");
 
         return parts;
     }
@@ -82,27 +58,15 @@ public abstract class AbstractVagrantCommandLineBuilder
 
         if (vagrantArgumentsBefore)
         {
-            if (!string.IsNullOrEmpty(args))
-            {
-                parts.Add(args);
-            }
+            if (!string.IsNullOrEmpty(args)) parts.Add(args);
 
-            if (!string.IsNullOrEmpty(options))
-            {
-                parts.Add(options);
-            }
+            if (!string.IsNullOrEmpty(options)) parts.Add(options);
         }
         else
         {
-            if (!string.IsNullOrEmpty(options))
-            {
-                parts.Add(options);
-            }
+            if (!string.IsNullOrEmpty(options)) parts.Add(options);
 
-            if (!string.IsNullOrEmpty(args))
-            {
-                parts.Add(args);
-            }
+            if (!string.IsNullOrEmpty(args)) parts.Add(args);
         }
 
         if (!string.IsNullOrEmpty(extraArgs))

@@ -43,10 +43,7 @@ public class VagrantStatusCommandLineBuilder : AbstractVagrantCommandLineBuilder
         {
             var parts = new List<string>();
 
-            if (!string.IsNullOrEmpty(statusRequest.NameOrId))
-            {
-                parts.Add(statusRequest.NameOrId);
-            }
+            if (!string.IsNullOrEmpty(statusRequest.NameOrId)) parts.Add(statusRequest.NameOrId);
 
             return string.Join(" ", parts);
         }

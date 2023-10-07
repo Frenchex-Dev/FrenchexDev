@@ -25,10 +25,7 @@ public class SolutionGenerator(
     {
         var dirInfo = new DirectoryInfo(generationContext.Path);
 
-        if (!dirInfo.Exists)
-        {
-            dirInfo.Create();
-        }
+        if (!dirInfo.Exists) dirInfo.Create();
 
         var process = processStarterFactory.Factory();
 
@@ -42,19 +39,15 @@ public class SolutionGenerator(
                                                                                   , true)
                                                       , cancellationToken);
         if (!processExecution.HasStarted)
-        {
             throw new ProcessNotStartedException(await processExecution.StdErrStream.ReadToEndAsync(cancellationToken));
-        }
 
         await processExecution.WaitForExitAsync(cancellationToken);
 
         if (processExecution.ExitCode > 0)
-        {
             return new SolutionGenerationErrorResult
                    {
                        Error = await processExecution.StdErrStream.ReadToEndAsync(cancellationToken)
                    };
-        }
 
         return new SolutionGenerationOkResult();
     }

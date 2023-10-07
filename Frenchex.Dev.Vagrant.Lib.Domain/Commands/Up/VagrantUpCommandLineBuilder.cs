@@ -35,35 +35,17 @@ public class VagrantUpCommandLineBuilder : AbstractVagrantCommandLineBuilder, IV
         {
             var parts = new List<string>();
 
-            if (!upRequest.Provision)
-            {
-                parts.Add("--no-provision");
-            }
+            if (!upRequest.Provision) parts.Add("--no-provision");
 
-            if (upRequest.ProvisionWith.Length > 0)
-            {
-                parts.AddRange(upRequest.ProvisionWith);
-            }
+            if (upRequest.ProvisionWith.Length > 0) parts.AddRange(upRequest.ProvisionWith);
 
-            if (upRequest.DestroyOnError)
-            {
-                parts.Add("--no-destroy-on-error");
-            }
+            if (upRequest.DestroyOnError) parts.Add("--no-destroy-on-error");
 
-            if (upRequest.Parallel)
-            {
-                parts.Add("--parallel");
-            }
+            if (upRequest.Parallel) parts.Add("--parallel");
 
-            if (!string.IsNullOrEmpty(upRequest.Provider))
-            {
-                parts.Add($"--provider {upRequest.Provider}");
-            }
+            if (!string.IsNullOrEmpty(upRequest.Provider)) parts.Add($"--provider {upRequest.Provider}");
 
-            if (upRequest.InstallProvider)
-            {
-                parts.Add("--install-provider");
-            }
+            if (upRequest.InstallProvider) parts.Add("--install-provider");
 
             return string.Join(",", parts);
         }
@@ -75,10 +57,7 @@ public class VagrantUpCommandLineBuilder : AbstractVagrantCommandLineBuilder, IV
         IVagrantCommandRequest request
     )
     {
-        if (request is VagrantUpRequest upRequest)
-        {
-            return upRequest.NameOrId;
-        }
+        if (request is VagrantUpRequest upRequest) return upRequest.NameOrId;
 
         throw new NotImplementedException();
     }

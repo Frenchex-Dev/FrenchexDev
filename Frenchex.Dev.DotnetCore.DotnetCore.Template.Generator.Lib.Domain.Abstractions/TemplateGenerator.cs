@@ -32,10 +32,7 @@ public class TemplateGenerator(
                                                                           , errorResult
                                                                           , cancellationToken);
 
-                if (errorResult.Errors.Count > 0)
-                {
-                    return errorResult;
-                }
+                if (errorResult.Errors.Count > 0) return errorResult;
 
                 return okResult;
             default:

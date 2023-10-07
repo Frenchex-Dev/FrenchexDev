@@ -36,10 +36,7 @@ public class VagrantSshCommandLineBuilder : AbstractVagrantCommandLineBuilder, I
         {
             var parts = new List<string>();
 
-            if (!string.IsNullOrEmpty(sshRequest.Command))
-            {
-                parts.Add($"--command \"{sshRequest.Command}\"");
-            }
+            if (!string.IsNullOrEmpty(sshRequest.Command)) parts.Add($"--command \"{sshRequest.Command}\"");
 
             return string.Join(" ", parts);
         }
@@ -55,10 +52,7 @@ public class VagrantSshCommandLineBuilder : AbstractVagrantCommandLineBuilder, I
         {
             var parts = new List<string>();
 
-            if (!string.IsNullOrEmpty(sshRequest.NameOrId))
-            {
-                parts.Add(sshRequest.NameOrId);
-            }
+            if (!string.IsNullOrEmpty(sshRequest.NameOrId)) parts.Add(sshRequest.NameOrId);
 
             return string.Join(" ", parts);
         }

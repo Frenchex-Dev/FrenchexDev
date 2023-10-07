@@ -36,30 +36,15 @@ public class VagrantInitCommandLineBuilder : AbstractVagrantCommandLineBuilder, 
         {
             var parts = new List<string>();
 
-            if (!string.IsNullOrEmpty(initRequest.BoxVersion))
-            {
-                parts.Add($"--box-version {initRequest.BoxVersion}");
-            }
+            if (!string.IsNullOrEmpty(initRequest.BoxVersion)) parts.Add($"--box-version {initRequest.BoxVersion}");
 
-            if (initRequest.Force)
-            {
-                parts.Add("--force");
-            }
+            if (initRequest.Force) parts.Add("--force");
 
-            if (initRequest.Minimal)
-            {
-                parts.Add("--minimal");
-            }
+            if (initRequest.Minimal) parts.Add("--minimal");
 
-            if (!string.IsNullOrEmpty(initRequest.Output))
-            {
-                parts.Add($"--output {initRequest.Output}");
-            }
+            if (!string.IsNullOrEmpty(initRequest.Output)) parts.Add($"--output {initRequest.Output}");
 
-            if (!string.IsNullOrEmpty(initRequest.Template))
-            {
-                parts.Add($"--template {initRequest.Template}");
-            }
+            if (!string.IsNullOrEmpty(initRequest.Template)) parts.Add($"--template {initRequest.Template}");
 
             parts.AddRange(BuildRootVagrantOptions(initRequest));
 
@@ -77,15 +62,9 @@ public class VagrantInitCommandLineBuilder : AbstractVagrantCommandLineBuilder, 
         {
             var parts = new List<string>();
 
-            if (!string.IsNullOrEmpty(initRequest.Name))
-            {
-                parts.Add(initRequest.Name);
-            }
+            if (!string.IsNullOrEmpty(initRequest.Name)) parts.Add(initRequest.Name);
 
-            if (!string.IsNullOrEmpty(initRequest.Url))
-            {
-                parts.Add(initRequest.Url);
-            }
+            if (!string.IsNullOrEmpty(initRequest.Url)) parts.Add(initRequest.Url);
 
             return string.Join(" ", parts);
         }

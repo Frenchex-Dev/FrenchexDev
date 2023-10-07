@@ -66,8 +66,7 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
                                                                                       }
                                                                           , Readme = new Readme
                                                                                      {
-                                                                                         Content
-                                                                                             = "# This is a readme\r\n## How to test"
+                                                                                         Content = "# This is a readme\r\n## How to test"
                                                                                      }
                                                                           , Name
                                                                                 = $"Frenchex.Dev.DotnetCore.DotnetCore.Test_{templateGuid}"

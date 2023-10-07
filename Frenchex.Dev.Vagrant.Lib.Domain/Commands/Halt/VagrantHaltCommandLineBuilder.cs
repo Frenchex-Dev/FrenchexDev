@@ -36,10 +36,7 @@ public class VagrantHaltCommandLineBuilder : AbstractVagrantCommandLineBuilder, 
         {
             var parts = new List<string>();
 
-            if (haltRequest.Force)
-            {
-                parts.Add("--force");
-            }
+            if (haltRequest.Force) parts.Add("--force");
 
             return string.Join(",", parts);
         }
@@ -55,10 +52,7 @@ public class VagrantHaltCommandLineBuilder : AbstractVagrantCommandLineBuilder, 
         {
             var parts = new List<string>();
 
-            if (!string.IsNullOrEmpty(haltRequest.NameOrId))
-            {
-                parts.Add(haltRequest.NameOrId);
-            }
+            if (!string.IsNullOrEmpty(haltRequest.NameOrId)) parts.Add(haltRequest.NameOrId);
 
             return string.Join(",", parts);
         }

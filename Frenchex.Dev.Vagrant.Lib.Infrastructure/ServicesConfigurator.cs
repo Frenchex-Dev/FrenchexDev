@@ -49,13 +49,14 @@ public static class ServicesConfigurator
     {
         DotnetCore.Process.Lib.ServicesConfigurator.Configure(services);
 
-        services.AddTransient<IVagrantDestroyCommand, VagrantDestroyCommand>()
-                .AddTransient<IVagrantHaltCommand, VagrantHaltCommand>()
-                .AddTransient<IVagrantInitCommand, VagrantInitCommand>()
-                .AddTransient<IVagrantProvisionCommand, VagrantProvisionCommand>()
-                .AddTransient<IVagrantSshCommand, VagrantSshCommand>()
-                .AddTransient<IVagrantSshConfigCommand, VagrantSshConfigCommand>()
-                .AddTransient<IVagrantStatusCommand, VagrantStatusCommand>()
-                .AddTransient<IVagrantUpCommand, VagrantUpCommand>();
+        services
+            .AddTransient<IVagrantDestroyCommand, VagrantDestroyCommand>()
+            .AddTransient<IVagrantHaltCommand, VagrantHaltCommand>()
+            .AddTransient<IVagrantInitCommand, VagrantInitCommand>()
+            .AddTransient<IVagrantProvisionCommand, VagrantProvisionCommand>()
+            .AddTransient<IVagrantSshCommand, VagrantSshCommand>()
+            .AddTransient<IVagrantSshConfigCommand, VagrantSshConfigCommand>()
+            .AddTransient<IVagrantStatusCommand, VagrantStatusCommand>()
+            .AddTransient<IVagrantUpCommand, VagrantUpCommand>();
     }
 }

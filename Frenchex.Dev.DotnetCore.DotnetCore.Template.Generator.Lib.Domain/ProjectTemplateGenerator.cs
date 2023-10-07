@@ -88,50 +88,46 @@ public class ProjectTemplateGenerator : IProjectTemplateGenerator
                                                                  Content = JsonSerializer.Serialize(
                                                                                                     new ProjectTemplateConfigJson
                                                                                                     {
-                                                                                                        Name
-                                                                                                            = projectTemplateDefinition
-                                                                                                                .Name
+                                                                                                        Name = projectTemplateDefinition
+                                                                                                            .Name
                                                                                                       , Author
                                                                                                             = projectTemplateDefinition
                                                                                                                 .Author
                                                                                                       , Classifications
                                                                                                             = projectTemplateDefinition
-                                                                                                              .Classifications
-                                                                                                              .ToList()
+                                                                                                              .Classifications.ToList()
                                                                                                       , Identity
                                                                                                             = projectTemplateDefinition
                                                                                                                 .Identity
                                                                                                       , ShortName
                                                                                                             = projectTemplateDefinition
                                                                                                                 .ShortName
-                                                                                                      , Tags
-                                                                                                            = projectTemplateDefinition
-                                                                                                                .Tags
+                                                                                                      , Tags = projectTemplateDefinition
+                                                                                                            .Tags
                                                                                                       , Symbols
                                                                                                             = projectTemplateDefinition
-                                                                                                              .Symbols.Select(
-                                                                                                                              x =>
-                                                                                                                                  new
-                                                                                                                                  SymbolDefinitionJson
-                                                                                                                                  {
-                                                                                                                                      DefaultValue
-                                                                                                                                          = x
-                                                                                                                                              .DefaultValue
-                                                                                                                                    , Replaces
-                                                                                                                                          = x
-                                                                                                                                              .Replaces
-                                                                                                                                    , Type
-                                                                                                                                          = x
-                                                                                                                                              .Type
-                                                                                                                                  })
+                                                                                                              .Symbols
+                                                                                                              .Select(
+                                                                                                                      x =>
+                                                                                                                          new
+                                                                                                                          SymbolDefinitionJson
+                                                                                                                          {
+                                                                                                                              DefaultValue
+                                                                                                                                  = x
+                                                                                                                                      .DefaultValue
+                                                                                                                            , Replaces
+                                                                                                                                  = x
+                                                                                                                                      .Replaces
+                                                                                                                            , Type = x
+                                                                                                                                  .Type
+                                                                                                                          })
                                                                                                               .ToList()
                                                                                                     }
                                                                                                   , new JsonSerializerOptions
                                                                                                     {
                                                                                                         WriteIndented = true
                                                                                                       , DictionaryKeyPolicy
-                                                                                                            = JsonNamingPolicy
-                                                                                                                .CamelCase
+                                                                                                            = JsonNamingPolicy.CamelCase
                                                                                                     })
                                                                , Extension = ".json"
                                                                , FileName  = "template.json"
@@ -158,18 +154,19 @@ public class ProjectTemplateGenerator : IProjectTemplateGenerator
                                                                                                           {
                                                                                                               SymbolInfo
                                                                                                                   = projectTemplateDefinition
-                                                                                                                    .Symbols.Select(
-                                                                                                                                    x =>
-                                                                                                                                        new
-                                                                                                                                        TemplateSymbolDefinitionJson
-                                                                                                                                        {
-                                                                                                                                            ShortName
-                                                                                                                                                = x
-                                                                                                                                                    .ShortName
-                                                                                                                                          , LongName
-                                                                                                                                                = x
-                                                                                                                                                    .LongName
-                                                                                                                                        })
+                                                                                                                    .Symbols
+                                                                                                                    .Select(
+                                                                                                                            x =>
+                                                                                                                                new
+                                                                                                                                TemplateSymbolDefinitionJson
+                                                                                                                                {
+                                                                                                                                    ShortName
+                                                                                                                                        = x
+                                                                                                                                            .ShortName
+                                                                                                                                  , LongName
+                                                                                                                                        = x
+                                                                                                                                            .LongName
+                                                                                                                                })
                                                                                                                     .ToList()
                                                                                                           }
                                                                                                         , new JsonSerializerOptions

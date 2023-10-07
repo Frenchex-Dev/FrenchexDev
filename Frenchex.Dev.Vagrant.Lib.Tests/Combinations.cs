@@ -17,18 +17,13 @@ internal class Combinations
 
         // prime the data
         foreach (var value in sets[0])
-        {
             combinations.Add(
                              new List<T>
                              {
                                  value
                              });
-        }
 
-        foreach (var set in sets.Skip(1))
-        {
-            combinations = AddExtraSet(combinations, set);
-        }
+        foreach (var set in sets.Skip(1)) combinations = AddExtraSet(combinations, set);
 
         return combinations;
     }

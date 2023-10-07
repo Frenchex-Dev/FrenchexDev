@@ -25,11 +25,10 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
                                         {
                                             ProjectDefinition = new ProjectDefinition
                                                                 {
-                                                                    TemplateName       = "classlib"
-                                                                  , Language           = "C#"
-                                                                  , Name               = "MyProject"
-                                                                  , ExtraArgs          = new Dictionary<string, string>()
-                                                                  , ProjectsReferences = new List<IProjectReference>()
+                                                                    TemplateName = "classlib"
+                                                                  , Language     = "C#"
+                                                                  , Name         = "MyProject"
+                                                                  , ExtraArgs    = new Dictionary<string, string>()
                                                                 }
                                         }
                      };

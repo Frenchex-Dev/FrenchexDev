@@ -43,10 +43,7 @@ public class ProcessStarter : IProcessStarter
                           }
                       };
 
-        foreach (var preparer in _processPreparers)
-        {
-            await preparer(process);
-        }
+        foreach (var preparer in _processPreparers) await preparer(process);
 
         var started = process.Start();
 

@@ -27,8 +27,8 @@ public static class ServicesConfigurator
         IServiceCollection services
     )
     {
-        // scoping Domain interfaces services with Infrastructure implementations services
-        services.AddTransient<IProcessStarter, ProcessStarter>()
-                .AddSingleton<IProcessStarterFactory, ProcessStarterFactory>();
+        services
+            .AddTransient<IProcessStarter, ProcessStarter>()
+            .AddSingleton<IProcessStarterFactory, ProcessStarterFactory>();
     }
 }

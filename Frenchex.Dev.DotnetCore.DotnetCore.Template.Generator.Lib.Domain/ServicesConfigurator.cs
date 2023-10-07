@@ -19,8 +19,9 @@ public static class ServicesConfigurator
         IServiceCollection services
     )
     {
-        services.AddTransient<ITemplateGenerator, TemplateGenerator>()
-                .AddTransient<IProjectTemplateGenerator, ProjectTemplateGenerator>()
-                .AddTransient<IPackagesInstaller, PackagesInstaller>();
+        services
+            .AddTransient<ITemplateGenerator, TemplateGenerator>()
+            .AddTransient<IProjectTemplateGenerator, ProjectTemplateGenerator>()
+            .AddTransient<IPackagesInstaller, PackagesInstaller>();
     }
 }

@@ -17,8 +17,7 @@ public class VagrantProvisionRequest(
   , bool?    debugTimestamp
   , bool?    noTty
   , bool?    help
-) : BaseVagrantCommandRequest(color, machineReadable, version, debug, timestamp, debugTimestamp, noTty, help)
-  , IVagrantProvisionRequest
+) : BaseVagrantCommandRequest(color, machineReadable, version, debug, timestamp, debugTimestamp, noTty, help), IVagrantProvisionRequest
 {
     public string   NameOrId      { get; } = nameOrId;
     public string[] ProvisionWith { get; } = provisionWith;

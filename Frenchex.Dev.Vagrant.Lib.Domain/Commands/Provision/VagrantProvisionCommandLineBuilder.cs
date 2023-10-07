@@ -37,12 +37,8 @@ public class VagrantProvisionCommandLineBuilder : AbstractVagrantCommandLineBuil
             var parts = new List<string>();
 
             if (provisionRequest.ProvisionWith.Length > 0)
-            {
                 foreach (var provisionWith in provisionRequest.ProvisionWith)
-                {
                     parts.Add("--provision-with " + provisionWith);
-                }
-            }
 
             return string.Join(" ", parts);
         }
@@ -58,10 +54,7 @@ public class VagrantProvisionCommandLineBuilder : AbstractVagrantCommandLineBuil
         {
             var parts = new List<string>();
 
-            if (!string.IsNullOrEmpty(provisionRequest.NameOrId))
-            {
-                parts.Add(provisionRequest.NameOrId);
-            }
+            if (!string.IsNullOrEmpty(provisionRequest.NameOrId)) parts.Add(provisionRequest.NameOrId);
 
             return string.Join(" ", parts);
         }
