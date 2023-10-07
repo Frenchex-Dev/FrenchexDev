@@ -4,10 +4,9 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
+
+public interface IReadme
 {
-    public interface IReadme
-    {
-        string ToString();
-    }
+    string ToString();
 }

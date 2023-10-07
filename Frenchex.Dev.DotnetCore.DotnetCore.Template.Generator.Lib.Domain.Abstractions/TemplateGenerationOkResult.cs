@@ -4,10 +4,9 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
+
+public class TemplateGenerationOkResult : ITemplateGenerationResult
 {
-    public class TemplateGenerationOkResult : ITemplateGenerationResult
-    {
-        public IList<IGeneratedFile> Generation { get; } = new List<IGeneratedFile>();
-    }
+    public IList<IGeneratedFile> Generation { get; } = new List<IGeneratedFile>();
 }

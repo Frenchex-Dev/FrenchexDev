@@ -4,14 +4,13 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions;
+
+public interface ISolutionGenerator
 {
-    public interface ISolutionGenerator
-    {
-        Task<ISolutionGenerationResult> GenerateAsync(
-            ISolutionDefinition solution
-          , IGenerationContext  generationContext
-          , CancellationToken   cancellationToken = default
-        );
-    }
+    Task<ISolutionGenerationResult> GenerateAsync(
+        ISolutionDefinition solution
+      , IGenerationContext  generationContext
+      , CancellationToken   cancellationToken = default
+    );
 }

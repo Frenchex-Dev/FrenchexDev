@@ -4,11 +4,10 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
+
+public interface IPackageReference
 {
-    public interface IPackageReference
-    {
-        string Name    { get; }
-        string Version { get; }
-    }
+    string Name    { get; }
+    string Version { get; }
 }

@@ -4,9 +4,8 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions;
+
+public interface ISolutionGenerationResult
 {
-    public interface ISolutionGenerationResult
-    {
-    }
 }

@@ -96,6 +96,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.DotnetCore.Dot
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Tests", "Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Tests\Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Tests.csproj", "{743BD9BA-2D69-40EE-B002-E09BE9A37C87}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AddProjectReference", "AddProjectReference", "{65E2485D-6C53-4AA4-A650-8B6E41B457B5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -267,6 +269,7 @@ Global
 		{34ACA40C-FD9A-4158-B695-D99CF55D2466} = {8C6314BB-2E67-4707-B115-F5D0F80E23FC}
 		{E267CDB3-BBC2-4870-A1D4-068999B40D30} = {8C6314BB-2E67-4707-B115-F5D0F80E23FC}
 		{743BD9BA-2D69-40EE-B002-E09BE9A37C87} = {8C6314BB-2E67-4707-B115-F5D0F80E23FC}
+		{65E2485D-6C53-4AA4-A650-8B6E41B457B5} = {CDCD5829-7A1D-4A75-9635-722F5510CF6A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4FC281B1-B4CB-4880-B811-BD07AD3EE896}

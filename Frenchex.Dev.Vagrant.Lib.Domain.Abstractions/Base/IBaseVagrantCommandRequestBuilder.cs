@@ -4,42 +4,41 @@
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Base
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Base;
+
+public interface IBaseVagrantCommandRequestBuilder
 {
-    public interface IBaseVagrantCommandRequestBuilder
-    {
-        IBaseVagrantCommandRequestBuilder WithColor(
-            bool withColor
-        );
+    IBaseVagrantCommandRequestBuilder WithColor(
+        bool withColor
+    );
 
-        IBaseVagrantCommandRequestBuilder WithMachineReadable(
-            bool withMachineReadable
-        );
+    IBaseVagrantCommandRequestBuilder WithMachineReadable(
+        bool withMachineReadable
+    );
 
-        IBaseVagrantCommandRequestBuilder WithVersion(
-            bool withVersion
-        );
+    IBaseVagrantCommandRequestBuilder WithVersion(
+        bool withVersion
+    );
 
-        IBaseVagrantCommandRequestBuilder WithDebug(
-            bool withDebug
-        );
+    IBaseVagrantCommandRequestBuilder WithDebug(
+        bool withDebug
+    );
 
-        IBaseVagrantCommandRequestBuilder WithTimestamp(
-            bool withTimestamp
-        );
+    IBaseVagrantCommandRequestBuilder WithTimestamp(
+        bool withTimestamp
+    );
 
-        IBaseVagrantCommandRequestBuilder WithDebugTimestamp(
-            bool withTimestamp
-        );
+    IBaseVagrantCommandRequestBuilder WithDebugTimestamp(
+        bool withTimestamp
+    );
 
-        IBaseVagrantCommandRequestBuilder WithHelp(
-            bool withHelp
-        );
+    IBaseVagrantCommandRequestBuilder WithHelp(
+        bool withHelp
+    );
 
-        IBaseVagrantCommandRequestBuilder WithNoTty(
-            bool withNoTty
-        );
+    IBaseVagrantCommandRequestBuilder WithNoTty(
+        bool withNoTty
+    );
 
-        T GetOwner<T>();
-    }
+    T GetOwner<T>();
 }

@@ -12,32 +12,31 @@ using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Provision;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Provision
+namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Provision;
+
+public class VagrantProvisionCommand(
+    IProcessStarterFactory              processExecutor
+  , IVagrantProvisionCommandLineBuilder commandLineBuilder
+) : AbstractVagrantCommand(processExecutor), IVagrantProvisionCommand
 {
-    public class VagrantProvisionCommand(
-        IProcessStarterFactory              processExecutor
-      , IVagrantProvisionCommandLineBuilder commandLineBuilder
-    ) : AbstractVagrantCommand(processExecutor), IVagrantProvisionCommand
+    public async Task<VagrantProvisionResponse> StartAsync(
+        VagrantProvisionRequest           request
+      , IVagrantCommandExecutionContext   context
+      , IVagrantCommandExecutionListeners listeners
+    )
     {
-        public async Task<VagrantProvisionResponse> StartAsync(
-            VagrantProvisionRequest           request
-          , IVagrantCommandExecutionContext   context
-          , IVagrantCommandExecutionListeners listeners
-        )
-        {
-            var processContext = CreateProcessExecutionContext(context, commandLineBuilder.BuildCommandLineArguments(request));
+        var processContext = CreateProcessExecutionContext(context, commandLineBuilder.BuildCommandLineArguments(request));
 
-            var processStarter = ProcessStarterFactory.Factory();
+        var processStarter = ProcessStarterFactory.Factory();
 
-            PrepareProcess(listeners, processStarter);
+        PrepareProcess(listeners, processStarter);
 
-            var process = await processStarter.StartAsync(processContext);
+        var process = await processStarter.StartAsync(processContext);
 
-            await WaitProcessForExitAsync(context, process);
+        await WaitProcessForExitAsync(context, process);
 
-            var response = new VagrantProvisionResponse(process.ExitCode);
+        var response = new VagrantProvisionResponse(process.ExitCode);
 
-            return response;
-        }
+        return response;
     }
 }

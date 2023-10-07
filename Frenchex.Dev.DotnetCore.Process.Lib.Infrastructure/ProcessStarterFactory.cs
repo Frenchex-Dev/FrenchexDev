@@ -11,15 +11,14 @@ using Microsoft.Extensions.DependencyInjection;
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.Process.Lib.Infrastructure
+namespace Frenchex.Dev.DotnetCore.Process.Lib.Infrastructure;
+
+public class ProcessStarterFactory(
+    IServiceProvider serviceProvider
+) : IProcessStarterFactory
 {
-    public class ProcessStarterFactory(
-        IServiceProvider serviceProvider
-    ) : IProcessStarterFactory
+    public IProcessStarter Factory()
     {
-        public IProcessStarter Factory()
-        {
-            return serviceProvider.GetRequiredService<IProcessStarter>();
-        }
+        return serviceProvider.GetRequiredService<IProcessStarter>();
     }
 }

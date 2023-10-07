@@ -13,76 +13,75 @@ using Shouldly;
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Tests
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Tests;
+
+public class FullWorkflowTests : AbstractFullWorkflowTester
 {
-    public class FullWorkflowTests : AbstractFullWorkflowTester
+    protected static IEnumerable<object[]> Data()
     {
-        protected static IEnumerable<object[]> Data()
-        {
-            yield return new object[]
-                         {
-                             "test case 1", new Payload
-                                            {
-                                                ProjectDefinition = new ProjectDefinition
-                                                                    {
-                                                                        TemplateName       = "classlib"
-                                                                      , Language           = "C#"
-                                                                      , Name               = "MyProject"
-                                                                      , ExtraArgs          = new Dictionary<string, string>()
-                                                                      , ProjectsReferences = new List<IProjectReference>()
-                                                                    }
-                                            }
-                         };
-        }
-
-        [Test] [TestCaseSource(nameof(Data))] public async Task FullWorkflow(
-            string  _
-          , Payload payload
-        )
-        {
-            var services = await BuildServiceProviderAsync();
-
-            await RunScopedAsync(
-                                 services
-                               , async (
-                                     scope
-                                   , token
-                                 ) =>
-                                 {
-                                     await RunInternalAsync(scope, payload, token);
-                                 });
-        }
-
-        private static async Task RunInternalAsync(
-            AsyncServiceScope scope
-          , Payload           payload
-          , CancellationToken token
-        )
-        {
-            var projectGenerator = scope.ServiceProvider.GetRequiredService<IProjectGenerator>();
-
-            var generationContext = new GenerationContext
-                                    {
-                                        Path = Path.Join(Path.GetTempPath(), Path.GetRandomFileName())
-                                    };
-
-            var response = await projectGenerator.GenerateAsync(payload.ProjectDefinition, generationContext, token);
-
-            response.ShouldBeAssignableTo<ProjectGenerationOk>();
-        }
-
-        protected override Task ConfigureServicesAsync(
-            IServiceCollection services
-          , CancellationToken  cancellationToken = default
-        )
-        {
-            ServicesConfigurator.Configure(services);
-            return Task.CompletedTask;
-        }
+        yield return new object[]
+                     {
+                         "test case 1", new Payload
+                                        {
+                                            ProjectDefinition = new ProjectDefinition
+                                                                {
+                                                                    TemplateName       = "classlib"
+                                                                  , Language           = "C#"
+                                                                  , Name               = "MyProject"
+                                                                  , ExtraArgs          = new Dictionary<string, string>()
+                                                                  , ProjectsReferences = new List<IProjectReference>()
+                                                                }
+                                        }
+                     };
     }
 
-    public class Payload
+    [Test] [TestCaseSource(nameof(Data))] public async Task FullWorkflow(
+        string  _
+      , Payload payload
+    )
     {
-        public required ProjectDefinition ProjectDefinition { get; set; }
+        var services = await BuildServiceProviderAsync();
+
+        await RunScopedAsync(
+                             services
+                           , async (
+                                 scope
+                               , token
+                             ) =>
+                             {
+                                 await RunInternalAsync(scope, payload, token);
+                             });
     }
+
+    private static async Task RunInternalAsync(
+        AsyncServiceScope scope
+      , Payload           payload
+      , CancellationToken token
+    )
+    {
+        var projectGenerator = scope.ServiceProvider.GetRequiredService<IProjectGenerator>();
+
+        var generationContext = new GenerationContext
+                                {
+                                    Path = Path.Join(Path.GetTempPath(), Path.GetRandomFileName())
+                                };
+
+        var response = await projectGenerator.GenerateAsync(payload.ProjectDefinition, generationContext, token);
+
+        response.ShouldBeAssignableTo<ProjectGenerationOk>();
+    }
+
+    protected override Task ConfigureServicesAsync(
+        IServiceCollection services
+      , CancellationToken  cancellationToken = default
+    )
+    {
+        ServicesConfigurator.Configure(services);
+        return Task.CompletedTask;
+    }
+}
+
+public class Payload
+{
+    public required ProjectDefinition ProjectDefinition { get; set; }
 }

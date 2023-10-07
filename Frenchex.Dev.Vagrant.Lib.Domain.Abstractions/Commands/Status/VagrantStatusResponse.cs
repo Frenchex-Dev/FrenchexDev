@@ -4,12 +4,11 @@
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Status
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Status;
+
+public class VagrantStatusResponse(
+    int exitCode
+) : IVagrantStatusResponse
 {
-    public class VagrantStatusResponse(
-        int exitCode
-    ) : IVagrantStatusResponse
-    {
-        public int ExitCode { get; } = exitCode;
-    }
+    public int ExitCode { get; } = exitCode;
 }

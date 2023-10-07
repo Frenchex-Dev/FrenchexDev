@@ -4,9 +4,8 @@
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Halt
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Halt;
+
+public interface IVagrantHaltCommandLineBuilder : IVagrantCommandLineBuilder<VagrantHaltRequest>
 {
-    public interface IVagrantHaltCommandLineBuilder : IVagrantCommandLineBuilder<VagrantHaltRequest>
-    {
-    }
 }

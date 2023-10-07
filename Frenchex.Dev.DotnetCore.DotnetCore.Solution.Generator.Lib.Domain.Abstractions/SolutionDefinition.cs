@@ -4,10 +4,9 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions;
+
+public class SolutionDefinition : ISolutionDefinition
 {
-    public class SolutionDefinition : ISolutionDefinition
-    {
-        public required string Name { get; set; }
-    }
+    public required string Name { get; set; }
 }

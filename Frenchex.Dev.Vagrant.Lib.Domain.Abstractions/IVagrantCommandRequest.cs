@@ -4,20 +4,19 @@
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
+
+/// <summary>
+///     Represents the base interface for Vagrant command requests
+/// </summary>
+public interface IVagrantCommandRequest
 {
-    /// <summary>
-    ///     Represents the base interface for Vagrant command requests
-    /// </summary>
-    public interface IVagrantCommandRequest
-    {
-        bool Color           { get; }
-        bool MachineReadable { get; }
-        bool Version         { get; }
-        bool Debug           { get; }
-        bool Timestamp       { get; }
-        bool DebugTimestamp  { get; }
-        bool NoTty           { get; }
-        bool Help            { get; }
-    }
+    bool Color           { get; }
+    bool MachineReadable { get; }
+    bool Version         { get; }
+    bool Debug           { get; }
+    bool Timestamp       { get; }
+    bool DebugTimestamp  { get; }
+    bool NoTty           { get; }
+    bool Help            { get; }
 }

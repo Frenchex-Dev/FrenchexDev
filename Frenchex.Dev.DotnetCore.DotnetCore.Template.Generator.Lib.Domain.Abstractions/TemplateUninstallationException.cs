@@ -4,14 +4,13 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
+
+public class TemplateUninstallationException : Exception
 {
-    public class TemplateUninstallationException : Exception
+    public TemplateUninstallationException(
+        string message
+    ) : base(message)
     {
-        public TemplateUninstallationException(
-            string message
-        ) : base(message)
-        {
-        }
     }
 }

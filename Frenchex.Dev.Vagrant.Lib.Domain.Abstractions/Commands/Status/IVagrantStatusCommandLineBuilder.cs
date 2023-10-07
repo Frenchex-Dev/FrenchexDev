@@ -4,9 +4,8 @@
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Status
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Status;
+
+public interface IVagrantStatusCommandLineBuilder : IVagrantCommandLineBuilder<VagrantStatusRequest>
 {
-    public interface IVagrantStatusCommandLineBuilder : IVagrantCommandLineBuilder<VagrantStatusRequest>
-    {
-    }
 }

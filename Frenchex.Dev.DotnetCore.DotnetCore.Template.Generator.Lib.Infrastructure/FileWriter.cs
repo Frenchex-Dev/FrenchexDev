@@ -11,27 +11,26 @@ using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstracti
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Infrastructure
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Infrastructure;
+
+/// <summary>
+/// </summary>
+public class FileWriter : IFileWriter
 {
     /// <summary>
     /// </summary>
-    public class FileWriter : IFileWriter
+    /// <param name="path"></param>
+    /// <param name="content"></param>
+    /// <param name="encoding"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    public async Task WriteAllTextAsync(
+        string            path
+      , string            content
+      , Encoding          encoding
+      , CancellationToken cancellationToken = default
+    )
     {
-        /// <summary>
-        /// </summary>
-        /// <param name="path"></param>
-        /// <param name="content"></param>
-        /// <param name="encoding"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
-        public async Task WriteAllTextAsync(
-            string            path
-          , string            content
-          , Encoding          encoding
-          , CancellationToken cancellationToken = default
-        )
-        {
-            await File.WriteAllTextAsync(path, content, encoding, cancellationToken);
-        }
+        await File.WriteAllTextAsync(path, content, encoding, cancellationToken);
     }
 }

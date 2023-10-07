@@ -10,12 +10,11 @@ using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Base;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Status
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Status;
+
+public interface IVagrantStatusRequestBuilder : IVagrantRequestBuilder<VagrantStatusRequest>
 {
-    public interface IVagrantStatusRequestBuilder : IVagrantRequestBuilder<VagrantStatusRequest>
-    {
-        IVagrantStatusRequestBuilder WithNameOrId(
-            string nameOrId
-        );
-    }
+    IVagrantStatusRequestBuilder WithNameOrId(
+        string nameOrId
+    );
 }

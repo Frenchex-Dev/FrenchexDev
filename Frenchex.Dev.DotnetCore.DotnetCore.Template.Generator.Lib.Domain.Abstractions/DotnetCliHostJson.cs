@@ -10,10 +10,9 @@ using System.Text.Json.Serialization;
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
+
+public class DotnetCliHostJson
 {
-    public class DotnetCliHostJson
-    {
-        [JsonPropertyName("symbolInfo")] public required List<TemplateSymbolDefinitionJson> SymbolInfo { get; set; }
-    }
+    [JsonPropertyName("symbolInfo")] public required List<TemplateSymbolDefinitionJson> SymbolInfo { get; set; }
 }

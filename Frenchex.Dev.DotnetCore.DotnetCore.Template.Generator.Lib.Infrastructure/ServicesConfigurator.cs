@@ -12,27 +12,26 @@ using Microsoft.Extensions.DependencyInjection;
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Infrastructure
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Infrastructure;
+
+/// <summary>
+/// </summary>
+public static class ServicesConfigurator
 {
     /// <summary>
     /// </summary>
-    public static class ServicesConfigurator
+    /// <param name="services"></param>
+    public static void Configure(
+        IServiceCollection services
+    )
     {
-        /// <summary>
-        /// </summary>
-        /// <param name="services"></param>
-        public static void Configure(
-            IServiceCollection services
-        )
-        {
-            Process.Lib.ServicesConfigurator.Configure(services);
+        Process.Lib.ServicesConfigurator.Configure(services);
 
-            services.AddTransient<IPackagesInstaller, PackagesInstaller>()
-                    .AddTransient<IFileWriter, FileWriter>()
-                    .AddTransient<IPackagesInstaller, PackagesInstaller>()
-                    .AddTransient<IGeneratedCodeWriter, GeneratedCodeWriter>()
-                    .AddTransient<ITemplateInstaller, TemplateInstaller>()
-                    .AddTransient<ITemplateUnInstaller, TemplateUnInstaller>();
-        }
+        services.AddTransient<IPackagesInstaller, PackagesInstaller>()
+                .AddTransient<IFileWriter, FileWriter>()
+                .AddTransient<IPackagesInstaller, PackagesInstaller>()
+                .AddTransient<IGeneratedCodeWriter, GeneratedCodeWriter>()
+                .AddTransient<ITemplateInstaller, TemplateInstaller>()
+                .AddTransient<ITemplateUnInstaller, TemplateUnInstaller>();
     }
 }

@@ -4,14 +4,13 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
+
+public class PackageInstallationException : Exception
 {
-    public class PackageInstallationException : Exception
+    public PackageInstallationException(
+        string message
+    ) : base(message)
     {
-        public PackageInstallationException(
-            string message
-        ) : base(message)
-        {
-        }
     }
 }

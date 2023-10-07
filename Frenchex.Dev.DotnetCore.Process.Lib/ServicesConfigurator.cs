@@ -12,24 +12,23 @@ using Microsoft.Extensions.DependencyInjection;
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.Process.Lib
+namespace Frenchex.Dev.DotnetCore.Process.Lib;
+
+/// <summary>
+///     Static class to configures an <see cref="IServiceCollection" /> to use this lib.
+/// </summary>
+public static class ServicesConfigurator
 {
     /// <summary>
-    ///     Static class to configures an <see cref="IServiceCollection" /> to use this lib.
+    ///     Static method to configures an <see cref="IServiceCollection" /> to use this lib.
     /// </summary>
-    public static class ServicesConfigurator
+    /// <param name="services"></param>
+    public static void Configure(
+        IServiceCollection services
+    )
     {
-        /// <summary>
-        ///     Static method to configures an <see cref="IServiceCollection" /> to use this lib.
-        /// </summary>
-        /// <param name="services"></param>
-        public static void Configure(
-            IServiceCollection services
-        )
-        {
-            // scoping Domain interfaces services with Infrastructure implementations services
-            services.AddTransient<IProcessStarter, ProcessStarter>()
-                    .AddSingleton<IProcessStarterFactory, ProcessStarterFactory>();
-        }
+        // scoping Domain interfaces services with Infrastructure implementations services
+        services.AddTransient<IProcessStarter, ProcessStarter>()
+                .AddSingleton<IProcessStarterFactory, ProcessStarterFactory>();
     }
 }

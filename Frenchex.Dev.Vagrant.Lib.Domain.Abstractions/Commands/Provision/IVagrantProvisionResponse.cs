@@ -4,9 +4,8 @@
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Provision
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Provision;
+
+public interface IVagrantProvisionResponse : IVagrantCommandResponse
 {
-    public interface IVagrantProvisionResponse : IVagrantCommandResponse
-    {
-    }
 }

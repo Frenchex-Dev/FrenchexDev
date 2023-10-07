@@ -11,42 +11,41 @@ using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Abstractions;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Provision
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Provision;
+
+public class VagrantProvisionRequestBuilder : AbstractVagrantRequestBuilder, IVagrantProvisionRequestBuilder
 {
-    public class VagrantProvisionRequestBuilder : AbstractVagrantRequestBuilder, IVagrantProvisionRequestBuilder
+    private readonly List<string> _provisionWith = new();
+    private          string       _nameOrId      = string.Empty;
+
+    public VagrantProvisionRequest Build()
     {
-        private readonly List<string> _provisionWith = new();
-        private          string       _nameOrId      = string.Empty;
+        return new VagrantProvisionRequest(
+                                           _nameOrId
+                                         , _provisionWith.ToArray()
+                                         , BaseBuilder.Color
+                                         , BaseBuilder.MachineReadable
+                                         , BaseBuilder.Version
+                                         , BaseBuilder.Debug
+                                         , BaseBuilder.Timestamp
+                                         , BaseBuilder.DebugTimestamp
+                                         , BaseBuilder.NoTty
+                                         , BaseBuilder.Help);
+    }
 
-        public VagrantProvisionRequest Build()
-        {
-            return new VagrantProvisionRequest(
-                                               _nameOrId
-                                             , _provisionWith.ToArray()
-                                             , BaseBuilder.Color
-                                             , BaseBuilder.MachineReadable
-                                             , BaseBuilder.Version
-                                             , BaseBuilder.Debug
-                                             , BaseBuilder.Timestamp
-                                             , BaseBuilder.DebugTimestamp
-                                             , BaseBuilder.NoTty
-                                             , BaseBuilder.Help);
-        }
+    public IVagrantProvisionRequestBuilder WithNameOrId(
+        string nameOrId
+    )
+    {
+        _nameOrId = nameOrId;
+        return this;
+    }
 
-        public IVagrantProvisionRequestBuilder WithNameOrId(
-            string nameOrId
-        )
-        {
-            _nameOrId = nameOrId;
-            return this;
-        }
-
-        public IVagrantProvisionRequestBuilder WithProvisionWith(
-            string provisionWith
-        )
-        {
-            _provisionWith.Add(provisionWith);
-            return this;
-        }
+    public IVagrantProvisionRequestBuilder WithProvisionWith(
+        string provisionWith
+    )
+    {
+        _provisionWith.Add(provisionWith);
+        return this;
     }
 }

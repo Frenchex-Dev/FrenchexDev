@@ -4,14 +4,13 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions;
+
+public interface IProjectGenerator
 {
-    public interface IProjectGenerator
-    {
-        Task<IProjectGenerationResult> GenerateAsync(
-            IProjectDefinition projectDefinition
-          , IGenerationContext generationContext
-          , CancellationToken  cancellationToken = default
-        );
-    }
+    Task<IProjectGenerationResult> GenerateAsync(
+        IProjectDefinition projectDefinition
+      , IGenerationContext generationContext
+      , CancellationToken  cancellationToken = default
+    );
 }

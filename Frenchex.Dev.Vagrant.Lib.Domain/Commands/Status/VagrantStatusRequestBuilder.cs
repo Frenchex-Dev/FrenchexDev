@@ -11,32 +11,31 @@ using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Abstractions;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Status
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Status;
+
+public class VagrantStatusRequestBuilder : AbstractVagrantRequestBuilder, IVagrantStatusRequestBuilder
 {
-    public class VagrantStatusRequestBuilder : AbstractVagrantRequestBuilder, IVagrantStatusRequestBuilder
+    private string _nameOrId = string.Empty;
+
+    public VagrantStatusRequest Build()
     {
-        private string _nameOrId = string.Empty;
+        return new VagrantStatusRequest(
+                                        _nameOrId
+                                      , BaseBuilder.Color
+                                      , BaseBuilder.MachineReadable
+                                      , BaseBuilder.Version
+                                      , BaseBuilder.Debug
+                                      , BaseBuilder.Timestamp
+                                      , BaseBuilder.DebugTimestamp
+                                      , BaseBuilder.NoTty
+                                      , BaseBuilder.Help);
+    }
 
-        public VagrantStatusRequest Build()
-        {
-            return new VagrantStatusRequest(
-                                            _nameOrId
-                                          , BaseBuilder.Color
-                                          , BaseBuilder.MachineReadable
-                                          , BaseBuilder.Version
-                                          , BaseBuilder.Debug
-                                          , BaseBuilder.Timestamp
-                                          , BaseBuilder.DebugTimestamp
-                                          , BaseBuilder.NoTty
-                                          , BaseBuilder.Help);
-        }
-
-        public IVagrantStatusRequestBuilder WithNameOrId(
-            string nameOrId
-        )
-        {
-            _nameOrId = nameOrId;
-            return this;
-        }
+    public IVagrantStatusRequestBuilder WithNameOrId(
+        string nameOrId
+    )
+    {
+        _nameOrId = nameOrId;
+        return this;
     }
 }

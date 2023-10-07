@@ -4,10 +4,9 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.Process.Lib.Domain
+namespace Frenchex.Dev.DotnetCore.Process.Lib.Domain;
+
+public interface IProcessStarterFactory
 {
-    public interface IProcessStarterFactory
-    {
-        IProcessStarter Factory();
-    }
+    IProcessStarter Factory();
 }

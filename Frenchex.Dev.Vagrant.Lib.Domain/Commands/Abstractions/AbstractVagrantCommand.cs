@@ -12,91 +12,90 @@ using TimeSpanParserUtil;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Abstractions
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Abstractions;
+
+public abstract class AbstractVagrantCommand(
+    IProcessStarterFactory processStarterFactory
+)
 {
-    public abstract class AbstractVagrantCommand(
-        IProcessStarterFactory processStarterFactory
+    protected readonly IProcessStarterFactory ProcessStarterFactory = processStarterFactory;
+
+    protected static ProcessExecutionContext CreateProcessExecutionContext(
+        IVagrantCommandExecutionContext context
+      , string                          arguments
     )
     {
-        protected readonly IProcessStarterFactory ProcessStarterFactory = processStarterFactory;
+        var processContext = new ProcessExecutionContext(
+                                                         context.WorkingDirectory
+                                                       , context.VagrantBin
+                                                       , arguments
+                                                       , context.Environment
+                                                       , context.SaveStdOutStream
+                                                       , context.SaveStdErrStream);
 
-        protected static ProcessExecutionContext CreateProcessExecutionContext(
-            IVagrantCommandExecutionContext context
-          , string                          arguments
-        )
+        return processContext;
+    }
+
+    protected static async Task WaitProcessForExitAsync(
+        IVagrantCommandExecutionContext context
+      , IProcessExecution               process
+    )
+    {
+        if (!string.IsNullOrEmpty(context.Timeout))
         {
-            var processContext = new ProcessExecutionContext(
-                                                             context.WorkingDirectory
-                                                           , context.VagrantBin
-                                                           , arguments
-                                                           , context.Environment
-                                                           , context.SaveStdOutStream
-                                                           , context.SaveStdErrStream);
+            var timeOutMs = TimeSpanParser.Parse(context.Timeout);
 
-            return processContext;
+            await process.WaitForExitAsync((int)timeOutMs.TotalMilliseconds);
         }
-
-        protected static async Task WaitProcessForExitAsync(
-            IVagrantCommandExecutionContext context
-          , IProcessExecution               process
-        )
+        else
         {
-            if (!string.IsNullOrEmpty(context.Timeout))
-            {
-                var timeOutMs = TimeSpanParser.Parse(context.Timeout);
-
-                await process.WaitForExitAsync((int)timeOutMs.TotalMilliseconds);
-            }
-            else
-            {
-                await process.WaitForExitAsync();
-            }
+            await process.WaitForExitAsync();
         }
+    }
 
-        protected static void PrepareProcess(
-            IVagrantCommandExecutionListeners listeners
-          , IProcessStarter                   processStarter
-        )
-        {
-            processStarter.AddProcessPreparer(
-                                              process =>
-                                              {
-                                                  process.OutputDataReceived += async (
-                                                                                    _
-                                                                                  , e
-                                                                                ) =>
+    protected static void PrepareProcess(
+        IVagrantCommandExecutionListeners listeners
+      , IProcessStarter                   processStarter
+    )
+    {
+        processStarter.AddProcessPreparer(
+                                          process =>
+                                          {
+                                              process.OutputDataReceived += async (
+                                                                                _
+                                                                              , e
+                                                                            ) =>
+                                                                            {
+                                                                                if (e.Data == null)
                                                                                 {
-                                                                                    if (e.Data == null)
-                                                                                    {
-                                                                                        return;
-                                                                                    }
+                                                                                    return;
+                                                                                }
 
-                                                                                    foreach (var listener in
-                                                                                             listeners.GetStdOutListeners())
-                                                                                    {
-                                                                                        await listener(e.Data);
-                                                                                    }
-                                                                                };
+                                                                                foreach (var listener in
+                                                                                         listeners.GetStdOutListeners())
+                                                                                {
+                                                                                    await listener(e.Data);
+                                                                                }
+                                                                            };
 
-                                                  process.ErrorDataReceived += async (
-                                                                                   _
-                                                                                 , e
-                                                                               ) =>
+                                              process.ErrorDataReceived += async (
+                                                                               _
+                                                                             , e
+                                                                           ) =>
+                                                                           {
+                                                                               if (e.Data == null)
                                                                                {
-                                                                                   if (e.Data == null)
-                                                                                   {
-                                                                                       return;
-                                                                                   }
+                                                                                   return;
+                                                                               }
 
-                                                                                   foreach (var listener in
-                                                                                            listeners.GetStdErrListeners())
-                                                                                   {
-                                                                                       await listener(e.Data);
-                                                                                   }
-                                                                               };
+                                                                               foreach (var listener in
+                                                                                        listeners.GetStdErrListeners())
+                                                                               {
+                                                                                   await listener(e.Data);
+                                                                               }
+                                                                           };
 
-                                                  return Task.CompletedTask;
-                                              });
-        }
+                                              return Task.CompletedTask;
+                                          });
     }
 }

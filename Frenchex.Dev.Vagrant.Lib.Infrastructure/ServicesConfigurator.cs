@@ -26,37 +26,36 @@ using Microsoft.Extensions.DependencyInjection;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Infrastructure
+namespace Frenchex.Dev.Vagrant.Lib.Infrastructure;
+
+/// <summary>
+///     Configures your <see cref="IServiceCollection" /> so it can use this lib's external dependencies.
+/// </summary>
+public static class ServicesConfigurator
 {
     /// <summary>
-    ///     Configures your <see cref="IServiceCollection" /> so it can use this lib's external dependencies.
+    ///     Configures your <see cref="IServiceCollection" /> so it can use this lib's external dependencies
     /// </summary>
-    public static class ServicesConfigurator
+    /// <example>
+    ///     var servicesBuilder = new ServiceCollection();
+    ///     Frenchex.Dev.Vagrant.Lib.Infrastructure.ServicesConfigurator.Configure(servicesBuilder);
+    ///     var services = servicesBuilder.BuildServiceProvider();
+    ///     await using var scope =
+    /// </example>
+    /// <param name="services"></param>
+    public static void Configure(
+        IServiceCollection services
+    )
     {
-        /// <summary>
-        ///     Configures your <see cref="IServiceCollection" /> so it can use this lib's external dependencies
-        /// </summary>
-        /// <example>
-        ///     var servicesBuilder = new ServiceCollection();
-        ///     Frenchex.Dev.Vagrant.Lib.Infrastructure.ServicesConfigurator.Configure(servicesBuilder);
-        ///     var services = servicesBuilder.BuildServiceProvider();
-        ///     await using var scope =
-        /// </example>
-        /// <param name="services"></param>
-        public static void Configure(
-            IServiceCollection services
-        )
-        {
-            DotnetCore.Process.Lib.ServicesConfigurator.Configure(services);
+        DotnetCore.Process.Lib.ServicesConfigurator.Configure(services);
 
-            services.AddTransient<IVagrantDestroyCommand, VagrantDestroyCommand>()
-                    .AddTransient<IVagrantHaltCommand, VagrantHaltCommand>()
-                    .AddTransient<IVagrantInitCommand, VagrantInitCommand>()
-                    .AddTransient<IVagrantProvisionCommand, VagrantProvisionCommand>()
-                    .AddTransient<IVagrantSshCommand, VagrantSshCommand>()
-                    .AddTransient<IVagrantSshConfigCommand, VagrantSshConfigCommand>()
-                    .AddTransient<IVagrantStatusCommand, VagrantStatusCommand>()
-                    .AddTransient<IVagrantUpCommand, VagrantUpCommand>();
-        }
+        services.AddTransient<IVagrantDestroyCommand, VagrantDestroyCommand>()
+                .AddTransient<IVagrantHaltCommand, VagrantHaltCommand>()
+                .AddTransient<IVagrantInitCommand, VagrantInitCommand>()
+                .AddTransient<IVagrantProvisionCommand, VagrantProvisionCommand>()
+                .AddTransient<IVagrantSshCommand, VagrantSshCommand>()
+                .AddTransient<IVagrantSshConfigCommand, VagrantSshConfigCommand>()
+                .AddTransient<IVagrantStatusCommand, VagrantStatusCommand>()
+                .AddTransient<IVagrantUpCommand, VagrantUpCommand>();
     }
 }

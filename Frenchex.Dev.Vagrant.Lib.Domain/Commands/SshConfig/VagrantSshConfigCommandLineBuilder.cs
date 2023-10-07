@@ -12,58 +12,57 @@ using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Abstractions;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.SshConfig
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.SshConfig;
+
+public class VagrantSshConfigCommandLineBuilder : AbstractVagrantCommandLineBuilder, IVagrantSshConfigCommandLineBuilder
 {
-    public class VagrantSshConfigCommandLineBuilder : AbstractVagrantCommandLineBuilder, IVagrantSshConfigCommandLineBuilder
+    public string BuildCommandLineArguments(
+        VagrantSshConfigRequest request
+    )
     {
-        public string BuildCommandLineArguments(
-            VagrantSshConfigRequest request
-        )
-        {
-            return BuildArguments(GetCliCommandName(), request, false, string.Empty);
-        }
+        return BuildArguments(GetCliCommandName(), request, false, string.Empty);
+    }
 
-        protected override string GetCliCommandName()
-        {
-            return "ssh-config";
-        }
+    protected override string GetCliCommandName()
+    {
+        return "ssh-config";
+    }
 
-        protected override string BuildVagrantOptions(
-            IVagrantCommandRequest request
-        )
+    protected override string BuildVagrantOptions(
+        IVagrantCommandRequest request
+    )
+    {
+        if (request is VagrantSshConfigRequest sshConfigRequest)
         {
-            if (request is VagrantSshConfigRequest sshConfigRequest)
+            var parts = new List<string>();
+
+            if (!string.IsNullOrEmpty(sshConfigRequest.Host))
             {
-                var parts = new List<string>();
-
-                if (!string.IsNullOrEmpty(sshConfigRequest.Host))
-                {
-                    parts.Add($"--host {sshConfigRequest.Host}");
-                }
-
-                return string.Join(" ", parts);
+                parts.Add($"--host {sshConfigRequest.Host}");
             }
 
-            throw new NotImplementedException();
+            return string.Join(" ", parts);
         }
 
-        protected override string BuildVagrantArguments(
-            IVagrantCommandRequest request
-        )
+        throw new NotImplementedException();
+    }
+
+    protected override string BuildVagrantArguments(
+        IVagrantCommandRequest request
+    )
+    {
+        if (request is VagrantSshConfigRequest sshConfigRequest)
         {
-            if (request is VagrantSshConfigRequest sshConfigRequest)
+            var parts = new List<string>();
+
+            if (!string.IsNullOrEmpty(sshConfigRequest.NameOrId))
             {
-                var parts = new List<string>();
-
-                if (!string.IsNullOrEmpty(sshConfigRequest.NameOrId))
-                {
-                    parts.Add(sshConfigRequest.NameOrId);
-                }
-
-                return string.Join(" ", parts);
+                parts.Add(sshConfigRequest.NameOrId);
             }
 
-            throw new NotImplementedException();
+            return string.Join(" ", parts);
         }
+
+        throw new NotImplementedException();
     }
 }

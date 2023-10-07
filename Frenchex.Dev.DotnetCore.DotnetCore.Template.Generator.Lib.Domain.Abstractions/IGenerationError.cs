@@ -4,12 +4,11 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
+
+public interface IGenerationError
 {
-    public interface IGenerationError
-    {
-        string Error    { get; }
-        string Path     { get; }
-        string FileName { get; }
-    }
+    string Error    { get; }
+    string Path     { get; }
+    string FileName { get; }
 }

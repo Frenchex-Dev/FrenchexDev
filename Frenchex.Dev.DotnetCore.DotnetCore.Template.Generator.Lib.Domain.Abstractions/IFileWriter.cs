@@ -10,15 +10,14 @@ using System.Text;
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
+
+public interface IFileWriter
 {
-    public interface IFileWriter
-    {
-        Task WriteAllTextAsync(
-            string            path
-          , string            content
-          , Encoding          encoding
-          , CancellationToken cancellationToken = default
-        );
-    }
+    Task WriteAllTextAsync(
+        string            path
+      , string            content
+      , Encoding          encoding
+      , CancellationToken cancellationToken = default
+    );
 }

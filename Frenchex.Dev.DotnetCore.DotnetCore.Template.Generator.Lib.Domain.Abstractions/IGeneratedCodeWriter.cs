@@ -8,13 +8,12 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
+
+public interface IGeneratedCodeWriter
 {
-    public interface IGeneratedCodeWriter
-    {
-        Task WriteAsync(
-            IList<IGeneratedFile> files
-          , CancellationToken     cancellationToken = default
-        );
-    }
+    Task WriteAsync(
+        IList<IGeneratedFile> files
+      , CancellationToken     cancellationToken = default
+    );
 }

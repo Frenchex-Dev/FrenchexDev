@@ -4,11 +4,10 @@
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Init
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Init;
+
+/// <summary>
+/// </summary>
+public interface IVagrantInitCommand : IVagrantCommand<VagrantInitRequest, VagrantInitResponse>
 {
-    /// <summary>
-    /// </summary>
-    public interface IVagrantInitCommand : IVagrantCommand<VagrantInitRequest, VagrantInitResponse>
-    {
-    }
 }

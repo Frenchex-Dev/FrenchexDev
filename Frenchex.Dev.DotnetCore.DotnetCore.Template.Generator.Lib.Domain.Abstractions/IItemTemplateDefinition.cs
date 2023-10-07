@@ -4,9 +4,8 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
+
+public interface IItemTemplateDefinition : ITemplateDefinition
 {
-    public interface IItemTemplateDefinition : ITemplateDefinition
-    {
-    }
 }

@@ -4,9 +4,8 @@
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.SshConfig
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.SshConfig;
+
+public interface IVagrantSshConfigResponse : IVagrantCommandResponse
 {
-    public interface IVagrantSshConfigResponse : IVagrantCommandResponse
-    {
-    }
 }
