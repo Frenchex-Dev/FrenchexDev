@@ -8,6 +8,7 @@
 
 using Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.Solution;
 using Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.Solution.Global;
+using IDotnetSolutionGenerator = Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.ISolutionGenerator;
 using DotnetSolutionDefinition = Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions.SolutionDefinition;
 using DotnetSolutionGenerationContext
     = Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions.SolutionGenerationContext;
@@ -17,8 +18,8 @@ using DotnetSolutionGenerationContext
 namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Solution;
 
 public class SolutionGenerator(
-    IGlobalGenerator                                                         globalGenerator
-  , DotnetCore.Solution.Generator.Lib.Domain.Abstractions.ISolutionGenerator dotnetSolutionGenerator
+    IGlobalGenerator         globalGenerator
+  , IDotnetSolutionGenerator dotnetSolutionGenerator
 ) : ISolutionGenerator
 {
     /// <summary>

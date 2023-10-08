@@ -8,6 +8,6 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.P
 
 public interface ICsProj
 {
-    string Name { get; }
+    string Name           { get; }
     string SolutionFolder { get; }
 }

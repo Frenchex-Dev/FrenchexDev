@@ -15,8 +15,8 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Solution;
 public interface ISolutionGenerator
 {
     Task<ISolutionGenerationResult> GenerateAsync(
-        ISolutionDefinition solutionDefinition
+        ISolutionDefinition        solutionDefinition
       , ISolutionGenerationContext solutionGenerationContext
-      , CancellationToken cancellationToken = default
+      , CancellationToken          cancellationToken = default
     );
 }

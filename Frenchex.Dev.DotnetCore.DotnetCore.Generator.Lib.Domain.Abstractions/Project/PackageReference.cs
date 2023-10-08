@@ -8,7 +8,7 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.P
 
 public class PackageReference : IPackageReference
 {
-    public required string Name { get; set; }
-    public required string? Version { get; set; }
-    public bool HasVersion => !string.IsNullOrEmpty(Version);
+    public required string  Name       { get; set; }
+    public required string? Version    { get; set; }
+    public          bool    HasVersion => !string.IsNullOrEmpty(Version);
 }

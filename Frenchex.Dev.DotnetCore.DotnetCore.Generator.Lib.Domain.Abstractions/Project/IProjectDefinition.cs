@@ -8,10 +8,10 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.P
 
 public interface IProjectDefinition
 {
-    ICsProj CsProj { get; }
-    IList<IProjectReference> ProjectsReferences { get; }
+    ICsProj                          CsProj                     { get; }
+    IList<IProjectReference>         ProjectsReferences         { get; }
     IList<IExternalProjectReference> ExternalProjectsReferences { get; }
-    IList<IPackageReference> PackagesReferences { get; }
-    string Template { get; }
-    IDictionary<string, string> TemplateArgs { get; }
+    IList<IPackageReference>         PackagesReferences         { get; }
+    string                           Template                   { get; }
+    IDictionary<string, string>      TemplateArgs               { get; }
 }

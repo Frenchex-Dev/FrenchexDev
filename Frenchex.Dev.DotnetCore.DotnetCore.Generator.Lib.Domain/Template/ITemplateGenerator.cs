@@ -15,8 +15,8 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Template;
 public interface ITemplateGenerator
 {
     Task<ITemplateGenerationResult> GenerateAsync(
-        ITemplateDefinition templateDefinition
+        ITemplateDefinition        templateDefinition
       , ITemplateGenerationContext templateGenerationContext
-      , CancellationToken cancellationToken = default
+      , CancellationToken          cancellationToken = default
     );
 }

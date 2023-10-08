@@ -13,7 +13,7 @@ using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Provision;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Ssh;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.SshConfig;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Status;
-using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Up;
+using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Up;
 using Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Destroy;
 using Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Halt;
 using Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Init;

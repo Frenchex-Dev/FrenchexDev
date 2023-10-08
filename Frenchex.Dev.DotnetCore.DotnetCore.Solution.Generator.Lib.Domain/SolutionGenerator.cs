@@ -18,9 +18,9 @@ public class SolutionGenerator(
 ) : ISolutionGenerator
 {
     public async Task<ISolutionGenerationResult> GenerateAsync(
-        ISolutionDefinition solution
-      , ISolutionGenerationContext  solutionGenerationContext
-      , CancellationToken   cancellationToken = default
+        ISolutionDefinition        solution
+      , ISolutionGenerationContext solutionGenerationContext
+      , CancellationToken          cancellationToken = default
     )
     {
         var dirInfo = new DirectoryInfo(solutionGenerationContext.Path);

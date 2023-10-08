@@ -15,8 +15,8 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain;
 public interface IMetaSolutionDefinitionGenerator
 {
     Task<IMetaSolutionDefinitionGenerationResult> GenerateAsync(
-        IMetaSolutionDefinition metaSolutionDefinition
-      , IMetaSolutionGenerationContext      metaSolutionGenerationContext
-      , CancellationToken       cancellationToken = default
+        IMetaSolutionDefinition        metaSolutionDefinition
+      , IMetaSolutionGenerationContext metaSolutionGenerationContext
+      , CancellationToken              cancellationToken = default
     );
 }

@@ -10,7 +10,7 @@ using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Base;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Up;
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Up;
 
 public interface IVagrantUpRequestBuilder : IVagrantRequestBuilder<VagrantUpRequest>
 {

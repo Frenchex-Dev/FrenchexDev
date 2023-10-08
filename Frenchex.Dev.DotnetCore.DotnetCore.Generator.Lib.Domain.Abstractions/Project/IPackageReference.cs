@@ -8,7 +8,7 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.P
 
 public interface IPackageReference
 {
-    string Name { get; }
-    string? Version { get; }
-    bool HasVersion { get; }
+    string  Name       { get; }
+    string? Version    { get; }
+    bool    HasVersion { get; }
 }

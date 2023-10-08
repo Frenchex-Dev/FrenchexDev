@@ -116,13 +116,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.DotnetCore.Dot
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AddProject", "AddProject", "{E35BA319-13B5-4038-9C11-D240C58E9D03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib", "Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib\Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib.csproj", "{EA3A63ED-E915-4249-A0B9-B043A160FF8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib", "Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib\Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib.csproj", "{EA3A63ED-E915-4249-A0B9-B043A160FF8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib.Domain", "Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib.Domain\Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib.Domain.csproj", "{3959A2DE-DBB4-4D34-A4CA-1F2D4914B63F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib.Domain", "Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib.Domain\Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib.Domain.csproj", "{3959A2DE-DBB4-4D34-A4CA-1F2D4914B63F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib.Domain.Abstractions", "Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib.Domain.Abstractions\Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib.Domain.Abstractions.csproj", "{1235DD11-D5FF-4806-A450-196EB10EAF80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib.Domain.Abstractions", "Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib.Domain.Abstractions\Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib.Domain.Abstractions.csproj", "{1235DD11-D5FF-4806-A450-196EB10EAF80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib.Infrastructure", "Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib.Infrastructure\Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib.Infrastructure.csproj", "{F7E41BE2-838B-4FD5-A3A5-9EFB27175D0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib.Infrastructure", "Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib.Infrastructure\Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib.Infrastructure.csproj", "{F7E41BE2-838B-4FD5-A3A5-9EFB27175D0B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeGeneration", "CodeGeneration", "{83C03EBA-0F44-4C51-B07B-60C755126D0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -358,6 +360,7 @@ Global
 		{3959A2DE-DBB4-4D34-A4CA-1F2D4914B63F} = {E35BA319-13B5-4038-9C11-D240C58E9D03}
 		{1235DD11-D5FF-4806-A450-196EB10EAF80} = {E35BA319-13B5-4038-9C11-D240C58E9D03}
 		{F7E41BE2-838B-4FD5-A3A5-9EFB27175D0B} = {E35BA319-13B5-4038-9C11-D240C58E9D03}
+		{83C03EBA-0F44-4C51-B07B-60C755126D0E} = {CA1A6E50-64F0-46FE-BD24-24B827056E6F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4FC281B1-B4CB-4880-B811-BD07AD3EE896}

@@ -8,6 +8,6 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.T
 
 public interface ITemplateDefinition
 {
-    string Name { get; }
+    string                             Name { get; }
     IList<ITemplateArgumentDefinition> Args { get; }
 }

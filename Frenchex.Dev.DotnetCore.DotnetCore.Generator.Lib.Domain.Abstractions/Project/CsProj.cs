@@ -8,6 +8,6 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.P
 
 public class CsProj : ICsProj
 {
-    public required string Name { get; set; }
+    public required string Name           { get; set; }
     public required string SolutionFolder { get; set; }
 }

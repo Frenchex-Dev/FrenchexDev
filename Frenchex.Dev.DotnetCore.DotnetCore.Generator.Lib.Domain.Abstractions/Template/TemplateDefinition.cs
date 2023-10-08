@@ -8,6 +8,6 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.T
 
 public class TemplateDefinition : ITemplateDefinition
 {
-    public required string Name { get; set; }
+    public required string                             Name { get; set; }
     public required IList<ITemplateArgumentDefinition> Args { get; set; }
 }

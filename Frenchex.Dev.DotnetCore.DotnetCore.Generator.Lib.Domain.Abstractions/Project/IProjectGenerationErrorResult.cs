@@ -8,6 +8,6 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.P
 
 public class IProjectGenerationErrorResult : IProjectGenerationResult
 {
-    public required string Error { get; set; }
+    public required string Error   { get; set; }
     public required string Message { get; set; }
 }

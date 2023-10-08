@@ -25,9 +25,9 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain;
 /// <param name="templateGenerator"></param>
 /// <param name="projectGenerator"></param>
 public class MetaSolutionDefinitionGenerator(
-    ISolutionGenerator solutionGenerator
-  , ITemplateGenerator templateGenerator
-  , IProjectGenerator  projectGenerator
+    ISolutionGenerator                      solutionGenerator
+  , ITemplateGenerator                      templateGenerator
+  , IProjectGenerator                       projectGenerator
   , IMetaSolutionDefinitionGeneratorOptions metaSolutionDefinitionGeneratorOptions
 ) : IMetaSolutionDefinitionGenerator
 {

@@ -4,7 +4,7 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Project.AddProjectReference.Lib.Domain;
+namespace Frenchex.Dev.DotnetCore.DotnetCore.Project.AddProjectReference.Lib.Domain.Abstractions;
 
 public class AddProjectReferenceErrorResult : IAddProjectReferenceResult
 {

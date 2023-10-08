@@ -14,6 +14,7 @@ using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Destroy;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Init;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.SshConfig;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Status;
+using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Up;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Destroy;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Init;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.SshConfig;
@@ -25,7 +26,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Frenchex.Dev.Vagrant.Lib.Tests;
 
-public class Tests : AbstractFullWorkflowTester
+public class FullWorkflowTests : AbstractFullWorkflowTester
 {
     protected static IEnumerable<object[]> WorkflowData()
     {

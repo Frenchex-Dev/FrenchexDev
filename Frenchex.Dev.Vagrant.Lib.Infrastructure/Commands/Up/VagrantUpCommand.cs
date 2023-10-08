@@ -8,7 +8,7 @@
 
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
-using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Up;
+using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Up;
 
 #endregion
 
