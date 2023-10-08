@@ -7,11 +7,11 @@
 #region Usings
 
 using System.Text;
-using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
+using Frenchex.Dev.DotnetCore.CodeGeneration.Lib.Domain;
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Infrastructure;
+namespace Frenchex.Dev.DotnetCore.CodeGeneration.Lib.Infrastructure;
 
 /// <summary>
 /// </summary>
@@ -25,9 +25,9 @@ public class FileWriter : IFileWriter
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public async Task WriteAllTextAsync(
-        string            path
-      , string            content
-      , Encoding          encoding
+        string path
+      , string content
+      , Encoding encoding
       , CancellationToken cancellationToken = default
     )
     {

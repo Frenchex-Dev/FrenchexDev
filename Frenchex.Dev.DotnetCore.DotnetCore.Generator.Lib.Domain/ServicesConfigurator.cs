@@ -23,6 +23,12 @@ public static class ServicesConfigurator
     {
         services
             .AddTransient<IMetaSolutionDefinitionGenerator, MetaSolutionDefinitionGenerator>()
+            .AddTransient<IMetaSolutionDefinitionGeneratorOptions>( //@todo make it using IOptions pattern
+                                                                   _ => new MetaSolutionDefinitionGeneratorOptions
+                                                                        {
+                                                                            ProjectsGenerationMaxConcurrency  = 100
+                                                                          , TemplatesGenerationMaxConcurrency = 100
+                                                                        })
             .AddTransient<ISolutionGenerator, SolutionGenerator>()
             .AddTransient<IGlobalGenerator, GlobalGenerator>()
             .AddTransient<ITemplateGenerator, TemplateGenerator>()

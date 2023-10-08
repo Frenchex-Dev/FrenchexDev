@@ -35,6 +35,7 @@ public class TemplateGenerator(
         switch (definition)
         {
             case IProjectTemplateDefinition projectTemplateDefinition:
+                //@todo rework this thing, .GenerateProjectTemplateAsync must return itself the object
                 var okResult    = new TemplateGenerationOkResult();
                 var errorResult = new TemplateGenerationErrorResult();
 

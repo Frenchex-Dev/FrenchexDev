@@ -12,6 +12,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Frenchex.Dev.DotnetCore.CodeGeneration.Lib\Frenchex.Dev.DotnetCore.CodeGeneration.Lib.csproj" />
 		<ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain\Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.csproj" />
 		<ProjectReference Include="..\Frenchex.Dev.DotnetCore.Process.Lib\Frenchex.Dev.DotnetCore.Process.Lib.csproj" />
 	</ItemGroup>

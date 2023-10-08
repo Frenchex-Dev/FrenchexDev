@@ -7,17 +7,19 @@
 #region Usings
 
 using System.Text;
-using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
+using Frenchex.Dev.DotnetCore.CodeGeneration.Lib.Domain;
+using Frenchex.Dev.DotnetCore.CodeGeneration.Lib.Domain.Abstractions;
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Infrastructure;
+namespace Frenchex.Dev.DotnetCore.CodeGeneration.Lib.Infrastructure;
 
 /// <summary>
 /// </summary>
 /// <param name="fileWriter"></param>
 public class GeneratedCodeWriter(
-    IFileWriter fileWriter
+    IFileWriter                 fileWriter
+  , IGeneratedCodeWriterOptions options
 ) : IGeneratedCodeWriter
 {
     /// <summary>
@@ -36,7 +38,7 @@ public class GeneratedCodeWriter(
                                   , new ParallelOptions
                                     {
                                         CancellationToken      = cancellationToken
-                                      , MaxDegreeOfParallelism = 500
+                                      , MaxDegreeOfParallelism = options.WriteFilesMaxConcurrency
                                       , TaskScheduler          = TaskScheduler.Current
                                     }
                                   , async (
@@ -53,22 +55,21 @@ public class GeneratedCodeWriter(
     )
     {
         var directories = new Dictionary<string, DirectoryInfo>();
+
         files
             .ToList()
             .ForEach(
                      file =>
                      {
                          var dirInfo = new FileInfo(file.Path);
-
-                         if (dirInfo.Directory == null) throw new DirectoryNotFoundException(dirInfo.FullName);
-
+                         if (dirInfo.Directory == null) return;
                          directories.TryAdd(dirInfo.Directory.FullName, dirInfo.Directory);
                      });
 
         directories
             .Values
             .ToList()
-            .ForEach(file => { file.Create(); });
+            .ForEach(directory => { directory.Create(); });
 
         return Task.CompletedTask;
     }

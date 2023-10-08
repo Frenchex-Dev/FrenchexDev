@@ -7,6 +7,7 @@
 #region Usings
 
 using System.Text.Json;
+using Frenchex.Dev.DotnetCore.CodeGeneration.Lib.Domain.Abstractions;
 using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
 
 #endregion
