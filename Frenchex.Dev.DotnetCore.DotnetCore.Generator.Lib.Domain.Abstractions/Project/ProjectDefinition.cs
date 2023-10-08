@@ -6,7 +6,7 @@
 
 namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.Project;
 
-public class ProjectDefintion : IProjectDefinition
+public class ProjectDefinition : IProjectDefinition
 {
     public required ICsProj                          CsProj                     { get; set; }
     public required IList<IProjectReference>         ProjectsReferences         { get; set; }

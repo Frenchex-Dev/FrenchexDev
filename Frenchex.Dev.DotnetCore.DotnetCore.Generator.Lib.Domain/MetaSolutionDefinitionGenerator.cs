@@ -119,8 +119,8 @@ public class MetaSolutionDefinitionGenerator(
                                                                                                                ProjectGenerationContext
                                                                                                                {
                                                                                                                    Path
-                                                                                                                       = metaSolutionGenerationContext
-                                                                                                                           .Path
+                                                                                                                       = $"{metaSolutionGenerationContext
+                                                                                                                           .Path}\\{definition.CsProj.Name}"
                                                                                                                }
                                                                                                              , token);
 

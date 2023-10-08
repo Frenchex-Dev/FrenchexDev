@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Frenchex.Dev.DotnetCore.CodeGeneration.Lib.Domain\Frenchex.Dev.DotnetCore.CodeGeneration.Lib.Domain.csproj" />
     <ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions\Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.csproj" />
     <ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Project.AddPackage.Lib.Domain\Frenchex.Dev.DotnetCore.DotnetCore.Project.AddPackage.Lib.Domain.csproj" />
     <ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Project.AddProjectReference.Lib.Domain\Frenchex.Dev.DotnetCore.DotnetCore.Project.AddProjectReference.Lib.Domain.csproj" />

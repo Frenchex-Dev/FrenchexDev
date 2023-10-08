@@ -46,7 +46,7 @@ public class GeneratedCodeWriter(
                                       , ct
                                     ) =>
                                     {
-                                        await fileWriter.WriteAllTextAsync(x.Path, x.Content, Encoding.Unicode, ct);
+                                        await fileWriter.WriteAllTextAsync(x.Path, x.Content, Encoding.UTF8, ct);
                                     });
     }
 

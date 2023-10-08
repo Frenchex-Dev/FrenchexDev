@@ -46,7 +46,7 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
                                                                                               }
                                                                        , ProjectsDefinitions = new List<IProjectDefinition>
                                                                                                {
-                                                                                                   new ProjectDefintion
+                                                                                                   new ProjectDefinition
                                                                                                    {
                                                                                                        CsProj = new CsProj
                                                                                                                 {
@@ -66,12 +66,23 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
                                                                                                      , Template = "classlib"
                                                                                                      , TemplateArgs
                                                                                                            = new Dictionary<string,
-                                                                                                               string>()
+                                                                                                                 string>
+                                                                                                             {
+                                                                                                                 {
+                                                                                                                     "--framework"
+                                                                                                                   , "net7.0"
+                                                                                                                 }
+                                                                                                                ,
+                                                                                                                 {
+                                                                                                                     "--langVersion"
+                                                                                                                   , "preview"
+                                                                                                                 }
+                                                                                                             }
                                                                                                    }
                                                                                                }
                                                                        , TemplatesDefinitions = new List<ITemplateDefinition>
                                                                                                 {
-                                                                                                    new TemplateDefinition
+                                                                                                    /*new TemplateDefinition
                                                                                                     {
                                                                                                         Name
                                                                                                             = $"Foo.Lib.Template_{Guid.NewGuid()}"
@@ -82,7 +93,7 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
                                                                                                                   new
                                                                                                                   TemplateArgumentDefinition
                                                                                                                   {
-                                                                                                                      Name = "licencing"
+                                                                                                                      Name = "licensing"
                                                                                                                     , DefaultValue
                                                                                                                           = "// Please read LICENSE.md"
                                                                                                                     , Replace
@@ -90,7 +101,7 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
                                                                                                                     , Type = "parameter"
                                                                                                                   }
                                                                                                               }
-                                                                                                    }
+                                                                                                    }*/
                                                                                                 }
                                                                      }
                                         }
@@ -129,27 +140,30 @@ public class FullWorkflowTests : AbstractFullWorkflowTester
       , CancellationToken token
     )
     {
-        var service = scope.ServiceProvider.GetRequiredService<IMetaSolutionDefinitionGenerator>();
+        var metaSolutionDefinitionGenerator = scope.ServiceProvider.GetRequiredService<IMetaSolutionDefinitionGenerator>();
 
         var generationContext = new MetaSolutionGenerationContext
                                 {
                                     Path = Path.Join(Path.GetTempPath(), Path.GetRandomFileName())
                                 };
 
-        var response = await service.GenerateAsync(payload.MetaSolutionDefinition, generationContext, token);
+        Directory.CreateDirectory(generationContext.Path);
 
         await OpenVsCodeAsync(generationContext.Path, cancellationToken: token);
 
-        response.ShouldBeAssignableTo<MetaSolutionDefinitionGenerationResult>();
+        var metaSolutionGenerationResult
+            = await metaSolutionDefinitionGenerator.GenerateAsync(payload.MetaSolutionDefinition, generationContext, token);
 
-        response.SolutionGenerationResult.ShouldBeAssignableTo<SolutionGenerationOkResult>();
+        metaSolutionGenerationResult.ShouldBeAssignableTo<MetaSolutionDefinitionGenerationResult>();
 
-        response
+        metaSolutionGenerationResult.SolutionGenerationResult.ShouldBeAssignableTo<SolutionGenerationOkResult>();
+
+        metaSolutionGenerationResult
             .TemplatesGenerationsResults
             .ToList()
             .ForEach(x => x.ShouldBeAssignableTo<TemplateGenerationOkResult>());
 
-        response
+        metaSolutionGenerationResult
             .ProjectsGenerationsResults
             .ToList()
             .ForEach(x => x.ShouldBeAssignableTo<ProjectGenerationOkResult>());

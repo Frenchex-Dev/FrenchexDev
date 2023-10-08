@@ -8,5 +8,6 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.S
 
 public class GlobalGenerationErrorResult : IGlobalGenerationResult
 {
-    public required string Error { get; set; }
+    public required string     Error     { get; set; }
+    public          Exception? Exception { get; set; }
 }

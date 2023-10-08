@@ -6,7 +6,6 @@
 
 #region Usings
 
-using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
 #endregion
@@ -21,6 +20,8 @@ public static class ServicesConfigurator
     {
         services
             .AddTransient<ITemplateGenerator, TemplateGenerator>()
+            .AddTransient<ITemplateInstaller, TemplateInstaller>()
+            .AddTransient<ITemplateUnInstaller, TemplateUnInstaller>()
             .AddTransient<IProjectTemplateGenerator, ProjectTemplateGenerator>()
             .AddTransient<IPackagesInstaller, PackagesInstaller>();
     }

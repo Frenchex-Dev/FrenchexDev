@@ -23,9 +23,9 @@ public class ProjectGenerator(
     /// <param name="generationContext"></param>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
-    /// <exception cref="ProcessNotStartedException"></exception>
+    /// <exception cref="ProcessNotStartedException">Dotnet error.</exception>
     /// <exception cref="IOException">
-    ///     The directory specified by <paramref name="path" /> is a file.
+    ///     The directory specified by <paramref name="generationContext" /> is a file.
     ///     -or-
     ///     The network name is not known.
     /// </exception>
@@ -37,7 +37,9 @@ public class ProjectGenerator(
     {
         if (!Directory.Exists(generationContext.Path)) Directory.CreateDirectory(generationContext.Path);
 
-        var arguments = BuildArguments(projectDefinition, generationContext);
+        var argumentsList = BuildArgumentsList(projectDefinition, generationContext);
+
+        var arguments = string.Join(" ", argumentsList);
 
         var processExecutionContext = await processStarterFactory
                                             .Factory()
@@ -45,7 +47,7 @@ public class ProjectGenerator(
                                                         new ProcessExecutionContext(
                                                                                     generationContext.Path
                                                                                   , "dotnet"
-                                                                                  , string.Join(" ", arguments)
+                                                                                  , arguments
                                                                                   , new Dictionary<string, string>()
                                                                                   , true
                                                                                   , true)
@@ -64,7 +66,7 @@ public class ProjectGenerator(
         return new ProjectGenerationOk();
     }
 
-    private static List<string> BuildArguments(
+    private static List<string> BuildArgumentsList(
         IProjectDefinition projectDefinition
       , IGenerationContext generationContext
     )

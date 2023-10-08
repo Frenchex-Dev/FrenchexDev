@@ -25,9 +25,9 @@ public class FileWriter : IFileWriter
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     public async Task WriteAllTextAsync(
-        string path
-      , string content
-      , Encoding encoding
+        string            path
+      , string            content
+      , Encoding          encoding
       , CancellationToken cancellationToken = default
     )
     {
