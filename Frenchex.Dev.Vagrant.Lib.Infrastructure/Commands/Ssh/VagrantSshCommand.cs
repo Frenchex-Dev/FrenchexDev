@@ -25,18 +25,11 @@ public class VagrantSshCommand(
       , IVagrantCommandExecutionListeners listeners
     )
     {
-        var processContext = CreateProcessExecutionContext(context, commandLineBuilder.BuildCommandLineArguments(request));
-
-        var processStarter = ProcessStarterFactory.Factory();
-
-        PrepareProcess(listeners, processStarter);
-
-        var process = await processStarter.StartAsync(processContext);
-
-        await WaitProcessForExitAsync(context, process);
-
-        var response = new VagrantSshResponse(process.ExitCode);
-
-        return response;
+        return await StartInternalAsync<VagrantSshRequest, VagrantSshResponse>(
+                                                                               request
+                                                                             , context
+                                                                             , listeners
+                                                                             , () => commandLineBuilder.BuildCommandLineArguments(request)
+                                                                             , exitCode => new VagrantSshResponse(exitCode));
     }
 }

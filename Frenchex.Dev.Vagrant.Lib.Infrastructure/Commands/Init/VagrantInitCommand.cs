@@ -27,18 +27,11 @@ public class VagrantInitCommand(
       , IVagrantCommandExecutionListeners listeners
     )
     {
-        var processContext = CreateProcessExecutionContext(context, commandLineBuilder.BuildCommandLineArguments(request));
-
-        var processStarter = ProcessStarterFactory.Factory();
-
-        PrepareProcess(listeners, processStarter);
-
-        var process = await processStarter.StartAsync(processContext);
-
-        await WaitProcessForExitAsync(context, process);
-
-        var response = new VagrantInitResponse(process.ExitCode);
-
-        return response;
+        return await StartInternalAsync<VagrantInitRequest, VagrantInitResponse>(
+                                                                                 request
+                                                                               , context
+                                                                               , listeners
+                                                                               , () => commandLineBuilder.BuildCommandLineArguments(request)
+                                                                               , exitCode => new VagrantInitResponse(exitCode));
     }
 }
