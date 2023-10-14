@@ -18,7 +18,28 @@ public abstract class AbstractVagrantCommand(
     IProcessStarterFactory processStarterFactory
 )
 {
-    protected readonly IProcessStarterFactory ProcessStarterFactory = processStarterFactory;
+    protected async Task<TResponse> StartInternalAsync<TRequest, TResponse>(
+        TRequest                          _
+      , IVagrantCommandExecutionContext   context
+      , IVagrantCommandExecutionListeners listeners
+      , Func<string>                      commandLineBuilder
+      , Func<int, TResponse>              responseFactory
+    )
+    {
+        var processContext = CreateProcessExecutionContext(context, commandLineBuilder());
+
+        var processStarter = processStarterFactory.Factory();
+
+        PrepareProcess(listeners, processStarter);
+
+        var process = await processStarter.StartAsync(processContext);
+
+        await WaitProcessForExitAsync(context, process);
+
+        var response = responseFactory(process.ExitCode);
+
+        return response;
+    }
 
     protected static ProcessExecutionContext CreateProcessExecutionContext(
         IVagrantCommandExecutionContext context

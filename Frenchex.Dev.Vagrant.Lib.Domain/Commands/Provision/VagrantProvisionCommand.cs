@@ -8,28 +8,29 @@
 
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
-using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.SshConfig;
+using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Provision;
+using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Abstractions;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.SshConfig;
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Provision;
 
-public class VagrantSshConfigCommand(
+public class VagrantProvisionCommand(
     IProcessStarterFactory              processExecutor
-  , IVagrantSshConfigCommandLineBuilder commandLineBuilder
-) : AbstractVagrantCommand(processExecutor), IVagrantSshConfigCommand
+  , IVagrantProvisionCommandLineBuilder commandLineBuilder
+) : AbstractVagrantCommand(processExecutor), IVagrantProvisionCommand
 {
-    public async Task<VagrantSshConfigResponse> StartAsync(
-        VagrantSshConfigRequest           request
+    public async Task<VagrantProvisionResponse> StartAsync(
+        VagrantProvisionRequest           request
       , IVagrantCommandExecutionContext   context
       , IVagrantCommandExecutionListeners listeners
     )
     {
-        return await StartInternalAsync<VagrantSshConfigRequest, VagrantSshConfigResponse>(
+        return await StartInternalAsync<VagrantProvisionRequest, VagrantProvisionResponse>(
                                                                                            request
                                                                                          , context
                                                                                          , listeners
                                                                                          , () => commandLineBuilder.BuildCommandLineArguments(request)
-                                                                                         , exitCode => new VagrantSshConfigResponse(exitCode));
+                                                                                         , exitCode => new VagrantProvisionResponse(exitCode));
     }
 }

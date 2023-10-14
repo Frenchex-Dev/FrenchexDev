@@ -9,10 +9,11 @@
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Ssh;
+using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Abstractions;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Ssh;
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Ssh;
 
 public class VagrantSshCommand(
     IProcessStarterFactory        processExecutor

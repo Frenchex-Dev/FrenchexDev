@@ -6,22 +6,6 @@
 
 #region Usings
 
-using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Destroy;
-using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Halt;
-using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Init;
-using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Provision;
-using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Ssh;
-using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.SshConfig;
-using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Status;
-using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Up;
-using Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Destroy;
-using Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Halt;
-using Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Init;
-using Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Provision;
-using Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Ssh;
-using Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.SshConfig;
-using Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Status;
-using Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Up;
 using Microsoft.Extensions.DependencyInjection;
 
 #endregion
@@ -48,15 +32,5 @@ public static class ServicesConfigurator
     )
     {
         DotnetCore.Process.Lib.ServicesConfigurator.Configure(services);
-
-        services
-            .AddTransient<IVagrantDestroyCommand, VagrantDestroyCommand>()
-            .AddTransient<IVagrantHaltCommand, VagrantHaltCommand>()
-            .AddTransient<IVagrantInitCommand, VagrantInitCommand>()
-            .AddTransient<IVagrantProvisionCommand, VagrantProvisionCommand>()
-            .AddTransient<IVagrantSshCommand, VagrantSshCommand>()
-            .AddTransient<IVagrantSshConfigCommand, VagrantSshConfigCommand>()
-            .AddTransient<IVagrantStatusCommand, VagrantStatusCommand>()
-            .AddTransient<IVagrantUpCommand, VagrantUpCommand>();
     }
 }

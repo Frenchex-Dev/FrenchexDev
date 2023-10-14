@@ -8,28 +8,29 @@
 
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
-using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Provision;
+using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.SshConfig;
+using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Abstractions;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Provision;
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.SshConfig;
 
-public class VagrantProvisionCommand(
+public class VagrantSshConfigCommand(
     IProcessStarterFactory              processExecutor
-  , IVagrantProvisionCommandLineBuilder commandLineBuilder
-) : AbstractVagrantCommand(processExecutor), IVagrantProvisionCommand
+  , IVagrantSshConfigCommandLineBuilder commandLineBuilder
+) : AbstractVagrantCommand(processExecutor), IVagrantSshConfigCommand
 {
-    public async Task<VagrantProvisionResponse> StartAsync(
-        VagrantProvisionRequest           request
+    public async Task<VagrantSshConfigResponse> StartAsync(
+        VagrantSshConfigRequest           request
       , IVagrantCommandExecutionContext   context
       , IVagrantCommandExecutionListeners listeners
     )
     {
-        return await StartInternalAsync<VagrantProvisionRequest, VagrantProvisionResponse>(
+        return await StartInternalAsync<VagrantSshConfigRequest, VagrantSshConfigResponse>(
                                                                                            request
                                                                                          , context
                                                                                          , listeners
                                                                                          , () => commandLineBuilder.BuildCommandLineArguments(request)
-                                                                                         , exitCode => new VagrantProvisionResponse(exitCode));
+                                                                                         , exitCode => new VagrantSshConfigResponse(exitCode));
     }
 }

@@ -9,10 +9,11 @@
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Up;
+using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Abstractions;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Up;
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Up;
 
 /// <summary>
 ///     <inheritdoc cref="IVagrantUpCommand" />
@@ -22,17 +23,17 @@ public class VagrantUpCommand(
   , IVagrantUpCommandLineBuilder commandLineBuilder
 ) : AbstractVagrantCommand(processStarterFactory), IVagrantUpCommand
 {
-    public async Task<UpCommandResponse> StartAsync(
+    public async Task<VagrantUpResponse> StartAsync(
         VagrantUpRequest                  request
       , IVagrantCommandExecutionContext   context
       , IVagrantCommandExecutionListeners listeners
     )
     {
-        return await StartInternalAsync<VagrantUpRequest, UpCommandResponse>(
+        return await StartInternalAsync<VagrantUpRequest, VagrantUpResponse>(
                                                                              request
                                                                            , context
                                                                            , listeners
                                                                            , () => commandLineBuilder.BuildCommandLineArguments(request)
-                                                                           , exitCode => new UpCommandResponse(exitCode));
+                                                                           , exitCode => new VagrantUpResponse(exitCode));
     }
 }

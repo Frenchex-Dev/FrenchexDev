@@ -9,10 +9,11 @@
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Status;
+using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Abstractions;
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Infrastructure.Commands.Status;
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.Status;
 
 public class VagrantStatusCommand(
     IProcessStarterFactory           processExecutor

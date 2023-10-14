@@ -35,20 +35,28 @@ public static class ServicesConfigurator
     )
     {
         services
+            .AddTransient<IVagrantDestroyCommand, VagrantDestroyCommand>()
             .AddTransient<IVagrantDestroyCommandLineBuilder, VagrantDestroyCommandLineBuilder>()
             .AddTransient<IVagrantDestroyRequestBuilder, VagrantDestroyRequestBuilder>()
+            .AddTransient<IVagrantHaltCommand, VagrantHaltCommand>()
             .AddTransient<IVagrantHaltCommandLineBuilder, VagrantHaltCommandLineBuilder>()
             .AddTransient<IVagrantHaltRequestBuilder, VagrantHaltRequestBuilder>()
+            .AddTransient<IVagrantInitCommand, VagrantInitCommand>()
             .AddTransient<IVagrantInitCommandLineBuilder, VagrantInitCommandLineBuilder>()
             .AddTransient<IVagrantInitRequestBuilder, VagrantInitRequestBuilder>()
+            .AddTransient<IVagrantProvisionCommand, VagrantProvisionCommand>()
             .AddTransient<IVagrantProvisionCommandLineBuilder, VagrantProvisionCommandLineBuilder>()
             .AddTransient<IVagrantProvisionRequestBuilder, VagrantProvisionRequestBuilder>()
+            .AddTransient<IVagrantSshCommand, VagrantSshCommand>()
             .AddTransient<IVagrantSshCommandLineBuilder, VagrantSshCommandLineBuilder>()
             .AddTransient<IVagrantSshRequestBuilder, VagrantSshRequestBuilder>()
+            .AddTransient<IVagrantSshConfigCommand, VagrantSshConfigCommand>()
             .AddTransient<IVagrantSshConfigCommandLineBuilder, VagrantSshConfigCommandLineBuilder>()
             .AddTransient<IVagrantSshConfigRequestBuilder, VagrantSshConfigRequestBuilder>()
+            .AddTransient<IVagrantStatusCommand, VagrantStatusCommand>()
             .AddTransient<IVagrantStatusCommandLineBuilder, VagrantStatusCommandLineBuilder>()
             .AddTransient<IVagrantStatusRequestBuilder, VagrantStatusRequestBuilder>()
+            .AddTransient<IVagrantUpCommand, VagrantUpCommand>()
             .AddTransient<IVagrantUpCommandLineBuilder, VagrantUpCommandLineBuilder>()
             .AddTransient<IVagrantUpRequestBuilder, VagrantUpRequestBuilder>();
     }
