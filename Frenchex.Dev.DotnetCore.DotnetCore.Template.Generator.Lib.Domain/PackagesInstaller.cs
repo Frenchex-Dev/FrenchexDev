@@ -8,6 +8,7 @@
 
 using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
+using Frenchex.Dev.DotnetCore.Process.Lib.Domain.Abstractions;
 
 #endregion
 
@@ -51,7 +52,7 @@ public class PackagesInstaller(
                                                                                , $"add {csProjPath.Path} package {package.Name} --version {package.Version}"
                                                                                , new Dictionary<string, string>()
                                                                                , true
-                                                                               , true)
+                                                                               , false)
                                                    , cancellationToken);
             if (!processExecution.HasStarted)
                 throw new ProcessNotStartedException(await processExecution.StdErrStream.ReadToEndAsync(cancellationToken));

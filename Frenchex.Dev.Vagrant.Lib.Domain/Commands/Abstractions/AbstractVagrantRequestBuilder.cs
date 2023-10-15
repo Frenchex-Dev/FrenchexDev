@@ -6,7 +6,7 @@
 
 #region Usings
 
-using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Base;
+using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
 
 #endregion
 

@@ -4,7 +4,7 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.Process.Lib.Domain;
+namespace Frenchex.Dev.DotnetCore.Process.Lib.Domain.Abstractions;
 
 /// <summary>
 ///     Represents a process execution started using <see cref="IProcessStarter" />
@@ -25,6 +25,10 @@ public interface IProcessExecution
     ///     Returns the exit code of the process
     /// </summary>
     int ExitCode { get; }
+
+    bool HasStartingException => StartingException != null;
+
+    Exception? StartingException { get; }
 
     /// <summary>
     ///     Returns the StandardOutput of the process

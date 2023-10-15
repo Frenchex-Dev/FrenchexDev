@@ -6,10 +6,6 @@
 
 #region Usings
 
-#endregion
-
-#region Usings
-
 using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
 
 #endregion

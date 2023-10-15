@@ -4,7 +4,7 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.Process.Lib.Domain;
+namespace Frenchex.Dev.DotnetCore.Process.Lib.Domain.Abstractions;
 
 public interface IProcessStarterFactory
 {

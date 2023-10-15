@@ -4,7 +4,7 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.Process.Lib.Domain;
+namespace Frenchex.Dev.DotnetCore.Process.Lib.Domain.Abstractions;
 
 /// <summary>
 /// </summary>
@@ -26,6 +26,6 @@ public interface IProcessStarter
     /// </summary>
     /// <param name="processPreparer"></param>
     void AddProcessPreparer(
-        Func<System.Diagnostics.Process, Task> processPreparer
+        Func<IProcessExecutionContext, Task> processPreparer
     );
 }

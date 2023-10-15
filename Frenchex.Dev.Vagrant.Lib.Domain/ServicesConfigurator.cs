@@ -6,6 +6,7 @@
 
 #region Usings
 
+using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Destroy;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Halt;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Init;
@@ -34,30 +35,71 @@ public static class ServicesConfigurator
         IServiceCollection services
     )
     {
+        ConfigureCommandLineBuilders(services);
+        ConfigureCommands(services);
+        ConfigureRequestBuilders(services);
+        ConfigureResponseBuilders(services);
+    }
+
+    public static void ConfigureResponseBuilders(
+        IServiceCollection services
+    )
+    {
+        services
+            .AddTransient<IVagrantDestroyResponseBuilder, VagrantDestroyResponseBuilder>()
+            .AddTransient<IVagrantHaltResponseBuilder, VagrantHaltResponseBuilder>()
+            .AddTransient<IVagrantInitResponseBuilder, VagrantInitResponseBuilder>()
+            .AddTransient<IVagrantProvisionResponseBuilder, VagrantProvisionResponseBuilder>()
+            .AddTransient<IVagrantSshResponseBuilder, VagrantSshResponseBuilder>()
+            .AddTransient<IVagrantSshConfigResponseBuilder, VagrantSshConfigResponseBuilder>()
+            .AddTransient<IVagrantStatusResponseBuilder, VagrantStatusResponseBuilder>()
+            .AddTransient<IVagrantUpResponseBuilder, VagrantUpResponseBuilder>();
+    }
+
+    public static void ConfigureRequestBuilders(
+        IServiceCollection services
+    )
+    {
+        services
+            .AddTransient<IVagrantDestroyRequestBuilder, VagrantDestroyRequestBuilder>()
+            .AddTransient<IVagrantHaltRequestBuilder, VagrantHaltRequestBuilder>()
+            .AddTransient<IVagrantInitRequestBuilder, VagrantInitRequestBuilder>()
+            .AddTransient<IVagrantProvisionRequestBuilder, VagrantProvisionRequestBuilder>()
+            .AddTransient<IVagrantSshRequestBuilder, VagrantSshRequestBuilder>()
+            .AddTransient<IVagrantSshConfigRequestBuilder, VagrantSshConfigRequestBuilder>()
+            .AddTransient<IVagrantStatusRequestBuilder, VagrantStatusRequestBuilder>()
+            .AddTransient<IVagrantUpRequestBuilder, VagrantUpRequestBuilder>();
+    }
+
+    public static void ConfigureCommands(
+        IServiceCollection services
+    )
+    {
+        services.AddTransient<IVagrantCommandsFacade, VagrantCommandsFacade>();
+
         services
             .AddTransient<IVagrantDestroyCommand, VagrantDestroyCommand>()
-            .AddTransient<IVagrantDestroyCommandLineBuilder, VagrantDestroyCommandLineBuilder>()
-            .AddTransient<IVagrantDestroyRequestBuilder, VagrantDestroyRequestBuilder>()
             .AddTransient<IVagrantHaltCommand, VagrantHaltCommand>()
-            .AddTransient<IVagrantHaltCommandLineBuilder, VagrantHaltCommandLineBuilder>()
-            .AddTransient<IVagrantHaltRequestBuilder, VagrantHaltRequestBuilder>()
             .AddTransient<IVagrantInitCommand, VagrantInitCommand>()
-            .AddTransient<IVagrantInitCommandLineBuilder, VagrantInitCommandLineBuilder>()
-            .AddTransient<IVagrantInitRequestBuilder, VagrantInitRequestBuilder>()
             .AddTransient<IVagrantProvisionCommand, VagrantProvisionCommand>()
-            .AddTransient<IVagrantProvisionCommandLineBuilder, VagrantProvisionCommandLineBuilder>()
-            .AddTransient<IVagrantProvisionRequestBuilder, VagrantProvisionRequestBuilder>()
             .AddTransient<IVagrantSshCommand, VagrantSshCommand>()
-            .AddTransient<IVagrantSshCommandLineBuilder, VagrantSshCommandLineBuilder>()
-            .AddTransient<IVagrantSshRequestBuilder, VagrantSshRequestBuilder>()
             .AddTransient<IVagrantSshConfigCommand, VagrantSshConfigCommand>()
-            .AddTransient<IVagrantSshConfigCommandLineBuilder, VagrantSshConfigCommandLineBuilder>()
-            .AddTransient<IVagrantSshConfigRequestBuilder, VagrantSshConfigRequestBuilder>()
             .AddTransient<IVagrantStatusCommand, VagrantStatusCommand>()
+            .AddTransient<IVagrantUpCommand, VagrantUpCommand>();
+    }
+
+    public static void ConfigureCommandLineBuilders(
+        IServiceCollection services
+    )
+    {
+        services
+            .AddTransient<IVagrantDestroyCommandLineBuilder, VagrantDestroyCommandLineBuilder>()
+            .AddTransient<IVagrantHaltCommandLineBuilder, VagrantHaltCommandLineBuilder>()
+            .AddTransient<IVagrantInitCommandLineBuilder, VagrantInitCommandLineBuilder>()
+            .AddTransient<IVagrantProvisionCommandLineBuilder, VagrantProvisionCommandLineBuilder>()
+            .AddTransient<IVagrantSshCommandLineBuilder, VagrantSshCommandLineBuilder>()
+            .AddTransient<IVagrantSshConfigCommandLineBuilder, VagrantSshConfigCommandLineBuilder>()
             .AddTransient<IVagrantStatusCommandLineBuilder, VagrantStatusCommandLineBuilder>()
-            .AddTransient<IVagrantStatusRequestBuilder, VagrantStatusRequestBuilder>()
-            .AddTransient<IVagrantUpCommand, VagrantUpCommand>()
-            .AddTransient<IVagrantUpCommandLineBuilder, VagrantUpCommandLineBuilder>()
-            .AddTransient<IVagrantUpRequestBuilder, VagrantUpRequestBuilder>();
+            .AddTransient<IVagrantUpCommandLineBuilder, VagrantUpCommandLineBuilder>();
     }
 }

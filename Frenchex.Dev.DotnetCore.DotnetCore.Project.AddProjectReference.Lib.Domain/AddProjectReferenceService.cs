@@ -8,6 +8,7 @@
 
 using Frenchex.Dev.DotnetCore.DotnetCore.Project.AddProjectReference.Lib.Domain.Abstractions;
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
+using Frenchex.Dev.DotnetCore.Process.Lib.Domain.Abstractions;
 
 #endregion
 
@@ -42,7 +43,7 @@ public class AddProjectReferenceService(
                                                                            , $"add {sourceProject.Path} reference {targetProject.Path}"
                                                                            , new Dictionary<string, string>()
                                                                            , true
-                                                                           , true)
+                                                                           , false)
                                                , cancellationToken);
 
         if (!processExecution.HasStarted)

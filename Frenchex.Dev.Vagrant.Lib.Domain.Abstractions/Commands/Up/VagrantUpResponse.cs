@@ -14,4 +14,4 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Up;
 /// </summary>
 public class VagrantUpResponse(
     int exitCode
-) : BaseVagrantCommandResponse(exitCode), IUpCommandResponse;
+) : BaseVagrantCommandResponse(exitCode), IVagrantUpResponse;

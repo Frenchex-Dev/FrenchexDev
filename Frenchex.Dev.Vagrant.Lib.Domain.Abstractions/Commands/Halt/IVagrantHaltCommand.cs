@@ -8,6 +8,10 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Halt;
 
 /// <summary>
 /// </summary>
-public interface IVagrantHaltCommand : IVagrantCommand<VagrantHaltRequest, VagrantHaltResponse>
+public interface IVagrantHaltCommand : IVagrantCommand<VagrantHaltRequest, IVagrantHaltResponse>
+{
+}
+
+public interface IVagrantHaltResponseBuilder : IVagrantResponseBuilder<IVagrantHaltResponse>
 {
 }

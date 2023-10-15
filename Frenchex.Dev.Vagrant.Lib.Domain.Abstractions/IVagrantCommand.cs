@@ -18,10 +18,12 @@ public interface IVagrantCommand<in TRequest, TResponse> where TRequest : IVagra
     /// <param name="request"></param>
     /// <param name="context"></param>
     /// <param name="listeners"></param>
+    /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task<TResponse> StartAsync(
         TRequest                          request
       , IVagrantCommandExecutionContext   context
       , IVagrantCommandExecutionListeners listeners
+      , CancellationToken                 cancellationToken = default
     );
 }

@@ -4,7 +4,7 @@
 
 #endregion
 
-namespace Frenchex.Dev.DotnetCore.Process.Lib.Domain;
+namespace Frenchex.Dev.DotnetCore.Process.Lib.Domain.Abstractions;
 
 /// <summary>
 ///     Represents a process execution context.
@@ -27,9 +27,14 @@ public interface IProcessExecutionContext
     string Arguments { get; }
 
     /// <summary>
-    ///     Represents Environments for the process to start
+    ///     Represents CreateNoWindow for the process to start
     /// </summary>
-    Dictionary<string, string> Environment { get; }
+    bool CreateNoWindow { get; }
+
+    /// <summary>
+    ///     Represents UseShellExecute for the process to start
+    /// </summary>
+    bool UseShellExecute { get; }
 
     /// <summary>
     ///     Add listeners to StandardOutput data

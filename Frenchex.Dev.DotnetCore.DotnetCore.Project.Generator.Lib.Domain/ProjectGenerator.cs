@@ -8,6 +8,7 @@
 
 using Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions;
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
+using Frenchex.Dev.DotnetCore.Process.Lib.Domain.Abstractions;
 
 #endregion
 
@@ -50,7 +51,7 @@ public class ProjectGenerator(
                                                                                   , arguments
                                                                                   , new Dictionary<string, string>()
                                                                                   , true
-                                                                                  , true)
+                                                                                  , false)
                                                       , cancellationToken);
         if (!processExecutionContext.HasStarted)
             throw new ProcessNotStartedException(await processExecutionContext.StdErrStream.ReadToEndAsync(cancellationToken));

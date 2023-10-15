@@ -8,6 +8,7 @@
 
 using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
+using Frenchex.Dev.DotnetCore.Process.Lib.Domain.Abstractions;
 
 #endregion
 
@@ -30,7 +31,7 @@ public class TemplateInstaller(
     /// <exception cref="TemplateInstallationException"></exception>
     /// <exception cref="System.Security.SecurityException">The caller does not have the required permission.</exception>
     /// <exception cref="UnauthorizedAccessException">Access to <paramref name="csProjPath" /> is denied.</exception>
-    public async Task InstallAsync(
+    public async Task<ITemplateInstallationResult> InstallAsync(
         ICsProjPath       csProjPath
       , CancellationToken cancellationToken = default
     )
@@ -46,7 +47,7 @@ public class TemplateInstaller(
                                                                            , "new install ./"
                                                                            , new Dictionary<string, string>()
                                                                            , true
-                                                                           , true)
+                                                                           , false)
                                                , cancellationToken);
 
         if (!processExecution.HasStarted)
@@ -55,6 +56,11 @@ public class TemplateInstaller(
         await processExecution.WaitForExitAsync(cancellationToken);
 
         if (processExecution.ExitCode > 0)
-            throw new TemplateInstallationException(await processExecution.StdErrStream.ReadToEndAsync(cancellationToken));
+            return new TemplateInstallationErrorResult
+                   {
+                       Error = (await processExecution.StdOutStream.ReadLineAsync(cancellationToken))!
+                   };
+
+        return new TemplateInstallationOkResult();
     }
 }

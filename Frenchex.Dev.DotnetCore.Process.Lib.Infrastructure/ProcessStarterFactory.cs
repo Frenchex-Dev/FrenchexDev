@@ -6,7 +6,7 @@
 
 #region Usings
 
-using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
+using Frenchex.Dev.DotnetCore.Process.Lib.Domain.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
 #endregion

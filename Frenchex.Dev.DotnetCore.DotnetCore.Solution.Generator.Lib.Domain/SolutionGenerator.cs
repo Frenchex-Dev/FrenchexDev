@@ -8,15 +8,28 @@
 
 using Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain.Abstractions;
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
+using Frenchex.Dev.DotnetCore.Process.Lib.Domain.Abstractions;
 
 #endregion
 
 namespace Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.Domain;
 
+/// <summary>
+/// </summary>
+/// <param name="processStarterFactory"></param>
 public class SolutionGenerator(
     IProcessStarterFactory processStarterFactory
 ) : ISolutionGenerator
 {
+    /// <summary>
+    /// </summary>
+    /// <param name="solution"></param>
+    /// <param name="solutionGenerationContext"></param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
+    /// <exception cref="ProcessNotStartedException"></exception>
+    /// <exception cref="IOException">The directory cannot be created.</exception>
+    /// <exception cref="System.Security.SecurityException">The caller does not have the required permission.</exception>
     public async Task<ISolutionGenerationResult> GenerateAsync(
         ISolutionDefinition        solution
       , ISolutionGenerationContext solutionGenerationContext
@@ -36,7 +49,7 @@ public class SolutionGenerator(
                                                                                   , $"new sln --name {solution.Name} -o {solutionGenerationContext.Path} --force"
                                                                                   , new Dictionary<string, string>()
                                                                                   , true
-                                                                                  , true)
+                                                                                  , false)
                                                       , cancellationToken);
         if (!processExecution.HasStarted)
             throw new ProcessNotStartedException(await processExecution.StdErrStream.ReadToEndAsync(cancellationToken));

@@ -4,6 +4,12 @@
 
 #endregion
 
+#region Usings
+
+using Frenchex.Dev.DotnetCore.Process.Lib.Domain.Abstractions;
+
+#endregion
+
 namespace Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 
 public class ProcessExecutionContext(
@@ -11,20 +17,28 @@ public class ProcessExecutionContext(
   , string                     binary
   , string                     arguments
   , Dictionary<string, string> environment
-  , bool                       saveStdOutStream
-  , bool                       saveStdErrStream
+  , bool                       createNoWindow
+  , bool                       useShellExecute
 ) : IProcessExecutionContext
 {
     private readonly List<Func<string, Task>> _stdErrListeners = new();
     private readonly List<Func<string, Task>> _stdOutListeners = new();
 
-    public bool SaveStdOutStream { get; } = saveStdOutStream;
-    public bool SaveStdErrStream { get; } = saveStdErrStream;
+    public Dictionary<string, string> Environment { get; } = environment;
 
-    public string                     WorkingDirectory { get; } = path;
-    public string                     Binary           { get; } = binary;
-    public string                     Arguments        { get; } = arguments;
-    public Dictionary<string, string> Environment      { get; } = environment;
+    public string WorkingDirectory { get; } = path;
+    public string Binary           { get; } = binary;
+    public string Arguments        { get; } = arguments;
+
+    /// <summary>
+    ///     Represents CreateNoWindow for the process to start
+    /// </summary>
+    public bool CreateNoWindow { get; } = createNoWindow;
+
+    /// <summary>
+    ///     Represents UseShellExecute for the process to start
+    /// </summary>
+    public bool UseShellExecute { get; } = useShellExecute;
 
     public IProcessExecutionContext AddStdOutListener(
         Func<string, Task> listener

@@ -8,6 +8,6 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.Init;
 
 /// <summary>
 /// </summary>
-public interface IVagrantInitCommand : IVagrantCommand<VagrantInitRequest, VagrantInitResponse>
+public interface IVagrantInitCommand : IVagrantCommand<VagrantInitRequest, IVagrantInitResponse>
 {
 }

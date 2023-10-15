@@ -30,13 +30,5 @@ public interface IVagrantCommandExecutionContext
 
     /// <summary>
     /// </summary>
-    bool SaveStdOutStream { get; }
-
-    /// <summary>
-    /// </summary>
-    bool SaveStdErrStream { get; }
-
-    /// <summary>
-    /// </summary>
     string? Timeout { get; }
 }

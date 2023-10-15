@@ -12,6 +12,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Frenchex.Dev.DotnetCore.Process.Lib.Domain.Abstractions\Frenchex.Dev.DotnetCore.Process.Lib.Domain.Abstractions.csproj" />
 		<ProjectReference Include="..\Frenchex.Dev.DotnetCore.Process.Lib.Domain\Frenchex.Dev.DotnetCore.Process.Lib.Domain.csproj" />
 	</ItemGroup>
 

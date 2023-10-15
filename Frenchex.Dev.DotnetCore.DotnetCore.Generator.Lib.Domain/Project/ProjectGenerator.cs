@@ -12,7 +12,7 @@ using Frenchex.Dev.DotnetCore.DotnetCore.Project.AddPackage.Lib.Domain.Abstracti
 using Frenchex.Dev.DotnetCore.DotnetCore.Project.AddProjectReference.Lib.Domain;
 using Frenchex.Dev.DotnetCore.DotnetCore.Project.AddProjectReference.Lib.Domain.Abstractions;
 using Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions;
-using CsProj = Frenchex.Dev.DotnetCore.DotnetCore.Project.AddProjectReference.Lib.Domain.Abstractions.CsProj;
+using AddProjectReferenceCsProj = Frenchex.Dev.DotnetCore.DotnetCore.Project.AddProjectReference.Lib.Domain.Abstractions.CsProj;
 using IDotnetProjectSourceGenerator = Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.Domain.Abstractions.IProjectGenerator;
 using IProjectDefinition = Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.Project.IProjectDefinition;
 using IProjectGenerationResult = Frenchex.Dev.DotnetCore.DotnetCore.Generator.Lib.Domain.Abstractions.Project.IProjectGenerationResult;
@@ -87,11 +87,11 @@ public class ProjectGenerator(
         foreach (var projectReference in projectDefinition.ProjectsReferences)
         {
             var projectReferenceResult = await addProjectReferenceService.AddAsync(
-                                                                                   new CsProj
+                                                                                   new AddProjectReferenceCsProj
                                                                                    {
                                                                                        Path = projectGenerationContext.Path
                                                                                    }
-                                                                                 , new CsProj
+                                                                                 , new AddProjectReferenceCsProj
                                                                                    {
                                                                                        Path = projectReference.ReferencedProject.Name
                                                                                    }
@@ -108,11 +108,11 @@ public class ProjectGenerator(
         foreach (var externalProjectReference in projectDefinition.ExternalProjectsReferences)
         {
             var externalProjectReferenceAddingResult = await addProjectReferenceService.AddAsync(
-                                                                                                 new CsProj
+                                                                                                 new AddProjectReferenceCsProj
                                                                                                  {
                                                                                                      Path = projectGenerationContext.Path
                                                                                                  }
-                                                                                               , new CsProj
+                                                                                               , new AddProjectReferenceCsProj
                                                                                                  {
                                                                                                      Path = externalProjectReference.Path
                                                                                                  }

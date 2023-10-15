@@ -18,7 +18,11 @@ public static class ServicesConfigurator
         IServiceCollection services
     )
     {
+        CodeGeneration.Lib.ServicesConfigurator.Configure(services);
+        Project.AddPackage.Lib.ServicesConfigurator.Configure(services);
+        Project.AddProjectReference.Lib.ServicesConfigurator.Configure(services);
         Solution.Generator.Lib.ServicesConfigurator.Configure(services);
+        Solution.AddProject.Lib.ServicesConfigurator.Configure(services);
         Project.Generator.Lib.ServicesConfigurator.Configure(services);
         Template.Generator.Lib.ServicesConfigurator.Configure(services);
     }

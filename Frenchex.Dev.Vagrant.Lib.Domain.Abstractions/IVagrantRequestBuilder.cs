@@ -4,7 +4,7 @@
 
 #endregion
 
-namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Base;
+namespace Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
 
 /// <summary>
 /// </summary>

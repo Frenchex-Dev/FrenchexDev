@@ -8,6 +8,7 @@
 
 using Frenchex.Dev.DotnetCore.DotnetCore.Project.AddPackage.Lib.Domain.Abstractions;
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
+using Frenchex.Dev.DotnetCore.Process.Lib.Domain.Abstractions;
 
 #endregion
 
@@ -22,7 +23,9 @@ public class AddPackageService(
     /// <param name="project"></param>
     /// <param name="package"></param>
     /// <param name="cancellationToken"></param>
-    /// <returns></returns>
+    /// <returns>
+    ///     <see cref="IAddPackageResult" />
+    /// </returns>
     /// <exception cref="System.Security.SecurityException">The caller does not have the required permission.</exception>
     /// <exception cref="UnauthorizedAccessException">Access to <paramref name="project" /> is denied.</exception>
     /// <exception cref="ProcessNotStartedException">Dotnet error.</exception>
@@ -50,7 +53,7 @@ public class AddPackageService(
                                                                            , $"add {project.Path} package {package.Name} --version {package.Version}"
                                                                            , new Dictionary<string, string>()
                                                                            , true
-                                                                           , true)
+                                                                           , false)
                                                , cancellationToken);
 
         if (!processExecution.HasStarted)

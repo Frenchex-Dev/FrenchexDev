@@ -8,6 +8,7 @@
 
 using Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain.Abstractions;
 using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
+using Frenchex.Dev.DotnetCore.Process.Lib.Domain.Abstractions;
 
 #endregion
 
@@ -46,7 +47,7 @@ public class TemplateUnInstaller(
                                                                            , "new uninstall ./"
                                                                            , new Dictionary<string, string>()
                                                                            , true
-                                                                           , true)
+                                                                           , false)
                                                , cancellationToken);
 
         if (!processExecution.HasStarted)

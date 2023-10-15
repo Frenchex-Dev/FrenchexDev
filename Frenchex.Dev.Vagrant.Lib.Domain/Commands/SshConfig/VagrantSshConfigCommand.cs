@@ -6,7 +6,7 @@
 
 #region Usings
 
-using Frenchex.Dev.DotnetCore.Process.Lib.Domain;
+using Frenchex.Dev.DotnetCore.Process.Lib.Domain.Abstractions;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions;
 using Frenchex.Dev.Vagrant.Lib.Domain.Abstractions.Commands.SshConfig;
 using Frenchex.Dev.Vagrant.Lib.Domain.Commands.Abstractions;
@@ -18,19 +18,31 @@ namespace Frenchex.Dev.Vagrant.Lib.Domain.Commands.SshConfig;
 public class VagrantSshConfigCommand(
     IProcessStarterFactory              processExecutor
   , IVagrantSshConfigCommandLineBuilder commandLineBuilder
+  , IVagrantSshConfigResponseBuilder    responseBuilder
 ) : AbstractVagrantCommand(processExecutor), IVagrantSshConfigCommand
 {
-    public async Task<VagrantSshConfigResponse> StartAsync(
+    public async Task<IVagrantSshConfigResponse> StartAsync(
         VagrantSshConfigRequest           request
       , IVagrantCommandExecutionContext   context
       , IVagrantCommandExecutionListeners listeners
+      , CancellationToken                 cancellationToken = default
     )
     {
-        return await StartInternalAsync<VagrantSshConfigRequest, VagrantSshConfigResponse>(
-                                                                                           request
-                                                                                         , context
-                                                                                         , listeners
-                                                                                         , () => commandLineBuilder.BuildCommandLineArguments(request)
-                                                                                         , exitCode => new VagrantSshConfigResponse(exitCode));
+        return await StartInternalAsync<VagrantSshConfigRequest, IVagrantSshConfigResponse>(
+                                                                                            request
+                                                                                          , context
+                                                                                          , listeners
+                                                                                          , () => commandLineBuilder
+                                                                                                .BuildCommandLineArguments(request)
+                                                                                          , async (
+                                                                                                stdOut
+                                                                                              , stdErr
+                                                                                              , exitCode
+                                                                                            ) => await responseBuilder.BuildAsync(
+                                                                                                                                  stdOut
+                                                                                                                                , stdErr
+                                                                                                                                , exitCode
+                                                                                                                                , cancellationToken)
+                                                                                          , cancellationToken);
     }
 }

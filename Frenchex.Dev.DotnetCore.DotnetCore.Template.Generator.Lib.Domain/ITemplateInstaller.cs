@@ -18,7 +18,7 @@ namespace Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.Domain;
 
 public interface ITemplateInstaller
 {
-    Task InstallAsync(
+    Task<ITemplateInstallationResult> InstallAsync(
         ICsProjPath       csProjPath
       , CancellationToken cancellationToken = default
     );

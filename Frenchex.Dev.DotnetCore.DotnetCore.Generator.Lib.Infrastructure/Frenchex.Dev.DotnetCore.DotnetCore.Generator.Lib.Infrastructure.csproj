@@ -12,7 +12,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Project.AddPackage.Lib\Frenchex.Dev.DotnetCore.DotnetCore.Project.AddPackage.Lib.csproj" />
+    <ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Project.AddProjectReference.Lib\Frenchex.Dev.DotnetCore.DotnetCore.Project.AddProjectReference.Lib.csproj" />
     <ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib\Frenchex.Dev.DotnetCore.DotnetCore.Project.Generator.Lib.csproj" />
+    <ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib\Frenchex.Dev.DotnetCore.DotnetCore.Solution.AddProject.Lib.csproj" />
     <ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib\Frenchex.Dev.DotnetCore.DotnetCore.Solution.Generator.Lib.csproj" />
     <ProjectReference Include="..\Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib\Frenchex.Dev.DotnetCore.DotnetCore.Template.Generator.Lib.csproj" />
   </ItemGroup>

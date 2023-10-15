@@ -4,6 +4,12 @@
 
 #endregion
 
+#region Usings
+
+using Frenchex.Dev.DotnetCore.Process.Lib.Domain.Abstractions;
+
+#endregion
+
 namespace Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 
 /// <summary>
@@ -14,6 +20,7 @@ namespace Frenchex.Dev.DotnetCore.Process.Lib.Domain;
 public sealed class ProcessExecution(
     System.Diagnostics.Process internalProcess
   , bool                       hasStarted
+  , Exception?                 startingException
 ) : IProcessExecution
 {
     #region Public API
@@ -25,6 +32,8 @@ public sealed class ProcessExecution(
     ///     </para>
     /// </summary>
     public bool HasStarted { get; } = hasStarted;
+
+    public Exception? StartingException { get; } = startingException;
 
     /// <summary>
     ///     Interface : <inheritdoc />
