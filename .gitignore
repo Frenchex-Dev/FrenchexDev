@@ -3,3 +3,5 @@
 **/packages
 packages/
 .vs
+.idea
+TestResults/*
